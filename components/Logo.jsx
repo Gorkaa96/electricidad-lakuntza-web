@@ -4,12 +4,12 @@ export default function Logo({ compact = false, dark = false }) {
   return (
     <div className="flex items-center gap-3">
       <Image
-        src="/logo-lakuntza.svg"
+        src="/logo-lakuntza-new.svg"
         alt="Electricidad Lakuntza"
         width={compact ? 44 : 56}
-        height={compact ? 44 : 56}
+        height={compact ? 48 : 61}
         priority
-        className="rounded-full logo-shadow"
+        className="logo-shadow rounded-[14px] object-contain"
       />
       <div className="leading-tight">
         <p className={`${compact ? 'text-base' : 'text-lg'} font-black tracking-tight ${dark ? 'text-white' : 'text-neutral-950'}`}>
