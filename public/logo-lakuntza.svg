@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title>Electricidad Lakuntza</title>
+  <circle cx="256" cy="256" r="245" fill="#55B927"/>
+  <path d="M101 247 255 122l158 125h-52v132H151V247h-50Z" fill="#111"/>
+  <path d="M80 305h218c52 0 65-72 124-72" fill="none" stroke="#fff" stroke-width="42" stroke-linecap="round"/>
+  <path d="M62 256h110M62 351h110" fill="none" stroke="#fff" stroke-width="42" stroke-linecap="round"/>
+</svg>
