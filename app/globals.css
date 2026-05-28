@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green: #55b927;
+  --green-dark: #3f981d;
+  --ink: #121417;
+  --mist: #f5f8f2;
+  --line: #e4e9df;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #ffffff;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  color: #ffffff;
+  background: var(--green);
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.light-grid {
+  background-image:
+    linear-gradient(rgba(18, 20, 23, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 20, 23, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.logo-shadow {
+  box-shadow: 0 14px 35px rgba(85, 185, 39, 0.25);
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid rgba(85, 185, 39, 0.35);
+  outline-offset: 3px;
+}
