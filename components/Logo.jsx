@@ -4,7 +4,7 @@ export default function Logo({ compact = false, dark = false }) {
   return (
     <div className="flex items-center gap-3">
       <Image
-        src="/logo-lakuntza-new.svg"
+        src="/logo-lakuntza.png"
         alt="Electricidad Lakuntza"
         width={compact ? 44 : 56}
         height={compact ? 48 : 61}
