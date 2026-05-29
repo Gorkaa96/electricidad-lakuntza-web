@@ -8,6 +8,7 @@ import ContactForm from '@/components/ContactForm';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
+const mapsHref = 'https://www.google.com/maps/search/?api=1&query=Uriz%20Kalea%2027%2031830%20Lakuntza%20Nafarroa';
 
 const services = [
   {
@@ -34,7 +35,7 @@ const trustItems = [
   {
     icon: Home,
     title: 'Empresa local',
-    text: 'Atención cercana desde Lakuntza para Sakana, Navarra y zonas próximas.',
+    text: 'Atención cercana desde Lakuntza, con servicio en Navarra y País Vasco.',
   },
   {
     icon: Phone,
@@ -72,14 +73,14 @@ export default function HomePage() {
           <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-12 lg:px-8 lg:py-24">
             <div className="lg:col-span-7">
               <div className="flex flex-wrap gap-3">
-                <Badge dark><MapPin size={14} /> Lakuntza · Sakana · Navarra</Badge>
+                <Badge dark><MapPin size={14} /> Lakuntza · Navarra · País Vasco</Badge>
                 <Badge dark><ShieldCheck size={14} /> Empresa delegada de Fenie Energía</Badge>
               </div>
               <h1 className="mt-7 max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.06em] sm:text-7xl lg:text-[5.6rem]">
                 Instalaciones eléctricas y energía con trato directo.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75 sm:text-xl">
-                Electricidad Lakuntza ofrece instalaciones eléctricas, telecomunicaciones y asesoría energética para viviendas, comunidades, comercios y pequeñas empresas.
+                Electricidad Lakuntza ofrece instalaciones eléctricas, telecomunicaciones y asesoría energética para viviendas, comunidades, comercios y pequeñas empresas en Navarra y País Vasco.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <a href="#contacto" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
@@ -195,9 +196,16 @@ export default function HomePage() {
         <section id="zona" className="bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 rounded-[2.2rem] border border-neutral-200 bg-lakuntza-mist p-7 shadow-card sm:p-10 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-7"><Badge><MapPin size={14} /> Zona de servicio</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">Atención cercana desde Lakuntza.</h2><p className="mt-5 text-base leading-8 text-neutral-600">Servicio en Lakuntza, Sakana, Navarra y zonas cercanas de Gipuzkoa. Para cada solicitud se valora el tipo de trabajo, disponibilidad y desplazamiento.</p></div>
+              <div className="lg:col-span-7">
+                <Badge><MapPin size={14} /> Zona de servicio</Badge>
+                <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">Servicio en Navarra y País Vasco desde Lakuntza.</h2>
+                <p className="mt-5 text-base leading-8 text-neutral-600">La empresa está ubicada en Uriz Kalea, 27, 31830 Lakuntza, Nafarroa. Desde Lakuntza se atienden trabajos en Navarra y País Vasco, valorando en cada solicitud el tipo de trabajo, disponibilidad y desplazamiento.</p>
+                <a href={mapsHref} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                  Ver ubicación en Google Maps
+                </a>
+              </div>
               <div className="grid gap-3 sm:grid-cols-2 lg:col-span-5">
-                {['Particulares', 'Comunidades', 'Comercios', 'Energía'].map((item) => <div key={item} className="rounded-3xl bg-white p-5 shadow-sm"><p className="font-black">{item}</p><p className="mt-2 text-sm leading-6 text-neutral-500">{item === 'Energía' ? 'Luz, gas y facturas.' : 'Instalación, revisión y mantenimiento.'}</p></div>)}
+                {['Navarra', 'País Vasco', 'Particulares y comunidades', 'Comercios y pequeños negocios'].map((item) => <div key={item} className="rounded-3xl bg-white p-5 shadow-sm"><p className="font-black">{item}</p><p className="mt-2 text-sm leading-6 text-neutral-500">{item === 'Navarra' || item === 'País Vasco' ? 'Zona de servicio actual.' : 'Instalación, revisión y mantenimiento.'}</p></div>)}
               </div>
             </div>
           </div>
@@ -211,7 +219,7 @@ export default function HomePage() {
                 <a href="tel:+34649853448" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Phone className="text-lakuntza-green" /><div><p className="font-black">649 853 448</p><p className="text-sm text-neutral-500">Llamada directa</p></div></a>
                 <a href={whatsappHref} className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MessageCircle className="text-lakuntza-green" /><div><p className="font-black">Escribir por WhatsApp</p><p className="text-sm text-neutral-500">Presupuestos, dudas y envío de facturas</p></div></a>
                 <a href="mailto:eleclakuntza@yahoo.es" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Mail className="text-lakuntza-green" /><div><p className="font-black">eleclakuntza@yahoo.es</p><p className="text-sm text-neutral-500">Presupuestos y documentación</p></div></a>
-                <div className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><Home className="text-lakuntza-green" /><div><p className="font-black">Lakuntza</p><p className="text-sm text-neutral-500">Navarra</p></div></div>
+                <a href={mapsHref} target="_blank" rel="noreferrer" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MapPin className="text-lakuntza-green" /><div><p className="font-black">Uriz Kalea, 27</p><p className="text-sm text-neutral-500">31830 Lakuntza, Nafarroa</p></div></a>
               </div>
             </div>
             <div className="lg:col-span-7"><ContactForm /></div>
