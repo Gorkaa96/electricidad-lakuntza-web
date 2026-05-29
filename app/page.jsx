@@ -6,6 +6,7 @@ import Badge from '@/components/Badge';
 import InvoiceWhatsAppForm from '@/components/InvoiceWhatsAppForm';
 import ContactForm from '@/components/ContactForm';
 import FrequentServices from '@/components/FrequentServices';
+import ProjectsSection from '@/components/ProjectsSection';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
@@ -144,6 +145,7 @@ export default function HomePage() {
         </section>
 
         <FrequentServices />
+        <ProjectsSection />
 
         <section className="bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
