@@ -6,6 +6,7 @@ import Logo from './Logo';
 
 const navItems = [
   ['Servicios', '#servicios'],
+  ['Trabajos', '#trabajos'],
   ['Luz y gas', '#energia'],
   ['Proceso', '#proceso'],
   ['Zona', '#zona'],
@@ -18,13 +19,13 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-200/80 bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#inicio" aria-label="Ir al inicio">
+        <a href="/#inicio" aria-label="Ir al inicio">
           <Logo compact />
         </a>
 
-        <nav className="hidden items-center gap-7 text-sm font-black text-neutral-700 lg:flex" aria-label="Navegación principal">
+        <nav className="hidden items-center gap-6 text-sm font-black text-neutral-700 lg:flex" aria-label="Navegación principal">
           {navItems.map(([label, href]) => (
-            <a key={href} href={href} className="transition hover:text-lakuntza-greenDark">
+            <a key={href} href={`/${href}`} className="transition hover:text-lakuntza-greenDark">
               {label}
             </a>
           ))}
@@ -34,7 +35,7 @@ export default function Header() {
           <a href="tel:+34649853448" className="rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-black shadow-sm transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
             649 853 448
           </a>
-          <a href="#contacto" className="rounded-full bg-neutral-950 px-5 py-2.5 text-sm font-black text-white shadow-lg transition hover:bg-lakuntza-greenDark">
+          <a href="/#contacto" className="rounded-full bg-neutral-950 px-5 py-2.5 text-sm font-black text-white shadow-lg transition hover:bg-lakuntza-greenDark">
             Pedir presupuesto
           </a>
         </div>
@@ -54,7 +55,7 @@ export default function Header() {
         <div className="border-t border-neutral-200 bg-white px-4 py-4 lg:hidden">
           <nav className="mx-auto grid max-w-7xl gap-1 text-sm font-black text-neutral-700">
             {navItems.map(([label, href]) => (
-              <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 hover:bg-neutral-50">
+              <a key={href} href={`/${href}`} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 hover:bg-neutral-50">
                 {label}
               </a>
             ))}
