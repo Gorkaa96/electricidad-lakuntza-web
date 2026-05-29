@@ -14,9 +14,11 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-wrap gap-5 text-xs font-black uppercase tracking-[.14em]">
-          <a href="#servicios" className="hover:text-white">Servicios</a>
-          <a href="#energia" className="hover:text-white">Luz y gas</a>
-          <a href="#contacto" className="hover:text-white">Contacto</a>
+          <a href="/#servicios" className="hover:text-white">Servicios</a>
+          <a href="/#trabajos" className="hover:text-white">Trabajos</a>
+          <a href="/trabajos-realizados" className="hover:text-white">Galería</a>
+          <a href="/#energia" className="hover:text-white">Luz y gas</a>
+          <a href="/#contacto" className="hover:text-white">Contacto</a>
           <a href="/aviso-legal" className="hover:text-white">Aviso legal</a>
           <a href="/privacidad" className="hover:text-white">Privacidad</a>
           <a href="/cookies" className="hover:text-white">Cookies</a>
