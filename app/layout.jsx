@@ -14,17 +14,20 @@ const localBusinessSchema = {
   email: 'eleclakuntza@yahoo.es',
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'Uriz Kalea, 27',
+    postalCode: '31830',
     addressLocality: 'Lakuntza',
-    addressRegion: 'Navarra',
+    addressRegion: 'Nafarroa',
     addressCountry: 'ES',
   },
-  areaServed: ['Lakuntza', 'Sakana', 'Navarra', 'Gipuzkoa'],
+  areaServed: ['Lakuntza', 'Sakana', 'Navarra', 'Nafarroa', 'País Vasco', 'Euskadi'],
   description:
-    'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Sakana, Navarra y zonas cercanas. Empresa delegada de Fenie Energía para contratación de luz y gas.',
+    'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco. Empresa delegada de Fenie Energía para contratación de luz y gas.',
   makesOffer: [
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Instalaciones eléctricas' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Telecomunicaciones' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asesoría energética y comparación de facturas' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Contratación de luz y gas' } },
   ],
 };
 
@@ -35,10 +38,22 @@ export const metadata = {
     template: '%s | Electricidad Lakuntza',
   },
   description:
-    'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Sakana, Navarra y zonas cercanas. Empresa delegada de Fenie Energía para contratación de luz y gas.',
+    'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco. Empresa delegada de Fenie Energía para contratación de luz y gas.',
   alternates: {
     canonical: '/',
   },
+  keywords: [
+    'Electricidad Lakuntza',
+    'electricista Lakuntza',
+    'electricista Navarra',
+    'electricista País Vasco',
+    'instalaciones eléctricas Navarra',
+    'instalaciones eléctricas País Vasco',
+    'telecomunicaciones Navarra',
+    'asesoría energética Navarra',
+    'Fenie Energía Navarra',
+    'comparar factura luz gas',
+  ],
   icons: {
     icon: '/logo-lakuntza.png',
     shortcut: '/logo-lakuntza.png',
@@ -47,7 +62,7 @@ export const metadata = {
   openGraph: {
     title: 'Electricidad Lakuntza | Elektrizitatea',
     description:
-      'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Sakana y Navarra.',
+      'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco.',
     url: siteUrl,
     siteName: 'Electricidad Lakuntza',
     type: 'website',
@@ -65,7 +80,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Electricidad Lakuntza | Elektrizitatea',
     description:
-      'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Sakana y Navarra.',
+      'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco.',
     images: ['/logo-lakuntza.png'],
   },
   robots: {
