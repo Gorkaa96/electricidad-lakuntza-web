@@ -6,24 +6,50 @@ import Badge from '@/components/Badge';
 import InvoiceWhatsAppForm from '@/components/InvoiceWhatsAppForm';
 import ContactForm from '@/components/ContactForm';
 
+const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
+const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
+
 const services = [
   {
     icon: Zap,
     title: 'Instalaciones eléctricas',
-    text: 'Instalaciones, reformas, ampliaciones, cuadros eléctricos, puntos de luz, averías y mantenimiento.',
-    items: ['Viviendas y reformas', 'Comunidades y locales', 'Cuadros, protecciones y cableado'],
+    text: 'Instalaciones, reformas, ampliaciones, cuadros eléctricos, puntos de luz, iluminación, averías y mantenimiento eléctrico.',
+    items: ['Reformas eléctricas', 'Cuadros y protecciones', 'Averías, ampliaciones y puntos de luz'],
   },
   {
     icon: Wifi,
     title: 'Telecomunicaciones',
-    text: 'Soluciones de conectividad para vivienda, comercio y pequeño negocio, con instalación limpia y preparada para durar.',
-    items: ['Redes de datos', 'Antenas y cableado', 'Porteros y videoporteros'],
+    text: 'Soluciones de conectividad para vivienda, comunidad, comercio y pequeño negocio, con instalación limpia y preparada para durar.',
+    items: ['Redes de datos y cableado', 'Antenas y telecomunicaciones', 'Porteros y videoporteros'],
   },
   {
     icon: Leaf,
     title: 'Asesoría energética',
-    text: 'Revisión de facturas, potencia contratada y alternativas de luz y gas con atención directa.',
-    items: ['Comparación gratuita', 'Luz y gas', 'Acompañamiento en contratación'],
+    text: 'Revisión de facturas, potencia contratada y alternativas de luz y gas con atención directa como empresa delegada de Fenie Energía.',
+    items: ['Comparación gratuita de factura', 'Luz y gas', 'Acompañamiento en contratación'],
+  },
+];
+
+const trustItems = [
+  {
+    icon: Home,
+    title: 'Empresa local',
+    text: 'Atención cercana desde Lakuntza para Sakana, Navarra y zonas próximas.',
+  },
+  {
+    icon: Phone,
+    title: 'Trato directo',
+    text: 'Hablas con una persona cercana, sin centralitas ni procesos impersonales.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Trabajo claro',
+    text: 'Se revisa la necesidad, se explica la solución y se ejecuta con orden.',
+  },
+  {
+    icon: Leaf,
+    title: 'Energía y contratación',
+    text: 'Revisión de facturas de luz y gas sin compromiso y con explicación sencilla.',
   },
 ];
 
@@ -59,6 +85,9 @@ export default function HomePage() {
                 <a href="#contacto" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
                   Solicitar presupuesto <ArrowRight className="ml-2" size={18} />
                 </a>
+                <a href={whatsappHref} className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
+                  Escribir por WhatsApp
+                </a>
                 <a href="#energia" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
                   Comparar factura gratis
                 </a>
@@ -87,6 +116,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
         <section id="servicios" className="bg-lakuntza-mist py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
@@ -110,6 +140,31 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <section className="bg-white py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-7">
+                <Badge>Confianza local</Badge>
+                <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Cercanía, oficio y explicación clara.</h2>
+              </div>
+              <p className="text-base leading-8 text-neutral-600 lg:col-span-5">Una instalación eléctrica o una contratación energética debe entenderse bien antes de tomar decisiones. Por eso el trato es directo y el proceso se explica desde el principio.</p>
+            </div>
+            <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {trustItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <article key={item.title} className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card">
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F3FAEF] text-lakuntza-greenDark"><Icon size={23} /></div>
+                    <h3 className="text-lg font-black tracking-[-.03em]">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-neutral-600">{item.text}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         <section id="energia" className="bg-white py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
             <div className="lg:col-span-6">
@@ -117,13 +172,14 @@ export default function HomePage() {
               <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Compara tu factura sin compromiso.</h2>
               <p className="mt-6 text-base leading-8 text-neutral-600">Como empresa delegada de Fenie Energía, revisamos tu factura de luz o gas, te explicamos qué estás pagando y valoramos contigo si existe una opción más adecuada para tu consumo.</p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><FileText className="mb-4 text-lakuntza-green" /><h3 className="font-black">Revisión de factura</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Consumo, potencia, condiciones y posibles mejoras.</p></div>
+                <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><FileText className="mb-4 text-lakuntza-green" /><h3 className="font-black">Revisión de factura</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Consumo, potencia contratada, condiciones y posibles mejoras.</p></div>
                 <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><MessageCircle className="mb-4 text-lakuntza-green" /><h3 className="font-black">Atención cercana</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Sin centralitas impersonales y sin obligación de contratar.</p></div>
               </div>
             </div>
             <div className="lg:col-span-6"><div className="rounded-[2rem] bg-neutral-950 p-2 shadow-2xl"><InvoiceWhatsAppForm /></div></div>
           </div>
         </section>
+
         <section id="proceso" className="bg-neutral-950 py-20 text-white sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
@@ -135,6 +191,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
         <section id="zona" className="bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 rounded-[2.2rem] border border-neutral-200 bg-lakuntza-mist p-7 shadow-card sm:p-10 lg:grid-cols-12 lg:items-center">
@@ -145,13 +202,15 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
         <section id="contacto" className="bg-lakuntza-mist py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
             <div className="lg:col-span-5">
               <Badge>Contacto</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Cuéntanos qué necesitas.</h2><p className="mt-6 text-base leading-8 text-neutral-600">Para averías, presupuestos o revisión de facturas, llama o escribe por WhatsApp.</p>
               <div className="mt-8 space-y-4">
-                <a href="tel:+34649853448" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm hover:border-lakuntza-green"><Phone className="text-lakuntza-green" /><div><p className="font-black">649 853 448</p><p className="text-sm text-neutral-500">Llamada o WhatsApp</p></div></a>
-                <a href="mailto:eleclakuntza@yahoo.es" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm hover:border-lakuntza-green"><Mail className="text-lakuntza-green" /><div><p className="font-black">eleclakuntza@yahoo.es</p><p className="text-sm text-neutral-500">Presupuestos y documentación</p></div></a>
+                <a href="tel:+34649853448" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Phone className="text-lakuntza-green" /><div><p className="font-black">649 853 448</p><p className="text-sm text-neutral-500">Llamada directa</p></div></a>
+                <a href={whatsappHref} className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MessageCircle className="text-lakuntza-green" /><div><p className="font-black">Escribir por WhatsApp</p><p className="text-sm text-neutral-500">Presupuestos, dudas y envío de facturas</p></div></a>
+                <a href="mailto:eleclakuntza@yahoo.es" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Mail className="text-lakuntza-green" /><div><p className="font-black">eleclakuntza@yahoo.es</p><p className="text-sm text-neutral-500">Presupuestos y documentación</p></div></a>
                 <div className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><Home className="text-lakuntza-green" /><div><p className="font-black">Lakuntza</p><p className="text-sm text-neutral-500">Navarra</p></div></div>
               </div>
             </div>
@@ -160,7 +219,7 @@ export default function HomePage() {
         </section>
       </main>
       <Footer />
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-white p-3 shadow-2xl md:hidden"><div className="grid grid-cols-2 gap-2"><a href="tel:+34649853448" className="rounded-2xl bg-neutral-950 px-4 py-3 text-center text-sm font-black text-white">Llamar</a><a href="#energia" className="rounded-2xl bg-lakuntza-green px-4 py-3 text-center text-sm font-black text-white">Enviar factura</a></div></div>
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-white p-3 shadow-2xl md:hidden"><div className="grid grid-cols-2 gap-2"><a href="tel:+34649853448" className="rounded-2xl bg-neutral-950 px-4 py-3 text-center text-sm font-black text-white">Llamar</a><a href={whatsappHref} className="rounded-2xl bg-lakuntza-green px-4 py-3 text-center text-sm font-black text-white">WhatsApp</a></div></div>
     </div>
   );
 }
