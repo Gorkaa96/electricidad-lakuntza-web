@@ -5,7 +5,9 @@ export default function Footer() {
     <footer className="bg-neutral-950 py-10 text-white/55">
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
         <div className="flex items-center gap-3">
-          <Image src="/logo-lakuntza.png" alt="Electricidad Lakuntza" width={44} height={48} className="rounded-[12px] object-contain" />
+          <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full">
+            <Image src="/logo-lakuntza.png" alt="Electricidad Lakuntza" width={44} height={44} className="h-full w-full rounded-full object-contain" />
+          </span>
           <div>
             <p className="text-sm font-black text-white">Electricidad Lakuntza · Elektrizitatea</p>
             <p className="text-xs">Instalaciones eléctricas · Telecomunicaciones · Asesoría energética</p>
