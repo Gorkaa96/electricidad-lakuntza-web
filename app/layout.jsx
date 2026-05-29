@@ -55,9 +55,14 @@ export const metadata = {
     'comparar factura luz gas',
   ],
   icons: {
-    icon: '/logo-lakuntza.png',
-    shortcut: '/logo-lakuntza.png',
-    apple: '/logo-lakuntza.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
     title: 'Electricidad Lakuntza | Elektrizitatea',
@@ -70,14 +75,14 @@ export const metadata = {
     images: [
       {
         url: '/logo-lakuntza.png',
-        width: 992,
-        height: 1075,
+        width: 1024,
+        height: 1024,
         alt: 'Electricidad Lakuntza',
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
     title: 'Electricidad Lakuntza | Elektrizitatea',
     description:
       'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco.',
