@@ -1,9 +1,10 @@
 import { ArrowRight, Camera, CheckCircle2 } from 'lucide-react';
 import Badge from './Badge';
 import ProjectCard from './ProjectCard';
-import { featuredProjects } from '@/lib/projects';
+import { getFeaturedProjects } from '@/lib/projects';
 
-export default function ProjectsSection() {
+export default async function ProjectsSection() {
+  const featuredProjects = await getFeaturedProjects();
   const hasProjects = featuredProjects.length > 0;
 
   return (
