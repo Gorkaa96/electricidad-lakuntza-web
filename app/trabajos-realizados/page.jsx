@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import ProjectCard from '@/components/ProjectCard';
 import { Camera, CheckCircle2 } from 'lucide-react';
-import { publishedProjects, projectCategories } from '@/lib/projects';
+import { getPublishedProjects, projectCategories } from '@/lib/projects';
 
 export const metadata = {
   title: 'Trabajos realizados',
@@ -11,7 +11,8 @@ export const metadata = {
     'Trabajos realizados por Electricidad Lakuntza: instalaciones eléctricas, telecomunicaciones, porteros, videoporteros, cuadros eléctricos y asesoría energética en Navarra y País Vasco.',
 };
 
-export default function TrabajosRealizadosPage() {
+export default async function TrabajosRealizadosPage() {
+  const publishedProjects = await getPublishedProjects();
   const hasProjects = publishedProjects.length > 0;
 
   return (
