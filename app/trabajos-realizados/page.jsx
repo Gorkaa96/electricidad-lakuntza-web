@@ -5,6 +5,8 @@ import ProjectCard from '@/components/ProjectCard';
 import { Camera, CheckCircle2 } from 'lucide-react';
 import { getPublishedProjects, projectCategories } from '@/lib/projects';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: 'Trabajos realizados',
   description:
