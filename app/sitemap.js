@@ -1,7 +1,7 @@
 const siteUrl = 'https://electricidad-lakuntza-web.vercel.app';
 
 export default function sitemap() {
-  const routes = ['', '/aviso-legal', '/privacidad', '/cookies'];
+  const routes = ['', '/trabajos-realizados', '/aviso-legal', '/privacidad', '/cookies'];
 
   return routes.map((route) => ({
     url: `${siteUrl}${route}`,
