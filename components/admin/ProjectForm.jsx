@@ -11,11 +11,11 @@ export default function ProjectForm({ project }) {
       <form action={action} className="grid gap-6 rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
         <div className="grid gap-5 lg:grid-cols-2">
           <label className="grid gap-2">
-            <span className="text-sm font-black">Título *</span>
+            <span className="text-sm font-black">Título del trabajo *</span>
             <input name="title" defaultValue={project?.title || ''} required className="rounded-2xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-lakuntza-green" />
           </label>
           <label className="grid gap-2">
-            <span className="text-sm font-black">Título corto</span>
+            <span className="text-sm font-black">Título corto para la tarjeta</span>
             <input name="short_title" defaultValue={project?.short_title || project?.shortTitle || ''} className="rounded-2xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-lakuntza-green" />
           </label>
         </div>
@@ -39,44 +39,44 @@ export default function ProjectForm({ project }) {
         </div>
 
         <label className="grid gap-2">
-          <span className="text-sm font-black">Slug URL</span>
-          <input name="slug" defaultValue={project?.slug || ''} placeholder="se genera desde el título si lo dejas vacío" className="rounded-2xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-lakuntza-green" />
+          <span className="text-sm font-black">URL del trabajo</span>
+          <input name="slug" defaultValue={project?.slug || ''} placeholder="se genera automáticamente desde el título si lo dejas vacío" className="rounded-2xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-lakuntza-green" />
         </label>
 
         <label className="grid gap-2">
-          <span className="text-sm font-black">Descripción corta *</span>
+          <span className="text-sm font-black">Resumen para tarjetas *</span>
           <textarea name="description" defaultValue={project?.description || ''} required rows={4} className="rounded-2xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-lakuntza-green" />
         </label>
 
         <label className="grid gap-2">
-          <span className="text-sm font-black">Descripción ampliada</span>
+          <span className="text-sm font-black">Detalle del trabajo</span>
           <textarea name="long_description" defaultValue={project?.long_description || project?.longDescription || ''} rows={6} className="rounded-2xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-lakuntza-green" />
         </label>
 
         <label className="grid gap-2">
           <span className="text-sm font-black">Añadir imágenes</span>
           <input name="images" type="file" accept="image/jpeg,image/png,image/webp" multiple className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-4 py-5 text-sm" />
-          <span className="text-xs font-bold text-neutral-500">JPG, PNG o WebP. Máximo 5 MB por imagen. La primera imagen del proyecto será portada si todavía no hay ninguna marcada.</span>
+          <span className="text-xs font-bold text-neutral-500">JPG, PNG o WebP. Máximo 5 MB por imagen. La portada aparece en las tarjetas y como imagen principal del trabajo.</span>
         </label>
 
         <div className="grid gap-3 rounded-2xl bg-neutral-50 p-4 sm:grid-cols-3">
-          <label className="flex items-center gap-3 text-sm font-black"><input name="published" type="checkbox" defaultChecked={project?.published || false} /> Publicado</label>
-          <label className="flex items-center gap-3 text-sm font-black"><input name="featured" type="checkbox" defaultChecked={project?.featured || false} /> Destacado home</label>
-          <label className="grid gap-1 text-sm font-black">Orden<input name="sort_order" type="number" defaultValue={project?.sort_order || project?.sortOrder || 100} className="rounded-xl border border-neutral-200 px-3 py-2 text-sm" /></label>
+          <label className="flex items-center gap-3 text-sm font-black"><input name="published" type="checkbox" defaultChecked={project?.published || false} /> Publicar en la web</label>
+          <label className="flex items-center gap-3 text-sm font-black"><input name="featured" type="checkbox" defaultChecked={project?.featured || false} /> Mostrar en la home</label>
+          <label className="grid gap-1 text-sm font-black">Orden de aparición<input name="sort_order" type="number" defaultValue={project?.sort_order || project?.sortOrder || 100} className="rounded-xl border border-neutral-200 px-3 py-2 text-sm" /></label>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <button type="submit" className="rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
-            {isEdit ? 'Guardar cambios' : 'Crear proyecto'}
+            {isEdit ? 'Guardar cambios' : 'Crear trabajo'}
           </button>
-          {isEdit ? <button formAction={deleteProject.bind(null, project.id)} className="rounded-2xl border border-red-200 px-6 py-4 text-sm font-black text-red-700 transition hover:bg-red-50">Eliminar proyecto completo</button> : null}
+          {isEdit ? <button formAction={deleteProject.bind(null, project.id)} className="rounded-2xl border border-red-200 px-6 py-4 text-sm font-black text-red-700 transition hover:bg-red-50">Eliminar trabajo completo</button> : null}
         </div>
       </form>
 
       {isEdit && images.length > 0 ? (
         <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
           <div className="mb-6">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Imágenes del proyecto</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Imágenes del trabajo</p>
             <h2 className="mt-2 text-2xl font-black tracking-[-0.04em] text-neutral-950">Portada y galería</h2>
             <p className="mt-2 text-sm leading-6 text-neutral-500">La imagen marcada como portada aparece en las tarjetas de la home, en el listado y como imagen principal del detalle.</p>
           </div>
