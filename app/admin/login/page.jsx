@@ -4,7 +4,7 @@ import LoginForm from './LoginForm';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 export const metadata = {
-  title: 'Acceso admin',
+  title: 'Acceso al panel',
   robots: { index: false, follow: false },
 };
 
@@ -28,16 +28,16 @@ export default async function AdminLoginPage() {
                 Gestión de trabajos realizados.
               </h1>
               <p className="mt-6 text-base leading-8 text-white/65">
-                Acceso reservado para gestionar proyectos, textos e imágenes que se publican en la web de Electricidad Lakuntza.
+                Acceso reservado para actualizar los trabajos que se muestran en la web de Electricidad Lakuntza.
               </p>
             </div>
           </section>
 
           <section className="p-8 sm:p-10 lg:p-12">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Acceso</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Acceso seguro</p>
             <h2 className="mt-4 text-3xl font-black tracking-[-0.05em] text-neutral-950">Entrar al panel</h2>
             <p className="mt-3 text-sm leading-6 text-neutral-600">
-              Usa el usuario autorizado en Supabase. No hay registro público para mantener el panel seguro.
+              Introduce el correo y la contraseña autorizados para gestionar el contenido de la web.
             </p>
             <LoginForm />
           </section>
