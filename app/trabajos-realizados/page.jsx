@@ -28,7 +28,7 @@ export default async function TrabajosRealizadosPage() {
               Instalaciones y trabajos para clientes reales.
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70">
-              Selección de trabajos de electricidad, telecomunicaciones y energía realizados por Electricidad Lakuntza en Navarra y País Vasco.
+              Referencias de electricidad, telecomunicaciones y energía realizadas por Electricidad Lakuntza en Navarra y País Vasco.
             </p>
           </div>
         </section>
@@ -49,10 +49,10 @@ export default async function TrabajosRealizadosPage() {
                       <Camera size={28} />
                     </div>
                     <h2 className="text-4xl font-black leading-[.95] tracking-[-.055em] text-neutral-950 sm:text-5xl">
-                      Galería en preparación.
+                      Referencias disponibles bajo consulta.
                     </h2>
                     <p className="mt-5 text-base leading-8 text-neutral-600">
-                      Esta página está preparada para mostrar trabajos reales con imágenes propias. En cuanto se añadan los primeros proyectos desde el sistema de gestión, aparecerán aquí de forma ordenada.
+                      Publicamos trabajos únicamente cuando contamos con imágenes propias y autorización. Para consultar referencias de un servicio concreto, puedes contactar por teléfono o WhatsApp.
                     </p>
                   </div>
                   <div className="grid gap-3 lg:col-span-5">
