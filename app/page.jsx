@@ -191,10 +191,10 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
               <div className="lg:col-span-7"><Badge dark>Proceso</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Trabajo claro de principio a fin.</h2></div>
-              <p className="text-base leading-8 text-white/65 lg:col-span-5">Un trato directo ayuda a evitar dudas: sabes con quién hablas, qué se va a revisar y cuál es el siguiente paso.</p>
+              <p className="text-base leading-8 text-white/70 lg:col-span-5">Un trato directo ayuda a evitar dudas: sabes con quién hablas, qué se va a revisar y cuál es el siguiente paso.</p>
             </div>
             <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {steps.map(([num, title, text]) => <div key={num} className="rounded-[2rem] border border-white/10 bg-white/[.045] p-6"><p className="text-sm font-black text-lakuntza-green">{num}</p><h3 className="mt-5 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm leading-6 text-white/58">{text}</p></div>)}
+              {steps.map(([num, title, text]) => <div key={num} className="rounded-[2rem] border border-white/10 bg-white/[.05] p-6"><p className="text-sm font-black text-lakuntza-green">{num}</p><h3 className="mt-5 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm leading-6 text-white/60">{text}</p></div>)}
             </div>
           </div>
         </section>
