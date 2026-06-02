@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
   title: 'Política de privacidad',
@@ -69,14 +70,16 @@ const sections = [
 
 export default function PrivacidadPage() {
   return (
-    <div className="min-h-screen bg-white text-neutral-950">
+    <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="bg-neutral-950 pt-32 text-white">
-          <div className="mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8">
+        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
+          <div className="hero-grid absolute inset-0 opacity-30" />
+          <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
+          <div className="relative mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-lakuntza-green">Protección de datos</p>
             <h1 className="mt-5 text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-6xl">Política de privacidad</h1>
-            <p className="mt-6 text-base leading-8 text-white/65">Información sobre cómo tratamos los datos recibidos a través de la web, teléfono, email o WhatsApp.</p>
+            <p className="mt-6 text-base leading-8 text-white/70">Información sobre cómo tratamos los datos recibidos a través de la web, teléfono, email o WhatsApp.</p>
           </div>
         </section>
 
@@ -94,13 +97,14 @@ export default function PrivacidadPage() {
                 ))}
               </div>
               <p className="mt-10 rounded-2xl bg-neutral-50 p-4 text-xs leading-6 text-neutral-500">
-                Última actualización: junio de 2026. Esta política deberá revisarse si se incorporan formularios con almacenamiento propio, analítica avanzada, automatización de facturas o nuevos proveedores tecnológicos.
+                Última actualización: junio de 2026.
               </p>
             </div>
           </div>
         </section>
       </main>
       <Footer />
+      <MobileContactBar />
     </div>
   );
 }
