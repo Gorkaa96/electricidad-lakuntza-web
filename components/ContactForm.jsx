@@ -33,6 +33,10 @@ export default function ContactForm() {
 
       <textarea name="message" required rows={5} className="focus-ring mt-4 w-full rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3.5 text-sm outline-none focus:border-lakuntza-green" placeholder="Describe brevemente qué necesitas, ubicación aproximada y urgencia." />
 
+      <p className="mt-4 rounded-2xl bg-neutral-50 p-4 text-xs leading-5 text-neutral-500">
+        Al preparar el email aceptas que Electricidad Lakuntza trate los datos indicados para responder a tu solicitud. Puedes consultar más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
+      </p>
+
       <button className="mt-4 rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
         Preparar email
       </button>
