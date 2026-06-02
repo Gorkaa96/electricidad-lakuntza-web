@@ -14,11 +14,11 @@ export default async function ProjectsSection() {
           <div className="lg:col-span-7">
             <Badge>Trabajos realizados</Badge>
             <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">
-              Una selección de trabajos para ver cómo trabajamos.
+              Instalaciones terminadas con criterio técnico y acabado limpio.
             </h2>
           </div>
           <p className="text-base leading-8 text-neutral-600 lg:col-span-5">
-            Esta sección estará destinada a mostrar instalaciones, reformas, telecomunicaciones y trabajos energéticos realizados por Electricidad Lakuntza, con imágenes reales y descripción clara.
+            Mostramos una selección de trabajos cuando contamos con imágenes propias y autorización para publicarlas. La prioridad es enseñar referencias reales, útiles y bien documentadas.
           </p>
         </div>
 
@@ -43,10 +43,10 @@ export default async function ProjectsSection() {
                   <Camera size={28} />
                 </div>
                 <h3 className="text-3xl font-black tracking-[-.05em] text-neutral-950">
-                  Próximamente, trabajos realizados con imágenes reales.
+                  Referencias de trabajos bajo solicitud.
                 </h3>
                 <p className="mt-4 text-base leading-8 text-neutral-600">
-                  La galería se publicará con fotos propias de trabajos terminados. Preferimos no usar imágenes genéricas: el objetivo es enseñar trabajos reales, bien presentados y con contexto útil para el cliente.
+                  Para mantener la privacidad de los clientes, solo publicamos trabajos con imágenes propias y autorización. Si necesitas ver referencias de un servicio concreto, podemos orientarte por teléfono o WhatsApp.
                 </p>
               </div>
               <div className="grid gap-3 lg:col-span-5">
