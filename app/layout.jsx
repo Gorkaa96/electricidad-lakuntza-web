@@ -1,28 +1,26 @@
 import './globals.css';
-
-const siteUrl = 'https://electricidad-lakuntza-web.vercel.app';
+import { siteConfig, siteUrl } from '@/lib/site';
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'Electrician',
-  name: 'Electricidad Lakuntza',
-  alternateName: 'Elektrizitatea',
+  name: siteConfig.name,
+  alternateName: siteConfig.alternateName,
   url: siteUrl,
   image: `${siteUrl}/logo-lakuntza.png`,
   logo: `${siteUrl}/logo-lakuntza.png`,
-  telephone: '+34 649 853 448',
-  email: 'eleclakuntza@yahoo.es',
+  telephone: siteConfig.phoneInternational,
+  email: siteConfig.email,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Uriz Kalea, 27',
-    postalCode: '31830',
-    addressLocality: 'Lakuntza',
-    addressRegion: 'Nafarroa',
-    addressCountry: 'ES',
+    streetAddress: siteConfig.address.street,
+    postalCode: siteConfig.address.postalCode,
+    addressLocality: siteConfig.address.locality,
+    addressRegion: siteConfig.address.region,
+    addressCountry: siteConfig.address.country,
   },
-  areaServed: ['Lakuntza', 'Sakana', 'Navarra', 'Nafarroa', 'País Vasco', 'Euskadi'],
-  description:
-    'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco. Empresa delegada de Fenie Energía para contratación de luz y gas.',
+  areaServed: siteConfig.areaServed,
+  description: siteConfig.description,
   makesOffer: [
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Instalaciones eléctricas' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Telecomunicaciones' } },
@@ -37,8 +35,7 @@ export const metadata = {
     default: 'Electricidad Lakuntza | Elektrizitatea',
     template: '%s | Electricidad Lakuntza',
   },
-  description:
-    'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco. Empresa delegada de Fenie Energía para contratación de luz y gas.',
+  description: siteConfig.description,
   alternates: {
     canonical: '/',
   },
@@ -69,7 +66,7 @@ export const metadata = {
     description:
       'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco.',
     url: siteUrl,
-    siteName: 'Electricidad Lakuntza',
+    siteName: siteConfig.name,
     type: 'website',
     locale: 'es_ES',
     images: [
@@ -77,7 +74,7 @@ export const metadata = {
         url: '/logo-lakuntza.png',
         width: 1024,
         height: 1024,
-        alt: 'Electricidad Lakuntza',
+        alt: siteConfig.name,
       },
     ],
   },
