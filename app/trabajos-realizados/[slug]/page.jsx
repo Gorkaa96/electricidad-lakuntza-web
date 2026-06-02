@@ -36,13 +36,20 @@ export default async function ProjectDetailPage({ params }) {
     <div className="min-h-screen bg-white text-neutral-950">
       <Header />
       <main>
-        <section className="bg-neutral-950 pt-32 text-white">
-          <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-            <a href="/trabajos-realizados" className="mb-8 inline-flex items-center text-sm font-black text-white/65 transition hover:text-white">
-              <ArrowLeft className="mr-2" size={18} /> Volver a trabajos realizados
-            </a>
-            <Badge dark>{project.category}</Badge>
-            <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
+        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
+          <div className="hero-grid absolute inset-0 opacity-30" />
+          <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
+          <div className="relative mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+            <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <a href="/trabajos-realizados" className="inline-flex w-fit items-center rounded-full border border-white/10 bg-white/[.06] px-4 py-2.5 text-sm font-black text-white/70 transition hover:border-lakuntza-green/40 hover:bg-white/[.09] hover:text-white">
+                <ArrowLeft className="mr-2" size={17} /> Trabajos realizados
+              </a>
+              <span className="inline-flex w-fit rounded-full border border-lakuntza-green/30 bg-lakuntza-green/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-lakuntza-green">
+                {project.category}
+              </span>
+            </div>
+
+            <h1 className="max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
               {project.title}
             </h1>
             <p className="mt-7 max-w-3xl text-lg leading-8 text-white/70">{project.description}</p>
