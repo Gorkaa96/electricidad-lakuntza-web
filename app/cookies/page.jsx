@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
   title: 'Política de cookies',
@@ -44,14 +45,16 @@ const sections = [
 
 export default function CookiesPage() {
   return (
-    <div className="min-h-screen bg-white text-neutral-950">
+    <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="bg-neutral-950 pt-32 text-white">
-          <div className="mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8">
+        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
+          <div className="hero-grid absolute inset-0 opacity-30" />
+          <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
+          <div className="relative mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-lakuntza-green">Información de cookies</p>
             <h1 className="mt-5 text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-6xl">Política de cookies</h1>
-            <p className="mt-6 text-base leading-8 text-white/65">Información sobre el uso actual de cookies y tecnologías similares en la web.</p>
+            <p className="mt-6 text-base leading-8 text-white/70">Información sobre el uso actual de cookies y tecnologías similares en la web.</p>
           </div>
         </section>
 
@@ -69,13 +72,14 @@ export default function CookiesPage() {
                 ))}
               </div>
               <p className="mt-10 rounded-2xl bg-neutral-50 p-4 text-xs leading-6 text-neutral-500">
-                Última actualización: junio de 2026. Esta política deberá actualizarse si se incorporan cookies no técnicas o herramientas externas que requieran consentimiento.
+                Última actualización: junio de 2026.
               </p>
             </div>
           </div>
         </section>
       </main>
       <Footer />
+      <MobileContactBar />
     </div>
   );
 }
