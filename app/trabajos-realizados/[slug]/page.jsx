@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, MapPin, Tag } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
+import MobileContactBar from '@/components/MobileContactBar';
 import { getProjectBySlug } from '@/lib/projects';
 
 export const revalidate = 60;
@@ -33,7 +34,7 @@ export default async function ProjectDetailPage({ params }) {
   const galleryImages = project.images || [];
 
   return (
-    <div className="min-h-screen bg-white text-neutral-950">
+    <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
@@ -41,7 +42,7 @@ export default async function ProjectDetailPage({ params }) {
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
           <div className="relative mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
             <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <a href="/trabajos-realizados" className="inline-flex w-fit items-center rounded-full border border-white/10 bg-white/[.06] px-4 py-2.5 text-sm font-black text-white/70 transition hover:border-lakuntza-green/40 hover:bg-white/[.09] hover:text-white">
+              <a href="/trabajos-realizados" className="inline-flex w-fit items-center rounded-full border border-white/10 bg-white/[.07] px-4 py-2.5 text-sm font-black text-white/75 transition hover:border-lakuntza-green/40 hover:bg-white/10 hover:text-white">
                 <ArrowLeft className="mr-2" size={17} /> Trabajos realizados
               </a>
               <span className="inline-flex w-fit rounded-full border border-lakuntza-green/30 bg-lakuntza-green/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-lakuntza-green">
@@ -52,8 +53,8 @@ export default async function ProjectDetailPage({ params }) {
             <h1 className="max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
               {project.title}
             </h1>
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-white/70">{project.description}</p>
-            <div className="mt-8 flex flex-wrap gap-3 text-sm font-black text-white/75">
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">{project.description}</p>
+            <div className="mt-8 flex flex-wrap gap-3 text-sm font-black text-white/80">
               {project.location ? <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2"><MapPin size={16} />{project.location}</span> : null}
               {project.year ? <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2"><Calendar size={16} />{project.year}</span> : null}
               <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2"><Tag size={16} />{project.category}</span>
@@ -72,7 +73,7 @@ export default async function ProjectDetailPage({ params }) {
             <div className="mt-10 grid gap-8 lg:grid-cols-12">
               <article className="rounded-[2rem] border border-neutral-200 bg-white p-7 shadow-card sm:p-10 lg:col-span-7">
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Detalle del trabajo</p>
-                <div className="mt-5 space-y-5 text-base leading-8 text-neutral-650">
+                <div className="mt-5 space-y-5 text-base leading-8 text-neutral-700">
                   {(project.longDescription || project.description)
                     .split('\n')
                     .filter(Boolean)
@@ -109,6 +110,7 @@ export default async function ProjectDetailPage({ params }) {
         </section>
       </main>
       <Footer />
+      <MobileContactBar />
     </div>
   );
 }
