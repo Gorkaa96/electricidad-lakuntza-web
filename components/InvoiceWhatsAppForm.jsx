@@ -13,25 +13,25 @@ export default function InvoiceWhatsAppForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-[1.6rem] border border-white/10 bg-white/[.04] p-6 text-white sm:p-8">
+    <form onSubmit={handleSubmit} className="rounded-[1.6rem] border border-white/10 bg-white/[.04] p-5 text-white sm:p-8">
       <p className="text-xs font-black uppercase tracking-[.22em] text-lakuntza-green">Estudio gratuito</p>
-      <h3 className="mt-3 text-3xl font-black tracking-[-.05em]">Enviar factura por WhatsApp</h3>
+      <h3 className="mt-3 text-2xl font-black tracking-[-.05em] sm:text-3xl">Enviar factura por WhatsApp</h3>
       <p className="mt-3 text-sm leading-6 text-white/65">
         Rellena los datos y se abrirá WhatsApp con el mensaje preparado. Después adjuntas la foto o PDF de tu factura.
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <input name="name" required className="focus-ring rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-sm outline-none placeholder:text-white/35 focus:border-lakuntza-green" placeholder="Nombre" />
-        <input name="phone" required className="focus-ring rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-sm outline-none placeholder:text-white/35 focus:border-lakuntza-green" placeholder="Teléfono" />
+      <div className="mt-7 grid gap-4 sm:mt-8 sm:grid-cols-2">
+        <input name="name" required autoComplete="name" className="focus-ring min-h-12 rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-base outline-none placeholder:text-white/35 focus:border-lakuntza-green sm:text-sm" placeholder="Nombre" />
+        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" className="focus-ring min-h-12 rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-base outline-none placeholder:text-white/35 focus:border-lakuntza-green sm:text-sm" placeholder="Teléfono" />
       </div>
 
-      <select name="supply" className="focus-ring mt-4 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-sm outline-none focus:border-lakuntza-green">
+      <select name="supply" className="focus-ring mt-4 min-h-12 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
         <option className="text-neutral-950">Luz</option>
         <option className="text-neutral-950">Gas</option>
         <option className="text-neutral-950">Luz y gas</option>
       </select>
 
-      <textarea name="notes" rows={4} className="focus-ring mt-4 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-sm outline-none placeholder:text-white/35 focus:border-lakuntza-green" placeholder="Comentario opcional" />
+      <textarea name="notes" rows={4} className="focus-ring mt-4 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-base outline-none placeholder:text-white/35 focus:border-lakuntza-green sm:text-sm" placeholder="Comentario opcional" />
 
       <p className="mt-4 rounded-2xl border border-white/10 bg-white/[.06] p-4 text-xs leading-5 text-white/50">
         La solicitud se enviará por WhatsApp. Electricidad Lakuntza usará tus datos para revisar la factura y responder a tu consulta. Más información en la <a href="/privacidad" className="font-black text-lakuntza-green underline">política de privacidad</a>.
