@@ -1,11 +1,14 @@
-const siteUrl = 'https://electricidad-lakuntza-web.vercel.app';
+import { siteUrl } from '@/lib/site';
 
 export default function robots() {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin/'],
+      },
+    ],
     sitemap: `${siteUrl}/sitemap.xml`,
   };
 }
