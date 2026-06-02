@@ -187,7 +187,7 @@ export async function createProject(formData) {
   }
 
   await revalidateProjectPaths(supabase, project.id, project.slug);
-  redirect('/admin/proyectos');
+  redirect('/admin/proyectos?success=created');
 }
 
 export async function updateProject(projectId, formData) {
@@ -232,7 +232,7 @@ export async function updateProject(projectId, formData) {
   if (currentProject?.slug && currentProject.slug !== project.slug) {
     revalidatePath(`/trabajos-realizados/${currentProject.slug}`);
   }
-  redirect('/admin/proyectos');
+  redirect('/admin/proyectos?success=updated');
 }
 
 export async function setProjectCover(projectId, imageId) {
@@ -251,7 +251,7 @@ export async function setProjectCover(projectId, imageId) {
   await supabase.from('project_images').update({ is_cover: true }).eq('id', imageId);
 
   await revalidateProjectPaths(supabase, projectId);
-  redirect(`/admin/proyectos/${projectId}`);
+  redirect(`/admin/proyectos/${projectId}?success=cover`);
 }
 
 export async function deleteProjectImage(projectId, imageId) {
@@ -278,7 +278,7 @@ export async function deleteProjectImage(projectId, imageId) {
   }
 
   await revalidateProjectPaths(supabase, projectId);
-  redirect(`/admin/proyectos/${projectId}`);
+  redirect(`/admin/proyectos/${projectId}?success=image-deleted`);
 }
 
 export async function deleteProject(projectId) {
@@ -302,7 +302,7 @@ export async function deleteProject(projectId) {
   await supabase.from('projects').delete().eq('id', projectId);
 
   await revalidateProjectPaths(supabase, projectId, project?.slug);
-  redirect('/admin/proyectos');
+  redirect('/admin/proyectos?success=deleted');
 }
 
 export async function signOutAdmin() {
