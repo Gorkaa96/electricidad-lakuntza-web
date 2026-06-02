@@ -7,6 +7,7 @@ import InvoiceWhatsAppForm from '@/components/InvoiceWhatsAppForm';
 import ContactForm from '@/components/ContactForm';
 import FrequentServices from '@/components/FrequentServices';
 import ProjectsSection from '@/components/ProjectsSection';
+import MobileContactBar from '@/components/MobileContactBar';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
@@ -65,7 +66,7 @@ const steps = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white text-neutral-950">
+    <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
         <section id="inicio" className="relative isolate overflow-hidden bg-[#101411] pt-20 text-white">
@@ -232,7 +233,7 @@ export default function HomePage() {
         </section>
       </main>
       <Footer />
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-white p-3 shadow-2xl md:hidden"><div className="grid grid-cols-2 gap-2"><a href="tel:+34649853448" className="rounded-2xl bg-neutral-950 px-4 py-3 text-center text-sm font-black text-white">Llamar</a><a href={whatsappHref} className="rounded-2xl bg-lakuntza-green px-4 py-3 text-center text-sm font-black text-white">WhatsApp</a></div></div>
+      <MobileContactBar />
     </div>
   );
 }
