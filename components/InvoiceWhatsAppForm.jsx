@@ -33,6 +33,10 @@ export default function InvoiceWhatsAppForm() {
 
       <textarea name="notes" rows={4} className="focus-ring mt-4 w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3.5 text-sm outline-none placeholder:text-white/35 focus:border-lakuntza-green" placeholder="Comentario opcional" />
 
+      <p className="mt-4 rounded-2xl border border-white/10 bg-white/[.06] p-4 text-xs leading-5 text-white/50">
+        La solicitud se enviará por WhatsApp. Electricidad Lakuntza usará tus datos para revisar la factura y responder a tu consulta. Más información en la <a href="/privacidad" className="font-black text-lakuntza-green underline">política de privacidad</a>.
+      </p>
+
       <button className="mt-4 w-full rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
         Preparar WhatsApp
       </button>
