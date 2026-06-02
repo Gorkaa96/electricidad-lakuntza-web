@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import ProjectCard from '@/components/ProjectCard';
+import MobileContactBar from '@/components/MobileContactBar';
 import { Camera, CheckCircle2 } from 'lucide-react';
 import { getPublishedProjects, projectCategories } from '@/lib/projects';
 
@@ -18,16 +19,18 @@ export default async function TrabajosRealizadosPage() {
   const hasProjects = publishedProjects.length > 0;
 
   return (
-    <div className="min-h-screen bg-white text-neutral-950">
+    <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="bg-neutral-950 pt-32 text-white">
-          <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
+          <div className="hero-grid absolute inset-0 opacity-30" />
+          <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
+          <div className="relative mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
             <Badge dark>Trabajos realizados</Badge>
             <h1 className="mt-6 max-w-4xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
               Instalaciones y trabajos para clientes reales.
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70">
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75">
               Referencias de electricidad, telecomunicaciones y energía realizadas por Electricidad Lakuntza en Navarra y País Vasco.
             </p>
           </div>
@@ -70,6 +73,7 @@ export default async function TrabajosRealizadosPage() {
         </section>
       </main>
       <Footer />
+      <MobileContactBar />
     </div>
   );
 }
