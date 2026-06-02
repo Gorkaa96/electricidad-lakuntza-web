@@ -1,5 +1,6 @@
 import { createProject, updateProject, deleteProject, setProjectCover, deleteProjectImage } from '@/app/admin/actions';
 import { projectCategories } from '@/lib/projects';
+import ConfirmSubmitButton from './ConfirmSubmitButton';
 
 export default function ProjectForm({ project }) {
   const isEdit = Boolean(project?.id);
@@ -69,7 +70,15 @@ export default function ProjectForm({ project }) {
           <button type="submit" className="rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
             {isEdit ? 'Guardar cambios' : 'Crear trabajo'}
           </button>
-          {isEdit ? <button formAction={deleteProject.bind(null, project.id)} className="rounded-2xl border border-red-200 px-6 py-4 text-sm font-black text-red-700 transition hover:bg-red-50">Eliminar trabajo completo</button> : null}
+          {isEdit ? (
+            <ConfirmSubmitButton
+              formAction={deleteProject.bind(null, project.id)}
+              message="Vas a eliminar el trabajo completo y todas sus imágenes. Esta acción no se puede deshacer. ¿Quieres continuar?"
+              className="rounded-2xl border border-red-200 px-6 py-4 text-sm font-black text-red-700 transition hover:bg-red-50"
+            >
+              Eliminar trabajo completo
+            </ConfirmSubmitButton>
+          ) : null}
         </div>
       </form>
 
@@ -102,7 +111,12 @@ export default function ProjectForm({ project }) {
                       ) : null}
                       {imageId ? (
                         <form action={deleteProjectImage.bind(null, project.id, imageId)}>
-                          <button className="w-full rounded-xl border border-red-200 px-4 py-2.5 text-xs font-black text-red-700 transition hover:bg-red-50">Eliminar imagen</button>
+                          <ConfirmSubmitButton
+                            message="Vas a eliminar esta imagen del trabajo. Esta acción no se puede deshacer. ¿Quieres continuar?"
+                            className="w-full rounded-xl border border-red-200 px-4 py-2.5 text-xs font-black text-red-700 transition hover:bg-red-50"
+                          >
+                            Eliminar imagen
+                          </ConfirmSubmitButton>
                         </form>
                       ) : null}
                     </div>
