@@ -85,7 +85,7 @@ export default function HomePage() {
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75 sm:text-xl">
                 Electricidad Lakuntza ofrece instalaciones eléctricas, telecomunicaciones y asesoría energética para viviendas, comunidades, comercios y pequeñas empresas en Navarra y País Vasco.
               </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="#contacto" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
                   Solicitar presupuesto <ArrowRight className="ml-2" size={18} />
                 </a>
