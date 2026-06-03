@@ -11,7 +11,7 @@ import MobileContactBar from '@/components/MobileContactBar';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
-const mapsHref = 'https://www.google.com/maps/search/?api=1&query=Uriz%20Kalea%2027%2031830%20Lakuntza%20Nafarroa';
+const mapsHref = 'https://www.google.com/maps/search/?api=1&query=Uriz%20Kalea%2027%2031830%20Lakuntza%20Navarra';
 
 const services = [
   {
@@ -73,13 +73,13 @@ export default function HomePage() {
           <div className="hero-grid absolute inset-0 opacity-50" />
           <div className="absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-lakuntza-green/25 blur-3xl" />
           <div className="absolute -left-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-white/10 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-12 lg:px-8 lg:py-24">
-            <div className="lg:col-span-7">
+          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 xl:grid-cols-12 xl:px-8 xl:py-24">
+            <div className="xl:col-span-7">
               <div className="flex flex-wrap gap-3">
                 <Badge dark><MapPin size={14} /> Lakuntza · Navarra · País Vasco</Badge>
                 <Badge dark><ShieldCheck size={14} /> Empresa delegada de Fenie Energía</Badge>
               </div>
-              <h1 className="mt-7 max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.06em] sm:text-7xl lg:text-[5.6rem]">
+              <h1 className="mt-7 max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.06em] sm:text-7xl xl:text-[5.6rem]">
                 Instalaciones eléctricas y energía con trato directo.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75 sm:text-xl">
@@ -102,8 +102,8 @@ export default function HomePage() {
                 <div className="rounded-3xl border border-white/10 bg-white/[.07] p-5"><p className="text-3xl font-black">1:1</p><p className="mt-1 text-xs font-black uppercase tracking-[.16em] text-white/50">Atención directa</p></div>
               </div>
             </div>
-            <div className="lg:col-span-5">
-              <div className="rounded-[2rem] border border-white/10 bg-white/[.08] p-3 shadow-2xl backdrop-blur">
+            <div className="xl:col-span-5">
+              <div className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/[.08] p-3 shadow-2xl backdrop-blur xl:max-w-none">
                 <div className="rounded-[1.55rem] bg-white p-7 text-neutral-950 sm:p-8">
                   <Logo />
                   <div className="my-9 border-y border-neutral-200 py-8">
@@ -173,8 +173,8 @@ export default function HomePage() {
         </section>
 
         <section id="energia" className="bg-white py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
-            <div className="lg:col-span-6">
+          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 xl:grid-cols-12 xl:items-center xl:px-8">
+            <div className="xl:col-span-6">
               <Badge><Leaf size={14} /> Luz y gas</Badge>
               <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Compara tu factura sin compromiso.</h2>
               <p className="mt-6 text-base leading-8 text-neutral-600">Como empresa delegada de Fenie Energía, revisamos tu factura de luz o gas, te explicamos qué estás pagando y valoramos contigo si existe una opción más adecuada para tu consumo.</p>
@@ -183,7 +183,7 @@ export default function HomePage() {
                 <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><MessageCircle className="mb-4 text-lakuntza-green" /><h3 className="font-black">Atención cercana</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Sin centralitas impersonales y sin obligación de contratar.</p></div>
               </div>
             </div>
-            <div className="lg:col-span-6"><div className="rounded-[2rem] bg-neutral-950 p-2 shadow-2xl"><InvoiceWhatsAppForm /></div></div>
+            <div className="xl:col-span-6"><div className="mx-auto max-w-2xl rounded-[2rem] bg-neutral-950 p-2 shadow-2xl xl:max-w-none"><InvoiceWhatsAppForm /></div></div>
           </div>
         </section>
 
@@ -201,16 +201,16 @@ export default function HomePage() {
 
         <section id="zona" className="bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 rounded-[2.2rem] border border-neutral-200 bg-lakuntza-mist p-7 shadow-card sm:p-10 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-7">
+            <div className="grid gap-10 rounded-[2.2rem] border border-neutral-200 bg-lakuntza-mist p-7 shadow-card sm:p-10 xl:grid-cols-12 xl:items-center">
+              <div className="xl:col-span-7">
                 <Badge><MapPin size={14} /> Zona de servicio</Badge>
                 <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">Servicio en Navarra y País Vasco desde Lakuntza.</h2>
-                <p className="mt-5 text-base leading-8 text-neutral-600">La empresa está ubicada en Uriz Kalea, 27, 31830 Lakuntza, Nafarroa. Desde Lakuntza se atienden trabajos en Navarra y País Vasco, valorando en cada solicitud el tipo de trabajo, disponibilidad y desplazamiento.</p>
+                <p className="mt-5 text-base leading-8 text-neutral-600">La empresa está ubicada en Uriz Kalea, 27, 31830 Lakuntza, Navarra. Desde Lakuntza se atienden trabajos en Navarra y País Vasco, valorando en cada solicitud el tipo de trabajo, disponibilidad y desplazamiento.</p>
                 <a href={mapsHref} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
                   Ver ubicación en Google Maps
                 </a>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2 lg:col-span-5">
+              <div className="grid gap-3 sm:grid-cols-2 xl:col-span-5">
                 {['Navarra', 'País Vasco', 'Particulares y comunidades', 'Comercios y pequeños negocios'].map((item) => <div key={item} className="rounded-3xl bg-white p-5 shadow-sm"><p className="font-black">{item}</p><p className="mt-2 text-sm leading-6 text-neutral-500">{item === 'Navarra' || item === 'País Vasco' ? 'Zona de servicio actual.' : 'Instalación, revisión y mantenimiento.'}</p></div>)}
               </div>
             </div>
@@ -218,17 +218,17 @@ export default function HomePage() {
         </section>
 
         <section id="contacto" className="bg-lakuntza-mist py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
-            <div className="lg:col-span-5">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 xl:grid-cols-12 xl:px-8">
+            <div className="xl:col-span-5">
               <Badge>Contacto</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Cuéntanos qué necesitas.</h2><p className="mt-6 text-base leading-8 text-neutral-600">Para averías, presupuestos o revisión de facturas, llama o escribe por WhatsApp.</p>
-              <div className="mt-8 space-y-4">
+              <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
                 <a href="tel:+34649853448" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Phone className="text-lakuntza-green" /><div><p className="font-black">649 853 448</p><p className="text-sm text-neutral-500">Llamada directa</p></div></a>
                 <a href={whatsappHref} className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MessageCircle className="text-lakuntza-green" /><div><p className="font-black">Escribir por WhatsApp</p><p className="text-sm text-neutral-500">Presupuestos, dudas y envío de facturas</p></div></a>
                 <a href="mailto:eleclakuntza@yahoo.es" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Mail className="text-lakuntza-green" /><div><p className="font-black">eleclakuntza@yahoo.es</p><p className="text-sm text-neutral-500">Presupuestos y documentación</p></div></a>
-                <a href={mapsHref} target="_blank" rel="noreferrer" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MapPin className="text-lakuntza-green" /><div><p className="font-black">Uriz Kalea, 27</p><p className="text-sm text-neutral-500">31830 Lakuntza, Nafarroa</p></div></a>
+                <a href={mapsHref} target="_blank" rel="noreferrer" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MapPin className="text-lakuntza-green" /><div><p className="font-black">Uriz Kalea, 27</p><p className="text-sm text-neutral-500">31830 Lakuntza, Navarra</p></div></a>
               </div>
             </div>
-            <div className="lg:col-span-7"><ContactForm /></div>
+            <div className="xl:col-span-7"><ContactForm /></div>
           </div>
         </section>
       </main>
