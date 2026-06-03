@@ -62,7 +62,7 @@ export default function Footer() {
             <div className="mt-4 grid gap-3 text-sm text-white/70">
               <a href="tel:+34649853448" className="inline-flex items-start gap-2 transition hover:text-white"><Phone size={16} className="mt-0.5 shrink-0 text-lakuntza-green" />649 853 448</a>
               <a href="mailto:eleclakuntza@yahoo.es" className="inline-flex items-start gap-2 break-all transition hover:text-white"><Mail size={16} className="mt-0.5 shrink-0 text-lakuntza-green" />eleclakuntza@yahoo.es</a>
-              <span className="inline-flex items-start gap-2"><MapPin size={16} className="mt-0.5 shrink-0 text-lakuntza-green" />Uriz Kalea, 27 · 31830 Lakuntza</span>
+              <span className="inline-flex items-start gap-2"><MapPin size={16} className="mt-0.5 shrink-0 text-lakuntza-green" />Uriz Kalea, 27 · 31830 Lakuntza, Navarra</span>
             </div>
           </div>
 
