@@ -12,7 +12,7 @@ const sections = [
     title: 'Responsable del tratamiento',
     content: [
       'Responsable: Electricidad Lakuntza · Elektrizitatea.',
-      'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Nafarroa.',
+      'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Navarra.',
       'Email de contacto: eleclakuntza@yahoo.es.',
       'Teléfono: 649 853 448.',
     ],
