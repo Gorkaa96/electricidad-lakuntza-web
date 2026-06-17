@@ -38,3 +38,40 @@ export async function updateInvoiceLead(formData) {
   revalidatePath(`/admin/facturas/${id}`);
   redirect(`/admin/facturas/${id}?success=estado`);
 }
+
+export async function deleteInvoiceLead(formData) {
+  const { supabase } = await requireAdmin();
+
+  const id = String(formData.get('id') || '').trim();
+  const confirm = String(formData.get('confirmDelete') || '').trim().toUpperCase();
+
+  if (!id || confirm !== 'ELIMINAR') {
+    redirect(`/admin/facturas/${id || ''}?error=confirmacion`);
+  }
+
+  const { data: lead, error: readError } = await supabase
+    .from('invoice_review_leads')
+    .select('id, file_path')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (readError || !lead) {
+    redirect('/admin/facturas?error=datos');
+  }
+
+  if (lead.file_path) {
+    await supabase.storage.from('invoice-files').remove([lead.file_path]);
+  }
+
+  const { error } = await supabase
+    .from('invoice_review_leads')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    redirect(`/admin/facturas/${id}?error=eliminar`);
+  }
+
+  revalidatePath('/admin/facturas');
+  redirect('/admin/facturas?success=eliminada');
+}
