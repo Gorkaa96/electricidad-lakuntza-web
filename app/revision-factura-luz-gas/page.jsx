@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
+import InvoiceFileInput from '@/components/InvoiceFileInput';
 import { submitInvoiceReview } from './actions';
 
 export const metadata = {
@@ -100,103 +101,113 @@ export default function RevisionFacturaPage({ searchParams }) {
             </div>
 
             <div className="xl:col-span-7">
-              <form action={submitInvoiceReview} className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
-                <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3FAEF] text-lakuntza-greenDark">
-                    <ShieldCheck size={24} />
+              <form action={submitInvoiceReview} className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
+                <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3FAEF] text-lakuntza-greenDark">
+                      <ShieldCheck size={24} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Formulario seguro</p>
+                      <h3 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">Enviar factura para revisión</h3>
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">Rellena los datos mínimos para que podamos estudiar la factura y contactarte.</p>
+                    </div>
                   </div>
+
+                  {error ? (
+                    <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold leading-6 text-red-700">
+                      {errorMessages[error] || 'Ha ocurrido un error. Inténtalo de nuevo.'}
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="grid gap-6 p-6 sm:p-8">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Formulario seguro</p>
-                    <h3 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">Enviar factura para revisión</h3>
-                    <p className="mt-3 text-sm leading-6 text-neutral-600">Rellena los datos mínimos para que podamos estudiar la factura y contactarte.</p>
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">1. Datos de contacto</p>
+                    <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Nombre *
+                        <input name="name" required autoComplete="name" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                      </label>
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Teléfono *
+                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                      </label>
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Email
+                        <input name="email" type="email" autoComplete="email" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                      </label>
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Localidad
+                        <input name="locality" autoComplete="address-level2" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                      </label>
+                    </div>
                   </div>
-                </div>
 
-                {error ? (
-                  <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold leading-6 text-red-700">
-                    {errorMessages[error] || 'Ha ocurrido un error. Inténtalo de nuevo.'}
+                  <div className="border-t border-neutral-200 pt-6">
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">2. Datos del contrato</p>
+                    <div className="mt-4 grid gap-4 md:grid-cols-3">
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Suministro *
+                        <select name="supplyType" required defaultValue="luz" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+                          <option value="luz">Luz</option>
+                          <option value="gas">Gas</option>
+                          <option value="luz_gas">Luz y gas</option>
+                        </select>
+                      </label>
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Cliente *
+                        <select name="customerType" required defaultValue="vivienda" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+                          <option value="vivienda">Vivienda</option>
+                          <option value="negocio">Negocio</option>
+                          <option value="comunidad">Comunidad</option>
+                        </select>
+                      </label>
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Bono social / familia numerosa *
+                        <select name="bonusStatus" required defaultValue="no_lo_se" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+                          <option value="no">No</option>
+                          <option value="si">Sí</option>
+                          <option value="no_lo_se">No lo sé</option>
+                        </select>
+                      </label>
+                    </div>
                   </div>
-                ) : null}
 
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Nombre *
-                    <input name="name" required autoComplete="name" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
-                  </label>
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Teléfono *
-                    <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
-                  </label>
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Email
-                    <input name="email" type="email" autoComplete="email" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
-                  </label>
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Localidad
-                    <input name="locality" autoComplete="address-level2" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
-                  </label>
+                  <div className="border-t border-neutral-200 pt-6">
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">3. Factura y comentarios</p>
+                    <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                        Compañía actual
+                        <input name="currentCompany" placeholder="Iberdrola, Endesa, Naturgy..." className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                      </label>
+                      <InvoiceFileInput />
+                    </div>
+
+                    <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
+                      Comentario opcional
+                      <textarea name="notes" rows={4} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                    </label>
+                  </div>
+
+                  <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+                    <label className="flex gap-3 text-xs leading-5 text-neutral-600">
+                      <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-lakuntza-green" />
+                      <span>
+                        Acepto que Electricidad Lakuntza use mis datos y la factura enviada únicamente para revisar la consulta y contactarme. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
+                      </span>
+                    </label>
+                  </div>
+
+                  <button className="w-full rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                    Enviar factura para revisión gratuita
+                  </button>
+
+                  <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
+                    <Lock className="mt-0.5 shrink-0" size={14} />
+                    Formatos permitidos: PDF, JPG, PNG o WebP. Tamaño máximo: 10 MB.
+                  </p>
                 </div>
-
-                <div className="mt-4 grid gap-4 sm:grid-cols-3">
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Suministro *
-                    <select name="supplyType" required defaultValue="luz" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
-                      <option value="luz">Luz</option>
-                      <option value="gas">Gas</option>
-                      <option value="luz_gas">Luz y gas</option>
-                    </select>
-                  </label>
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Cliente *
-                    <select name="customerType" required defaultValue="vivienda" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
-                      <option value="vivienda">Vivienda</option>
-                      <option value="negocio">Negocio</option>
-                      <option value="comunidad">Comunidad</option>
-                    </select>
-                  </label>
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Bono social / familia numerosa *
-                    <select name="bonusStatus" required defaultValue="no_lo_se" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
-                      <option value="no">No</option>
-                      <option value="si">Sí</option>
-                      <option value="no_lo_se">No lo sé</option>
-                    </select>
-                  </label>
-                </div>
-
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Compañía actual
-                    <input name="currentCompany" placeholder="Iberdrola, Endesa, Naturgy..." className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
-                  </label>
-                  <label className="grid gap-2 text-sm font-black text-neutral-800">
-                    Factura PDF o imagen *
-                    <input name="invoice" required type="file" accept="application/pdf,image/jpeg,image/png,image/webp" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium file:mr-4 file:rounded-xl file:border-0 file:bg-neutral-950 file:px-4 file:py-2 file:text-sm file:font-black file:text-white focus:border-lakuntza-green" />
-                  </label>
-                </div>
-
-                <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
-                  Comentario opcional
-                  <textarea name="notes" rows={4} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
-                </label>
-
-                <div className="mt-5 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-                  <label className="flex gap-3 text-xs leading-5 text-neutral-600">
-                    <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-lakuntza-green" />
-                    <span>
-                      Acepto que Electricidad Lakuntza use mis datos y la factura enviada únicamente para revisar la consulta y contactarme. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
-                    </span>
-                  </label>
-                </div>
-
-                <button className="mt-5 w-full rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-                  Enviar factura para revisión gratuita
-                </button>
-
-                <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-neutral-500">
-                  <Lock className="mt-0.5 shrink-0" size={14} />
-                  Formatos permitidos: PDF, JPG, PNG o WebP. Tamaño máximo: 10 MB.
-                </p>
               </form>
             </div>
           </div>
