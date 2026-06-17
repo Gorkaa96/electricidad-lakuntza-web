@@ -4,12 +4,20 @@ const successMessages = {
   deleted: 'Trabajo eliminado correctamente.',
   cover: 'Portada actualizada correctamente.',
   'image-deleted': 'Imagen eliminada correctamente.',
+  estado: 'Estado actualizado correctamente.',
+  analisis: 'Análisis guardado correctamente.',
+  eliminada: 'Solicitud eliminada correctamente.',
 };
 
 const errorMessages = {
   missing: 'Faltan campos obligatorios. Revisa el título, la categoría y el resumen.',
   'image-not-found': 'No se ha encontrado la imagen indicada.',
   unauthorized: 'No tienes permisos para acceder al panel.',
+  datos: 'Faltan datos o la solicitud no existe.',
+  estado: 'No se ha podido actualizar el estado.',
+  analisis: 'No se ha podido guardar el análisis.',
+  eliminar: 'No se ha podido eliminar la solicitud.',
+  confirmacion: 'Para eliminar la solicitud tienes que escribir ELIMINAR.',
 };
 
 export default function AdminNotice({ success, error }) {
