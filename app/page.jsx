@@ -17,18 +17,21 @@ const services = [
   {
     icon: Zap,
     title: 'Instalaciones eléctricas',
+    href: '/servicios/instalaciones-electricas',
     text: 'Instalaciones, reformas, ampliaciones, cuadros eléctricos, puntos de luz, iluminación, averías y mantenimiento eléctrico.',
     items: ['Reformas eléctricas', 'Cuadros y protecciones', 'Averías, ampliaciones y puntos de luz'],
   },
   {
     icon: Wifi,
     title: 'Telecomunicaciones',
+    href: '/servicios/telecomunicaciones',
     text: 'Soluciones de conectividad para vivienda, comunidad, comercio y pequeño negocio, con instalación limpia y preparada para durar.',
     items: ['Redes de datos y cableado', 'Antenas y telecomunicaciones', 'Porteros y videoporteros'],
   },
   {
     icon: Leaf,
     title: 'Asesoría energética',
+    href: '/servicios/asesoria-energetica-luz-gas',
     text: 'Revisión de facturas, potencia contratada y alternativas de luz y gas con atención directa como empresa delegada de Fenie Energía.',
     items: ['Comparación gratuita de factura', 'Luz y gas', 'Acompañamiento en contratación'],
   },
@@ -89,8 +92,8 @@ export default function HomePage() {
                 <a href="#contacto" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
                   Solicitar presupuesto <ArrowRight className="ml-2" size={18} />
                 </a>
-                <a href={whatsappHref} className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
-                  Escribir por WhatsApp
+                <a href="/servicios" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
+                  Ver servicios
                 </a>
                 <a href="#energia" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
                   Comparar factura gratis
@@ -125,20 +128,28 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
               <div className="lg:col-span-7"><Badge>Servicios</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Lo que ofrecemos</h2></div>
-              <p className="text-base leading-8 text-neutral-600 lg:col-span-5">Atención para particulares, comunidades, comercios y pequeñas empresas, con un enfoque práctico: entender la necesidad, proponer una solución y ejecutar bien.</p>
+              <div className="lg:col-span-5">
+                <p className="text-base leading-8 text-neutral-600">Atención para particulares, comunidades, comercios y pequeñas empresas, con un enfoque práctico: entender la necesidad, proponer una solución y ejecutar bien.</p>
+                <a href="/servicios" className="mt-5 inline-flex items-center text-sm font-black text-lakuntza-greenDark transition hover:text-lakuntza-green">
+                  Ver página de servicios <ArrowRight className="ml-2" size={17} />
+                </a>
+              </div>
             </div>
             <div className="mt-14 grid gap-6 lg:grid-cols-3">
               {services.map((service) => {
                 const Icon = service.icon;
                 return (
-                  <article key={service.title} className="rounded-[2rem] border border-neutral-200 bg-white p-7 shadow-card transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-2xl">
+                  <a key={service.title} href={service.href} className="group rounded-[2rem] border border-neutral-200 bg-white p-7 shadow-card transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-2xl">
                     <div className="mb-7 flex h-16 w-16 items-center justify-center rounded-3xl bg-[#F3FAEF] text-lakuntza-greenDark"><Icon size={30} /></div>
                     <h3 className="text-2xl font-black tracking-[-.04em]">{service.title}</h3>
                     <p className="mt-4 text-sm leading-7 text-neutral-600">{service.text}</p>
                     <div className="mt-7 grid gap-3 text-sm font-bold text-neutral-700">
                       {service.items.map((item) => <div key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 shrink-0 text-lakuntza-green" size={17} /><span>{item}</span></div>)}
                     </div>
-                  </article>
+                    <span className="mt-7 inline-flex items-center text-sm font-black text-lakuntza-greenDark transition group-hover:text-lakuntza-green">
+                      Ver detalle <ArrowRight className="ml-2 transition group-hover:translate-x-1" size={17} />
+                    </span>
+                  </a>
                 );
               })}
             </div>
@@ -182,6 +193,9 @@ export default function HomePage() {
                 <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><FileText className="mb-4 text-lakuntza-green" /><h3 className="font-black">Revisión de factura</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Consumo, potencia contratada, condiciones y posibles mejoras.</p></div>
                 <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><MessageCircle className="mb-4 text-lakuntza-green" /><h3 className="font-black">Atención cercana</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Sin centralitas impersonales y sin obligación de contratar.</p></div>
               </div>
+              <a href="/servicios/asesoria-energetica-luz-gas" className="mt-7 inline-flex items-center text-sm font-black text-lakuntza-greenDark transition hover:text-lakuntza-green">
+                Ver servicio de luz y gas <ArrowRight className="ml-2" size={17} />
+              </a>
             </div>
             <div className="xl:col-span-6"><div className="mx-auto max-w-2xl rounded-[2rem] bg-neutral-950 p-2 shadow-2xl xl:max-w-none"><InvoiceWhatsAppForm /></div></div>
           </div>
@@ -206,9 +220,14 @@ export default function HomePage() {
                 <Badge><MapPin size={14} /> Zona de servicio</Badge>
                 <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">Servicio en Navarra y País Vasco desde Lakuntza.</h2>
                 <p className="mt-5 text-base leading-8 text-neutral-600">La empresa está ubicada en Uriz Kalea, 27, 31830 Lakuntza, Navarra. Desde Lakuntza se atienden trabajos en Navarra y País Vasco, valorando en cada solicitud el tipo de trabajo, disponibilidad y desplazamiento.</p>
-                <a href={mapsHref} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
-                  Ver ubicación en Google Maps
-                </a>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <a href="/zona-servicio" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                    Ver zona de servicio
+                  </a>
+                  <a href={mapsHref} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-neutral-300 bg-white px-5 py-3 text-sm font-black text-neutral-950 transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
+                    Ver ubicación en Google Maps
+                  </a>
+                </div>
               </div>
               <div className="grid gap-3 sm:grid-cols-2 xl:col-span-5">
                 {['Navarra', 'País Vasco', 'Particulares y comunidades', 'Comercios y pequeños negocios'].map((item) => <div key={item} className="rounded-3xl bg-white p-5 shadow-sm"><p className="font-black">{item}</p><p className="mt-2 text-sm leading-6 text-neutral-500">{item === 'Navarra' || item === 'País Vasco' ? 'Zona de servicio actual.' : 'Instalación, revisión y mantenimiento.'}</p></div>)}
