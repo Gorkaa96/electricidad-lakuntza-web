@@ -191,6 +191,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
               <a href={whatsappHref} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
                 WhatsApp cliente
               </a>
+              <a href={`/admin/facturas/${lead.id}/eliminar`} className="inline-flex w-full items-center justify-center rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">
+                Eliminar solicitud
+              </a>
             </div>
           </section>
         </aside>
