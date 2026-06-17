@@ -8,12 +8,12 @@ const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hace
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const navItems = [
-  ['Servicios', '#servicios'],
-  ['Trabajos', '#trabajos'],
-  ['Luz y gas', '#energia'],
-  ['Proceso', '#proceso'],
-  ['Zona', '#zona'],
-  ['Contacto', '#contacto'],
+  ['Servicios', '/servicios'],
+  ['Trabajos', '/#trabajos'],
+  ['Luz y gas', '/#energia'],
+  ['Proceso', '/#proceso'],
+  ['Zona', '/#zona'],
+  ['Contacto', '/#contacto'],
 ];
 
 export default function Header() {
@@ -26,15 +26,15 @@ export default function Header() {
           <Logo compact />
         </a>
 
-        <nav className="hidden items-center gap-7 text-sm font-black text-neutral-700 lg:flex" aria-label="Navegación principal">
+        <nav className="hidden items-center gap-7 text-sm font-black text-neutral-700 xl:flex" aria-label="Navegación principal">
           {navItems.map(([label, href]) => (
-            <a key={href} href={`/${href}`} className="rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark">
+            <a key={href} href={href} className="rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark">
               {label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <a href="tel:+34649853448" className="rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-black text-neutral-900 shadow-sm transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
             649 853 448
           </a>
@@ -46,7 +46,7 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-950 shadow-sm lg:hidden"
+          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-950 shadow-sm xl:hidden"
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={open}
         >
@@ -55,7 +55,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl lg:hidden">
+        <div className="border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl xl:hidden">
           <div className="mx-auto grid max-w-7xl gap-5">
             <div className="rounded-[1.6rem] border border-lakuntza-line bg-lakuntza-mist p-4">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Electricidad Lakuntza</p>
@@ -64,7 +64,7 @@ export default function Header() {
 
             <nav className="grid gap-1 text-sm font-black text-neutral-800" aria-label="Navegación móvil">
               {navItems.map(([label, href]) => (
-                <a key={href} href={`/${href}`} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 transition hover:bg-neutral-50">
+                <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 transition hover:bg-neutral-50">
                   {label}
                 </a>
               ))}
