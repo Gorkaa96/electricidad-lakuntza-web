@@ -8,12 +8,13 @@ export default function AdminShell({ children, title, description, action }) {
         <Logo compact />
         <nav className="mt-10 grid gap-2 text-sm font-black text-neutral-700">
           <a href="/admin/proyectos" className="rounded-2xl bg-neutral-950 px-4 py-3 text-white">Trabajos</a>
+          <a href="/admin/facturas" className="rounded-2xl px-4 py-3 hover:bg-neutral-50">Facturas</a>
           <a href="/admin/proyectos/nuevo" className="rounded-2xl px-4 py-3 hover:bg-neutral-50">Nuevo trabajo</a>
-          <a href="/trabajos-realizados" target="_blank" className="rounded-2xl px-4 py-3 hover:bg-neutral-50">Ver web pública</a>
+          <a href="/trabajos-realizados" className="rounded-2xl px-4 py-3 hover:bg-neutral-50">Ver web publica</a>
         </nav>
         <form action={signOutAdmin} className="absolute bottom-6 left-6 right-6">
           <button className="w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-black text-neutral-700 transition hover:border-lakuntza-green">
-            Cerrar sesión
+            Cerrar sesion
           </button>
         </form>
       </aside>
@@ -30,10 +31,11 @@ export default function AdminShell({ children, title, description, action }) {
               </button>
             </form>
           </div>
-          <nav className="mt-3 grid grid-cols-3 gap-2 text-center text-xs font-black text-neutral-700" aria-label="Navegación del panel">
+          <nav className="mt-3 grid grid-cols-4 gap-2 text-center text-xs font-black text-neutral-700" aria-label="Navegacion del panel">
             <a href="/admin/proyectos" className="rounded-2xl bg-neutral-950 px-3 py-3 text-white">Trabajos</a>
+            <a href="/admin/facturas" className="rounded-2xl border border-neutral-200 bg-white px-3 py-3">Facturas</a>
             <a href="/admin/proyectos/nuevo" className="rounded-2xl border border-neutral-200 bg-white px-3 py-3">Nuevo</a>
-            <a href="/trabajos-realizados" target="_blank" className="rounded-2xl border border-neutral-200 bg-white px-3 py-3">Web</a>
+            <a href="/trabajos-realizados" className="rounded-2xl border border-neutral-200 bg-white px-3 py-3">Web</a>
           </nav>
         </div>
 
