@@ -8,7 +8,7 @@ const mainLinks = [
   ['Servicios', '/servicios'],
   ['Trabajos realizados', '/trabajos-realizados'],
   ['Luz y gas', '/#energia'],
-  ['Zona de servicio', '/#zona'],
+  ['Zona de servicio', '/zona-servicio'],
   ['Contacto', '/#contacto'],
 ];
 
