@@ -26,6 +26,13 @@ const precheckLabels = {
   bonus_social_case: 'Bono social',
 };
 
+const analysisLabels = {
+  pending: 'Análisis pendiente',
+  viable: 'Viable',
+  review: 'Revisar',
+  not_viable: 'No viable',
+};
+
 const statusOptions = ['all', 'new', 'reviewing', 'contacted', 'converted', 'discarded'];
 const precheckOptions = ['all', 'potential_improvement', 'bonus_social_case', 'manual_review', 'pending'];
 
@@ -70,11 +77,18 @@ function precheckBadgeClass(precheck) {
   return 'bg-neutral-100 text-neutral-500';
 }
 
+function analysisBadgeClass(analysis) {
+  if (analysis === 'viable') return 'bg-[#F3FAEF] text-lakuntza-greenDark';
+  if (analysis === 'review') return 'bg-amber-50 text-amber-700';
+  if (analysis === 'not_viable') return 'bg-red-50 text-red-700';
+  return 'bg-neutral-100 text-neutral-500';
+}
+
 export default async function AdminInvoiceLeadsPage({ searchParams }) {
   const { supabase } = await requireAdmin();
   const { data: leads = [] } = await supabase
     .from('invoice_review_leads')
-    .select('id, created_at, name, phone, locality, supply_type, customer_type, bonus_status, status, precheck_result, contacted_at, converted_at')
+    .select('id, created_at, name, phone, locality, supply_type, customer_type, bonus_status, status, precheck_result, analysis_result, contacted_at, converted_at')
     .order('created_at', { ascending: false });
 
   const selectedStatus = statusOptions.includes(searchParams?.status) ? searchParams.status : 'all';
@@ -90,7 +104,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
     { label: 'Total recibidas', value: leads.length, href: buildHref({}) },
     { label: 'Nuevas', value: countWhere(leads, (lead) => lead.status === 'new'), href: buildHref({ status: 'new', precheck: selectedPrecheck }) },
     { label: 'Posible mejora', value: countWhere(leads, (lead) => lead.precheck_result === 'potential_improvement'), href: buildHref({ status: selectedStatus, precheck: 'potential_improvement' }) },
-    { label: 'Bono social', value: countWhere(leads, (lead) => lead.precheck_result === 'bonus_social_case'), href: buildHref({ status: selectedStatus, precheck: 'bonus_social_case' }) },
+    { label: 'Viables', value: countWhere(leads, (lead) => lead.analysis_result === 'viable'), href: buildHref({ status: selectedStatus, precheck: selectedPrecheck }) },
     { label: 'Convertidos', value: countWhere(leads, (lead) => lead.status === 'converted'), href: buildHref({ status: 'converted', precheck: selectedPrecheck }) },
   ];
 
@@ -153,6 +167,9 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
                   <div className="flex flex-wrap gap-2">
                     <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${precheckBadgeClass(lead.precheck_result)}`}>
                       {precheckLabels[lead.precheck_result] || lead.precheck_result}
+                    </span>
+                    <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${analysisBadgeClass(lead.analysis_result)}`}>
+                      {analysisLabels[lead.analysis_result] || 'Análisis pendiente'}
                     </span>
                     <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${statusBadgeClass(lead.status)}`}>
                       {statusLabels[lead.status] || lead.status}
