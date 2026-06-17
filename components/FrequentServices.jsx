@@ -6,41 +6,49 @@ const frequentServices = [
     icon: Lightbulb,
     title: 'Reformas eléctricas',
     text: 'Actualización de instalaciones, nuevos puntos de luz, enchufes, mecanismos e iluminación interior o exterior.',
+    href: '/servicios/instalaciones-electricas',
   },
   {
     icon: ShieldCheck,
     title: 'Cuadros eléctricos',
     text: 'Revisión, ordenación y mejora de cuadros eléctricos y protecciones según las necesidades de cada instalación.',
+    href: '/servicios/instalaciones-electricas',
   },
   {
     icon: PlugZap,
     title: 'Averías y mantenimiento',
     text: 'Localización de fallos, pequeñas reparaciones y mantenimiento eléctrico en viviendas, comunidades y negocios.',
+    href: '/servicios/instalaciones-electricas',
   },
   {
     icon: Router,
     title: 'Redes de datos',
     text: 'Cableado estructurado, puntos de red y mejoras de conectividad para hogares, oficinas y pequeños comercios.',
+    href: '/servicios/telecomunicaciones',
   },
   {
     icon: Satellite,
     title: 'Antenas y telecomunicaciones',
     text: 'Instalaciones y mejoras relacionadas con antenas, telecomunicaciones y señal en edificios y viviendas.',
+    href: '/servicios/telecomunicaciones',
   },
   {
     icon: Video,
     title: 'Porteros y videoporteros',
     text: 'Instalación, sustitución y mejora de porteros y videoporteros para viviendas, comunidades y locales.',
+    href: '/servicios/telecomunicaciones',
   },
   {
     icon: FileText,
     title: 'Revisión de factura',
     text: 'Comparación de facturas de luz y gas, revisión de potencia contratada y explicación clara de las opciones.',
+    href: '/servicios/asesoria-energetica-luz-gas',
   },
   {
     icon: CheckCircle2,
     title: 'Contratación luz y gas',
     text: 'Acompañamiento en la contratación de luz y gas como empresa delegada de Fenie Energía, sin compromiso previo.',
+    href: '/servicios/asesoria-energetica-luz-gas',
   },
 ];
 
@@ -64,13 +72,16 @@ export default function FrequentServices() {
           {frequentServices.map((service) => {
             const Icon = service.icon;
             return (
-              <article key={service.title} className="rounded-[1.7rem] border border-neutral-200 bg-white p-5 shadow-card transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-2xl">
+              <a key={service.title} href={service.href} className="group rounded-[1.7rem] border border-neutral-200 bg-white p-5 shadow-card transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-2xl">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F3FAEF] text-lakuntza-greenDark">
                   <Icon size={23} />
                 </div>
                 <h3 className="text-base font-black tracking-[-.03em] text-neutral-950">{service.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-neutral-600">{service.text}</p>
-              </article>
+                <span className="mt-4 inline-flex text-xs font-black uppercase tracking-[0.14em] text-lakuntza-greenDark transition group-hover:text-lakuntza-green">
+                  Ver más
+                </span>
+              </a>
             );
           })}
         </div>
