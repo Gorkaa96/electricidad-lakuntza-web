@@ -5,7 +5,7 @@ const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hace
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const mainLinks = [
-  ['Servicios', '/#servicios'],
+  ['Servicios', '/servicios'],
   ['Trabajos realizados', '/trabajos-realizados'],
   ['Luz y gas', '/#energia'],
   ['Zona de servicio', '/#zona'],
