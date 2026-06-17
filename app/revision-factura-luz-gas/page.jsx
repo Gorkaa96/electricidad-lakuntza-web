@@ -103,7 +103,7 @@ export default function RevisionFacturaPage({ searchParams }) {
             <div className="xl:col-span-7">
               <form action={submitInvoiceReview} className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
-                  <div className="flex items-start gap-4">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3FAEF] text-lakuntza-greenDark">
                       <ShieldCheck size={24} />
                     </div>
@@ -121,35 +121,35 @@ export default function RevisionFacturaPage({ searchParams }) {
                   ) : null}
                 </div>
 
-                <div className="grid gap-6 p-6 sm:p-8">
+                <div className="grid gap-7 p-5 sm:p-8">
                   <div>
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">1. Datos de contacto</p>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Nombre *
-                        <input name="name" required autoComplete="name" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="name" required autoComplete="name" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Teléfono *
-                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Email
-                        <input name="email" type="email" autoComplete="email" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="email" type="email" autoComplete="email" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Localidad
-                        <input name="locality" autoComplete="address-level2" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="locality" autoComplete="address-level2" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                     </div>
                   </div>
 
-                  <div className="border-t border-neutral-200 pt-6">
+                  <div className="border-t border-neutral-200 pt-7">
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">2. Datos del contrato</p>
-                    <div className="mt-4 grid gap-4 md:grid-cols-3">
+                    <div className="mt-4 grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Suministro *
-                        <select name="supplyType" required defaultValue="luz" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+                        <select name="supplyType" required defaultValue="luz" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
                           <option value="luz">Luz</option>
                           <option value="gas">Gas</option>
                           <option value="luz_gas">Luz y gas</option>
@@ -157,15 +157,15 @@ export default function RevisionFacturaPage({ searchParams }) {
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Cliente *
-                        <select name="customerType" required defaultValue="vivienda" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+                        <select name="customerType" required defaultValue="vivienda" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
                           <option value="vivienda">Vivienda</option>
                           <option value="negocio">Negocio</option>
                           <option value="comunidad">Comunidad</option>
                         </select>
                       </label>
-                      <label className="grid gap-2 text-sm font-black text-neutral-800">
+                      <label className="grid gap-2 text-sm font-black text-neutral-800 sm:col-span-2">
                         Bono social / familia numerosa *
-                        <select name="bonusStatus" required defaultValue="no_lo_se" className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+                        <select name="bonusStatus" required defaultValue="no_lo_se" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
                           <option value="no">No</option>
                           <option value="si">Sí</option>
                           <option value="no_lo_se">No lo sé</option>
@@ -174,19 +174,19 @@ export default function RevisionFacturaPage({ searchParams }) {
                     </div>
                   </div>
 
-                  <div className="border-t border-neutral-200 pt-6">
+                  <div className="border-t border-neutral-200 pt-7">
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">3. Factura y comentarios</p>
-                    <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                    <div className="mt-4 grid gap-4">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Compañía actual
-                        <input name="currentCompany" placeholder="Iberdrola, Endesa, Naturgy..." className="focus-ring min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                        <input name="currentCompany" placeholder="Iberdrola, Endesa, Naturgy..." className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <InvoiceFileInput />
                     </div>
 
                     <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
                       Comentario opcional
-                      <textarea name="notes" rows={4} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                      <textarea name="notes" rows={4} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
                     </label>
                   </div>
 
