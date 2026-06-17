@@ -12,7 +12,7 @@ const navItems = [
   ['Trabajos', '/#trabajos'],
   ['Luz y gas', '/#energia'],
   ['Proceso', '/#proceso'],
-  ['Zona', '/#zona'],
+  ['Zona', '/zona-servicio'],
   ['Contacto', '/#contacto'],
 ];
 
