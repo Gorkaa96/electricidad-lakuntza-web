@@ -3,6 +3,7 @@ import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
 import { requireAdmin } from '@/lib/admin';
 import { updateInvoiceLead } from '../actions';
+import { updateInvoiceAnalysis } from '../analysis-actions';
 
 export const metadata = {
   title: 'Detalle de factura recibida',
@@ -24,6 +25,13 @@ const precheckLabels = {
   potential_improvement: 'Posible mejora',
   manual_review: 'Revisión manual',
   bonus_social_case: 'Bono social / familia numerosa',
+};
+
+const analysisLabels = {
+  pending: 'Pendiente',
+  viable: 'Viable',
+  review: 'Revisar',
+  not_viable: 'No viable',
 };
 
 function row(label, value) {
@@ -56,6 +64,17 @@ function bonusLabel(value) {
   return value;
 }
 
+function analysisClass(value) {
+  if (value === 'viable') return 'bg-[#F3FAEF] text-lakuntza-greenDark';
+  if (value === 'review') return 'bg-amber-50 text-amber-700';
+  if (value === 'not_viable') return 'bg-red-50 text-red-700';
+  return 'bg-neutral-100 text-neutral-500';
+}
+
+function numberValue(value) {
+  return value === null || value === undefined ? '' : String(value).replace('.', ',');
+}
+
 export default async function AdminInvoiceLeadDetailPage({ params, searchParams }) {
   const { supabase } = await requireAdmin();
   const { data: lead } = await supabase
@@ -73,6 +92,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
   }
 
   const whatsappHref = `https://wa.me/${String(lead.phone || '').replace(/\D/g, '')}?text=${encodeURIComponent('Hola, soy Electricidad Lakuntza. Hemos recibido tu factura para revisión y queremos comentarte el resultado.')}`;
+  const analysisReasons = Array.isArray(lead.analysis_reasons) ? lead.analysis_reasons : [];
 
   return (
     <AdminShell title="Factura recibida" description="Revisa la solicitud, descarga la factura y actualiza el estado comercial.">
@@ -86,6 +106,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             </span>
             <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-neutral-500">
               {statusLabels[lead.status] || lead.status}
+            </span>
+            <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${analysisClass(lead.analysis_result)}`}>
+              Análisis: {analysisLabels[lead.analysis_result] || 'Pendiente'}
             </span>
           </div>
 
@@ -172,6 +195,85 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           </section>
         </aside>
       </div>
+
+      <section className="mt-6 rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Análisis interno</p>
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.05em] text-neutral-950">Datos extraídos y viabilidad</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600">
+              Rellena los datos principales de la factura. El resultado es interno y sirve para acelerar la revisión, no para comunicar una promesa automática al cliente.
+            </p>
+          </div>
+          <span className={`inline-flex rounded-full px-4 py-2 text-xs font-black uppercase tracking-[0.14em] ${analysisClass(lead.analysis_result)}`}>
+            {analysisLabels[lead.analysis_result] || 'Pendiente'}
+          </span>
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-neutral-50 p-5">
+          <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Motivos actuales</p>
+          {analysisReasons.length > 0 ? (
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-700">
+              {analysisReasons.map((reason) => <li key={reason}>• {reason}</li>)}
+            </ul>
+          ) : (
+            <p className="mt-3 text-sm leading-6 text-neutral-500">Sin motivos guardados todavía.</p>
+          )}
+        </div>
+
+        <form action={updateInvoiceAnalysis} className="mt-6 grid gap-5">
+          <input type="hidden" name="id" value={lead.id} />
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <label className="grid gap-2 text-sm font-black text-neutral-800">
+              CUPS
+              <input name="extractedCups" defaultValue={lead.extracted_cups || ''} className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" placeholder="ES..." />
+            </label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">
+              Tarifa / peaje
+              <input name="extractedTariff" defaultValue={lead.extracted_tariff || ''} className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" placeholder="2.0TD, RL.1..." />
+            </label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">
+              Potencia kW
+              <input name="contractedPowerKw" defaultValue={numberValue(lead.contracted_power_kw)} inputMode="decimal" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" placeholder="4,6" />
+            </label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">
+              Consumo kWh
+              <input name="consumptionKwh" defaultValue={numberValue(lead.consumption_kwh)} inputMode="decimal" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" placeholder="350" />
+            </label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">
+              Total factura €
+              <input name="invoiceTotalEur" defaultValue={numberValue(lead.invoice_total_eur)} inputMode="decimal" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" placeholder="95,40" />
+            </label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">
+              Días facturados
+              <input name="billingDays" defaultValue={lead.billing_days || ''} inputMode="numeric" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" placeholder="30" />
+            </label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">
+              Resultado interno
+              <select name="analysisResult" defaultValue={lead.analysis_result || 'pending'} className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-bold outline-none focus:border-lakuntza-green">
+                <option value="pending">Calcular / pendiente</option>
+                <option value="viable">Viable</option>
+                <option value="review">Revisar</option>
+                <option value="not_viable">No viable</option>
+              </select>
+            </label>
+            <label className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm font-black text-neutral-800">
+              <input name="hasExtraServices" type="checkbox" defaultChecked={Boolean(lead.has_extra_services)} className="h-4 w-4 accent-lakuntza-green" />
+              Servicios añadidos
+            </label>
+          </div>
+
+          <label className="grid gap-2 text-sm font-black text-neutral-800">
+            Motivos / observaciones del análisis
+            <textarea name="analysisReasons" rows={5} defaultValue={analysisReasons.join('\n')} className="rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Un motivo por línea. Ej.: potencia alta, consumo alto, servicios añadidos, bono social..." />
+          </label>
+
+          <button className="rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+            Guardar análisis
+          </button>
+        </form>
+      </section>
     </AdminShell>
   );
 }
