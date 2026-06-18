@@ -42,6 +42,9 @@ export default function ServiceDetailPage({ params }) {
   if (!service) notFound();
 
   const Icon = iconBySlug[service.slug] || PlugZap;
+  const isEnergy = service.slug === 'asesoria-energetica-luz-gas';
+  const primaryCtaHref = isEnergy ? '/revision-factura-luz-gas' : '#contacto-servicio';
+  const primaryCtaLabel = isEnergy ? 'Subir factura gratis' : 'Consultar servicio';
 
   const serviceSchema = {
     '@context': 'https://schema.org',
@@ -80,15 +83,20 @@ export default function ServiceDetailPage({ params }) {
                 {service.hero}
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">{service.intro}</p>
+              {isEnergy ? (
+                <a href="/revision-factura-luz-gas" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                  Subir factura gratis <ArrowRight className="ml-2" size={18} />
+                </a>
+              ) : null}
             </div>
             <div className="xl:col-span-4">
               <div className="rounded-[2rem] border border-white/10 bg-white/[.07] p-7">
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-lakuntza-green text-white shadow-green">
                   <Icon size={30} />
                 </div>
-                <p className="text-sm leading-7 text-white/70">Atención directa desde Lakuntza para Navarra y País Vasco.</p>
-                <a href="#contacto-servicio" className="mt-6 inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
-                  Consultar servicio <ArrowRight className="ml-2" size={17} />
+                <p className="text-sm leading-7 text-white/70">{isEnergy ? 'Sube una factura y revisamos si hay oportunidad real de mejora.' : 'Atención directa desde Lakuntza para Navarra y País Vasco.'}</p>
+                <a href={primaryCtaHref} className="mt-6 inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                  {primaryCtaLabel} <ArrowRight className="ml-2" size={17} />
                 </a>
               </div>
             </div>
@@ -127,15 +135,21 @@ export default function ServiceDetailPage({ params }) {
 
         <section id="contacto-servicio" className="bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-            <Badge>Contacto</Badge>
-            <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] text-neutral-950 sm:text-5xl">¿Necesitas este servicio?</h2>
+            <Badge>{isEnergy ? 'Sube tu factura' : 'Contacto'}</Badge>
+            <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] text-neutral-950 sm:text-5xl">{isEnergy ? 'Empezamos revisando tu factura.' : '¿Necesitas este servicio?'}</h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-neutral-600">
-              Cuéntanos qué necesitas, dónde se realizará el trabajo y si tienes alguna foto o factura que ayude a valorarlo mejor.
+              {isEnergy ? 'La forma más rápida es subir una factura en PDF o imagen. Revisamos el caso y te contactamos si hay margen de mejora o si conviene analizarlo con cuidado.' : 'Cuéntanos qué necesitas, dónde se realizará el trabajo y si tienes alguna foto o factura que ayude a valorarlo mejor.'}
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
-                Llamar al 649 853 448
-              </a>
+              {isEnergy ? (
+                <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                  Subir factura gratis <ArrowRight className="ml-2" size={18} />
+                </a>
+              ) : (
+                <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                  Llamar al 649 853 448
+                </a>
+              )}
               <a href={whatsappHref} className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
                 <MessageCircle className="mr-2" size={18} /> Escribir por WhatsApp
               </a>
