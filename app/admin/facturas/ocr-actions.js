@@ -82,6 +82,7 @@ Formato exacto de salida:
     "issue_date": null,
     "billing_period_start": null,
     "billing_period_end": null,
+    "billing_days": null,
     "due_date": null,
     "supply_type": null,
     "total_amount_eur": null
@@ -168,7 +169,6 @@ export async function prepareInvoiceOcr(formData) {
     redirect(`/admin/facturas/${id}?error=ocr_config`);
   }
 
-  const now = new Date().toISOString();
   const provider = `openai:${process.env.OPENAI_OCR_MODEL || DEFAULT_OCR_MODEL}`;
 
   const { data: ocrRow, error: insertError } = await supabase
@@ -202,6 +202,8 @@ export async function prepareInvoiceOcr(formData) {
 
   if (downloadError || !fileData) {
     await markOcrFailure({ supabase, leadId: id, ocrId: ocrRow.id, sourceFilePath: lead.file_path, message: 'No se ha podido descargar el archivo desde Supabase Storage.' });
+    revalidatePath('/admin/facturas');
+    revalidatePath(`/admin/facturas/${id}`);
     redirect(`/admin/facturas/${id}?error=ocr_archivo`);
   }
 
@@ -209,6 +211,8 @@ export async function prepareInvoiceOcr(formData) {
   const base64File = Buffer.from(arrayBuffer).toString('base64');
   const mimeType = lead.file_type || fileData.type || 'application/pdf';
   const fileName = lead.file_name || 'factura.pdf';
+
+  let redirectPath = `/admin/facturas/${id}?success=ocr_completado`;
 
   try {
     const response = await fetch(OPENAI_RESPONSES_URL, {
@@ -243,62 +247,63 @@ export async function prepareInvoiceOcr(formData) {
     if (!response.ok) {
       const message = responseJson?.error?.message || 'OpenAI ha devuelto un error al procesar la factura.';
       await markOcrFailure({ supabase, leadId: id, ocrId: ocrRow.id, sourceFilePath: lead.file_path, message });
-      redirect(`/admin/facturas/${id}?error=ocr`);
+      redirectPath = `/admin/facturas/${id}?error=ocr`;
+    } else {
+      const outputText = getOutputText(responseJson);
+      const extracted = parseJsonOutput(outputText);
+
+      if (!extracted) {
+        await markOcrFailure({ supabase, leadId: id, ocrId: ocrRow.id, sourceFilePath: lead.file_path, message: 'La IA no ha devuelto JSON válido.' });
+        redirectPath = `/admin/facturas/${id}?error=ocr_json`;
+      } else {
+        const now = new Date().toISOString();
+        const confidenceAvg = toNumber(extracted.confidence_avg);
+        const suggestedResult = normalizeAnalysisResult(extracted.review?.suggested_analysis_result);
+        const reasons = Array.isArray(extracted.review?.reasons) ? extracted.review.reasons.filter(Boolean).map(String) : [];
+        const totalConsumption = toNumber(extracted.electricity?.consumption_kwh?.total);
+        const totalAmount = toNumber(extracted.amounts?.total_eur ?? extracted.invoice?.total_amount_eur);
+        const contractedPower = valueFromPower(extracted.electricity?.contracted_power_kw);
+        const requiresManualReview = extracted.review?.requires_manual_review !== false || confidenceAvg === null || confidenceAvg < 85;
+
+        await supabase
+          .from('invoice_ocr_results')
+          .update({
+            ocr_status: 'succeeded',
+            raw_text: extracted.raw_text || outputText,
+            extracted_json: extracted,
+            confidence_avg: confidenceAvg,
+            requires_manual_review: requiresManualReview,
+            error_message: null,
+            processed_at: now,
+          })
+          .eq('id', ocrRow.id);
+
+        await supabase
+          .from('invoice_review_leads')
+          .update({
+            extracted_cups: extracted.electricity?.cups || null,
+            extracted_tariff: extracted.electricity?.access_tariff || null,
+            contracted_power_kw: contractedPower,
+            consumption_kwh: totalConsumption,
+            invoice_total_eur: totalAmount,
+            billing_days: toInteger(extracted.invoice?.billing_days),
+            has_extra_services: Boolean(extracted.commercial_signals?.has_extra_services_billed),
+            analysis_result: suggestedResult,
+            analysis_reasons: reasons,
+            ocr_status: 'succeeded',
+            ocr_confidence_avg: confidenceAvg,
+            ocr_requires_manual_review: requiresManualReview,
+            ocr_processed_at: now,
+          })
+          .eq('id', id);
+      }
     }
-
-    const outputText = getOutputText(responseJson);
-    const extracted = parseJsonOutput(outputText);
-
-    if (!extracted) {
-      await markOcrFailure({ supabase, leadId: id, ocrId: ocrRow.id, sourceFilePath: lead.file_path, message: 'La IA no ha devuelto JSON válido.' });
-      redirect(`/admin/facturas/${id}?error=ocr_json`);
-    }
-
-    const confidenceAvg = toNumber(extracted.confidence_avg);
-    const suggestedResult = normalizeAnalysisResult(extracted.review?.suggested_analysis_result);
-    const reasons = Array.isArray(extracted.review?.reasons) ? extracted.review.reasons.filter(Boolean).map(String) : [];
-    const totalConsumption = toNumber(extracted.electricity?.consumption_kwh?.total);
-    const totalAmount = toNumber(extracted.amounts?.total_eur ?? extracted.invoice?.total_amount_eur);
-    const contractedPower = valueFromPower(extracted.electricity?.contracted_power_kw);
-    const requiresManualReview = extracted.review?.requires_manual_review !== false || confidenceAvg === null || confidenceAvg < 85;
-
-    await supabase
-      .from('invoice_ocr_results')
-      .update({
-        ocr_status: 'succeeded',
-        raw_text: extracted.raw_text || outputText,
-        extracted_json: extracted,
-        confidence_avg: confidenceAvg,
-        requires_manual_review: requiresManualReview,
-        error_message: null,
-        processed_at: now,
-      })
-      .eq('id', ocrRow.id);
-
-    await supabase
-      .from('invoice_review_leads')
-      .update({
-        extracted_cups: extracted.electricity?.cups || null,
-        extracted_tariff: extracted.electricity?.access_tariff || null,
-        contracted_power_kw: contractedPower,
-        consumption_kwh: totalConsumption,
-        invoice_total_eur: totalAmount,
-        billing_days: toInteger(extracted.invoice?.billing_days),
-        has_extra_services: Boolean(extracted.commercial_signals?.has_extra_services_billed),
-        analysis_result: suggestedResult,
-        analysis_reasons: reasons,
-        ocr_status: 'succeeded',
-        ocr_confidence_avg: confidenceAvg,
-        ocr_requires_manual_review: requiresManualReview,
-        ocr_processed_at: now,
-      })
-      .eq('id', id);
   } catch (error) {
     await markOcrFailure({ supabase, leadId: id, ocrId: ocrRow.id, sourceFilePath: lead.file_path, message: error?.message || 'Error inesperado al procesar OCR.' });
-    redirect(`/admin/facturas/${id}?error=ocr`);
+    redirectPath = `/admin/facturas/${id}?error=ocr`;
   }
 
   revalidatePath('/admin/facturas');
   revalidatePath(`/admin/facturas/${id}`);
-  redirect(`/admin/facturas/${id}?success=ocr_completado`);
+  redirect(redirectPath);
 }
