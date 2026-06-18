@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, MessageCircle, Phone, X } from 'lucide-react';
+import { FileText, Menu, MessageCircle, Phone, X } from 'lucide-react';
 import Logo from './Logo';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
@@ -9,9 +9,9 @@ const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const navItems = [
   ['Servicios', '/servicios'],
+  ['Revisar factura', '/revision-factura-luz-gas'],
   ['Trabajos', '/#trabajos'],
   ['Luz y gas', '/#energia'],
-  ['Proceso', '/#proceso'],
   ['Zona', '/zona-servicio'],
   ['Contacto', '/#contacto'],
 ];
@@ -28,7 +28,7 @@ export default function Header() {
 
         <nav className="hidden items-center gap-7 text-sm font-black text-neutral-700 xl:flex" aria-label="Navegación principal">
           {navItems.map(([label, href]) => (
-            <a key={href} href={href} className="rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark">
+            <a key={href} href={href} className={`rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark ${href === '/revision-factura-luz-gas' ? 'text-lakuntza-greenDark' : ''}`}>
               {label}
             </a>
           ))}
@@ -38,8 +38,8 @@ export default function Header() {
           <a href="tel:+34649853448" className="rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-black text-neutral-900 shadow-sm transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
             649 853 448
           </a>
-          <a href="/#contacto" className="rounded-full bg-neutral-950 px-5 py-2.5 text-sm font-black text-white shadow-lg transition hover:bg-lakuntza-greenDark">
-            Pedir presupuesto
+          <a href="/revision-factura-luz-gas" className="inline-flex items-center gap-2 rounded-full bg-lakuntza-green px-5 py-2.5 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+            <FileText size={16} /> Revisar factura
           </a>
         </div>
 
@@ -57,9 +57,12 @@ export default function Header() {
       {open && (
         <div className="border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl xl:hidden">
           <div className="mx-auto grid max-w-7xl gap-5">
-            <div className="rounded-[1.6rem] border border-lakuntza-line bg-lakuntza-mist p-4">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Electricidad Lakuntza</p>
-              <p className="mt-2 text-sm leading-6 text-neutral-600">Instalaciones eléctricas, telecomunicaciones y asesoría energética en Navarra y País Vasco.</p>
+            <div className="rounded-[1.6rem] border border-lakuntza-green/20 bg-[#F3FAEF] p-4">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión gratuita de factura</p>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">Sube tu factura de luz o gas y revisamos si merece la pena mejorar condiciones.</p>
+              <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green">
+                <FileText size={17} /> Revisar mi factura
+              </a>
             </div>
 
             <nav className="grid gap-1 text-sm font-black text-neutral-800" aria-label="Navegación móvil">
