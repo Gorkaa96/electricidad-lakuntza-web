@@ -7,6 +7,7 @@ const successMessages = {
   estado: 'Estado actualizado correctamente.',
   analisis: 'Análisis guardado correctamente.',
   eliminada: 'Solicitud eliminada correctamente.',
+  ocr_preparado: 'OCR preparado correctamente. Falta conectar el proveedor de lectura automática.',
 };
 
 const errorMessages = {
@@ -18,6 +19,8 @@ const errorMessages = {
   analisis: 'No se ha podido guardar el análisis.',
   eliminar: 'No se ha podido eliminar la solicitud.',
   confirmacion: 'Para eliminar la solicitud tienes que escribir ELIMINAR.',
+  ocr: 'No se ha podido preparar el OCR.',
+  ocr_archivo: 'No hay archivo de factura asociado para preparar el OCR.',
 };
 
 export default function AdminNotice({ success, error }) {
