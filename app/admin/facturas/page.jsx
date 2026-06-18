@@ -27,6 +27,7 @@ const precheckLabels = {
 };
 
 const analysisLabels = {
+  all: 'Todos',
   pending: 'Análisis pendiente',
   viable: 'Viable',
   review: 'Revisar',
@@ -35,11 +36,13 @@ const analysisLabels = {
 
 const statusOptions = ['all', 'new', 'reviewing', 'contacted', 'converted', 'discarded'];
 const precheckOptions = ['all', 'potential_improvement', 'bonus_social_case', 'manual_review', 'pending'];
+const analysisOptions = ['all', 'viable', 'review', 'not_viable', 'pending'];
 
-function buildHref({ status = 'all', precheck = 'all' }) {
+function buildHref({ status = 'all', precheck = 'all', analysis = 'all' }) {
   const params = new URLSearchParams();
   if (status !== 'all') params.set('status', status);
   if (precheck !== 'all') params.set('precheck', precheck);
+  if (analysis !== 'all') params.set('analysis', analysis);
   const query = params.toString();
   return query ? `/admin/facturas?${query}` : '/admin/facturas';
 }
@@ -93,19 +96,21 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
 
   const selectedStatus = statusOptions.includes(searchParams?.status) ? searchParams.status : 'all';
   const selectedPrecheck = precheckOptions.includes(searchParams?.precheck) ? searchParams.precheck : 'all';
+  const selectedAnalysis = analysisOptions.includes(searchParams?.analysis) ? searchParams.analysis : 'all';
 
   const filteredLeads = leads.filter((lead) => {
     const statusMatch = selectedStatus === 'all' || lead.status === selectedStatus;
     const precheckMatch = selectedPrecheck === 'all' || lead.precheck_result === selectedPrecheck;
-    return statusMatch && precheckMatch;
+    const analysisMatch = selectedAnalysis === 'all' || lead.analysis_result === selectedAnalysis;
+    return statusMatch && precheckMatch && analysisMatch;
   });
 
   const metrics = [
     { label: 'Total recibidas', value: leads.length, href: buildHref({}) },
-    { label: 'Nuevas', value: countWhere(leads, (lead) => lead.status === 'new'), href: buildHref({ status: 'new', precheck: selectedPrecheck }) },
-    { label: 'Posible mejora', value: countWhere(leads, (lead) => lead.precheck_result === 'potential_improvement'), href: buildHref({ status: selectedStatus, precheck: 'potential_improvement' }) },
-    { label: 'Viables', value: countWhere(leads, (lead) => lead.analysis_result === 'viable'), href: buildHref({ status: selectedStatus, precheck: selectedPrecheck }) },
-    { label: 'Convertidos', value: countWhere(leads, (lead) => lead.status === 'converted'), href: buildHref({ status: 'converted', precheck: selectedPrecheck }) },
+    { label: 'Nuevas', value: countWhere(leads, (lead) => lead.status === 'new'), href: buildHref({ status: 'new', precheck: selectedPrecheck, analysis: selectedAnalysis }) },
+    { label: 'Posible mejora', value: countWhere(leads, (lead) => lead.precheck_result === 'potential_improvement'), href: buildHref({ status: selectedStatus, precheck: 'potential_improvement', analysis: selectedAnalysis }) },
+    { label: 'Viables', value: countWhere(leads, (lead) => lead.analysis_result === 'viable'), href: buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis: 'viable' }) },
+    { label: 'Convertidos', value: countWhere(leads, (lead) => lead.status === 'converted'), href: buildHref({ status: 'converted', precheck: selectedPrecheck, analysis: selectedAnalysis }) },
   ];
 
   return (
@@ -125,14 +130,14 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
       </div>
 
       <section className="mt-6 rounded-[2rem] border border-neutral-200 bg-white p-5 shadow-card">
-        <div className="grid gap-5 xl:grid-cols-2">
+        <div className="grid gap-5 xl:grid-cols-3">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">Estado comercial</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {statusOptions.map((status) => (
                 <a
                   key={status}
-                  href={buildHref({ status, precheck: selectedPrecheck })}
+                  href={buildHref({ status, precheck: selectedPrecheck, analysis: selectedAnalysis })}
                   className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedStatus === status ? 'bg-neutral-950 text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
                 >
                   {statusLabels[status]}
@@ -147,10 +152,25 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
               {precheckOptions.map((precheck) => (
                 <a
                   key={precheck}
-                  href={buildHref({ status: selectedStatus, precheck })}
+                  href={buildHref({ status: selectedStatus, precheck, analysis: selectedAnalysis })}
                   className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedPrecheck === precheck ? 'bg-lakuntza-green text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
                 >
                   {precheckLabels[precheck]}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">Análisis interno</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {analysisOptions.map((analysis) => (
+                <a
+                  key={analysis}
+                  href={buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis })}
+                  className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedAnalysis === analysis ? 'bg-lakuntza-greenDark text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
+                >
+                  {analysisLabels[analysis]}
                 </a>
               ))}
             </div>
