@@ -75,6 +75,33 @@ function numberValue(value) {
   return value === null || value === undefined ? '' : String(value).replace('.', ',');
 }
 
+function normalizeSpanishPhone(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.startsWith('34') && digits.length >= 11) return digits;
+  if (digits.length === 9) return `34${digits}`;
+  return digits;
+}
+
+function buildWhatsappMessage(lead) {
+  const firstName = String(lead.name || '').trim().split(/\s+/)[0] || '';
+  const greeting = firstName ? `Hola ${firstName}, soy Electricidad Lakuntza.` : 'Hola, soy Electricidad Lakuntza.';
+
+  if (lead.analysis_result === 'viable') {
+    return `${greeting} Hemos revisado tu factura y vemos que puede merecer la pena comentarla contigo. No es una recomendación automática: queremos explicarte el resultado y confirmar algunos datos antes de hacer cualquier cambio.`;
+  }
+
+  if (lead.precheck_result === 'bonus_social_case' || lead.bonus_status === 'si') {
+    return `${greeting} Hemos recibido tu factura. Al indicar bono social, familia numerosa o un caso especial, preferimos revisarlo contigo con cuidado antes de recomendar ningún cambio.`;
+  }
+
+  if (lead.analysis_result === 'not_viable') {
+    return `${greeting} Hemos revisado tu factura y, con los datos actuales, no vemos claro recomendar un cambio sin comentarlo antes. Te llamamos o hablamos por aquí y te lo explicamos con transparencia.`;
+  }
+
+  return `${greeting} Hemos recibido tu factura para revisión. Queremos comentarte el resultado y confirmar algunos datos para ver si merece la pena mejorar condiciones.`;
+}
+
 export default async function AdminInvoiceLeadDetailPage({ params, searchParams }) {
   const { supabase } = await requireAdmin();
   const { data: lead } = await supabase
@@ -91,7 +118,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
     signedUrl = data?.signedUrl || null;
   }
 
-  const whatsappHref = `https://wa.me/${String(lead.phone || '').replace(/\D/g, '')}?text=${encodeURIComponent('Hola, soy Electricidad Lakuntza. Hemos recibido tu factura para revisión y queremos comentarte el resultado.')}`;
+  const normalizedPhone = normalizeSpanishPhone(lead.phone);
+  const telHref = normalizedPhone ? `tel:+${normalizedPhone}` : '#';
+  const whatsappHref = normalizedPhone ? `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(buildWhatsappMessage(lead))}` : '#';
   const analysisReasons = Array.isArray(lead.analysis_reasons) ? lead.analysis_reasons : [];
 
   return (
@@ -185,7 +214,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             </form>
 
             <div className="mt-5 grid gap-3">
-              <a href={`tel:${lead.phone}`} className="inline-flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">
+              <a href={telHref} className="inline-flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">
                 Llamar cliente
               </a>
               <a href={whatsappHref} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
