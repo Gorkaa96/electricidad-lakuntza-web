@@ -53,9 +53,9 @@ export default function ServiciosPage() {
             <div className="mb-10 rounded-[2rem] border border-lakuntza-green/20 bg-white p-6 shadow-card sm:p-8">
               <div className="grid gap-5 lg:grid-cols-12 lg:items-center">
                 <div className="lg:col-span-8">
-                  <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Objetivo principal</p>
-                  <h2 className="mt-3 text-3xl font-black tracking-[-0.05em] text-neutral-950">La factura es la entrada más rápida para convertir un contacto en cliente recurrente.</h2>
-                  <p className="mt-4 text-sm leading-7 text-neutral-600">Por eso la revisión de luz y gas aparece como prioridad. Las instalaciones y telecomunicaciones siguen siendo servicios importantes, pero la captación recurrente empieza por la factura.</p>
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión gratuita</p>
+                  <h2 className="mt-3 text-3xl font-black tracking-[-0.05em] text-neutral-950">Empieza por una factura de luz o gas.</h2>
+                  <p className="mt-4 text-sm leading-7 text-neutral-600">Con una factura podemos revisar consumo, potencia, condiciones y servicios añadidos. Después te explicamos si merece la pena mejorar algo o si conviene mantener lo actual.</p>
                 </div>
                 <div className="lg:col-span-4">
                   <a href="/revision-factura-luz-gas" className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
