@@ -36,6 +36,28 @@ const checks = [
   'Luz, gas o ambos suministros.',
 ];
 
+const privacyPoints = [
+  'La factura se guarda en un espacio privado, no público.',
+  'La usamos solo para revisar tu consulta y contactarte.',
+  'El resultado final lo revisa una persona antes de darte una recomendación.',
+  'Puedes pedir la eliminación de la solicitud y del archivo enviado.',
+];
+
+const processSteps = [
+  {
+    title: '1. Subes la factura',
+    text: 'Puede ser PDF o imagen. Solo pedimos los datos mínimos para poder revisarla y contactar contigo.',
+  },
+  {
+    title: '2. Preanálisis interno',
+    text: 'Ordenamos los datos principales: compañía, tarifa, potencia, consumo, importe y posibles servicios añadidos.',
+  },
+  {
+    title: '3. Confirmación humana',
+    text: 'Antes de recomendar nada, Electricidad Lakuntza revisa el caso y te explica si conviene actuar o mantener lo actual.',
+  },
+];
+
 export default function RevisionFacturaPage({ searchParams }) {
   const error = searchParams?.error;
 
@@ -62,6 +84,11 @@ export default function RevisionFacturaPage({ searchParams }) {
                 <p className="text-sm leading-7 text-white/70">
                   La factura se guarda en un espacio privado y solo se utiliza para estudiar tu consulta.
                 </p>
+                <div className="mt-5 grid gap-3 text-xs font-bold text-white/65">
+                  <div className="flex gap-2"><Lock size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Archivo privado</div>
+                  <div className="flex gap-2"><ShieldCheck size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Revisión humana</div>
+                  <div className="flex gap-2"><MessageCircle size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Contacto directo</div>
+                </div>
               </div>
             </div>
           </div>
@@ -98,6 +125,18 @@ export default function RevisionFacturaPage({ searchParams }) {
                   </div>
                 </div>
               </div>
+
+              <div className="mt-8 rounded-[1.6rem] border border-neutral-200 bg-white p-5 shadow-sm">
+                <div className="flex gap-3">
+                  <Lock className="mt-0.5 shrink-0 text-lakuntza-green" size={22} />
+                  <div>
+                    <h3 className="font-black text-neutral-950">Privacidad y revisión humana</h3>
+                    <div className="mt-3 grid gap-2 text-sm leading-6 text-neutral-600">
+                      {privacyPoints.map((item) => <p key={item}>• {item}</p>)}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="xl:col-span-7">
@@ -110,7 +149,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                     <div>
                       <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Formulario seguro</p>
                       <h3 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">Enviar factura para revisión</h3>
-                      <p className="mt-3 text-sm leading-6 text-neutral-600">Rellena los datos mínimos para que podamos estudiar la factura y contactarte.</p>
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">Rellena los datos mínimos para que podamos estudiar la factura y contactarte. La recomendación final no es automática: la revisa una persona.</p>
                     </div>
                   </div>
 
@@ -194,7 +233,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                     <label className="flex gap-3 text-xs leading-5 text-neutral-600">
                       <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-lakuntza-green" />
                       <span>
-                        Acepto que Electricidad Lakuntza use mis datos y la factura enviada únicamente para revisar la consulta y contactarme. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
+                        Acepto que Electricidad Lakuntza use mis datos y la factura enviada únicamente para revisar la consulta y contactarme. Entiendo que el preanálisis es orientativo y que la recomendación final requiere revisión humana. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
                       </span>
                     </label>
                   </div>
@@ -205,7 +244,7 @@ export default function RevisionFacturaPage({ searchParams }) {
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
-                    Formatos permitidos: PDF, JPG, PNG o WebP. Tamaño máximo: 10 MB.
+                    Formatos permitidos: PDF, JPG, PNG o WebP. Tamaño máximo: 10 MB. No subas documentación que no sea necesaria para revisar tu factura.
                   </p>
                 </div>
               </form>
@@ -215,7 +254,17 @@ export default function RevisionFacturaPage({ searchParams }) {
 
         <section className="bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-3">
+              {processSteps.map((step) => (
+                <div key={step.title} className="rounded-[1.6rem] border border-neutral-200 bg-white p-6 shadow-card">
+                  <ShieldCheck className="text-lakuntza-green" size={22} />
+                  <h3 className="mt-4 text-lg font-black tracking-[-0.03em] text-neutral-950">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-neutral-600">{step.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {checks.map((item) => (
                 <div key={item} className="rounded-[1.6rem] border border-neutral-200 bg-white p-5 shadow-card">
                   <CheckCircle2 className="text-lakuntza-green" size={22} />
