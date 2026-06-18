@@ -4,6 +4,7 @@ import AdminNotice from '@/components/admin/AdminNotice';
 import { requireAdmin } from '@/lib/admin';
 import { updateInvoiceLead } from '../actions';
 import { updateInvoiceAnalysis } from '../analysis-actions';
+import { prepareInvoiceOcr } from '../ocr-actions';
 
 export const metadata = {
   title: 'Detalle de factura recibida',
@@ -32,6 +33,14 @@ const analysisLabels = {
   viable: 'Viable',
   review: 'Revisar',
   not_viable: 'No viable',
+};
+
+const ocrLabels = {
+  pending: 'Pendiente',
+  processing: 'Procesando',
+  succeeded: 'Completado',
+  failed: 'Error',
+  not_applicable: 'No aplica',
 };
 
 function row(label, value) {
@@ -68,6 +77,13 @@ function analysisClass(value) {
   if (value === 'viable') return 'bg-[#F3FAEF] text-lakuntza-greenDark';
   if (value === 'review') return 'bg-amber-50 text-amber-700';
   if (value === 'not_viable') return 'bg-red-50 text-red-700';
+  return 'bg-neutral-100 text-neutral-500';
+}
+
+function ocrClass(value) {
+  if (value === 'succeeded') return 'bg-[#F3FAEF] text-lakuntza-greenDark';
+  if (value === 'processing') return 'bg-blue-50 text-blue-700';
+  if (value === 'failed') return 'bg-red-50 text-red-700';
   return 'bg-neutral-100 text-neutral-500';
 }
 
@@ -112,6 +128,14 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
 
   if (!lead) notFound();
 
+  const { data: latestOcr } = await supabase
+    .from('invoice_ocr_results')
+    .select('id, created_at, provider, ocr_status, confidence_avg, requires_manual_review, error_message, processed_at')
+    .eq('lead_id', lead.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
   let signedUrl = null;
   if (lead.file_path) {
     const { data } = await supabase.storage.from('invoice-files').createSignedUrl(lead.file_path, 60 * 30);
@@ -122,6 +146,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
   const telHref = normalizedPhone ? `tel:+${normalizedPhone}` : '#';
   const whatsappHref = normalizedPhone ? `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(buildWhatsappMessage(lead))}` : '#';
   const analysisReasons = Array.isArray(lead.analysis_reasons) ? lead.analysis_reasons : [];
+  const currentOcrStatus = latestOcr?.ocr_status || lead.ocr_status || 'pending';
 
   return (
     <AdminShell title="Factura recibida" description="Revisa la solicitud, descarga la factura y actualiza el estado comercial.">
@@ -138,6 +163,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             </span>
             <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${analysisClass(lead.analysis_result)}`}>
               Análisis: {analysisLabels[lead.analysis_result] || 'Pendiente'}
+            </span>
+            <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${ocrClass(currentOcrStatus)}`}>
+              OCR: {ocrLabels[currentOcrStatus] || currentOcrStatus}
             </span>
           </div>
 
@@ -183,6 +211,34 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
               El enlace al archivo caduca en 30 minutos. No compartas la factura fuera del proceso de revisión.
             </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">OCR</p>
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-neutral-950">Lectura automática</h2>
+            <div className="mt-5 rounded-2xl bg-neutral-50 p-4">
+              <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Estado</p>
+              <p className="mt-2 text-sm font-black text-neutral-800">{ocrLabels[currentOcrStatus] || currentOcrStatus}</p>
+              {latestOcr ? (
+                <div className="mt-3 grid gap-1 text-xs leading-5 text-neutral-500">
+                  <p>Último intento: {new Date(latestOcr.created_at).toLocaleString('es-ES')}</p>
+                  <p>Proveedor: {latestOcr.provider}</p>
+                  <p>Confianza: {latestOcr.confidence_avg ? `${latestOcr.confidence_avg}%` : 'Pendiente'}</p>
+                  {latestOcr.error_message ? <p className="text-red-600">Error: {latestOcr.error_message}</p> : null}
+                </div>
+              ) : (
+                <p className="mt-3 text-xs leading-5 text-neutral-500">Todavía no hay ningún intento OCR registrado para esta factura.</p>
+              )}
+            </div>
+            <form action={prepareInvoiceOcr} className="mt-5">
+              <input type="hidden" name="id" value={lead.id} />
+              <button className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                Preparar OCR
+              </button>
+            </form>
+            <p className="mt-3 text-xs leading-5 text-neutral-500">
+              Este botón deja el caso preparado para lectura automática. El siguiente paso será conectar el proveedor real de OCR/IA.
+            </p>
           </section>
 
           <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
