@@ -43,11 +43,17 @@ const ocrLabels = {
   not_applicable: 'No aplica',
 };
 
+function displayValue(value) {
+  if (value === null || value === undefined || value === '') return 'No indicado';
+  if (typeof value === 'boolean') return value ? 'Sí' : 'No';
+  return String(value).replace('.', ',');
+}
+
 function row(label, value) {
   return (
     <div className="rounded-2xl bg-neutral-50 p-4">
       <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">{label}</p>
-      <p className="mt-2 text-sm font-bold leading-6 text-neutral-800">{value || 'No indicado'}</p>
+      <p className="mt-2 text-sm font-bold leading-6 text-neutral-800">{displayValue(value)}</p>
     </div>
   );
 }
@@ -118,6 +124,35 @@ function buildWhatsappMessage(lead) {
   return `${greeting} Hemos recibido tu factura para revisión. Queremos comentarte el resultado y confirmar algunos datos para ver si merece la pena mejorar condiciones.`;
 }
 
+function ocrSummaryRows(ocrData) {
+  if (!ocrData) return [];
+  const invoice = ocrData.invoice || {};
+  const electricity = ocrData.electricity || {};
+  const consumption = electricity.consumption_kwh || {};
+  const power = electricity.contracted_power_kw || {};
+  const amounts = ocrData.amounts || {};
+  const signals = ocrData.commercial_signals || {};
+
+  return [
+    ['Comercializadora', invoice.supplier],
+    ['Nº factura', invoice.invoice_number],
+    ['Fecha emisión', invoice.issue_date],
+    ['Periodo', invoice.billing_period_start && invoice.billing_period_end ? `${invoice.billing_period_start} → ${invoice.billing_period_end}` : null],
+    ['CUPS', electricity.cups],
+    ['Tarifa / peaje', electricity.access_tariff],
+    ['Potencia P1', power.p1 ? `${displayValue(power.p1)} kW` : null],
+    ['Potencia P2', power.p2 ? `${displayValue(power.p2)} kW` : null],
+    ['Consumo total', consumption.total ? `${displayValue(consumption.total)} kWh` : null],
+    ['Punta / Llano / Valle', [consumption.p1, consumption.p2, consumption.p3].some((value) => value !== null && value !== undefined) ? `${displayValue(consumption.p1)} / ${displayValue(consumption.p2)} / ${displayValue(consumption.p3)} kWh` : null],
+    ['Importe energía', amounts.energy_amount_eur ? `${displayValue(amounts.energy_amount_eur)} €` : null],
+    ['Importe potencia', amounts.power_amount_eur ? `${displayValue(amounts.power_amount_eur)} €` : null],
+    ['IVA', amounts.vat_eur ? `${displayValue(amounts.vat_eur)} €` : null],
+    ['Total factura', amounts.total_eur ? `${displayValue(amounts.total_eur)} €` : null],
+    ['Servicios facturados', signals.has_extra_services_billed],
+    ['Mensaje promocional', signals.has_promotional_service_message],
+  ];
+}
+
 export default async function AdminInvoiceLeadDetailPage({ params, searchParams }) {
   const { supabase } = await requireAdmin();
   const { data: lead } = await supabase
@@ -130,7 +165,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
 
   const { data: latestOcr } = await supabase
     .from('invoice_ocr_results')
-    .select('id, created_at, provider, ocr_status, confidence_avg, requires_manual_review, error_message, processed_at')
+    .select('id, created_at, provider, ocr_status, confidence_avg, requires_manual_review, error_message, processed_at, extracted_json')
     .eq('lead_id', lead.id)
     .order('created_at', { ascending: false })
     .limit(1)
@@ -147,6 +182,8 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
   const whatsappHref = normalizedPhone ? `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(buildWhatsappMessage(lead))}` : '#';
   const analysisReasons = Array.isArray(lead.analysis_reasons) ? lead.analysis_reasons : [];
   const currentOcrStatus = latestOcr?.ocr_status || lead.ocr_status || 'pending';
+  const ocrData = latestOcr?.extracted_json || null;
+  const summaryRows = ocrSummaryRows(ocrData);
 
   return (
     <AdminShell title="Factura recibida" description="Revisa la solicitud, descarga la factura y actualiza el estado comercial.">
@@ -224,6 +261,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
                   <p>Último intento: {new Date(latestOcr.created_at).toLocaleString('es-ES')}</p>
                   <p>Proveedor: {latestOcr.provider}</p>
                   <p>Confianza: {latestOcr.confidence_avg ? `${latestOcr.confidence_avg}%` : 'Pendiente'}</p>
+                  {latestOcr.requires_manual_review ? <p className="font-bold text-amber-700">Requiere revisión manual</p> : null}
                   {latestOcr.error_message ? <p className="text-red-600">Error: {latestOcr.error_message}</p> : null}
                 </div>
               ) : (
@@ -233,11 +271,11 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <form action={prepareInvoiceOcr} className="mt-5">
               <input type="hidden" name="id" value={lead.id} />
               <button className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
-                Preparar OCR
+                Procesar lectura gratuita
               </button>
             </form>
             <p className="mt-3 text-xs leading-5 text-neutral-500">
-              Este botón deja el caso preparado para lectura automática. El siguiente paso será conectar el proveedor real de OCR/IA.
+              Extrae datos de PDFs con texto seleccionable. Si la factura es una foto o un escaneo, habrá que revisarla manualmente.
             </p>
           </section>
 
@@ -308,6 +346,23 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <p className="mt-3 text-sm leading-6 text-neutral-500">Sin motivos guardados todavía.</p>
           )}
         </div>
+
+        {summaryRows.length > 0 ? (
+          <div className="mt-6 rounded-2xl border border-neutral-200 bg-white p-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Resumen lectura gratuita</p>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">Datos estructurados guardados por el parser. Úsalos como apoyo y confirma contra la factura antes de contactar.</p>
+              </div>
+              <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-neutral-500">
+                Confianza {latestOcr?.confidence_avg || '—'}%
+              </span>
+            </div>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {summaryRows.map(([label, value]) => row(label, value))}
+            </div>
+          </div>
+        ) : null}
 
         <form action={updateInvoiceAnalysis} className="mt-6 grid gap-5">
           <input type="hidden" name="id" value={lead.id} />
