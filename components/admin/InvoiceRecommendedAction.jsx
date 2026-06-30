@@ -4,8 +4,22 @@ function numberValue(value) {
   return Number.isFinite(number) ? number : null;
 }
 
+function formatNumber(value) {
+  const number = numberValue(value);
+  if (number === null) return null;
+  return String(number).replace('.', ',');
+}
+
 function getOcrData(latestOcr) {
   return latestOcr?.extracted_json || {};
+}
+
+function normalizeSpanishPhone(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.startsWith('34') && digits.length >= 11) return digits;
+  if (digits.length === 9) return `34${digits}`;
+  return digits;
 }
 
 function buildRecommendation({ lead, latestOcr }) {
@@ -24,6 +38,7 @@ function buildRecommendation({ lead, latestOcr }) {
 
   if (sensitiveCase) {
     return {
+      key: 'sensitive',
       eyebrow: 'Revisión manual',
       title: 'Caso sensible: revisar antes de recomendar.',
       description: 'Hay señales de bono social, PVPC, TUR, familia numerosa o caso especial. Antes de hablar de cambio hay que revisar bien que no pierda ninguna ventaja.',
@@ -35,6 +50,7 @@ function buildRecommendation({ lead, latestOcr }) {
 
   if (ocrStatus === 'failed') {
     return {
+      key: 'ocr_failed',
       eyebrow: 'Revisión manual',
       title: 'La lectura automática ha fallado.',
       description: 'No conviene contactar con una conclusión. Abre la factura, rellena los datos principales manualmente y guarda el análisis.',
@@ -46,6 +62,7 @@ function buildRecommendation({ lead, latestOcr }) {
 
   if (ocrStatus !== 'succeeded') {
     return {
+      key: 'ocr_pending',
       eyebrow: 'Pendiente',
       title: 'Procesar la lectura gratuita primero.',
       description: 'Todavía no hay datos suficientes para priorizar comercialmente esta factura. Ejecuta la lectura gratuita o revisa el PDF manualmente.',
@@ -57,6 +74,7 @@ function buildRecommendation({ lead, latestOcr }) {
 
   if (confidence !== null && confidence < 70) {
     return {
+      key: 'low_confidence',
       eyebrow: 'Revisar datos',
       title: 'Confianza baja: confirmar campos clave.',
       description: 'La lectura ha funcionado, pero la confianza es baja. Antes de contactar, confirma CUPS, consumo, potencia, total y periodo.',
@@ -76,6 +94,7 @@ function buildRecommendation({ lead, latestOcr }) {
     if (consumption !== null && consumption >= 300) reasons.push(`Consumo relevante: ${String(consumption).replace('.', ',')} kWh`);
 
     return {
+      key: 'high_priority',
       eyebrow: 'Prioridad alta',
       title: 'Contactar hoy y explicar la revisión.',
       description: 'Hay señales suficientes para tratar esta factura como oportunidad comercial. No prometas ahorro automático: comenta que se ha revisado y que merece la pena explicarlo.',
@@ -87,6 +106,7 @@ function buildRecommendation({ lead, latestOcr }) {
 
   if (lead.analysis_result === 'not_viable') {
     return {
+      key: 'not_viable',
       eyebrow: 'Baja prioridad',
       title: 'No priorizar comercialmente.',
       description: 'Con los datos actuales no parece una oportunidad clara. Se puede responder con transparencia o dejar para seguimiento posterior.',
@@ -97,6 +117,7 @@ function buildRecommendation({ lead, latestOcr }) {
   }
 
   return {
+    key: 'manual_review',
     eyebrow: 'Revisión normal',
     title: 'Revisar manualmente antes de contactar.',
     description: 'La lectura ha extraído datos, pero no hay una señal comercial fuerte. Confirma precio, potencia y posibles servicios antes de decidir.',
@@ -104,6 +125,66 @@ function buildRecommendation({ lead, latestOcr }) {
     action: 'Validar datos y decidir contacto.',
     reasons: review.reasons?.length ? review.reasons : ['No hay señal comercial fuerte'],
   };
+}
+
+function buildOcrWhatsappMessage({ lead, latestOcr, recommendation }) {
+  const firstName = String(lead.name || '').trim().split(/\s+/)[0] || '';
+  const greeting = firstName ? `Hola ${firstName}, soy Electricidad Lakuntza.` : 'Hola, soy Electricidad Lakuntza.';
+  const ocrData = getOcrData(latestOcr);
+  const invoice = ocrData.invoice || {};
+  const electricity = ocrData.electricity || {};
+  const amounts = ocrData.amounts || {};
+  const signals = ocrData.commercial_signals || {};
+
+  const supplier = invoice.supplier || lead.current_company || null;
+  const total = formatNumber(lead.invoice_total_eur ?? amounts.total_eur ?? invoice.total_amount_eur);
+  const consumption = formatNumber(lead.consumption_kwh ?? electricity.consumption_kwh?.total);
+  const power = formatNumber(lead.contracted_power_kw ?? electricity.contracted_power_kw?.p1);
+  const tariff = lead.extracted_tariff || electricity.access_tariff || null;
+  const hasExtraServices = Boolean(lead.has_extra_services || signals.has_extra_services_billed);
+  const hasPromoMessage = Boolean(signals.has_promotional_service_message);
+
+  const details = [];
+  if (supplier) details.push(`compañía ${supplier}`);
+  if (total) details.push(`importe ${total} €`);
+  if (consumption) details.push(`consumo ${consumption} kWh`);
+  if (power) details.push(`potencia ${power} kW`);
+  if (tariff) details.push(`peaje/tarifa ${tariff}`);
+
+  const detailSentence = details.length
+    ? `Hemos hecho una primera lectura de tu factura (${details.join(', ')}).`
+    : 'Hemos hecho una primera lectura de tu factura.';
+
+  if (recommendation.key === 'sensitive') {
+    return `${greeting} ${detailSentence} Al aparecer un posible caso especial como bono social, PVPC, TUR o familia numerosa, preferimos revisarlo contigo con calma antes de recomendar ningún cambio. ¿Cuándo te viene bien que lo comentemos?`;
+  }
+
+  if (recommendation.key === 'high_priority') {
+    const serviceSentence = hasExtraServices
+      ? ' También vemos posibles servicios añadidos facturados, por eso merece la pena revisarla contigo.'
+      : hasPromoMessage
+        ? ' También aparece algún mensaje comercial o de mantenimiento, así que conviene confirmarlo contigo.'
+        : ' Vemos que puede merecer la pena comentarla contigo.';
+
+    return `${greeting} ${detailSentence}${serviceSentence} No es una recomendación automática ni una promesa de ahorro: queremos explicarte lo que vemos y confirmar algunos datos antes de plantear nada. ¿Te puedo llamar o lo vemos por aquí?`;
+  }
+
+  if (recommendation.key === 'not_viable') {
+    return `${greeting} ${detailSentence} Con los datos actuales no vemos claro recomendarte un cambio sin hablarlo antes. Preferimos explicártelo con transparencia y confirmar si hay algo más que revisar. ¿Te viene bien que lo comentemos?`;
+  }
+
+  if (recommendation.key === 'low_confidence' || recommendation.key === 'manual_review') {
+    return `${greeting} Hemos recibido tu factura y ya tenemos una primera lectura, pero antes de darte una valoración queremos confirmar algunos datos contigo para no sacar conclusiones precipitadas. ¿Cuándo te viene bien que lo revisemos?`;
+  }
+
+  return `${greeting} Hemos recibido tu factura para revisión. Queremos comentarte el resultado y confirmar algunos datos para ver si merece la pena mejorar condiciones. ¿Te viene bien que lo revisemos?`;
+}
+
+function buildWhatsappHref({ lead, latestOcr, recommendation, fallbackHref }) {
+  const phone = normalizeSpanishPhone(lead.phone);
+  if (!phone) return fallbackHref || '#';
+  const message = buildOcrWhatsappMessage({ lead, latestOcr, recommendation });
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
 
 function toneClasses(tone) {
@@ -121,6 +202,7 @@ function buttonClasses(tone) {
 
 export default function InvoiceRecommendedAction({ lead, latestOcr, whatsappHref, telHref }) {
   const recommendation = buildRecommendation({ lead, latestOcr });
+  const smartWhatsappHref = buildWhatsappHref({ lead, latestOcr, recommendation, fallbackHref: whatsappHref });
   const reasons = recommendation.reasons || [];
 
   return (
@@ -139,8 +221,8 @@ export default function InvoiceRecommendedAction({ lead, latestOcr, whatsappHref
           <a href={telHref || '#'} className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-black transition ${buttonClasses(recommendation.tone)}`}>
             Llamar
           </a>
-          <a href={whatsappHref || '#'} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">
-            WhatsApp
+          <a href={smartWhatsappHref} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">
+            WhatsApp inteligente
           </a>
         </div>
       </div>
