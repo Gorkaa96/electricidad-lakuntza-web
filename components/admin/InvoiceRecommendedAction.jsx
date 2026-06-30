@@ -1,3 +1,5 @@
+import { quickUpdateInvoiceStatus } from '@/app/admin/facturas/actions';
+
 function numberValue(value) {
   if (value === null || value === undefined || value === '') return null;
   const number = Number(String(value).replace(',', '.'));
@@ -21,6 +23,13 @@ function normalizeSpanishPhone(phone) {
   if (digits.length === 9) return `34${digits}`;
   return digits;
 }
+
+const quickStatuses = [
+  { status: 'reviewing', label: 'En revisión' },
+  { status: 'contacted', label: 'Contactado' },
+  { status: 'converted', label: 'Convertido' },
+  { status: 'discarded', label: 'Descartado' },
+];
 
 function buildRecommendation({ lead, latestOcr }) {
   const ocrData = getOcrData(latestOcr);
@@ -236,6 +245,21 @@ export default function InvoiceRecommendedAction({ lead, latestOcr, whatsappHref
           ))}
         </div>
       ) : null}
+
+      <div className="mt-6 rounded-2xl bg-white/70 p-4">
+        <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-500">Cambiar estado rápido</p>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          {quickStatuses.map((item) => (
+            <form key={item.status} action={quickUpdateInvoiceStatus}>
+              <input type="hidden" name="id" value={lead.id} />
+              <input type="hidden" name="status" value={item.status} />
+              <button disabled={lead.status === item.status} className="inline-flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-xs font-black text-neutral-800 transition hover:border-lakuntza-green disabled:cursor-not-allowed disabled:opacity-45">
+                {lead.status === item.status ? `${item.label} ✓` : item.label}
+              </button>
+            </form>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
