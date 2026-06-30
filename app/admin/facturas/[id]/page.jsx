@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
+import InvoiceRecommendedAction from '@/components/admin/InvoiceRecommendedAction';
 import { requireAdmin } from '@/lib/admin';
 import { updateInvoiceLead } from '../actions';
 import { updateInvoiceAnalysis } from '../analysis-actions';
@@ -188,6 +189,8 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
   return (
     <AdminShell title="Factura recibida" description="Revisa la solicitud, descarga la factura y actualiza el estado comercial.">
       <AdminNotice success={searchParams?.success} error={searchParams?.error} />
+
+      <InvoiceRecommendedAction lead={lead} latestOcr={latestOcr} telHref={telHref} whatsappHref={whatsappHref} />
 
       <div className="grid gap-6 lg:grid-cols-12">
         <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card lg:col-span-8 sm:p-8">
