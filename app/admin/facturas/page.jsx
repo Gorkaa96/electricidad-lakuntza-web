@@ -34,21 +34,66 @@ const analysisLabels = {
   not_viable: 'No viable',
 };
 
+const priorityLabels = {
+  all: 'Todos',
+  high: 'Prioridad alta',
+  review: 'Revisión manual',
+  low: 'Baja prioridad',
+  ocr_pending: 'OCR pendiente',
+  sensitive: 'Caso sensible',
+};
+
+const ocrLabels = {
+  pending: 'OCR pendiente',
+  processing: 'OCR procesando',
+  succeeded: 'OCR completado',
+  failed: 'OCR error',
+  not_applicable: 'OCR no aplica',
+};
+
 const statusOptions = ['all', 'new', 'reviewing', 'contacted', 'converted', 'discarded'];
 const precheckOptions = ['all', 'potential_improvement', 'bonus_social_case', 'manual_review', 'pending'];
 const analysisOptions = ['all', 'viable', 'review', 'not_viable', 'pending'];
+const priorityOptions = ['all', 'high', 'review', 'sensitive', 'ocr_pending', 'low'];
 
-function buildHref({ status = 'all', precheck = 'all', analysis = 'all' }) {
+function buildHref({ status = 'all', precheck = 'all', analysis = 'all', priority = 'all' }) {
   const params = new URLSearchParams();
   if (status !== 'all') params.set('status', status);
   if (precheck !== 'all') params.set('precheck', precheck);
   if (analysis !== 'all') params.set('analysis', analysis);
+  if (priority !== 'all') params.set('priority', priority);
   const query = params.toString();
   return query ? `/admin/facturas?${query}` : '/admin/facturas';
 }
 
 function countWhere(leads, predicate) {
   return leads.filter(predicate).length;
+}
+
+function toNumber(value) {
+  if (value === null || value === undefined || value === '') return null;
+  const number = Number(String(value).replace(',', '.'));
+  return Number.isFinite(number) ? number : null;
+}
+
+function formatNumber(value, suffix = '') {
+  const number = toNumber(value);
+  if (number === null) return null;
+  return `${String(number).replace('.', ',')}${suffix}`;
+}
+
+function getPriority(lead) {
+  const total = toNumber(lead.invoice_total_eur);
+  const consumption = toNumber(lead.consumption_kwh);
+  const ocrStatus = lead.ocr_status || 'pending';
+  const isBusiness = lead.customer_type === 'negocio' || lead.customer_type === 'comunidad';
+
+  if (lead.bonus_status === 'si' || lead.precheck_result === 'bonus_social_case') return 'sensitive';
+  if (ocrStatus === 'failed') return 'review';
+  if (ocrStatus !== 'succeeded') return 'ocr_pending';
+  if (lead.analysis_result === 'viable' || lead.has_extra_services || isBusiness || (total !== null && total >= 90) || (consumption !== null && consumption >= 300)) return 'high';
+  if (lead.analysis_result === 'not_viable') return 'low';
+  return 'review';
 }
 
 function supplyLabel(value) {
@@ -87,30 +132,57 @@ function analysisBadgeClass(analysis) {
   return 'bg-neutral-100 text-neutral-500';
 }
 
+function priorityBadgeClass(priority) {
+  if (priority === 'high') return 'bg-lakuntza-green text-white';
+  if (priority === 'sensitive') return 'bg-amber-100 text-amber-800';
+  if (priority === 'review') return 'bg-blue-50 text-blue-700';
+  if (priority === 'low') return 'bg-neutral-100 text-neutral-500';
+  if (priority === 'ocr_pending') return 'bg-purple-50 text-purple-700';
+  return 'bg-neutral-100 text-neutral-500';
+}
+
+function ocrBadgeClass(status) {
+  if (status === 'succeeded') return 'bg-[#F3FAEF] text-lakuntza-greenDark';
+  if (status === 'processing') return 'bg-blue-50 text-blue-700';
+  if (status === 'failed') return 'bg-red-50 text-red-700';
+  return 'bg-neutral-100 text-neutral-500';
+}
+
+function actionHint(priority) {
+  if (priority === 'high') return 'Contactar hoy';
+  if (priority === 'sensitive') return 'Revisar ayudas';
+  if (priority === 'ocr_pending') return 'Procesar lectura';
+  if (priority === 'low') return 'Sin urgencia';
+  return 'Validar datos';
+}
+
 export default async function AdminInvoiceLeadsPage({ searchParams }) {
   const { supabase } = await requireAdmin();
   const { data: leads = [] } = await supabase
     .from('invoice_review_leads')
-    .select('id, created_at, name, phone, locality, supply_type, customer_type, bonus_status, status, precheck_result, analysis_result, contacted_at, converted_at')
+    .select('id, created_at, name, phone, locality, supply_type, customer_type, bonus_status, status, precheck_result, analysis_result, contacted_at, converted_at, ocr_status, ocr_confidence_avg, invoice_total_eur, consumption_kwh, contracted_power_kw, has_extra_services')
     .order('created_at', { ascending: false });
 
   const selectedStatus = statusOptions.includes(searchParams?.status) ? searchParams.status : 'all';
   const selectedPrecheck = precheckOptions.includes(searchParams?.precheck) ? searchParams.precheck : 'all';
   const selectedAnalysis = analysisOptions.includes(searchParams?.analysis) ? searchParams.analysis : 'all';
+  const selectedPriority = priorityOptions.includes(searchParams?.priority) ? searchParams.priority : 'all';
+  const enrichedLeads = leads.map((lead) => ({ ...lead, priority: getPriority(lead) }));
 
-  const filteredLeads = leads.filter((lead) => {
+  const filteredLeads = enrichedLeads.filter((lead) => {
     const statusMatch = selectedStatus === 'all' || lead.status === selectedStatus;
     const precheckMatch = selectedPrecheck === 'all' || lead.precheck_result === selectedPrecheck;
     const analysisMatch = selectedAnalysis === 'all' || lead.analysis_result === selectedAnalysis;
-    return statusMatch && precheckMatch && analysisMatch;
+    const priorityMatch = selectedPriority === 'all' || lead.priority === selectedPriority;
+    return statusMatch && precheckMatch && analysisMatch && priorityMatch;
   });
 
   const metrics = [
     { label: 'Total recibidas', value: leads.length, href: buildHref({}) },
-    { label: 'Nuevas', value: countWhere(leads, (lead) => lead.status === 'new'), href: buildHref({ status: 'new', precheck: selectedPrecheck, analysis: selectedAnalysis }) },
-    { label: 'Posible mejora', value: countWhere(leads, (lead) => lead.precheck_result === 'potential_improvement'), href: buildHref({ status: selectedStatus, precheck: 'potential_improvement', analysis: selectedAnalysis }) },
-    { label: 'Viables', value: countWhere(leads, (lead) => lead.analysis_result === 'viable'), href: buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis: 'viable' }) },
-    { label: 'Convertidos', value: countWhere(leads, (lead) => lead.status === 'converted'), href: buildHref({ status: 'converted', precheck: selectedPrecheck, analysis: selectedAnalysis }) },
+    { label: 'Prioridad alta', value: countWhere(enrichedLeads, (lead) => lead.priority === 'high'), href: buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis: selectedAnalysis, priority: 'high' }) },
+    { label: 'OCR pendiente', value: countWhere(enrichedLeads, (lead) => lead.priority === 'ocr_pending'), href: buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis: selectedAnalysis, priority: 'ocr_pending' }) },
+    { label: 'Revisión manual', value: countWhere(enrichedLeads, (lead) => lead.priority === 'review' || lead.priority === 'sensitive'), href: buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis: selectedAnalysis, priority: 'review' }) },
+    { label: 'Convertidos', value: countWhere(enrichedLeads, (lead) => lead.status === 'converted'), href: buildHref({ status: 'converted', precheck: selectedPrecheck, analysis: selectedAnalysis, priority: selectedPriority }) },
   ];
 
   return (
@@ -130,16 +202,23 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
       </div>
 
       <section className="mt-6 rounded-[2rem] border border-neutral-200 bg-white p-5 shadow-card">
-        <div className="grid gap-5 xl:grid-cols-3">
+        <div className="grid gap-5 xl:grid-cols-4">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">Prioridad diaria</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {priorityOptions.map((priority) => (
+                <a key={priority} href={buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis: selectedAnalysis, priority })} className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedPriority === priority ? 'bg-neutral-950 text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}>
+                  {priorityLabels[priority]}
+                </a>
+              ))}
+            </div>
+          </div>
+
           <div>
             <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">Estado comercial</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {statusOptions.map((status) => (
-                <a
-                  key={status}
-                  href={buildHref({ status, precheck: selectedPrecheck, analysis: selectedAnalysis })}
-                  className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedStatus === status ? 'bg-neutral-950 text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
-                >
+                <a key={status} href={buildHref({ status, precheck: selectedPrecheck, analysis: selectedAnalysis, priority: selectedPriority })} className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedStatus === status ? 'bg-neutral-950 text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}>
                   {statusLabels[status]}
                 </a>
               ))}
@@ -150,11 +229,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
             <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">Resultado inicial</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {precheckOptions.map((precheck) => (
-                <a
-                  key={precheck}
-                  href={buildHref({ status: selectedStatus, precheck, analysis: selectedAnalysis })}
-                  className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedPrecheck === precheck ? 'bg-lakuntza-green text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
-                >
+                <a key={precheck} href={buildHref({ status: selectedStatus, precheck, analysis: selectedAnalysis, priority: selectedPriority })} className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedPrecheck === precheck ? 'bg-lakuntza-green text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}>
                   {precheckLabels[precheck]}
                 </a>
               ))}
@@ -165,11 +240,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
             <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">Análisis interno</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {analysisOptions.map((analysis) => (
-                <a
-                  key={analysis}
-                  href={buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis })}
-                  className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedAnalysis === analysis ? 'bg-lakuntza-greenDark text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}
-                >
+                <a key={analysis} href={buildHref({ status: selectedStatus, precheck: selectedPrecheck, analysis, priority: selectedPriority })} className={`rounded-full px-4 py-2 text-xs font-black transition ${selectedAnalysis === analysis ? 'bg-lakuntza-greenDark text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}>
                   {analysisLabels[analysis]}
                 </a>
               ))}
@@ -181,30 +252,42 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
       <div className="mt-6 overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
         {filteredLeads.length > 0 ? (
           <div className="divide-y divide-neutral-200">
-            {filteredLeads.map((lead) => (
-              <a key={lead.id} href={`/admin/facturas/${lead.id}`} className="grid gap-4 p-5 transition hover:bg-neutral-50 lg:grid-cols-[1fr_auto] lg:items-center">
-                <div>
-                  <div className="flex flex-wrap gap-2">
-                    <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${precheckBadgeClass(lead.precheck_result)}`}>
-                      {precheckLabels[lead.precheck_result] || lead.precheck_result}
-                    </span>
-                    <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${analysisBadgeClass(lead.analysis_result)}`}>
-                      {analysisLabels[lead.analysis_result] || 'Análisis pendiente'}
-                    </span>
-                    <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${statusBadgeClass(lead.status)}`}>
-                      {statusLabels[lead.status] || lead.status}
-                    </span>
+            {filteredLeads.map((lead) => {
+              const total = formatNumber(lead.invoice_total_eur, ' €');
+              const consumption = formatNumber(lead.consumption_kwh, ' kWh');
+              const power = formatNumber(lead.contracted_power_kw, ' kW');
+              const ocrStatus = lead.ocr_status || 'pending';
+
+              return (
+                <a key={lead.id} href={`/admin/facturas/${lead.id}`} className="grid gap-4 p-5 transition hover:bg-neutral-50 lg:grid-cols-[1fr_auto] lg:items-center">
+                  <div>
+                    <div className="flex flex-wrap gap-2">
+                      <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${priorityBadgeClass(lead.priority)}`}>{priorityLabels[lead.priority] || lead.priority}</span>
+                      <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${ocrBadgeClass(ocrStatus)}`}>{ocrLabels[ocrStatus] || ocrStatus}</span>
+                      <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${precheckBadgeClass(lead.precheck_result)}`}>{precheckLabels[lead.precheck_result] || lead.precheck_result}</span>
+                      <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${analysisBadgeClass(lead.analysis_result)}`}>{analysisLabels[lead.analysis_result] || 'Análisis pendiente'}</span>
+                      <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] ${statusBadgeClass(lead.status)}`}>{statusLabels[lead.status] || lead.status}</span>
+                    </div>
+                    <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-neutral-950">{lead.name}</h2>
+                    <p className="mt-2 text-sm text-neutral-500">
+                      {lead.phone} · {lead.locality || 'Sin localidad'} · {supplyLabel(lead.supply_type)} · {customerLabel(lead.customer_type)}
+                      {lead.bonus_status === 'si' ? ' · Posible bono social' : ''}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-neutral-500">
+                      <span className="rounded-full bg-neutral-50 px-3 py-1">{total ? `Total ${total}` : 'Total no leído'}</span>
+                      <span className="rounded-full bg-neutral-50 px-3 py-1">{consumption ? `Consumo ${consumption}` : 'Consumo no leído'}</span>
+                      <span className="rounded-full bg-neutral-50 px-3 py-1">{power ? `Potencia ${power}` : 'Potencia no leída'}</span>
+                      {lead.has_extra_services ? <span className="rounded-full bg-amber-50 px-3 py-1 text-amber-700">Servicios añadidos</span> : null}
+                    </div>
+                    <p className="mt-2 text-xs text-neutral-400">{new Date(lead.created_at).toLocaleString('es-ES')}</p>
                   </div>
-                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-neutral-950">{lead.name}</h2>
-                  <p className="mt-2 text-sm text-neutral-500">
-                    {lead.phone} · {lead.locality || 'Sin localidad'} · {supplyLabel(lead.supply_type)} · {customerLabel(lead.customer_type)}
-                    {lead.bonus_status === 'si' ? ' · Posible bono social' : ''}
-                  </p>
-                  <p className="mt-1 text-xs text-neutral-400">{new Date(lead.created_at).toLocaleString('es-ES')}</p>
-                </div>
-                <div className="text-sm font-black text-lakuntza-greenDark">Ver solicitud</div>
-              </a>
-            ))}
+                  <div className="grid gap-2 text-left lg:text-right">
+                    <p className="text-sm font-black text-neutral-950">{actionHint(lead.priority)}</p>
+                    <p className="text-sm font-black text-lakuntza-greenDark">Ver solicitud</p>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         ) : leads.length > 0 ? (
           <div className="p-8 text-center">
