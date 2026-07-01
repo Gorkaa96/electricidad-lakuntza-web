@@ -2,18 +2,17 @@ import { createProject, updateProject, deleteProject, setProjectCover, deletePro
 import { projectCategories } from '@/lib/projects';
 import ConfirmSubmitButton from './ConfirmSubmitButton';
 
-function Field({ label, children, help }) {
+function Field({ label, children }) {
   return (
     <label className="grid gap-2">
-      <span className="text-sm font-black text-neutral-900">{label}</span>
+      <span className="text-sm font-black leading-5 text-neutral-900">{label}</span>
       {children}
-      {help ? <span className="text-xs font-bold leading-5 text-neutral-500">{help}</span> : null}
     </label>
   );
 }
 
 function inputClass() {
-  return 'min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-lakuntza-green';
+  return 'w-full min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none transition focus:border-lakuntza-green';
 }
 
 export default function ProjectForm({ project }) {
@@ -29,7 +28,7 @@ export default function ProjectForm({ project }) {
             <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Contenido</p>
             <h2 className="mt-2 text-2xl font-black tracking-[-0.04em] text-neutral-950">Información del trabajo</h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-600">
-              Escribe lo justo para que el trabajo se entienda bien en la web pública. Mejor claro y real que demasiado largo.
+              Escribe una ficha clara y real. El título corto, la URL y el detalle son opcionales.
             </p>
           </div>
 
@@ -37,7 +36,7 @@ export default function ProjectForm({ project }) {
             <Field label="Título del trabajo *">
               <input name="title" defaultValue={project?.title || ''} required className={inputClass()} placeholder="Ej.: Instalación eléctrica en vivienda" />
             </Field>
-            <Field label="Título corto" help="Opcional. Si lo dejas vacío se usará el título principal.">
+            <Field label="Título corto">
               <input name="short_title" defaultValue={project?.short_title || project?.shortTitle || ''} className={inputClass()} placeholder="Ej.: Vivienda en Lakuntza" />
             </Field>
           </div>
@@ -58,11 +57,11 @@ export default function ProjectForm({ project }) {
           </div>
 
           <div className="mt-5 grid gap-5">
-            <Field label="Resumen para tarjetas *" help="Aparece en listados y tarjetas. Recomendado: 1 o 2 frases.">
-              <textarea name="description" defaultValue={project?.description || ''} required rows={4} className={`${inputClass()} min-h-28`} placeholder="Describe el trabajo realizado de forma sencilla." />
+            <Field label="Resumen para tarjetas *">
+              <textarea name="description" defaultValue={project?.description || ''} required rows={4} className={`${inputClass()} min-h-28`} placeholder="Describe el trabajo realizado de forma sencilla. Recomendado: 1 o 2 frases." />
             </Field>
-            <Field label="Detalle del trabajo" help="Opcional. Añade más información si el trabajo lo merece.">
-              <textarea name="long_description" defaultValue={project?.long_description || project?.longDescription || ''} rows={6} className={`${inputClass()} min-h-36`} placeholder="Explica qué se hizo, dónde y qué resultado tuvo." />
+            <Field label="Detalle del trabajo">
+              <textarea name="long_description" defaultValue={project?.long_description || project?.longDescription || ''} rows={6} className={`${inputClass()} min-h-36`} placeholder="Opcional. Explica qué se hizo, dónde y qué resultado tuvo." />
             </Field>
           </div>
         </section>
@@ -77,7 +76,7 @@ export default function ProjectForm({ project }) {
           </div>
 
           <div className="grid gap-5 lg:grid-cols-[1fr_180px]">
-            <Field label="URL del trabajo" help="Opcional. Si lo dejas vacío se genera desde el título.">
+            <Field label="URL del trabajo">
               <input name="slug" defaultValue={project?.slug || ''} placeholder="instalacion-vivienda-lakuntza" className={inputClass()} />
             </Field>
             <Field label="Orden">
