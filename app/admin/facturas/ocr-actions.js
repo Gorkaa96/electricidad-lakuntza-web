@@ -67,7 +67,7 @@ async function markOcrFailure({ supabase, leadId, ocrId, sourceFilePath, message
     supabase,
     leadId,
     status: 'failed',
-    title: 'Lectura gratuita fallida',
+    title: 'Lectura fallida',
     description: message,
     metadata: { ocr_id: ocrId, source_file_path: sourceFilePath },
   });
@@ -119,7 +119,7 @@ async function saveExtractedInvoice({ supabase, leadId, ocrId, extracted }) {
     supabase,
     leadId,
     status: 'succeeded',
-    title: 'Lectura gratuita completada',
+    title: 'Lectura completada',
     description: `Confianza ${confidenceAvg ?? 'sin dato'}%. Resultado interno: ${suggestedResult}.`,
     metadata: {
       ocr_id: ocrId,
@@ -194,7 +194,7 @@ export async function prepareInvoiceOcr(formData) {
       leadId: id,
       ocrId: ocrRow.id,
       sourceFilePath: lead.file_path,
-      message: 'La lectura gratuita actual solo procesa PDF con texto seleccionable. Para imágenes hará falta Tesseract o revisión manual.',
+      message: 'La lectura actual solo procesa PDF con texto seleccionable. Para imágenes hará falta Tesseract o revisión manual.',
     });
     revalidatePath('/admin/facturas');
     revalidatePath(`/admin/facturas/${id}`);
