@@ -28,6 +28,19 @@ function normalizeAnalysisResult(value) {
   return allowedAnalysisResults.has(value) ? value : 'review';
 }
 
+async function insertOcrEvent({ supabase, leadId, status, title, description, metadata = {} }) {
+  await supabase.from('invoice_lead_events').insert({
+    lead_id: leadId,
+    event_type: 'ocr_processed',
+    title,
+    description,
+    metadata: {
+      status,
+      ...metadata,
+    },
+  });
+}
+
 async function markOcrFailure({ supabase, leadId, ocrId, sourceFilePath, message }) {
   if (ocrId) {
     await supabase
@@ -49,6 +62,15 @@ async function markOcrFailure({ supabase, leadId, ocrId, sourceFilePath, message
       ocr_processed_at: new Date().toISOString(),
     })
     .eq('id', leadId);
+
+  await insertOcrEvent({
+    supabase,
+    leadId,
+    status: 'failed',
+    title: 'Lectura gratuita fallida',
+    description: message,
+    metadata: { ocr_id: ocrId, source_file_path: sourceFilePath },
+  });
 }
 
 async function saveExtractedInvoice({ supabase, leadId, ocrId, extracted }) {
@@ -92,6 +114,22 @@ async function saveExtractedInvoice({ supabase, leadId, ocrId, extracted }) {
       ocr_processed_at: now,
     })
     .eq('id', leadId);
+
+  await insertOcrEvent({
+    supabase,
+    leadId,
+    status: 'succeeded',
+    title: 'Lectura gratuita completada',
+    description: `Confianza ${confidenceAvg ?? 'sin dato'}%. Resultado interno: ${suggestedResult}.`,
+    metadata: {
+      ocr_id: ocrId,
+      confidence_avg: confidenceAvg,
+      analysis_result: suggestedResult,
+      total_amount: totalAmount,
+      consumption_kwh: totalConsumption,
+      contracted_power_kw: contractedPower,
+    },
+  });
 }
 
 export async function prepareInvoiceOcr(formData) {
