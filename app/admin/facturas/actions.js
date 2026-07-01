@@ -6,12 +6,40 @@ import { requireAdmin } from '@/lib/admin';
 
 const allowedStatuses = ['new', 'reviewing', 'contacted', 'converted', 'discarded'];
 
+const statusLabels = {
+  new: 'Nueva',
+  reviewing: 'En revisión',
+  contacted: 'Contactado',
+  converted: 'Convertido',
+  discarded: 'Descartado',
+};
+
 function statusPayload(status) {
   const payload = { status };
   const now = new Date().toISOString();
   if (status === 'contacted') payload.contacted_at = now;
   if (status === 'converted') payload.converted_at = now;
   return payload;
+}
+
+function eventTypeForStatus(status) {
+  if (status === 'contacted') return 'contacted';
+  if (status === 'converted') return 'converted';
+  if (status === 'discarded') return 'discarded';
+  return 'status_changed';
+}
+
+async function insertStatusEvent({ supabase, leadId, status, source, adminNotes }) {
+  await supabase.from('invoice_lead_events').insert({
+    lead_id: leadId,
+    event_type: eventTypeForStatus(status),
+    title: `Estado actualizado: ${statusLabels[status] || status}`,
+    description: adminNotes ? `Notas: ${adminNotes}` : `Cambio realizado desde ${source}.`,
+    metadata: {
+      status,
+      source,
+    },
+  });
 }
 
 export async function updateInvoiceLead(formData) {
@@ -39,6 +67,8 @@ export async function updateInvoiceLead(formData) {
     redirect(`/admin/facturas/${id}?error=estado`);
   }
 
+  await insertStatusEvent({ supabase, leadId: id, status, source: 'formulario de gestión', adminNotes });
+
   revalidatePath('/admin/facturas');
   revalidatePath(`/admin/facturas/${id}`);
   redirect(`/admin/facturas/${id}?success=estado`);
@@ -62,6 +92,8 @@ export async function quickUpdateInvoiceStatus(formData) {
   if (error) {
     redirect(`/admin/facturas/${id}?error=estado`);
   }
+
+  await insertStatusEvent({ supabase, leadId: id, status, source: 'acción rápida' });
 
   revalidatePath('/admin/facturas');
   revalidatePath(`/admin/facturas/${id}`);
