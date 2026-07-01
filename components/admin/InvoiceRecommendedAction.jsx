@@ -1,4 +1,5 @@
 import { quickUpdateInvoiceStatus } from '@/app/admin/facturas/actions';
+import { requireAdmin } from '@/lib/admin';
 
 function numberValue(value) {
   if (value === null || value === undefined || value === '') return null;
@@ -30,6 +31,17 @@ const quickStatuses = [
   { status: 'converted', label: 'Convertido' },
   { status: 'discarded', label: 'Descartado' },
 ];
+
+const eventTypeLabels = {
+  created: 'Solicitud',
+  ocr_processed: 'OCR',
+  status_changed: 'Estado',
+  analysis_saved: 'Análisis',
+  note_saved: 'Nota',
+  contacted: 'Contacto',
+  converted: 'Conversión',
+  discarded: 'Descartado',
+};
 
 function buildRecommendation({ lead, latestOcr }) {
   const ocrData = getOcrData(latestOcr);
@@ -209,10 +221,23 @@ function buttonClasses(tone) {
   return 'bg-neutral-950 text-white hover:bg-lakuntza-greenDark';
 }
 
-export default function InvoiceRecommendedAction({ lead, latestOcr, whatsappHref, telHref }) {
+async function getRecentEvents(leadId) {
+  const { supabase } = await requireAdmin();
+  const { data } = await supabase
+    .from('invoice_lead_events')
+    .select('id, created_at, event_type, title, description')
+    .eq('lead_id', leadId)
+    .order('created_at', { ascending: false })
+    .limit(6);
+
+  return data || [];
+}
+
+export default async function InvoiceRecommendedAction({ lead, latestOcr, whatsappHref, telHref }) {
   const recommendation = buildRecommendation({ lead, latestOcr });
   const smartWhatsappHref = buildWhatsappHref({ lead, latestOcr, recommendation, fallbackHref: whatsappHref });
   const reasons = recommendation.reasons || [];
+  const events = await getRecentEvents(lead.id);
 
   return (
     <section className={`mb-6 rounded-[2rem] border p-6 shadow-card sm:p-8 ${toneClasses(recommendation.tone)}`}>
@@ -259,6 +284,31 @@ export default function InvoiceRecommendedAction({ lead, latestOcr, whatsappHref
             </form>
           ))}
         </div>
+      </div>
+
+      <div className="mt-6 rounded-2xl bg-white/70 p-4">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-500">Historial reciente</p>
+          <p className="text-[11px] font-bold text-neutral-500">Últimos {events.length}</p>
+        </div>
+        {events.length > 0 ? (
+          <div className="mt-4 grid gap-3">
+            {events.map((event) => (
+              <div key={event.id} className="rounded-2xl border border-neutral-200 bg-white p-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-sm font-black text-neutral-900">{event.title}</p>
+                  <span className="rounded-full bg-neutral-100 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-neutral-500">
+                    {eventTypeLabels[event.event_type] || event.event_type}
+                  </span>
+                </div>
+                {event.description ? <p className="mt-2 text-xs font-bold leading-5 text-neutral-600">{event.description}</p> : null}
+                <p className="mt-2 text-[11px] font-bold text-neutral-400">{new Date(event.created_at).toLocaleString('es-ES')}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-3 text-xs font-bold leading-5 text-neutral-500">Todavía no hay eventos registrados.</p>
+        )}
       </div>
     </section>
   );
