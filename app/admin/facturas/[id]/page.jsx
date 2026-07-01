@@ -49,9 +49,9 @@ function numberValue(value) {
 
 function card(label, value) {
   return (
-    <div className="rounded-2xl bg-neutral-50 p-4">
+    <div className="min-w-0 rounded-2xl bg-neutral-50 p-4">
       <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">{label}</p>
-      <p className="mt-2 text-sm font-bold leading-6 text-neutral-800">{display(value)}</p>
+      <p className="mt-2 break-words text-sm font-bold leading-6 text-neutral-800">{display(value)}</p>
     </div>
   );
 }
@@ -165,10 +165,10 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${badgeClass(lead.analysis_result)}`}>{analysisLabels[lead.analysis_result] || 'Pendiente'}</span>
           </div>
 
-          <h2 className="mt-4 text-3xl font-black tracking-[-0.05em] text-neutral-950">{lead.name}</h2>
+          <h2 className="mt-4 break-words text-3xl font-black tracking-[-0.05em] text-neutral-950">{lead.name}</h2>
           <p className="mt-2 text-sm text-neutral-500">Recibida el {new Date(lead.created_at).toLocaleString('es-ES')}</p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {card('Teléfono', lead.phone)}
             {card('Email', lead.email)}
             {card('Localidad', lead.locality)}
@@ -180,13 +180,13 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           </div>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
-            <div className="rounded-2xl bg-neutral-50 p-5">
+            <div className="min-w-0 rounded-2xl bg-neutral-50 p-5">
               <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Comentario del cliente</p>
-              <p className="mt-3 text-sm leading-7 text-neutral-700">{lead.notes || 'Sin comentario.'}</p>
+              <p className="mt-3 break-words text-sm leading-7 text-neutral-700">{lead.notes || 'Sin comentario.'}</p>
             </div>
-            <div className="rounded-2xl bg-neutral-50 p-5">
+            <div className="min-w-0 rounded-2xl bg-neutral-50 p-5">
               <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Notas internas</p>
-              <p className="mt-3 whitespace-pre-line text-sm leading-7 text-neutral-700">{lead.admin_notes || 'Sin notas internas.'}</p>
+              <p className="mt-3 whitespace-pre-line break-words text-sm leading-7 text-neutral-700">{lead.admin_notes || 'Sin notas internas.'}</p>
             </div>
           </div>
         </section>
@@ -255,7 +255,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
 
         <div className="mt-6 rounded-2xl bg-neutral-50 p-5">
           <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Motivos actuales</p>
-          {analysisReasons.length > 0 ? <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-700">{analysisReasons.map((reason) => <li key={reason}>• {reason}</li>)}</ul> : <p className="mt-3 text-sm leading-6 text-neutral-500">Sin motivos guardados todavía.</p>}
+          {analysisReasons.length > 0 ? <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-700">{analysisReasons.map((reason) => <li key={reason} className="break-words">• {reason}</li>)}</ul> : <p className="mt-3 text-sm leading-6 text-neutral-500">Sin motivos guardados todavía.</p>}
         </div>
 
         <form action={updateInvoiceAnalysis} className="mt-6 grid gap-5">
