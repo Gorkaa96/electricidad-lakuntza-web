@@ -77,13 +77,13 @@ export default function HomePage() {
           <div className="hero-grid absolute inset-0 opacity-50" />
           <div className="absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-lakuntza-green/25 blur-3xl" />
           <div className="absolute -left-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-white/10 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 xl:grid-cols-12 xl:px-8 xl:py-24">
-            <div className="xl:col-span-7">
+          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-18 lg:py-20 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.72fr)] xl:gap-12 xl:px-8 xl:py-24">
+            <div className="min-w-0">
               <div className="flex flex-wrap gap-3">
                 <Badge dark><MapPin size={14} /> Lakuntza · Navarra</Badge>
                 <Badge dark><ShieldCheck size={14} /> Empresa delegada de Feníe Energía</Badge>
               </div>
-              <h1 className="mt-7 max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.06em] sm:text-7xl xl:text-[5.6rem]">
+              <h1 className="mt-7 max-w-4xl text-4xl font-black leading-[0.98] tracking-[-0.055em] sm:text-6xl lg:text-7xl xl:text-[4.85rem]">
                 Electricidad, telecomunicaciones y energía con trato directo.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75 sm:text-xl">
@@ -106,13 +106,13 @@ export default function HomePage() {
                 <div className="rounded-3xl border border-white/10 bg-white/[.07] p-5"><p className="text-3xl font-black">1:1</p><p className="mt-1 text-xs font-black uppercase tracking-[.16em] text-white/50">Atención directa</p></div>
               </div>
             </div>
-            <div className="xl:col-span-5">
-              <div className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/[.08] p-3 shadow-2xl backdrop-blur xl:max-w-none">
+            <div className="min-w-0 xl:justify-self-end">
+              <div className="mx-auto w-full max-w-xl rounded-[2rem] border border-white/10 bg-white/[.08] p-3 shadow-2xl backdrop-blur xl:max-w-[480px]">
                 <div className="rounded-[1.55rem] bg-white p-7 text-neutral-950 sm:p-8">
                   <Logo />
                   <div className="my-9 border-y border-neutral-200 py-8">
                     <p className="text-xs font-black uppercase tracking-[.22em] text-lakuntza-greenDark">Instalación · Telecomunicaciones · Energía</p>
-                    <h2 className="mt-4 text-4xl font-black leading-none tracking-[-.06em] sm:text-5xl">Soluciones claras para tu vivienda o negocio.</h2>
+                    <h2 className="mt-4 text-4xl font-black leading-none tracking-[-.06em] sm:text-5xl xl:text-4xl">Soluciones claras para tu vivienda o negocio.</h2>
                     <p className="mt-4 text-sm leading-6 text-neutral-600">Presupuestos, averías, reformas, conectividad y revisión de facturas de luz y gas.</p>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
