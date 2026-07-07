@@ -77,7 +77,7 @@ export default function HomePage() {
           <div className="hero-grid absolute inset-0 opacity-50" />
           <div className="absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-lakuntza-green/25 blur-3xl" />
           <div className="absolute -left-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-white/10 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-18 lg:py-20 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.72fr)] xl:gap-12 xl:px-8 xl:py-24">
+          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:py-20 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.72fr)] xl:gap-12 xl:px-8 xl:py-24">
             <div className="min-w-0">
               <div className="flex flex-wrap gap-3">
                 <Badge dark><MapPin size={14} /> Lakuntza · Navarra</Badge>
