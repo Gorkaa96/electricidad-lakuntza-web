@@ -9,9 +9,9 @@ const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const navItems = [
   ['Servicios', '/servicios'],
-  ['Revisar factura', '/revision-factura-luz-gas'],
   ['Trabajos', '/#trabajos'],
-  ['Luz y gas', '/#energia'],
+  ['Energía', '/#energia'],
+  ['Feníe Energía', '/#fenie'],
   ['Zona', '/zona-servicio'],
   ['Contacto', '/#contacto'],
 ];
@@ -20,21 +20,21 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-200 bg-white shadow-sm">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <a href="/#inicio" aria-label="Ir al inicio" onClick={() => setOpen(false)} className="shrink-0">
           <Logo compact />
         </a>
 
-        <nav className="hidden items-center gap-7 text-sm font-black text-neutral-700 xl:flex" aria-label="Navegación principal">
+        <nav className="hidden min-w-0 items-center gap-5 text-[13px] font-black text-neutral-700 xl:flex" aria-label="Navegación principal">
           {navItems.map(([label, href]) => (
-            <a key={href} href={href} className={`rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark ${href === '/revision-factura-luz-gas' ? 'text-lakuntza-greenDark' : ''}`}>
+            <a key={href} href={href} className="whitespace-nowrap rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark">
               {label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 xl:flex">
+        <div className="hidden shrink-0 items-center gap-3 xl:flex">
           <a href="tel:+34649853448" className="rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-black text-neutral-900 shadow-sm transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
             649 853 448
           </a>
@@ -58,7 +58,7 @@ export default function Header() {
         <div className="border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl xl:hidden">
           <div className="mx-auto grid max-w-7xl gap-5">
             <div className="rounded-[1.6rem] border border-lakuntza-green/20 bg-[#F3FAEF] p-4">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión gratuita de factura</p>
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión de factura</p>
               <p className="mt-2 text-sm leading-6 text-neutral-600">Sube tu factura de luz o gas y revisamos si merece la pena mejorar condiciones.</p>
               <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green">
                 <FileText size={17} /> Revisar mi factura
