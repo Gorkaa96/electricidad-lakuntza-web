@@ -7,9 +7,9 @@ import InvoiceFileInput from '@/components/InvoiceFileInput';
 import { submitInvoiceReview } from './actions';
 
 export const metadata = {
-  title: 'Revisión gratuita de factura de luz y gas',
+  title: 'Revisión de factura de luz y gas',
   description:
-    'Sube tu factura de luz o gas y Electricidad Lakuntza revisará gratis si puedes mejorar tus condiciones en Navarra y País Vasco.',
+    'Sube tu factura de luz o gas y Electricidad Lakuntza revisará si puedes mejorar tus condiciones en Navarra y zonas cercanas del País Vasco.',
 };
 
 const errorMessages = {
@@ -23,7 +23,7 @@ const errorMessages = {
 };
 
 const benefits = [
-  'Revisión gratuita y sin compromiso.',
+  'Revisión sin compromiso.',
   'Te explicamos la comparativa antes de cambiar nada.',
   'Atención directa desde Electricidad Lakuntza.',
   'Si no te conviene cambiar, también te lo diremos.',
@@ -72,7 +72,7 @@ export default function RevisionFacturaPage({ searchParams }) {
             <div className="xl:col-span-8">
               <Badge dark><Leaf size={14} /> Luz y gas</Badge>
               <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
-                Sube tu factura y revisamos gratis si puedes mejorar.
+                Sube tu factura y revisamos si puedes mejorar.
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
                 Envíanos tu factura de luz o gas. Hacemos un preanálisis y, si vemos margen de mejora o un caso especial, Electricidad Lakuntza contacta contigo para explicártelo sin compromiso.
@@ -97,7 +97,7 @@ export default function RevisionFacturaPage({ searchParams }) {
         <section className="bg-lakuntza-mist py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 xl:grid-cols-12 xl:px-8">
             <div className="xl:col-span-5">
-              <Badge>Revisión gratuita</Badge>
+              <Badge>Revisión de factura</Badge>
               <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">
                 Una revisión rápida puede detectar oportunidades reales.
               </h2>
@@ -224,7 +224,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                     </div>
 
                     <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
-                      Comentario opcional
+                      Comentarios
                       <textarea name="notes" rows={4} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
                     </label>
                   </div>
@@ -239,7 +239,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                   </div>
 
                   <button className="w-full rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-                    Enviar factura para revisión gratuita
+                    Enviar factura para revisión
                   </button>
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
