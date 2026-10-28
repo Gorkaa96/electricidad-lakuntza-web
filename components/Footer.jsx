@@ -12,7 +12,7 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#101411] pb-28 pt-16 text-white md:pb-16">
+    <footer className="brand-dark-surface pb-28 pt-16 text-white md:pb-16">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
         <div className="lg:col-span-5">
           <a href="/#inicio" className="inline-flex items-center gap-3">
