@@ -33,6 +33,8 @@ const benefits = [
   'Si no te conviene cambiar, también te lo diremos.',
 ];
 
+const initialQuestionWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero consultar la revisión de luz o gas, pero ahora mismo no tengo la factura.');
+
 const privacyPoints = [
   'La factura se guarda en un espacio privado, no público.',
   'La usamos solo para revisar tu consulta y contactarte.',
@@ -60,8 +62,12 @@ export default async function RevisionFacturaPage({ searchParams }) {
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
                 Envíanos tu factura para que revisemos tus condiciones y valoremos si existe una alternativa interesante con Feníe Energía. Si no te conviene cambiar, también te lo diremos.
               </p>
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-lakuntza-greenDark px-6 py-3 text-sm font-black text-white transition-colors hover:bg-neutral-950">Subir mi factura</a>
+                <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 bg-white/10 px-6 py-3 text-sm font-black text-white transition-colors hover:bg-white/20">Consultar sin factura</a>
+              </div>
             </div>
-            <div className="xl:col-span-4">
+            <div className="hidden xl:col-span-4 xl:block">
               <div className="rounded-[2rem] border border-white/10 bg-white/[.07] p-7">
                 <FileText className="mb-6 text-lakuntza-green" size={34} />
                 <p className="text-sm leading-7 text-white/70">
@@ -133,7 +139,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     <div>
                       <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Formulario seguro</p>
                       <h3 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">Enviar factura para revisión</h3>
-                      <p className="mt-3 text-sm leading-6 text-neutral-600">Rellena los datos mínimos para que podamos estudiar la factura y contactarte. La recomendación final no es automática: la revisa una persona.</p>
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">Adjunta la última factura de luz o gas, indica cómo podemos llamarte y confirma el envío. Revisaremos tu caso personalmente, sin obligación de contratar.</p>
                     </div>
                   </div>
 
@@ -161,20 +167,14 @@ export default async function RevisionFacturaPage({ searchParams }) {
                         Email
                         <input name="email" type="email" autoComplete="email" maxLength={254} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
-                      <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Localidad
-                        <input name="locality" autoComplete="address-level2" maxLength={100} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
-                      </label>
+
                     </div>
                   </div>
 
                   <div className="border-t border-neutral-200 pt-7">
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">3. Factura y comentarios</p>
                     <div className="mt-4 grid gap-4">
-                      <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Compañía actual
-                        <input name="currentCompany" maxLength={100} placeholder="Iberdrola, Endesa, Naturgy..." className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
-                      </label>
+
                       <InvoiceFileInput />
                     </div>
 
