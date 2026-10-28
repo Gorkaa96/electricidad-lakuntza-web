@@ -8,7 +8,7 @@ import { servicePages } from '@/lib/servicePages';
 export const metadata = {
   title: 'Servicios',
   description:
-    'Servicios de Electricidad Lakuntza: revisión de facturas de luz y gas, instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
+    'Revisión de luz y gas con Feníe Energía, instalaciones eléctricas y telecomunicaciones. Atención desde Lakuntza.',
 };
 
 const iconBySlug = {
@@ -32,13 +32,13 @@ export default function ServiciosPage() {
                 Revisión de facturas, electricidad y telecomunicaciones.
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
-                El primer paso recomendado es subir una factura de luz o gas. Es gratis, rápido y permite detectar oportunidades sin visita inicial.
+                Para luz y gas, empezamos revisando tus condiciones y valorando opciones con Feníe Energía. También realizamos instalaciones eléctricas y telecomunicaciones según disponibilidad.
               </p>
             </div>
             <div className="lg:col-span-4">
               <div className="rounded-[2rem] border border-lakuntza-green/20 bg-lakuntza-green/10 p-7">
                 <FileText className="mb-5 text-lakuntza-green" size={32} />
-                <h2 className="text-2xl font-black tracking-[-0.04em]">Sube tu factura gratis</h2>
+                <h2 className="text-2xl font-black tracking-[-0.04em]">Revisión de factura</h2>
                 <p className="mt-3 text-sm leading-6 text-white/70">Revisamos luz, gas, potencia, consumo y servicios añadidos. Sin compromiso.</p>
                 <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
                   Revisar factura <ArrowRight className="ml-2" size={17} />
@@ -53,7 +53,7 @@ export default function ServiciosPage() {
             <div className="mb-10 rounded-[2rem] border border-lakuntza-green/20 bg-white p-6 shadow-card sm:p-8">
               <div className="grid gap-5 lg:grid-cols-12 lg:items-center">
                 <div className="lg:col-span-8">
-                  <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión gratuita</p>
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Luz y gas</p>
                   <h2 className="mt-3 text-3xl font-black tracking-[-0.05em] text-neutral-950">Empieza por una factura de luz o gas.</h2>
                   <p className="mt-4 text-sm leading-7 text-neutral-600">Con una factura podemos revisar consumo, potencia, condiciones y servicios añadidos. Después te explicamos si merece la pena mejorar algo o si conviene mantener lo actual.</p>
                 </div>
