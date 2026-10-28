@@ -23,7 +23,7 @@ body {
   margin: 0;
   color: var(--ink);
   background: #ffffff;
-  text-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
