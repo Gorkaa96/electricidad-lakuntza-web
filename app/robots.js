@@ -1,4 +1,5 @@
 import { siteUrl } from '@/lib/site';
+
 const publicLaunchEnabled = process.env.NEXT_PUBLIC_PUBLICATION_ENABLED === 'true';
 
 export default function robots() {
@@ -6,9 +7,9 @@ export default function robots() {
     rules: [
       {
         userAgent: '*',
-        allow: publicLaunchEnabled ? '/' : undefined,
-      disallow: publicLaunchEnabled ? ['/admin/', '/revision-factura-luz-gas/gracias'] : '/',
-        disallow: ['/admin/'],
+        ...(publicLaunchEnabled
+          ? { allow: '/', disallow: ['/admin/', '/revision-factura-luz-gas/gracias'] }
+          : { disallow: '/' }),
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
