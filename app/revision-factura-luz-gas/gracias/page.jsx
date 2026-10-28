@@ -36,8 +36,9 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function GraciasRevisionFacturaPage({ searchParams }) {
-  const state = searchParams?.estado || 'pending';
+export default async function GraciasRevisionFacturaPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const state = resolvedSearchParams?.estado || 'pending';
   const message = messages[state] || messages.pending;
   const Icon = message.tone === 'amber' ? AlertTriangle : CheckCircle2;
 
