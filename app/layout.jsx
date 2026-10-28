@@ -36,7 +36,7 @@ const publicLaunchEnabled = process.env.NEXT_PUBLIC_PUBLICATION_ENABLED === 'tru
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Revisión de luz y gas | Electricidad Lakuntza',
+    default: 'Luz, gas y alarmas | Electricidad Lakuntza',
     template: '%s | Electricidad Lakuntza',
   },
   description: siteConfig.description,
@@ -65,7 +65,7 @@ export const metadata = {
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
-    title: 'Revisión de luz y gas | Electricidad Lakuntza',
+    title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
       'Revisión gratuita de facturas de luz y gas con Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
     url: siteUrl,
