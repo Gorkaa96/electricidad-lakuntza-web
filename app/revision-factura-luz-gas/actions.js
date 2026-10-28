@@ -85,7 +85,7 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
 }
 
 export async function submitInvoiceReview(formData) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   if (!supabase) redirect('/revision-factura-luz-gas?error=config');
 
   const name = cleanText(formData.get('name'));
@@ -130,7 +130,7 @@ export async function submitInvoiceReview(formData) {
   if (uploadError) redirect('/revision-factura-luz-gas?error=subida');
 
   const precheckResult = getPrecheckResult({ bonusStatus, supplyType, customerType, currentCompany, notes });
-  const userAgent = headers().get('user-agent') || '';
+  const userAgent = (await headers()).get('user-agent') || '';
 
   const { error: insertError } = await supabase.from('invoice_review_leads').insert({
     id: leadId,
