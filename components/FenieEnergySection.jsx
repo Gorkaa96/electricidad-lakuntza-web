@@ -7,7 +7,7 @@ const fenieLogoUrl = 'https://storage.googleapis.com/stb-drupal-p-ew4-01/styles/
 const points = [
   'Comercializadora creada por empresas instaladoras.',
   'Contratación de electricidad y gas a través de agentes energéticos.',
-  'Colaboración con Movistar Prosegur Alarmas para soluciones de seguridad.'
+  'Colaboración con Movistar Prosegur Alarmas para soluciones de seguridad.',
   'Asesoramiento cercano para entender consumo, potencia y condiciones.',
 ];
 
