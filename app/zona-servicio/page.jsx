@@ -15,7 +15,7 @@ const zones = [
   },
   {
     title: 'País Vasco',
-    text: 'Atención en trabajos eléctricos, telecomunicaciones y asesoría energética valorando ubicación, alcance y disponibilidad.',
+    text: 'Atención a instalaciones eléctricas y telecomunicaciones en zonas cercanas, valorando ubicación, alcance y disponibilidad.',
   },
   {
     title: 'Lakuntza y Sakana',
@@ -34,8 +34,9 @@ const services = [
 
 export const metadata = {
   title: 'Zona de servicio',
+  alternates: { canonical: '/zona-servicio' },
   description:
-    'Electricidad Lakuntza presta servicio en Navarra y País Vasco desde Lakuntza: instalaciones eléctricas, telecomunicaciones y asesoría energética.',
+    'Instalaciones eléctricas y telecomunicaciones en Navarra y zonas cercanas del País Vasco. Consultas de luz y gas desde Electricidad Lakuntza.',
 };
 
 export default function ZonaServicioPage() {
@@ -67,10 +68,10 @@ export default function ZonaServicioPage() {
           <div className="relative mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
             <Badge dark><MapPin size={14} /> Zona de servicio</Badge>
             <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
-              Servicio en Navarra y País Vasco desde Lakuntza.
+              Instalaciones en Navarra y zonas cercanas del País Vasco.
             </h1>
             <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
-              Electricidad Lakuntza atiende instalaciones eléctricas, telecomunicaciones y asesoría energética para particulares, comunidades, comercios y pequeñas empresas.
+              Desde Lakuntza realizamos trabajos eléctricos y telecomunicaciones según la ubicación y disponibilidad. Para luz y gas atendemos consultas de revisión de facturas.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#contacto-zona" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
@@ -91,7 +92,7 @@ export default function ZonaServicioPage() {
                 Atención cercana y desplazamientos valorados caso a caso.
               </h2>
               <p className="mt-6 text-base leading-8 text-neutral-600">
-                La empresa está ubicada en Uriz Kalea, 27, 31830 Lakuntza, Navarra. Desde esta base se atienden trabajos en Navarra y País Vasco, valorando en cada solicitud el tipo de servicio, urgencia, disponibilidad y desplazamiento.
+                La empresa está ubicada en Uriz Kalea, 27, 31830 Lakuntza, Navarra. Desde esta base se atienden trabajos en Navarra y zonas cercanas del País Vasco, valorando en cada solicitud el tipo de servicio, urgencia, disponibilidad y desplazamiento.
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
                 {zones.map((zone) => (
