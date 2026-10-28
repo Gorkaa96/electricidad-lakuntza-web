@@ -1,4 +1,4 @@
-import { ArrowUpRight, CheckCircle2, Leaf, ShieldCheck, Users } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CheckCircle2, Leaf, ShieldCheck, Users } from 'lucide-react';
 import Badge from './Badge';
 
 const fenieUrl = 'https://www.fenieenergia.es/es/sobre-fenie/historia';
@@ -42,10 +42,10 @@ export default function FenieEnergySection() {
             <div className="xl:col-span-7">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Energía con acompañamiento</p>
               <h2 className="mt-4 max-w-3xl text-4xl font-black leading-[.95] tracking-[-.055em] text-neutral-950 sm:text-5xl">
-                Revisión de luz y gas con el respaldo de Feníe Energía.
+                Luz y gas con el acompañamiento de Electricidad Lakuntza y Feníe Energía.
               </h2>
               <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-600">
-                Feníe Energía es una comercializadora impulsada por empresas instaladoras. Desde Electricidad Lakuntza revisamos cada caso, explicamos la factura y, si encaja, acompañamos al cliente en la contratación.
+                Feníe Energía es una comercializadora nacida del sector de las empresas instaladoras. Electricidad Lakuntza actúa como empresa delegada: revisamos tu caso, explicamos las condiciones de Feníe y te acompañamos si decides contratar. No comparamos ofertas de todas las compañías del mercado.
               </p>
 
               <div className="mt-7 grid gap-3">
@@ -70,9 +70,14 @@ export default function FenieEnergySection() {
                 </div>
               </div>
 
-              <a href={fenieUrl} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
-                Conocer Feníe Energía <ArrowUpRight className="ml-2" size={17} />
-              </a>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                  Revisar mi factura <ArrowRight className="ml-2" size={17} />
+                </a>
+                <a href={fenieUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-neutral-300 bg-white px-5 py-3 text-sm font-black text-neutral-950 transition hover:border-lakuntza-green">
+                  Web oficial de Feníe <ArrowUpRight className="ml-2" size={17} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
