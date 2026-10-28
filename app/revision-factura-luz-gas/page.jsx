@@ -32,33 +32,11 @@ const benefits = [
   'Si no te conviene cambiar, también te lo diremos.',
 ];
 
-const checks = [
-  'Potencia contratada.',
-  'Precio y condiciones actuales.',
-  'Servicios añadidos o permanencias.',
-  'Luz, gas o ambos suministros.',
-];
-
 const privacyPoints = [
   'La factura se guarda en un espacio privado, no público.',
   'La usamos solo para revisar tu consulta y contactarte.',
   'El resultado final lo revisa una persona antes de darte una recomendación.',
   'Puedes pedir la eliminación de la solicitud y del archivo enviado.',
-];
-
-const processSteps = [
-  {
-    title: '1. Subes la factura',
-    text: 'Puede ser PDF o imagen. Solo pedimos los datos mínimos para poder revisarla y contactar contigo.',
-  },
-  {
-    title: '2. Preanálisis interno',
-    text: 'Ordenamos los datos principales: compañía, tarifa, potencia, consumo, importe y posibles servicios añadidos.',
-  },
-  {
-    title: '3. Confirmación humana',
-    text: 'Antes de recomendar nada, Electricidad Lakuntza revisa el caso y te explica si conviene actuar o mantener lo actual.',
-  },
 ];
 
 export default function RevisionFacturaPage({ searchParams }) {
@@ -99,10 +77,10 @@ export default function RevisionFacturaPage({ searchParams }) {
 
         <section className="bg-lakuntza-mist py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 xl:grid-cols-12 xl:px-8">
-            <div className="xl:col-span-5">
+            <div className="order-2 xl:order-1 xl:col-span-5">
               <Badge>Revisión de factura</Badge>
               <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">
-                Una revisión rápida puede detectar oportunidades reales.
+                Revisamos las condiciones antes de que decidas.
               </h2>
               <p className="mt-6 text-base leading-8 text-neutral-600">
                 No prometemos ahorro automático. Revisamos tu caso y te decimos con honestidad si merece la pena cambiar, ajustar condiciones o mantener lo que tienes.
@@ -142,7 +120,7 @@ export default function RevisionFacturaPage({ searchParams }) {
               </div>
             </div>
 
-            <div className="xl:col-span-7">
+            <div className="order-1 xl:order-2 xl:col-span-7">
               <form action={submitInvoiceReview} className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
                 <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="website-hp">Deja este campo vacío</label><input id="website-hp" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
@@ -223,29 +201,6 @@ export default function RevisionFacturaPage({ searchParams }) {
                   </p>
                 </div>
               </form>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-6 md:grid-cols-3">
-              {processSteps.map((step) => (
-                <div key={step.title} className="rounded-[1.6rem] border border-neutral-200 bg-white p-6 shadow-card">
-                  <ShieldCheck className="text-lakuntza-green" size={22} />
-                  <h3 className="mt-4 text-lg font-black tracking-[-0.03em] text-neutral-950">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-neutral-600">{step.text}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {checks.map((item) => (
-                <div key={item} className="rounded-[1.6rem] border border-neutral-200 bg-white p-5 shadow-card">
-                  <CheckCircle2 className="text-lakuntza-green" size={22} />
-                  <p className="mt-4 text-sm font-black text-neutral-900">{item}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
