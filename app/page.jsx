@@ -12,8 +12,6 @@ export const metadata = {
   alternates: { canonical: '/' },
 };
 
-const luzWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero consultar sobre luz o gas.');
-const alarmWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero información sobre alarmas Movistar Prosegur.');
 const generalWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 
 const routes = [
@@ -49,14 +47,12 @@ export default function HomePage() {
       <Header />
       <main>
         <section id="inicio" className="relative isolate overflow-hidden bg-[#121915] pt-20 text-white">
-          <div className="hero-grid pointer-events-none absolute inset-0 opacity-35" />
-          <div className="pointer-events-none absolute -right-40 top-5 h-96 w-96 rounded-full bg-lakuntza-green/15 blur-3xl" />
           <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
             <div className="max-w-4xl">
               <p className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-[.12em] text-white/85">
                 <Leaf size={15} className="text-[#A9ED82]" /> Agentes energéticos de Feníe Energía
               </p>
-              <h1 className="mt-9 max-w-4xl text-[clamp(2.65rem,6.5vw,5.35rem)] font-black leading-[1.04] tracking-[-.055em]">
+              <h1 className="mt-9 max-w-4xl text-[clamp(2.5rem,5.7vw,4.9rem)] font-extrabold leading-[1.08] tracking-[-.045em]">
                 Revisamos tu factura de luz o gas. <span className="text-[#A9ED82]">Gratis y sin compromiso.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
@@ -91,7 +87,7 @@ export default function HomePage() {
               {routes.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <a key={item.label} href={item.href} className="group flex min-w-0 flex-col rounded-[1.5rem] border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-lg sm:p-7">
+                  <a key={item.label} href={item.href} className="group flex min-w-0 flex-col rounded-[1.5rem] border border-neutral-200 bg-white p-6 shadow-sm transition-colors hover:border-lakuntza-greenDark/40 hover:shadow-md sm:p-7">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F0F8EB] text-lakuntza-greenDark"><Icon size={24} /></div>
                     <p className="mt-7 text-xs font-black uppercase tracking-[.12em] text-lakuntza-greenDark">{item.label}</p>
                     <h3 className="mt-3 text-xl font-black leading-tight tracking-[-.03em] text-neutral-950">{item.title}</h3>
