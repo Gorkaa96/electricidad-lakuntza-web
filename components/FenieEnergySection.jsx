@@ -44,7 +44,7 @@ export default function FenieEnergySection() {
           </ol>
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
             <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">Luz y gas <ArrowRight size={16} /></a>
-            <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-neutral-300 px-4 py-3 text-sm font-black text-neutral-900 transition hover:border-lakuntza-greenDark">Alarmas <ArrowRight size={16} /></a>
+            <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">Alarmas <ArrowRight size={16} /></a>
           </div>
           <p className="mt-5 flex items-start gap-2 text-xs leading-5 text-neutral-500"><CheckCircle2 size={16} className="mt-0.5 shrink-0 text-lakuntza-greenDark" /> Atención directa, sin obligación de contratar.</p>
         </div>
