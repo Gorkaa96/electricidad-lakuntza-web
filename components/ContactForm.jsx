@@ -50,6 +50,7 @@ export default function ContactForm() {
       <label className="mt-4 grid gap-2 text-sm font-bold text-neutral-800">Motivo
         <select name="service" defaultValue="Revisión de luz y gas" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
           <option>Revisión de luz y gas</option>
+          <option>Alarmas de Movistar Prosegur</option>
           <option>Instalación eléctrica</option>
           <option>Avería o mantenimiento</option>
           <option>Telecomunicaciones</option>
