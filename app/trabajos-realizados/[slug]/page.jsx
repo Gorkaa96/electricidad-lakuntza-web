@@ -9,7 +9,8 @@ import { getProjectBySlug } from '@/lib/projects';
 export const revalidate = 60;
 
 export async function generateMetadata({ params }) {
-  const project = await getProjectBySlug(params.slug);
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return { title: 'Trabajo no encontrado' };
@@ -27,7 +28,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProjectDetailPage({ params }) {
-  const project = await getProjectBySlug(params.slug);
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
 
   if (!project) notFound();
 

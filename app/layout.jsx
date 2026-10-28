@@ -49,7 +49,9 @@ export const metadata = {
     'instalaciones eléctricas País Vasco',
     'telecomunicaciones Navarra',
     'asesoría energética Navarra',
-    'Feníe Energía Navarra',
+    'Feníe Energía',
+    'revisión gratuita factura de luz',
+    'comparar factura de gas',
     'comparar factura luz gas',
   ],
   icons: {
@@ -65,7 +67,7 @@ export const metadata = {
   openGraph: {
     title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
-      'Luz, gas y asesoramiento para alarmas Movistar Prosegur a través de Feníe Energía. Electricidad y telecomunicaciones en Navarra.',
+      'Luz, gas y alarmas con atención directa a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
     url: siteUrl,
     siteName: siteConfig.name,
     type: 'website',
@@ -83,7 +85,7 @@ export const metadata = {
     card: 'summary',
     title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
-      'Luz, gas y alarmas con atención directa; instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
+      'Luz, gas y alarmas con atención directa y sin compromiso. Instalaciones eléctricas y telecomunicaciones.',
     images: ['/logo-lakuntza.png'],
   },
   robots: {

@@ -27,7 +27,7 @@ export default function EnergyEligibilityFields() {
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-sm font-bold text-neutral-800">
           Suministro *
-          <select name="supplyType" required value={supplyType} onChange={(e) => setSupplyType(e.target.value)} className="focus-ring min-h-12 w-full min-w-0 rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+          <select name="supplyType" required value={supplyType} onChange={(e) => { setSupplyType(e.target.value); setBonusStatus(''); }} className="focus-ring min-h-12 w-full min-w-0 rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base outline-none focus:border-lakuntza-green sm:text-sm">
             <option value="luz">Luz</option>
             <option value="gas">Gas</option>
             <option value="luz_gas">Luz y gas</option>
@@ -41,16 +41,20 @@ export default function EnergyEligibilityFields() {
             <option value="comunidad">Comunidad</option>
           </select>
         </label>
-        <label className="grid gap-2 text-sm font-bold text-neutral-800 sm:col-span-2">
-          ¿Tienes bono social eléctrico, título de familia numerosa o podrías tener derecho a él? *
-          <select ref={statusRef} name="bonusStatus" required value={bonusStatus} onChange={(e) => setBonusStatus(e.target.value)} className="focus-ring min-h-12 w-full min-w-0 rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base outline-none focus:border-lakuntza-green sm:text-sm">
-            <option value="" disabled>Selecciona una opción</option>
-            <option value="si">Tengo bono social eléctrico</option>
-            <option value="familia_numerosa">Tengo título de familia numerosa</option>
-            <option value="no">No, ninguna de estas situaciones</option>
-            <option value="no_lo_se">No lo sé / tengo dudas</option>
-          </select>
-        </label>
+        {includesElectricity ? (
+          <label className="grid gap-2 text-sm font-bold text-neutral-800 sm:col-span-2">
+            ¿Tienes bono social eléctrico o título de familia numerosa? *
+            <select ref={statusRef} name="bonusStatus" required value={bonusStatus} onChange={(e) => setBonusStatus(e.target.value)} className="focus-ring min-h-12 w-full min-w-0 rounded-xl border border-neutral-300 bg-white px-4 py-3 text-base outline-none focus:border-lakuntza-green sm:text-sm">
+              <option value="" disabled>Selecciona una opción</option>
+              <option value="si">Tengo bono social eléctrico</option>
+              <option value="familia_numerosa">Tengo título de familia numerosa</option>
+              <option value="no">No, ninguna de estas situaciones</option>
+              <option value="no_lo_se">No lo sé / tengo dudas</option>
+            </select>
+          </label>
+        ) : (
+          <input type="hidden" name="bonusStatus" value="no" />
+        )}
       </div>
       {blocked ? (
         <div role="alert" className="mt-4 flex gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">

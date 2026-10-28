@@ -12,18 +12,20 @@ export const metadata = {
 export const revalidate = 0;
 
 export default async function EditProjectPage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const { supabase } = await requireAdmin();
   const { data: project } = await supabase
     .from('projects')
     .select('*, project_images(*)')
-    .eq('id', params.id)
+    .eq('id', resolvedParams.id)
     .maybeSingle();
 
   if (!project) notFound();
 
   return (
     <AdminShell title="Editar trabajo" description="Revisa el contenido antes de publicarlo en la web.">
-      <AdminNotice success={searchParams?.success} error={searchParams?.error} />
+      <AdminNotice success={resolvedSearchParams?.success} error={resolvedSearchParams?.error} />
       <ProjectForm project={project} />
     </AdminShell>
   );

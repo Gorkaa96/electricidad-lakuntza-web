@@ -20,7 +20,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const service = getServicePage(params.slug);
+  const { slug } = await params;
+  const service = getServicePage(slug);
 
   if (!service) return { title: 'Servicio no encontrado' };
 
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function ServiceDetailPage({ params }) {
+export default async function ServiceDetailPage({ params }) {
   const service = getServicePage(params.slug);
   if (!service) notFound();
 

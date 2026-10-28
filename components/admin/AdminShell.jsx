@@ -59,7 +59,7 @@ export default function AdminShell({ children, title, description, action }) {
         <header className="border-b border-neutral-200 bg-white/90 px-4 py-5 backdrop-blur sm:px-6 lg:px-8">
           <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Electricidad Lakuntza · Gestión interna</p>
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Gestión interna</p>
               <h1 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">{title}</h1>
               {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-600">{description}</p> : null}
             </div>

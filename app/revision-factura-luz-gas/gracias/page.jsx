@@ -36,8 +36,9 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function GraciasRevisionFacturaPage({ searchParams }) {
-  const state = searchParams?.estado || 'pending';
+export default async function GraciasRevisionFacturaPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const state = resolvedSearchParams?.estado || 'pending';
   const message = messages[state] || messages.pending;
   const Icon = message.tone === 'amber' ? AlertTriangle : CheckCircle2;
 
@@ -45,7 +46,7 @@ export default function GraciasRevisionFacturaPage({ searchParams }) {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
+        <section className="brand-dark-surface relative isolate overflow-hidden pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
           <div className="relative mx-auto max-w-4xl px-4 pb-16 text-center sm:px-6 lg:px-8">

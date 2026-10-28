@@ -8,7 +8,6 @@ const navigation = [
   ['Luz y gas', '/revision-factura-luz-gas'],
   ['Alarmas', '/alarmas-movistar-prosegur'],
   ['Instalaciones', '/servicios'],
-  ['Feníe Energía', '/#fenie'],
   ['Contacto', '/#contacto'],
 ];
 
@@ -26,9 +25,14 @@ export default function Header() {
             <a key={href} href={href} className="whitespace-nowrap transition hover:text-lakuntza-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lakuntza-greenDark">{label}</a>
           ))}
         </nav>
-        <a href="/revision-factura-luz-gas" className="hidden shrink-0 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white transition hover:bg-neutral-950 xl:inline-flex">
-          <FileText size={17} /> Revisar factura
-        </a>
+        <div className="hidden shrink-0 items-center gap-2 xl:flex">
+          <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">
+            <FileText size={17} aria-hidden="true" /> Luz y gas
+          </a>
+          <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">
+            Alarmas <ArrowRight size={17} aria-hidden="true" />
+          </a>
+        </div>
         <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="focus-ring inline-flex h-12 w-12 items-center justify-center rounded-xl border border-neutral-300 text-neutral-950 xl:hidden">
           {open ? <X size={23} /> : <Menu size={23} />}
         </button>
@@ -36,9 +40,14 @@ export default function Header() {
       <div id="public-nav-mobile" className={open ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-neutral-200 bg-white px-4 pb-5 pt-3 shadow-lg xl:hidden' : 'hidden'}>
         <nav className="mx-auto grid max-w-7xl gap-1" aria-label="Navegación móvil">
           {navigation.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-xl px-4 py-3 text-base font-bold text-neutral-900 hover:bg-neutral-100">{label}</a>)}
-          <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white">
-            Revisar mi factura <ArrowRight size={17} />
-          </a>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-3 py-3 text-sm font-black text-white">
+              Luz y gas <ArrowRight size={17} aria-hidden="true" />
+            </a>
+            <a href="/alarmas-movistar-prosegur" onClick={() => setOpen(false)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-3 py-3 text-sm font-black text-white">
+              Alarmas <ArrowRight size={17} aria-hidden="true" />
+            </a>
+          </div>
         </nav>
       </div>
     </header>

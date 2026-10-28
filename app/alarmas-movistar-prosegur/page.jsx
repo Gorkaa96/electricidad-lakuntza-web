@@ -37,7 +37,7 @@ export default function AlarmasMovistarProsegurPage() {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="relative isolate overflow-hidden bg-[#101411] pt-32 text-white">
+        <section className="brand-dark-surface relative isolate overflow-hidden pt-32 text-white">
           <div className="hero-grid pointer-events-none absolute inset-0 opacity-35" />
           <div className="pointer-events-none absolute -right-32 top-10 h-80 w-80 rounded-full bg-lakuntza-green/20 blur-3xl" />
           <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-20 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,.8fr)] lg:px-8">
@@ -125,7 +125,7 @@ export default function AlarmasMovistarProsegurPage() {
           </div>
         </section>
 
-        <section className="bg-neutral-950 py-20 text-white sm:py-24">
+        <section className="brand-dark-surface py-20 text-white sm:py-24">
           <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
             <ShieldCheck className="mx-auto text-lakuntza-green" size={34} />
             <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-5xl">¿Quieres conocer las opciones para tu hogar o negocio?</h2>

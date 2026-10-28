@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
 import InvoiceFileInput from '@/components/InvoiceFileInput';
+import InvoiceSubmitButton from '@/components/InvoiceSubmitButton';
 import EnergyEligibilityFields from '@/components/EnergyEligibilityFields';
 import { submitInvoiceReview } from './actions';
 
@@ -32,12 +33,7 @@ const benefits = [
   'Si no te conviene cambiar, también te lo diremos.',
 ];
 
-const checks = [
-  'Potencia contratada.',
-  'Precio y condiciones actuales.',
-  'Servicios añadidos o permanencias.',
-  'Luz, gas o ambos suministros.',
-];
+const initialQuestionWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero consultar la revisión de luz o gas, pero ahora mismo no tengo la factura.');
 
 const privacyPoints = [
   'La factura se guarda en un espacio privado, no público.',
@@ -46,42 +42,32 @@ const privacyPoints = [
   'Puedes pedir la eliminación de la solicitud y del archivo enviado.',
 ];
 
-const processSteps = [
-  {
-    title: '1. Subes la factura',
-    text: 'Puede ser PDF o imagen. Solo pedimos los datos mínimos para poder revisarla y contactar contigo.',
-  },
-  {
-    title: '2. Preanálisis interno',
-    text: 'Ordenamos los datos principales: compañía, tarifa, potencia, consumo, importe y posibles servicios añadidos.',
-  },
-  {
-    title: '3. Confirmación humana',
-    text: 'Antes de recomendar nada, Electricidad Lakuntza revisa el caso y te explica si conviene actuar o mantener lo actual.',
-  },
-];
-
-export default function RevisionFacturaPage({ searchParams }) {
-  const error = searchParams?.error;
+export default async function RevisionFacturaPage({ searchParams }) {
+  const resolvedParams = await searchParams;
+  const error = resolvedParams?.error;
 
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
+        <section className="brand-dark-surface relative isolate overflow-hidden pt-28 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 pb-16 sm:px-6 xl:grid-cols-12 xl:items-end xl:px-8">
+          <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-10 sm:gap-10 sm:px-6 sm:pb-16 xl:grid-cols-12 xl:items-end xl:px-8">
             <div className="xl:col-span-8">
               <Badge dark><Leaf size={14} /> Luz y gas</Badge>
-              <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
-                Revisa tu factura de luz o gas sin compromiso.
+              <h1 className="mt-6 max-w-5xl text-4xl font-black leading-[1.06] tracking-[-.05em] sm:text-6xl">
+                Revisión de luz y gas, con trato directo.
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
                 Envíanos tu factura para que revisemos tus condiciones y valoremos si existe una alternativa interesante con Feníe Energía. Si no te conviene cambiar, también te lo diremos.
               </p>
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-lakuntza-greenDark px-6 py-3 text-sm font-black text-white transition-colors hover:bg-neutral-950">Subir mi factura</a>
+                <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 bg-white/10 px-6 py-3 text-sm font-black text-white transition-colors hover:bg-white/20">Consultar sin factura</a>
+              </div>
             </div>
-            <div className="xl:col-span-4">
+            <div className="hidden xl:col-span-4 xl:block">
               <div className="rounded-[2rem] border border-white/10 bg-white/[.07] p-7">
                 <FileText className="mb-6 text-lakuntza-green" size={34} />
                 <p className="text-sm leading-7 text-white/70">
@@ -99,13 +85,13 @@ export default function RevisionFacturaPage({ searchParams }) {
 
         <section className="bg-lakuntza-mist py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 xl:grid-cols-12 xl:px-8">
-            <div className="xl:col-span-5">
+            <div className="order-2 xl:order-1 xl:col-span-5">
               <Badge>Revisión de factura</Badge>
               <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">
-                Una revisión rápida puede detectar oportunidades reales.
+                Revisamos las condiciones antes de que decidas.
               </h2>
               <p className="mt-6 text-base leading-8 text-neutral-600">
-                No prometemos ahorro automático. Revisamos tu caso y te decimos con honestidad si merece la pena cambiar, ajustar condiciones o mantener lo que tienes.
+                Revisamos tu caso y te explicamos si existe una alternativa interesante. Si conviene mantener tus condiciones actuales, también te lo diremos.
               </p>
 
               <div className="mt-8 grid gap-3">
@@ -142,8 +128,8 @@ export default function RevisionFacturaPage({ searchParams }) {
               </div>
             </div>
 
-            <div className="xl:col-span-7">
-              <form action={submitInvoiceReview} className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
+            <div className="order-1 xl:order-2 xl:col-span-7">
+              <form id="formulario" action={submitInvoiceReview} className="scroll-mt-24 overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
                 <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="website-hp">Deja este campo vacío</label><input id="website-hp" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -153,12 +139,12 @@ export default function RevisionFacturaPage({ searchParams }) {
                     <div>
                       <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Formulario seguro</p>
                       <h3 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">Enviar factura para revisión</h3>
-                      <p className="mt-3 text-sm leading-6 text-neutral-600">Rellena los datos mínimos para que podamos estudiar la factura y contactarte. La recomendación final no es automática: la revisa una persona.</p>
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">Adjunta la última factura de luz o gas, indica cómo podemos llamarte y confirma el envío. Revisaremos tu caso personalmente, sin obligación de contratar.</p>
                     </div>
                   </div>
 
                   {error ? (
-                    <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold leading-6 text-red-700">
+                    <div role="alert" id="form-error" className="mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold leading-6 text-red-700">
                       {errorMessages[error] || 'Ha ocurrido un error. Inténtalo de nuevo.'}
                     </div>
                   ) : null}
@@ -171,36 +157,30 @@ export default function RevisionFacturaPage({ searchParams }) {
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Nombre *
-                        <input name="name" required autoComplete="name" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="name" required autoComplete="name" minLength={2} maxLength={100} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Teléfono *
-                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Email
-                        <input name="email" type="email" autoComplete="email" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="email" type="email" autoComplete="email" maxLength={254} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
-                      <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Localidad
-                        <input name="locality" autoComplete="address-level2" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
-                      </label>
+
                     </div>
                   </div>
 
                   <div className="border-t border-neutral-200 pt-7">
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">3. Factura y comentarios</p>
                     <div className="mt-4 grid gap-4">
-                      <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Compañía actual
-                        <input name="currentCompany" placeholder="Iberdrola, Endesa, Naturgy..." className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
-                      </label>
+
                       <InvoiceFileInput />
                     </div>
 
                     <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
                       Comentarios
-                      <textarea name="notes" rows={4} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                      <textarea name="notes" rows={3} maxLength={500} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
                     </label>
                   </div>
 
@@ -213,9 +193,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                     </label>
                   </div>
 
-                  <button className="w-full rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
-                    Enviar factura para revisión
-                  </button>
+                  <InvoiceSubmitButton />
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
@@ -223,29 +201,6 @@ export default function RevisionFacturaPage({ searchParams }) {
                   </p>
                 </div>
               </form>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-6 md:grid-cols-3">
-              {processSteps.map((step) => (
-                <div key={step.title} className="rounded-[1.6rem] border border-neutral-200 bg-white p-6 shadow-card">
-                  <ShieldCheck className="text-lakuntza-green" size={22} />
-                  <h3 className="mt-4 text-lg font-black tracking-[-0.03em] text-neutral-950">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-neutral-600">{step.text}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {checks.map((item) => (
-                <div key={item} className="rounded-[1.6rem] border border-neutral-200 bg-white p-5 shadow-card">
-                  <CheckCircle2 className="text-lakuntza-green" size={22} />
-                  <p className="mt-4 text-sm font-black text-neutral-900">{item}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>

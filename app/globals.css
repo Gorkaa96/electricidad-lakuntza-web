@@ -69,3 +69,14 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Superficie oscura corporativa: degradado verde integrado en el grafito. */
+.brand-dark-surface {
+  background-color: #0d1712;
+  background-image:
+    radial-gradient(ellipse 72% 110% at 100% 0%, rgba(67, 142, 46, 0.33), transparent 68%),
+    radial-gradient(ellipse 65% 100% at 0% 100%, rgba(32, 112, 60, 0.24), transparent 72%),
+    linear-gradient(126deg, #101713 2%, #193021 55%, #0c1410 100%);
+}
+
+:where(h1, h2, h3) { text-wrap: balance; }
