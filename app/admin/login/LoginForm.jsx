@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
-export default function LoginForm() {
+export default function LoginForm({ unauthorized = false }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,8 +16,16 @@ export default function LoginForm() {
     setLoading(true);
     setError('');
 
-    const supabase = createSupabaseBrowserClient();
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    let signInError = null;
+    try {
+      const supabase = createSupabaseBrowserClient();
+      const result = await supabase.auth.signInWithPassword({ email, password });
+      signInError = result.error;
+    } catch {
+      setError('No se puede conectar con el servicio de acceso. Inténtalo de nuevo más tarde.');
+      setLoading(false);
+      return;
+    }
 
     if (signInError) {
       setError('No se ha podido iniciar sesión. Revisa el correo y la contraseña.');
@@ -57,7 +64,7 @@ export default function LoginForm() {
         />
       </label>
 
-      {searchParams.get('error') === 'unauthorized' ? <p role="alert" className="rounded-xl bg-amber-50 p-4 text-sm font-bold text-amber-950">Esta cuenta no tiene acceso al panel. Contacta con la persona responsable de Electricidad Lakuntza.</p> : null}
+      {unauthorized ? <p role="alert" className="rounded-xl bg-amber-50 p-4 text-sm font-bold text-amber-950">Esta cuenta no tiene acceso al panel. Contacta con la persona responsable de Electricidad Lakuntza.</p> : null}
       {error ? <p role="alert" className="rounded-xl bg-red-50 p-4 text-sm font-bold text-red-700">{error}</p> : null}
 
       <button
