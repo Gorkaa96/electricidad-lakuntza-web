@@ -8,7 +8,8 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function AdminLoginPage() {
+export default async function AdminLoginPage({ searchParams }) {
+  const resolvedParams = await searchParams;
   const { admin } = await getAdminContext();
 
   if (admin) {
@@ -19,7 +20,7 @@ export default async function AdminLoginPage() {
     <main className="min-h-screen bg-lakuntza-mist px-4 py-10 text-neutral-950 sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl items-center justify-center">
         <div className="grid w-full overflow-hidden rounded-[2.2rem] border border-neutral-200 bg-white shadow-2xl lg:grid-cols-2">
-          <section className="bg-neutral-950 p-8 text-white sm:p-10 lg:p-12">
+          <section className="brand-dark-surface p-8 text-white sm:p-10 lg:p-12">
             <Logo dark />
             <div className="mt-14">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-lakuntza-green">Panel privado</p>
@@ -38,7 +39,7 @@ export default async function AdminLoginPage() {
             <p className="mt-3 text-sm leading-6 text-neutral-600">
               Introduce las credenciales autorizadas para gestionar las solicitudes y el contenido de la web.
             </p>
-            <LoginForm />
+            <LoginForm unauthorized={resolvedParams?.error === 'unauthorized'} />
           </section>
         </div>
       </div>
