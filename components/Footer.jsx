@@ -1,98 +1,48 @@
 import Image from 'next/image';
-import { FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 
-const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
-const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
-
-const mainLinks = [
-  ['Revisión factura luz/gas', '/revision-factura-luz-gas'],
-  ['Alarmas Movistar Prosegur', '/alarmas-movistar-prosegur'],
-  ['Servicios', '/servicios'],
+const whatsappHref = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta.');
+const links = [
+  ['Luz y gas', '/revision-factura-luz-gas'],
+  ['Alarmas', '/alarmas-movistar-prosegur'],
+  ['Instalaciones', '/servicios'],
   ['Trabajos realizados', '/trabajos-realizados'],
   ['Feníe Energía', '/#fenie'],
-  ['Zona de servicio', '/zona-servicio'],
-  ['Contacto', '/#contacto'],
-];
-
-const legalLinks = [
-  ['Aviso legal', '/aviso-legal'],
-  ['Privacidad', '/privacidad'],
-  ['Cookies', '/cookies'],
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-950 pb-28 pt-14 text-white md:pb-14">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+    <footer className="bg-[#101411] pb-28 pt-16 text-white md:pb-16">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
         <div className="lg:col-span-5">
-          <div className="flex items-center gap-4">
-            <span className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
-              <Image src="/logo-lakuntza.png" alt="Electricidad Lakuntza" width={56} height={56} className="h-full w-full rounded-full object-contain" />
-            </span>
-            <div>
-              <p className="text-base font-black text-white">Electricidad Lakuntza · Elektrizitatea</p>
-              <p className="mt-1 text-sm text-white/60">Luz · Gas · Alarmas · Electricidad</p>
-            </div>
-          </div>
-
-          <p className="mt-6 max-w-md text-sm leading-7 text-white/60">
-            Luz y gas con Feníe Energía y asesoramiento sobre alarmas Movistar Prosegur a través de su colaboración. Instalaciones eléctricas y telecomunicaciones desde Lakuntza.
-          </p>
-
-          <div className="mt-6 rounded-[1.6rem] border border-lakuntza-green/30 bg-lakuntza-green/10 p-5">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Luz, gas y alarmas</p>
-            <h3 className="mt-3 text-2xl font-black tracking-[-0.04em] text-white">Revisamos tu factura, tú decides.</h3>
-            <p className="mt-3 text-sm leading-6 text-white/65">Revisamos tu factura y te informamos sobre soluciones de seguridad para hogar y negocio.</p>
-            <a href="/revision-factura-luz-gas" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-              <FileText size={17} /> Revisar luz y gas
-            </a>
-            <a href="/alarmas-movistar-prosegur" className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/20 px-4 py-3 text-sm font-black text-white transition hover:bg-white/10">
-              <ShieldCheck size={17} /> Consultar alarmas
-            </a>
-          </div>
-
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <a href="tel:+34649853448" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-black text-neutral-950 transition hover:bg-lakuntza-mist">
-              <Phone size={17} /> Llamar
-            </a>
-            <a href={whatsappHref} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-              <MessageCircle size={17} /> WhatsApp
-            </a>
-          </div>
+          <a href="/#inicio" className="inline-flex items-center gap-3">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white"><Image src="/logo-lakuntza.png" alt="" width={48} height={48} className="h-full w-full object-contain" /></span>
+            <span className="text-base font-black">Electricidad Lakuntza</span>
+          </a>
+          <p className="mt-6 max-w-md text-sm leading-7 text-white/65">Luz, gas y alarmas mediante nuestra colaboración con Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.</p>
+          <a href="/revision-factura-luz-gas" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-green">Revisar mi factura <ArrowRight size={16}/></a>
         </div>
-
-        <div className="grid gap-8 sm:grid-cols-3 lg:col-span-7">
+        <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7 lg:grid-cols-[.8fr_1.2fr]">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Navegación</p>
-            <nav className="mt-4 grid gap-3 text-sm font-bold text-white/70">
-              {mainLinks.map(([label, href]) => (
-                <a key={href} href={href} className="transition hover:text-white">{label}</a>
-              ))}
+            <p className="text-xs font-black uppercase tracking-[.14em] text-[#A9ED82]">Servicios</p>
+            <nav className="mt-5 grid gap-3 text-sm font-bold text-white/75" aria-label="Enlaces del pie de página">
+              {links.map(([label,href]) => <a key={href} href={href} className="hover:text-white">{label}</a>)}
             </nav>
           </div>
-
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Contacto</p>
-            <div className="mt-4 grid gap-3 text-sm text-white/70">
-              <a href="tel:+34649853448" className="inline-flex items-start gap-2 transition hover:text-white"><Phone size={16} className="mt-0.5 shrink-0 text-lakuntza-green" />649 853 448</a>
-              <a href="mailto:eleclakuntza@yahoo.es" className="inline-flex items-start gap-2 break-all transition hover:text-white"><Mail size={16} className="mt-0.5 shrink-0 text-lakuntza-green" />eleclakuntza@yahoo.es</a>
-              <span className="inline-flex items-start gap-2"><MapPin size={16} className="mt-0.5 shrink-0 text-lakuntza-green" />Uriz Kalea, 27 · 31830 Lakuntza, Navarra</span>
+            <p className="text-xs font-black uppercase tracking-[.14em] text-[#A9ED82]">Contacto</p>
+            <div className="mt-5 grid gap-3 text-sm leading-6 text-white/75">
+              <a href="tel:+34649853448" className="inline-flex items-start gap-3 hover:text-white"><Phone size={17} className="mt-1 shrink-0 text-[#A9ED82]"/>649 853 448</a>
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-3 hover:text-white"><MessageCircle size={17} className="mt-1 shrink-0 text-[#A9ED82]"/>WhatsApp</a>
+              <a href="mailto:eleclakuntza@yahoo.es" className="inline-flex items-start gap-3 break-all hover:text-white"><Mail size={17} className="mt-1 shrink-0 text-[#A9ED82]"/>eleclakuntza@yahoo.es</a>
+              <span className="inline-flex items-start gap-3"><MapPin size={17} className="mt-1 shrink-0 text-[#A9ED82]"/>Uriz Kalea 27 · 31830 Lakuntza, Navarra</span>
             </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Legal</p>
-            <nav className="mt-4 grid gap-3 text-sm font-bold text-white/70">
-              {legalLinks.map(([label, href]) => (
-                <a key={href} href={href} className="transition hover:text-white">{label}</a>
-              ))}
-            </nav>
           </div>
         </div>
       </div>
-
-      <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 px-4 pt-6 text-xs leading-6 text-white/40 sm:px-6 lg:px-8">
-        © {new Date().getFullYear()} Electricidad Lakuntza. Todos los derechos reservados.
+      <div className="mx-auto mt-12 flex max-w-7xl flex-wrap justify-between gap-4 border-t border-white/15 px-4 pt-7 text-xs text-white/55 sm:px-6 lg:px-8">
+        <span>© {new Date().getFullYear()} Electricidad Lakuntza.</span>
+        <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Información legal"><a href="/aviso-legal" className="hover:text-white">Aviso legal</a><a href="/privacidad" className="hover:text-white">Privacidad</a><a href="/cookies" className="hover:text-white">Cookies</a></nav>
       </div>
     </footer>
   );
