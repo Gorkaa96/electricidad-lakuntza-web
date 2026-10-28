@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import Logo from '@/components/Logo';
 import LoginForm from './LoginForm';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { getAdminContext } from '@/lib/admin';
 
 export const metadata = {
   title: 'Acceso al panel',
@@ -9,10 +9,9 @@ export const metadata = {
 };
 
 export default async function AdminLoginPage() {
-  const supabase = createSupabaseServerClient();
-  const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+  const { admin } = await getAdminContext();
 
-  if (data?.user) {
+  if (admin) {
     redirect('/admin/facturas');
   }
 
