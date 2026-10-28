@@ -71,7 +71,8 @@ function customerLabel(value) {
 }
 
 function bonusLabel(value) {
-  if (value === 'si') return 'Sí';
+  if (value === 'familia_numerosa') return 'Familia numerosa: posible derecho a bono social';
+  if (value === 'si') return 'Sí / situación especial declarada';
   if (value === 'no') return 'No';
   if (value === 'no_lo_se') return 'No lo sé';
   return value;

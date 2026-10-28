@@ -50,7 +50,7 @@ export default function AlarmasMovistarProsegurPage() {
                 Electricidad Lakuntza te informa sobre la contratación de Movistar Prosegur Alarmas a través de Feníe Energía. Te ayudamos a entender las opciones y condiciones antes de decidir.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                   Consultar mi alarma <MessageCircle className="ml-2" size={18} />
                 </a>
                 <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
@@ -130,7 +130,7 @@ export default function AlarmasMovistarProsegurPage() {
             <ShieldCheck className="mx-auto text-lakuntza-green" size={34} />
             <h2 className="mt-5 text-3xl font-black tracking-[-.04em] sm:text-5xl">¿Quieres conocer las opciones para tu hogar o negocio?</h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-white/70">Escríbenos y dinos si ya eres cliente de Feníe y para qué espacio necesitas la alarma. Te orientaremos sobre las condiciones que correspondan.</p>
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
               Solicitar información por WhatsApp <ArrowRight className="ml-2" size={18} />
             </a>
             <p className="mt-5 text-xs leading-6 text-white/50">El botón abre WhatsApp. El mensaje no se envía hasta que tú lo confirmes. También puedes llamar al 649 853 448.</p>

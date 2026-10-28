@@ -41,7 +41,7 @@ export default function ServiciosPage() {
                 <FileText className="mb-5 text-lakuntza-green" size={32} />
                 <h2 className="text-2xl font-black tracking-[-0.04em]">Revisión de factura</h2>
                 <p className="mt-3 text-sm leading-6 text-white/70">Revisamos luz, gas, potencia, consumo y servicios añadidos. Sin compromiso.</p>
-                <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                   Revisar factura <ArrowRight className="ml-2" size={17} />
                 </a>
                 <a href="/alarmas-movistar-prosegur" className="mt-3 inline-flex w-full items-center justify-center rounded-2xl border border-white/25 px-5 py-3 text-sm font-black text-white transition hover:bg-white/10">
@@ -62,7 +62,7 @@ export default function ServiciosPage() {
                   <p className="mt-4 text-sm leading-7 text-neutral-600">Con una factura podemos revisar consumo, potencia, condiciones y servicios añadidos. Después te explicamos si merece la pena mejorar algo o si conviene mantener lo actual.</p>
                 </div>
                 <div className="lg:col-span-4">
-                  <a href="/revision-factura-luz-gas" className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                  <a href="/revision-factura-luz-gas" className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
                     Subir factura ahora <ArrowRight className="ml-2" size={17} />
                   </a>
                 </div>

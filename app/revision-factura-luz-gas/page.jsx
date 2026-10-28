@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
 import InvoiceFileInput from '@/components/InvoiceFileInput';
+import EnergyEligibilityFields from '@/components/EnergyEligibilityFields';
 import { submitInvoiceReview } from './actions';
 
 export const metadata = {
@@ -15,6 +16,7 @@ export const metadata = {
 
 const errorMessages = {
   config: 'La configuración del formulario no está disponible ahora mismo. Puedes enviar la factura por WhatsApp o email.',
+  bono: 'No tramitamos el cambio de suministro eléctrico con bono social o posible derecho por familia numerosa. Puedes consultar una comercializadora de referencia o elegir solo gas.',
   datos: 'Revisa nombre, teléfono y consentimiento antes de enviar.',
   factura: 'Debes adjuntar una factura en PDF o imagen.',
   tipo: 'Formato no válido. Sube un PDF, JPG, PNG o WebP.',
@@ -121,7 +123,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                   <div>
                     <h3 className="font-black text-amber-950">Bono social o familia numerosa</h3>
                     <p className="mt-2 text-sm leading-6 text-amber-900">
-                      Si tienes bono social, familia numerosa o tarifa regulada, lo revisamos como caso especial antes de recomendar cualquier cambio.
+                      El bono social eléctrico solo puede aplicarse con comercializadoras de referencia. Si lo recibes o tienes título de familia numerosa, te orientamos hacia la información oficial antes de pedir tu factura de luz.
                     </p>
                   </div>
                 </div>
@@ -163,8 +165,9 @@ export default function RevisionFacturaPage({ searchParams }) {
                 </div>
 
                 <div className="grid gap-7 p-5 sm:p-8">
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">1. Datos de contacto</p>
+                  <EnergyEligibilityFields />
+                  <div className="border-t border-neutral-200 pt-7">
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">2. Datos de contacto</p>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Nombre *
@@ -181,36 +184,6 @@ export default function RevisionFacturaPage({ searchParams }) {
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Localidad
                         <input name="locality" autoComplete="address-level2" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-neutral-200 pt-7">
-                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">2. Datos del contrato</p>
-                    <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                      <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Suministro *
-                        <select name="supplyType" required defaultValue="luz" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
-                          <option value="luz">Luz</option>
-                          <option value="gas">Gas</option>
-                          <option value="luz_gas">Luz y gas</option>
-                        </select>
-                      </label>
-                      <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Cliente *
-                        <select name="customerType" required defaultValue="vivienda" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
-                          <option value="vivienda">Vivienda</option>
-                          <option value="negocio">Negocio</option>
-                          <option value="comunidad">Comunidad</option>
-                        </select>
-                      </label>
-                      <label className="grid gap-2 text-sm font-black text-neutral-800 sm:col-span-2">
-                        Bono social / familia numerosa *
-                        <select name="bonusStatus" required defaultValue="no_lo_se" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
-                          <option value="no">No</option>
-                          <option value="si">Sí</option>
-                          <option value="no_lo_se">No lo sé</option>
-                        </select>
                       </label>
                     </div>
                   </div>
@@ -240,7 +213,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                     </label>
                   </div>
 
-                  <button className="w-full rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                  <button className="w-full rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                     Enviar factura para revisión
                   </button>
 
@@ -286,7 +259,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                 ['¿Es obligatorio contratar?', 'No. Revisamos tu consulta y te explicamos las alternativas que podamos ofrecerte. Tú decides si continuar.'],
                 ['¿Comparáis todas las comercializadoras?', 'No. Electricidad Lakuntza trabaja como empresa delegada de Feníe Energía y estudia sus alternativas a partir de tus condiciones actuales.'],
                 ['¿Me quedaré sin luz o gas si cambio?', 'El cambio ordinario de comercializadora es administrativo y no exige interrumpir el suministro. Antes de contratar revisamos las condiciones aplicables.'],
-                ['¿Y si tengo bono social o tarifa regulada?', 'Indícalo en el formulario. Requiere especial cuidado: cambiar de modalidad puede hacerte perder determinadas ventajas. No aconsejamos cambios sin revisarlo.'],
+                ['¿Y si tengo bono social eléctrico o título de familia numerosa?', 'No podemos tramitar el cambio de luz a una tarifa con bono social. El PVPC y el descuento se solicitan ante una comercializadora de referencia. Para gas o alarmas puedes consultarnos por separado.'],
                 ['¿No tengo la factura disponible?', 'Puedes preguntarnos primero por WhatsApp o llamarnos. No hace falta enviarla para una consulta inicial.'],
               ].map(([question, answer]) => (
                 <details key={question} className="group rounded-2xl border border-neutral-200 bg-neutral-50 p-5 open:bg-white">

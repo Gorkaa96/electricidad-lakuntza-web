@@ -23,7 +23,7 @@ body {
   margin: 0;
   color: var(--ink);
   background: #ffffff;
-  text-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -53,4 +53,19 @@ body {
 .focus-ring:focus-visible {
   outline: 3px solid rgba(85, 185, 39, 0.35);
   outline-offset: 3px;
+}
+
+/* Usabilidad y accesibilidad, compartidas entre web pública y administrador. */
+:where(a,button,input,textarea,select,summary):focus-visible {
+  outline: 3px solid #3f981d;
+  outline-offset: 3px;
+}
+:where(section[id],header[id]) { scroll-margin-top: 5rem; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

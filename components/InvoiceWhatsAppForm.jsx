@@ -25,7 +25,7 @@ export default function InvoiceWhatsAppForm() {
         </div>
       </div>
 
-      <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+      <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
         <Upload className="mr-2" size={18} /> Revisar mi factura
       </a>
 

@@ -1,78 +1,46 @@
-import { CheckCircle2, FileText, Home, Leaf, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Wifi, Zap, ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, FileText, Leaf, Mail, MessageCircle, Phone, ShieldCheck, Wrench, Zap } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Logo from '@/components/Logo';
 import Badge from '@/components/Badge';
-import InvoiceWhatsAppForm from '@/components/InvoiceWhatsAppForm';
-import ContactForm from '@/components/ContactForm';
-import FrequentServices from '@/components/FrequentServices';
+import FenieEnergySection from '@/components/FenieEnergySection';
 import ProjectsSection from '@/components/ProjectsSection';
 import MobileContactBar from '@/components/MobileContactBar';
-import FenieEnergySection from '@/components/FenieEnergySection';
 
-const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
-const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
-const mapsHref = 'https://www.google.com/maps/search/?api=1&query=Uriz%20Kalea%2027%2031830%20Lakuntza%20Navarra';
+export const metadata = {
+  title: 'Luz, gas y alarmas con atención directa',
+  description: 'Electricidad Lakuntza: revisión de luz y gas, alarmas Movistar Prosegur a través de Feníe Energía e instalaciones eléctricas en Navarra y País Vasco.',
+  alternates: { canonical: '/' },
+};
 
-const services = [
-  {
-    icon: Leaf,
-    title: 'Luz y gas · Feníe Energía',
-    href: '/revision-factura-luz-gas',
-    text: 'Revisamos tu factura y estudiamos condiciones de luz y gas con atención directa, sin compromiso de contratación.',
-    items: ['Revisión de factura', 'Explicación de condiciones', 'Acompañamiento si decides contratar'],
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Alarmas Movistar Prosegur',
-    href: '/alarmas-movistar-prosegur',
-    text: 'Información y contratación de alarmas para viviendas y negocios a través de Feníe Energía. Condiciones sujetas a confirmación.',
-    items: ['Soluciones para hogar y negocio', 'Promociones según elegibilidad', 'Asesoramiento comercial cercano'],
-  },
+const luzWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero consultar sobre luz o gas.');
+const alarmWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero información sobre alarmas Movistar Prosegur.');
+const generalWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
+
+const routes = [
   {
     icon: Zap,
-    title: 'Instalaciones eléctricas',
-    href: '/servicios/instalaciones-electricas',
-    text: 'Instalaciones, reformas, ampliaciones, cuadros eléctricos, puntos de luz, iluminación, averías y mantenimiento eléctrico.',
-    items: ['Reformas eléctricas', 'Cuadros y protecciones', 'Averías, ampliaciones y puntos de luz'],
-  },
-  {
-    icon: Wifi,
-    title: 'Telecomunicaciones',
-    href: '/servicios/telecomunicaciones',
-    text: 'Soluciones de conectividad para vivienda, comunidad, comercio y pequeño negocio, con instalación limpia y preparada para durar.',
-    items: ['Redes de datos y cableado', 'Antenas y telecomunicaciones', 'Porteros y videoporteros'],
-  },
-];
-
-const trustItems = [
-  {
-    icon: Home,
-    title: 'Empresa local',
-    text: 'Atención cercana desde Lakuntza, con servicio en Navarra y zonas cercanas del País Vasco.',
-  },
-  {
-    icon: Phone,
-    title: 'Trato directo',
-    text: 'Hablas con una persona cercana, sin centralitas ni procesos impersonales.',
+    label: 'Luz y gas',
+    title: 'Revisión de facturas y contratación',
+    text: 'Revisamos tus condiciones actuales y valoramos alternativas de Feníe Energía. Con explicación clara y sin obligación de contratar.',
+    href: '/revision-factura-luz-gas',
+    action: 'Revisar mi factura',
   },
   {
     icon: ShieldCheck,
-    title: 'Trabajo claro',
-    text: 'Se revisa la necesidad, se explica la solución y se ejecuta con orden.',
+    label: 'Alarmas',
+    title: 'Movistar Prosegur Alarmas',
+    text: 'Te informamos sobre soluciones de seguridad para vivienda o negocio, a través de la colaboración con Feníe Energía.',
+    href: '/alarmas-movistar-prosegur',
+    action: 'Consultar alarmas',
   },
   {
-    icon: Leaf,
-    title: 'Energía y seguridad',
-    text: 'Revisión de luz y gas y consultas sobre alarmas a través de Feníe Energía.',
+    icon: Wrench,
+    label: 'Electricidad y telecomunicaciones',
+    title: 'Instalaciones profesionales',
+    text: 'Instalaciones, reformas, averías, redes y telecomunicaciones. Trabajos en Navarra y País Vasco, según disponibilidad.',
+    href: '/servicios',
+    action: 'Ver instalaciones',
   },
-];
-
-const steps = [
-  ['01', 'Escucha', 'Entendemos qué necesitas, el tipo de instalación y la urgencia real.'],
-  ['02', 'Diagnóstico', 'Revisamos el trabajo o la factura antes de plantear una solución.'],
-  ['03', 'Propuesta', 'Explicamos alcance, opciones y próximos pasos de forma clara.'],
-  ['04', 'Ejecución', 'Trabajo ordenado, comunicación directa y comprobación final.'],
 ];
 
 export default function HomePage() {
@@ -80,192 +48,77 @@ export default function HomePage() {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section id="inicio" className="relative isolate overflow-hidden bg-[#101411] pt-20 text-white">
-          <div className="hero-grid absolute inset-0 opacity-40" />
-          <div className="pointer-events-none absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-lakuntza-green/20 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.85fr)] lg:gap-10 lg:px-8 lg:py-24">
-            <div className="min-w-0">
-              <div className="flex flex-wrap gap-3">
-                <Badge dark><MapPin size={14} /> Electricidad Lakuntza · Lakuntza</Badge>
-                <Badge dark><ShieldCheck size={14} /> Empresa delegada de Feníe Energía</Badge>
-              </div>
-              <p className="mt-9 text-xs font-black uppercase tracking-[.18em] text-[#9AE36F]">Luz, gas y alarmas · Atención directa</p>
-              <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.08] tracking-[-.045em] sm:text-5xl lg:text-[clamp(2.75rem,4vw,4.2rem)]">
-                Luz, gas y alarmas con atención directa.
-              </h1>
-              <p className="mt-7 max-w-2xl text-base leading-8 text-white/80 sm:text-lg">
-                Revisamos tus suministros de luz y gas y te informamos sobre alarmas de Movistar Prosegur a través de Feníe Energía. Te explicamos las opciones para que puedas decidir con claridad.
+        <section id="inicio" className="relative isolate overflow-hidden bg-[#121915] pt-20 text-white">
+          <div className="hero-grid pointer-events-none absolute inset-0 opacity-35" />
+          <div className="pointer-events-none absolute -right-40 top-5 h-96 w-96 rounded-full bg-lakuntza-green/15 blur-3xl" />
+          <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+            <div className="max-w-4xl">
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-[.12em] text-white/85">
+                <Leaf size={15} className="text-[#A9ED82]" /> Empresa delegada de Feníe Energía
               </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-                  Revisar mi factura <ArrowRight className="ml-2" size={18} />
+              <h1 className="mt-9 max-w-4xl text-[clamp(2.65rem,6.5vw,5.35rem)] font-black leading-[1.04] tracking-[-.055em]">
+                Luz, gas y alarmas. <span className="text-[#A9ED82]">Atención directa, sin complicaciones.</span>
+              </h1>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
+                En Electricidad Lakuntza te orientamos sobre tus contratos de luz y gas y sobre alarmas Movistar Prosegur. Conocemos el sector, escuchamos lo que necesitas y te explicamos cada propuesta antes de decidir.
+              </p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
+                  <FileText size={19} /> Revisar luz y gas <ArrowRight size={17} />
                 </a>
-                <a href="/alarmas-movistar-prosegur" className="inline-flex items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
-                  Consultar alarmas <ArrowRight className="ml-2" size={17} />
+                <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/20">
+                  <ShieldCheck size={19} /> Consultar alarmas <ArrowRight size={17} />
                 </a>
               </div>
-              <p className="mt-5 text-sm leading-6 text-white/65">¿No tienes la factura a mano? <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="font-black text-white underline underline-offset-4">Escríbenos por WhatsApp</a>.</p>
-              <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-white/70">
-                <span className="inline-flex items-center gap-2"><CheckCircle2 className="text-[#9AE36F]" size={17} /> Revisión humana</span>
-                <span className="inline-flex items-center gap-2"><CheckCircle2 className="text-[#9AE36F]" size={17} /> Sin obligación de contratar</span>
-                <span className="inline-flex items-center gap-2"><CheckCircle2 className="text-[#9AE36F]" size={17} /> Tú decides</span>
+              <div className="mt-7 flex flex-wrap gap-x-7 gap-y-2 text-sm font-medium text-white/75">
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Atención personal</span>
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Condiciones claras</span>
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Sin compromiso de contratación</span>
               </div>
-              <a href="/servicios" className="mt-10 inline-flex items-center text-sm font-bold text-white/65 underline-offset-4 hover:text-white hover:underline">
-                También hacemos instalaciones eléctricas y telecomunicaciones. Ver servicios <ArrowRight className="ml-2" size={16} />
-              </a>
-            </div>
-            <div className="min-w-0">
-              <div className="mx-auto w-full max-w-lg rounded-[2rem] border border-white/10 bg-white p-6 text-neutral-950 shadow-2xl sm:p-8">
-                <Logo />
-                <p className="mt-8 text-xs font-black uppercase tracking-[.18em] text-lakuntza-greenDark">Así funciona</p>
-                <h2 className="mt-3 text-3xl font-black leading-tight tracking-[-.04em]">Una revisión clara, paso a paso.</h2>
-                <div className="mt-7 grid gap-4">
-                  {[
-                    ['01', 'Envías tu factura', 'Desde la web, en un espacio privado.'],
-                    ['02', 'Revisamos las condiciones', 'Consumo, potencia, servicios y alternativas disponibles.'],
-                    ['03', 'Te explicamos el resultado', 'Decides si te interesa seguir adelante.'],
-                  ].map(([num, title, text]) => (
-                    <div key={num} className="flex gap-4 rounded-2xl bg-neutral-50 p-4">
-                      <span className="text-sm font-black text-lakuntza-greenDark">{num}</span>
-                      <div className="min-w-0">
-                        <p className="font-black">{title}</p>
-                        <p className="mt-1 text-sm leading-6 text-neutral-600">{text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-6 text-xs leading-5 text-neutral-500">Trabajamos como empresa delegada de Feníe Energía. No somos un comparador independiente de todas las comercializadoras.</p>
-              </div>
+              <a href="/servicios" className="mt-10 inline-flex items-center gap-2 text-sm font-bold text-white/85 underline-offset-4 hover:text-white hover:underline">También realizamos instalaciones eléctricas y telecomunicaciones <ArrowRight size={16} /></a>
             </div>
           </div>
         </section>
 
-        <section id="servicios" className="bg-lakuntza-mist py-20 sm:py-28">
+        <section id="servicios" className="bg-white py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-              <div className="lg:col-span-7"><Badge>Servicios</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Servicios para tu hogar o negocio</h2></div>
-              <div className="lg:col-span-5">
-                <p className="text-base leading-8 text-neutral-600">Tres vías comerciales con Feníe Energía — luz, gas y alarmas — y nuestros servicios técnicos de electricidad y telecomunicaciones en Navarra y alrededores.</p>
-                <a href="/servicios" className="mt-5 inline-flex items-center text-sm font-black text-lakuntza-greenDark transition hover:text-lakuntza-green">
-                  Ver página de servicios <ArrowRight className="ml-2" size={17} />
-                </a>
-              </div>
+            <div className="max-w-2xl">
+              <Badge>Servicios</Badge>
+              <h2 className="mt-5 text-3xl font-black leading-tight tracking-[-.045em] sm:text-5xl">Encuentra lo que necesitas.</h2>
+              <p className="mt-4 text-base leading-7 text-neutral-600">Tres opciones claras, sin buscar entre páginas ni formularios innecesarios.</p>
             </div>
-            <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {services.map((service) => {
-                const Icon = service.icon;
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {routes.map((item) => {
+                const Icon = item.icon;
                 return (
-                  <a key={service.title} href={service.href} className="group rounded-[2rem] border border-neutral-200 bg-white p-7 shadow-card transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-2xl">
-                    <div className="mb-7 flex h-16 w-16 items-center justify-center rounded-3xl bg-[#F3FAEF] text-lakuntza-greenDark"><Icon size={30} /></div>
-                    <h3 className="text-2xl font-black tracking-[-.04em]">{service.title}</h3>
-                    <p className="mt-4 text-sm leading-7 text-neutral-600">{service.text}</p>
-                    <div className="mt-7 grid gap-3 text-sm font-bold text-neutral-700">
-                      {service.items.map((item) => <div key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 shrink-0 text-lakuntza-green" size={17} /><span>{item}</span></div>)}
-                    </div>
-                    <span className="mt-7 inline-flex items-center text-sm font-black text-lakuntza-greenDark transition group-hover:text-lakuntza-green">
-                      Ver detalle <ArrowRight className="ml-2 transition group-hover:translate-x-1" size={17} />
-                    </span>
+                  <a key={item.label} href={item.href} className="group flex min-w-0 flex-col rounded-[1.5rem] border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-lg sm:p-7">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F0F8EB] text-lakuntza-greenDark"><Icon size={24} /></div>
+                    <p className="mt-7 text-xs font-black uppercase tracking-[.12em] text-lakuntza-greenDark">{item.label}</p>
+                    <h3 className="mt-3 text-xl font-black leading-tight tracking-[-.03em] text-neutral-950">{item.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-7 text-neutral-600">{item.text}</p>
+                    <span className="mt-8 inline-flex items-center gap-2 text-sm font-black text-lakuntza-greenDark">{item.action} <ArrowRight size={17} className="transition group-hover:translate-x-1" /></span>
                   </a>
                 );
               })}
             </div>
-          </div>
-        </section>
-
-        <FrequentServices />
-        <ProjectsSection />
-
-        <section className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-              <div className="lg:col-span-7">
-                <Badge>Confianza local</Badge>
-                <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Cercanía, oficio y explicación clara.</h2>
-              </div>
-              <p className="text-base leading-8 text-neutral-600 lg:col-span-5">Una instalación eléctrica o una contratación energética debe entenderse bien antes de tomar decisiones. Por eso el trato es directo y el proceso se explica desde el principio.</p>
-            </div>
-            <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-              {trustItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <article key={item.title} className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card">
-                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F3FAEF] text-lakuntza-greenDark"><Icon size={23} /></div>
-                    <h3 className="text-lg font-black tracking-[-.03em]">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-neutral-600">{item.text}</p>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section id="energia" className="bg-white py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 xl:grid-cols-12 xl:items-center xl:px-8">
-            <div className="xl:col-span-6">
-              <Badge><Leaf size={14} /> Luz y gas</Badge>
-              <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Revisa tu factura sin compromiso.</h2>
-              <p className="mt-6 text-base leading-8 text-neutral-600">Como empresa delegada de Feníe Energía, revisamos tu factura de luz o gas, te explicamos qué estás pagando y valoramos contigo si existe una opción más adecuada para tu consumo.</p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><FileText className="mb-4 text-lakuntza-green" /><h3 className="font-black">Revisión de factura</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Consumo, potencia contratada, condiciones y posibles mejoras.</p></div>
-                <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"><MessageCircle className="mb-4 text-lakuntza-green" /><h3 className="font-black">Atención cercana</h3><p className="mt-2 text-sm leading-6 text-neutral-600">Sin centralitas impersonales y sin obligación de contratar.</p></div>
-              </div>
-              <a href="/servicios/asesoria-energetica-luz-gas" className="mt-7 inline-flex items-center text-sm font-black text-lakuntza-greenDark transition hover:text-lakuntza-green">
-                Ver servicio de luz y gas <ArrowRight className="ml-2" size={17} />
-              </a>
-            </div>
-            <div className="xl:col-span-6"><div className="mx-auto max-w-2xl rounded-[2rem] bg-neutral-950 p-2 shadow-2xl xl:max-w-none"><InvoiceWhatsAppForm /></div></div>
           </div>
         </section>
 
         <FenieEnergySection />
+        <ProjectsSection />
 
-        <section id="proceso" className="bg-neutral-950 py-20 text-white sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-              <div className="lg:col-span-7"><Badge dark>Proceso</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Trabajo claro de principio a fin.</h2></div>
-              <p className="text-base leading-8 text-white/70 lg:col-span-5">Un trato directo ayuda a evitar dudas: sabes con quién hablas, qué se va a revisar y cuál es el siguiente paso.</p>
+        <section id="contacto" className="scroll-mt-20 bg-neutral-950 py-20 text-white sm:py-24">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
+            <div className="lg:col-span-7">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-[#A9ED82]">Contacto</p>
+              <h2 className="mt-5 max-w-2xl text-3xl font-black leading-tight tracking-[-.045em] sm:text-5xl">¿Te ayudamos con tu próxima decisión?</h2>
+              <p className="mt-5 max-w-xl text-base leading-8 text-white/70">Escríbenos o llámanos. Te atendemos directamente, tanto si buscas luz o gas como una alarma o una instalación.</p>
             </div>
-            <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {steps.map(([num, title, text]) => <div key={num} className="rounded-[2rem] border border-white/10 bg-white/[.05] p-6"><p className="text-sm font-black text-lakuntza-green">{num}</p><h3 className="mt-5 text-xl font-black tracking-[-.03em]">{title}</h3><p className="mt-3 text-sm leading-6 text-white/60">{text}</p></div>)}
+            <div className="grid gap-3 lg:col-span-5">
+              <a href={generalWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-lakuntza-greenDark px-5 py-4 text-sm font-black text-white transition hover:bg-neutral-950"><MessageCircle size={19}/> Consultar por WhatsApp</a>
+              <a href="tel:+34649853448" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl border border-white/30 px-5 py-4 text-sm font-black text-white hover:bg-white/10"><Phone size={19}/> Llamar: 649 853 448</a>
+              <a href="mailto:eleclakuntza@yahoo.es" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl border border-white/30 px-5 py-4 text-sm font-black text-white hover:bg-white/10"><Mail size={19}/> eleclakuntza@yahoo.es</a>
             </div>
-          </div>
-        </section>
-
-        <section id="zona" className="bg-white py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 rounded-[2.2rem] border border-neutral-200 bg-lakuntza-mist p-7 shadow-card sm:p-10 xl:grid-cols-12 xl:items-center">
-              <div className="xl:col-span-7">
-                <Badge><MapPin size={14} /> Zona de servicio</Badge>
-                <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-5xl">Servicio en Navarra y zonas cercanas del País Vasco desde Lakuntza.</h2>
-                <p className="mt-5 text-base leading-8 text-neutral-600">La empresa está ubicada en Uriz Kalea, 27, 31830 Lakuntza, Navarra. Desde Lakuntza se atienden trabajos en Navarra y zonas cercanas del País Vasco, valorando en cada solicitud el tipo de trabajo, disponibilidad y desplazamiento.</p>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  <a href="/zona-servicio" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
-                    Ver zona de servicio
-                  </a>
-                  <a href={mapsHref} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-neutral-300 bg-white px-5 py-3 text-sm font-black text-neutral-950 transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
-                    Ver ubicación en Google Maps
-                  </a>
-                </div>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2 xl:col-span-5">
-                {['Navarra', 'País Vasco cercano', 'Particulares y comunidades', 'Comercios y pequeños negocios'].map((item) => <div key={item} className="rounded-3xl bg-white p-5 shadow-sm"><p className="font-black">{item}</p><p className="mt-2 text-sm leading-6 text-neutral-500">{item === 'Navarra' || item === 'País Vasco cercano' ? 'Zona de servicio según disponibilidad.' : 'Instalación, revisión y mantenimiento.'}</p></div>)}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="contacto" className="bg-lakuntza-mist py-20 sm:py-28">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 xl:grid-cols-12 xl:px-8">
-            <div className="xl:col-span-5">
-              <Badge>Contacto</Badge><h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">Cuéntanos qué necesitas.</h2><p className="mt-6 text-base leading-8 text-neutral-600">Para luz, gas, alarmas, averías o presupuestos, llama o escribe por WhatsApp.</p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
-                <a href="tel:+34649853448" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Phone className="text-lakuntza-green" /><div><p className="font-black">649 853 448</p><p className="text-sm text-neutral-500">Llamada directa</p></div></a>
-                <a href={whatsappHref} className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MessageCircle className="text-lakuntza-green" /><div><p className="font-black">Escribir por WhatsApp</p><p className="text-sm text-neutral-500">Luz, gas, alarmas y otras consultas</p></div></a>
-                <a href="mailto:eleclakuntza@yahoo.es" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><Mail className="text-lakuntza-green" /><div><p className="break-words font-black">eleclakuntza@yahoo.es</p><p className="text-sm text-neutral-500">Presupuestos y documentación</p></div></a>
-                <a href={mapsHref} target="_blank" rel="noreferrer" className="flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-lakuntza-green"><MapPin className="text-lakuntza-green" /><div><p className="font-black">Uriz Kalea, 27</p><p className="text-sm text-neutral-500">31830 Lakuntza, Navarra</p></div></a>
-              </div>
-            </div>
-            <div className="xl:col-span-7"><ContactForm /></div>
           </div>
         </section>
       </main>

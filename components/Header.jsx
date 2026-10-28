@@ -1,19 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { FileText, Menu, MessageCircle, Phone, X } from 'lucide-react';
+import { ArrowRight, FileText, Menu, X } from 'lucide-react';
 import Logo from './Logo';
 
-const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
-const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
-
-const navItems = [
+const navigation = [
   ['Luz y gas', '/revision-factura-luz-gas'],
   ['Alarmas', '/alarmas-movistar-prosegur'],
+  ['Instalaciones', '/servicios'],
   ['Feníe Energía', '/#fenie'],
-  ['Servicios', '/servicios'],
-  ['Trabajos', '/#trabajos'],
-  ['Zona', '/zona-servicio'],
   ['Contacto', '/#contacto'],
 ];
 
@@ -21,70 +16,31 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <a href="/#inicio" aria-label="Ir al inicio" onClick={() => setOpen(false)} className="shrink-0">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-md">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
+        <a href="/#inicio" aria-label="Electricidad Lakuntza, inicio" className="shrink-0" onClick={() => setOpen(false)}>
           <Logo compact />
         </a>
-
-        <nav className="hidden min-w-0 items-center gap-4 text-[13px] font-black text-neutral-700 2xl:flex" aria-label="Navegación principal">
-          {navItems.map(([label, href]) => (
-            <a key={href} href={href} className="whitespace-nowrap rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark">
-              {label}
-            </a>
+        <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-700 xl:flex" aria-label="Navegación principal">
+          {navigation.map(([label, href]) => (
+            <a key={href} href={href} className="whitespace-nowrap transition hover:text-lakuntza-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lakuntza-greenDark">{label}</a>
           ))}
         </nav>
-
-        <div className="hidden shrink-0 items-center gap-3 2xl:flex">
-          <a href="tel:+34649853448" className="rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-black text-neutral-900 shadow-sm transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
-            649 853 448
-          </a>
-          <a href="/revision-factura-luz-gas" className="inline-flex items-center gap-2 rounded-full bg-lakuntza-green px-5 py-2.5 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-            <FileText size={16} /> Revisar factura
-          </a>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-950 shadow-sm 2xl:hidden"
-          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-          aria-expanded={open}
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
+        <a href="/revision-factura-luz-gas" className="hidden shrink-0 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white transition hover:bg-neutral-950 xl:inline-flex">
+          <FileText size={17} /> Revisar factura
+        </a>
+        <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="focus-ring inline-flex h-12 w-12 items-center justify-center rounded-xl border border-neutral-300 text-neutral-950 xl:hidden">
+          {open ? <X size={23} /> : <Menu size={23} />}
         </button>
       </div>
-
-      {open && (
-        <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl 2xl:hidden">
-          <div className="mx-auto grid max-w-7xl gap-5">
-            <div className="rounded-[1.6rem] border border-lakuntza-green/20 bg-[#F3FAEF] p-4">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión de factura</p>
-              <p className="mt-2 text-sm leading-6 text-neutral-600">Sube tu factura de luz o gas para revisarla. También puedes consultarnos por alarmas de Movistar Prosegur.</p>
-              <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green">
-                <FileText size={17} /> Revisar mi factura
-              </a>
-            </div>
-
-            <nav className="grid gap-1 text-sm font-black text-neutral-800" aria-label="Navegación móvil">
-              {navItems.map(([label, href]) => (
-                <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 transition hover:bg-neutral-50">
-                  {label}
-                </a>
-              ))}
-            </nav>
-
-            <div className="grid grid-cols-2 gap-2">
-              <a href="tel:+34649853448" onClick={() => setOpen(false)} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-neutral-950 px-4 py-3 text-sm font-black text-white">
-                <Phone size={17} /> Llamar
-              </a>
-              <a href={whatsappHref} onClick={() => setOpen(false)} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green">
-                <MessageCircle size={17} /> WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
+      <div id="public-nav-mobile" className={open ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-neutral-200 bg-white px-4 pb-5 pt-3 shadow-lg xl:hidden' : 'hidden'}>
+        <nav className="mx-auto grid max-w-7xl gap-1" aria-label="Navegación móvil">
+          {navigation.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-xl px-4 py-3 text-base font-bold text-neutral-900 hover:bg-neutral-100">{label}</a>)}
+          <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white">
+            Revisar mi factura <ArrowRight size={17} />
+          </a>
+        </nav>
+      </div>
     </header>
   );
 }

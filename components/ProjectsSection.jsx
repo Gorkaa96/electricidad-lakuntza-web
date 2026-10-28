@@ -6,6 +6,7 @@ import { getFeaturedProjects } from '@/lib/projects';
 export default async function ProjectsSection() {
   const featuredProjects = await getFeaturedProjects();
   const hasProjects = featuredProjects.length > 0;
+  if (!hasProjects) return null;
 
   return (
     <section id="trabajos" className="bg-lakuntza-mist py-20 sm:py-28">
@@ -14,11 +15,11 @@ export default async function ProjectsSection() {
           <div className="lg:col-span-7">
             <Badge>Trabajos realizados</Badge>
             <h2 className="mt-5 text-4xl font-black leading-[.95] tracking-[-.055em] sm:text-6xl">
-              Instalaciones terminadas con criterio técnico y acabado limpio.
+              Algunos de nuestros trabajos.
             </h2>
           </div>
           <p className="text-base leading-8 text-neutral-600 lg:col-span-5">
-            Mostramos una selección de trabajos cuando contamos con imágenes propias y autorización para publicarlas. La prioridad es enseñar referencias reales, útiles y bien documentadas.
+            Una muestra de instalaciones y trabajos realizados por Electricidad Lakuntza.
           </p>
         </div>
 
