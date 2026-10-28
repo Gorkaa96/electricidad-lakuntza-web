@@ -65,7 +65,7 @@ export default function ServiceDetailPage({ params }) {
         addressCountry: 'ES',
       },
     },
-    areaServed: ['Navarra', 'País Vasco'],
+    areaServed: isEnergy ? 'España, según disponibilidad del servicio' : ['Navarra', 'País Vasco'],
   };
 
   return (
