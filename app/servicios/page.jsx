@@ -1,4 +1,4 @@
-import { ArrowRight, FileText, Leaf, PlugZap, Wifi } from 'lucide-react';
+import { ArrowRight, FileText, Leaf, PlugZap, ShieldCheck, Wifi } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
@@ -9,7 +9,7 @@ export const metadata = {
   title: 'Servicios',
   alternates: { canonical: '/servicios' },
   description:
-    'Revisión de luz y gas con Feníe Energía, instalaciones eléctricas y telecomunicaciones. Atención desde Lakuntza.',
+    'Revisión de luz y gas, asesoramiento sobre alarmas Movistar Prosegur a través de Feníe Energía, instalaciones y telecomunicaciones.',
 };
 
 const iconBySlug = {
@@ -30,10 +30,10 @@ export default function ServiciosPage() {
             <div className="lg:col-span-8">
               <Badge dark>Servicios</Badge>
               <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
-                Revisión de facturas, electricidad y telecomunicaciones.
+                Luz, gas, alarmas e instalaciones.
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
-                Para luz y gas, empezamos revisando tus condiciones y valorando opciones con Feníe Energía. También realizamos instalaciones eléctricas y telecomunicaciones según disponibilidad.
+                Con Feníe Energía trabajamos luz, gas y consultas sobre alarmas de Movistar Prosegur. Además, realizamos instalaciones eléctricas y telecomunicaciones según disponibilidad.
               </p>
             </div>
             <div className="lg:col-span-4">
@@ -43,6 +43,9 @@ export default function ServiciosPage() {
                 <p className="mt-3 text-sm leading-6 text-white/70">Revisamos luz, gas, potencia, consumo y servicios añadidos. Sin compromiso.</p>
                 <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
                   Revisar factura <ArrowRight className="ml-2" size={17} />
+                </a>
+                <a href="/alarmas-movistar-prosegur" className="mt-3 inline-flex w-full items-center justify-center rounded-2xl border border-white/25 px-5 py-3 text-sm font-black text-white transition hover:bg-white/10">
+                  Consultar alarmas <ArrowRight className="ml-2" size={17} />
                 </a>
               </div>
             </div>
@@ -66,7 +69,14 @@ export default function ServiciosPage() {
               </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              <a href="/alarmas-movistar-prosegur" className="group rounded-[2rem] border border-lakuntza-green/30 bg-white p-7 shadow-card transition hover:-translate-y-1 hover:shadow-2xl">
+                <div className="mb-7 flex h-16 w-16 items-center justify-center rounded-3xl bg-[#F3FAEF] text-lakuntza-greenDark"><ShieldCheck size={30} /></div>
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Seguridad · Feníe Energía</p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-.04em] text-neutral-950">Alarmas Movistar Prosegur</h2>
+                <p className="mt-4 text-sm leading-7 text-neutral-600">Consulta las opciones para tu hogar o negocio a través de Feníe Energía. Te orientamos sobre elegibilidad y condiciones.</p>
+                <span className="mt-6 inline-flex items-center text-sm font-black text-lakuntza-greenDark">Consultar alarmas <ArrowRight className="ml-2 transition group-hover:translate-x-1" size={17} /></span>
+              </a>
               {servicePages.map((service) => {
                 const Icon = iconBySlug[service.slug] || PlugZap;
                 const href = service.slug === 'asesoria-energetica-luz-gas' ? '/revision-factura-luz-gas' : `/servicios/${service.slug}`;
