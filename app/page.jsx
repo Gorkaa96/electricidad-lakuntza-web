@@ -7,8 +7,8 @@ import ProjectsSection from '@/components/ProjectsSection';
 import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
-  title: 'Revisión de luz y gas con atención directa',
-  description: 'Revisa tu factura de luz o gas con Electricidad Lakuntza, empresa delegada de Feníe Energía. También gestionamos consultas sobre alarmas e instalaciones.',
+  title: 'Luz, gas y alarmas con atención directa',
+  description: 'Revisamos tu factura de luz o gas y te informamos sobre alarmas Movistar Prosegur a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones.'
   alternates: { canonical: '/' },
 };
 
@@ -53,21 +53,21 @@ export default function HomePage() {
                 <Leaf size={15} className="text-[#A9ED82]" /> Empresa delegada de Feníe Energía
               </p>
               <h1 className="mt-9 max-w-4xl text-[clamp(2.5rem,5.7vw,4.9rem)] font-extrabold leading-[1.08] tracking-[-.045em]">
-                ¿Quieres saber si tu factura de luz o gas puede mejorar? <span className="text-[#A9ED82]">Te ayudamos a revisarla.</span>
+                Luz, gas y alarmas. <span className="text-[#A9ED82]">Atención directa, sin complicaciones.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
-                Envíanos tu última factura en foto o PDF. Revisamos tus condiciones actuales y te explicamos si una alternativa de Feníe Energía puede interesarte. Si te conviene seguir como estás, también te lo diremos.
+                Revisamos tus condiciones de luz y gas y te informamos sobre alarmas Movistar Prosegur a través de Feníe Energía. Te explicamos las opciones disponibles antes de que tomes una decisión.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
                   <FileText size={19} /> Revisar mi factura <ArrowRight size={17} />
                 </a>
-                <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/20">
+                <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
                   <ShieldCheck size={19} /> Consultar alarmas <ArrowRight size={17} />
                 </a>
               </div>
               <div className="mt-7 flex flex-wrap gap-x-7 gap-y-2 text-sm font-medium text-white/75">
-                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Revisión sin coste</span>
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Revisión de facturas sin coste</span>
                 <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Atención personal</span>
                 <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Sin obligación de contratar</span>
               </div>
@@ -81,7 +81,7 @@ export default function HomePage() {
             <div className="max-w-2xl">
               <Badge>Servicios</Badge>
               <h2 className="mt-5 text-3xl font-black leading-tight tracking-[-.045em] sm:text-5xl">Elige cómo podemos ayudarte.</h2>
-              <p className="mt-4 text-base leading-7 text-neutral-600">Revisión de energía, instalaciones o alarmas: cada servicio tiene su propio recorrido, sin distracciones.</p>
+              <p className="mt-4 text-base leading-7 text-neutral-600">Luz y gas, alarmas e instalaciones. Elige el servicio que buscas y contacta directamente con nosotros.</p>
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-3">
               {routes.map((item) => {
