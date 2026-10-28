@@ -7,6 +7,7 @@ import { servicePages } from '@/lib/servicePages';
 
 export const metadata = {
   title: 'Servicios',
+  alternates: { canonical: '/servicios' },
   description:
     'Revisión de luz y gas con Feníe Energía, instalaciones eléctricas y telecomunicaciones. Atención desde Lakuntza.',
 };
