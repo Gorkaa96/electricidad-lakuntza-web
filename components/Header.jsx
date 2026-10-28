@@ -6,8 +6,9 @@ import Logo from './Logo';
 
 const navigation = [
   ['Luz y gas', '/revision-factura-luz-gas'],
-  ['Instalaciones', '/servicios'],
   ['Alarmas', '/alarmas-movistar-prosegur'],
+  ['Instalaciones', '/servicios'],
+  ['Feníe Energía', '/#fenie'],
   ['Contacto', '/#contacto'],
 ];
 
@@ -26,7 +27,7 @@ export default function Header() {
           ))}
         </nav>
         <a href="/revision-factura-luz-gas" className="hidden shrink-0 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white transition hover:bg-neutral-950 xl:inline-flex">
-          <FileText size={17} /> Revisión gratuita
+          <FileText size={17} /> Revisar factura
         </a>
         <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="focus-ring inline-flex h-12 w-12 items-center justify-center rounded-xl border border-neutral-300 text-neutral-950 xl:hidden">
           {open ? <X size={23} /> : <Menu size={23} />}
