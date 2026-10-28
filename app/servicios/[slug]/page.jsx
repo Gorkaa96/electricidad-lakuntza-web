@@ -84,7 +84,7 @@ export default function ServiceDetailPage({ params }) {
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">{service.intro}</p>
               {isEnergy ? (
-                <a href="/revision-factura-luz-gas" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                <a href="/revision-factura-luz-gas" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                   Revisar factura sin compromiso <ArrowRight className="ml-2" size={18} />
                 </a>
               ) : null}
@@ -95,7 +95,7 @@ export default function ServiceDetailPage({ params }) {
                   <Icon size={30} />
                 </div>
                 <p className="text-sm leading-7 text-white/70">{isEnergy ? 'Sube una factura y revisamos si hay oportunidad real de mejora.' : 'Atención directa desde Lakuntza para Navarra y País Vasco.'}</p>
-                <a href={primaryCtaHref} className="mt-6 inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                <a href={primaryCtaHref} className="mt-6 inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white transition hover:bg-neutral-950">
                   {primaryCtaLabel} <ArrowRight className="ml-2" size={17} />
                 </a>
               </div>
@@ -142,15 +142,15 @@ export default function ServiceDetailPage({ params }) {
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               {isEnergy ? (
-                <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                   Revisar factura sin compromiso <ArrowRight className="ml-2" size={18} />
                 </a>
               ) : (
-                <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+                <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
                   Llamar al 649 853 448
                 </a>
               )}
-              <a href={whatsappHref} className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+              <a href={whatsappHref} className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                 <MessageCircle className="mr-2" size={18} /> Escribir por WhatsApp
               </a>
             </div>
