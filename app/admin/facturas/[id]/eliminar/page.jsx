@@ -12,18 +12,20 @@ export const metadata = {
 export const revalidate = 0;
 
 export default async function DeleteInvoiceLeadPage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const { supabase } = await requireAdmin();
   const { data: lead } = await supabase
     .from('invoice_review_leads')
     .select('id, created_at, name, phone, file_name')
-    .eq('id', params.id)
+    .eq('id', resolvedParams.id)
     .maybeSingle();
 
   if (!lead) notFound();
 
   return (
     <AdminShell title="Eliminar solicitud" description="Borra la solicitud y el archivo privado asociado a la factura.">
-      <AdminNotice success={searchParams?.success} error={searchParams?.error} />
+      <AdminNotice success={resolvedSearchParams?.success} error={resolvedSearchParams?.error} />
 
       <section className="max-w-3xl rounded-[2rem] border border-red-200 bg-white p-6 shadow-card sm:p-8">
         <p className="text-xs font-black uppercase tracking-[0.18em] text-red-600">Acción irreversible</p>
