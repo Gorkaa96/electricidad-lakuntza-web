@@ -26,11 +26,11 @@ export default function InvoiceWhatsAppForm() {
       </div>
 
       <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-        <Upload className="mr-2" size={18} /> Subir factura gratis
+        <Upload className="mr-2" size={18} /> Revisar mi factura
       </a>
 
-      <a href={whatsappHref} className="mt-3 inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
-        Prefiero WhatsApp
+      <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex w-full items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
+        Consultar sin adjuntar factura
       </a>
     </div>
   );
