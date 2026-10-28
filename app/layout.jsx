@@ -80,7 +80,7 @@ export const metadata = {
     card: 'summary',
     title: 'Electricidad Lakuntza | Elektrizitatea',
     description:
-      'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco.',
+      'Luz, gas y alarmas con atención directa; instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
     images: ['/logo-lakuntza.png'],
   },
   robots: {
