@@ -122,11 +122,13 @@ function summaryRows(ocrData) {
 }
 
 export default async function AdminInvoiceLeadDetailPage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const { supabase } = await requireAdmin();
   const { data: lead } = await supabase
     .from('invoice_review_leads')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', resolvedParams.id)
     .maybeSingle();
 
   if (!lead) notFound();
@@ -154,7 +156,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
 
   return (
     <AdminShell title="Factura recibida" description="Ficha sencilla para revisar datos, contactar y dejar el estado actualizado.">
-      <AdminNotice success={searchParams?.success} error={searchParams?.error} />
+      <AdminNotice success={resolvedSearchParams?.success} error={resolvedSearchParams?.error} />
 
       <SimpleInvoiceActionPanel lead={lead} latestOcr={latestOcr} telHref={telHref} />
 
