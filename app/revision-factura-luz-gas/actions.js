@@ -22,32 +22,17 @@ function safeFileName(name) {
     .slice(0, 90);
 }
 
-function getPrecheckResult({ bonusStatus, supplyType, customerType, currentCompany, notes }) {
-  const text = `${currentCompany} ${notes}`.toLowerCase();
-
-  if (bonusStatus === 'si') return 'bonus_social_case';
-  if (supplyType === 'luz_gas') return 'potential_improvement';
-  if (customerType !== 'vivienda') return 'potential_improvement';
-  if (text.includes('servicio') || text.includes('mantenimiento') || text.includes('permanencia')) return 'potential_improvement';
-
-  return 'manual_review';
+function getPrecheckResult({ bonusStatus }) {
+  // A form submission is not evidence of savings. Human review is always required.
+  return bonusStatus === 'si' ? 'bonus_social_case' : 'manual_review';
 }
 
-function getPrecheckSummary(result) {
-  if (result === 'bonus_social_case') {
-    return 'Caso especial: posible bono social o familia numerosa. Conviene revisar manualmente antes de recomendar cualquier cambio.';
-  }
-
-  if (result === 'potential_improvement') {
-    return 'Puede haber margen de mejora por tipo de suministro, condiciones del contrato o servicios asociados. Revisión prioritaria.';
-  }
-
-  return 'Factura recibida correctamente. Revisión manual necesaria para confirmar si existe margen de mejora.';
-}
-
-async function notifyByEmail({ leadId, name, phone, email, locality, supplyType, customerType, bonusStatus, currentCompany, result, summary }) {
+async function notifyByEmail({ leadId, name, phone, email, locality, supplyType, customerType, bonusStatus, currentCompany }) {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return;
+  if (!apiKey) {
+    console.warn('[invoice-notification] RESEND_API_KEY missing; lead remains in admin');
+    return false;
+  }
 
   const to = process.env.INVOICE_REVIEW_TO || 'eleclakuntza@yahoo.es';
   const from = process.env.RESEND_FROM || 'Electricidad Lakuntza <onboarding@resend.dev>';
@@ -60,29 +45,43 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
     `Teléfono: ${phone}`,
     `Email: ${email || 'No indicado'}`,
     `Localidad: ${locality || 'No indicada'}`,
-    `Tipo de suministro: ${supplyType}`,
-    `Tipo de cliente: ${customerType}`,
+    `Suministro: ${supplyType}`,
+    `Cliente: ${customerType}`,
     `Bono social / familia numerosa: ${bonusStatus}`,
     `Compañía actual: ${currentCompany || 'No indicada'}`,
-    `Resultado inicial: ${result}`,
-    `Resumen: ${summary}`,
     '',
-    `Ver en el panel: ${adminUrl}`,
-  ].join('\n');
+    'Revisión humana pendiente: no se ha realizado comparación de tarifas.',
+    `Abrir la solicitud en admin: ${adminUrl}`,
+    '',
+    'La factura no se adjunta por email; se consulta desde el panel privado.',
+  ].join('\\n');
 
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from,
-      to,
-      subject: 'Nueva factura recibida para revisión',
-      text: body,
-    }),
-  }).catch(() => null);
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to,
+        subject: 'Nueva factura recibida · Electricidad Lakuntza',
+        text: body,
+      }),
+      signal: AbortSignal.timeout(7000),
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      console.error('[invoice-notification] Resend rejected the notification. HTTP status:', response.status);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('[invoice-notification] Transport failure:', error?.name || 'unknown');
+    return false;
+  }
 }
 
 export async function submitInvoiceReview(formData) {
@@ -99,10 +98,12 @@ export async function submitInvoiceReview(formData) {
   const currentCompany = cleanText(formData.get('currentCompany'));
   const notes = cleanText(formData.get('notes'));
   const consentAccepted = formData.get('consent') === 'on';
+  if (formData.get('website')) redirect('/revision-factura-luz-gas/gracias?estado=pending');
   const file = formData.get('invoice');
 
   if (!name || !phone || !consentAccepted) redirect('/revision-factura-luz-gas?error=datos');
   if (!file || typeof file === 'string' || !file.size) redirect('/revision-factura-luz-gas?error=factura');
+  if (!['luz', 'gas', 'luz_gas'].includes(supplyType) || !['vivienda', 'negocio', 'comunidad'].includes(customerType) || !['si', 'no', 'no_lo_se'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=datos');
   if (!allowedFileTypes.includes(file.type)) redirect('/revision-factura-luz-gas?error=tipo');
   if (file.size > maxFileSize) redirect('/revision-factura-luz-gas?error=tamano');
 
@@ -121,7 +122,6 @@ export async function submitInvoiceReview(formData) {
   if (uploadError) redirect('/revision-factura-luz-gas?error=subida');
 
   const precheckResult = getPrecheckResult({ bonusStatus, supplyType, customerType, currentCompany, notes });
-  const resultSummary = getPrecheckSummary(precheckResult);
   const userAgent = headers().get('user-agent') || '';
 
   const { error: insertError } = await supabase.from('invoice_review_leads').insert({
@@ -159,8 +159,6 @@ export async function submitInvoiceReview(formData) {
     customerType,
     bonusStatus,
     currentCompany,
-    result: precheckResult,
-    summary: resultSummary,
   });
 
   redirect(`/revision-factura-luz-gas/gracias?estado=${precheckResult}`);
