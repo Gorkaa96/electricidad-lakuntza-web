@@ -74,7 +74,7 @@ export default function ZonaServicioPage() {
               Desde Lakuntza realizamos trabajos eléctricos y telecomunicaciones según la ubicación y disponibilidad. Los servicios de luz, gas y alarmas tienen sus propias páginas de contacto.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <a href="#contacto-zona" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+              <a href="#contacto-zona" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                 Consultar disponibilidad <ArrowRight className="ml-2" size={18} />
               </a>
               <a href={mapsHref} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
@@ -127,10 +127,10 @@ export default function ZonaServicioPage() {
               Indica el tipo de trabajo, ubicación aproximada y urgencia para valorar la disponibilidad y los siguientes pasos.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
+              <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
                 <Phone className="mr-2" size={18} /> Llamar
               </a>
-              <a href={whatsappHref} className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+              <a href={whatsappHref} className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                 <MessageCircle className="mr-2" size={18} /> WhatsApp
               </a>
             </div>
