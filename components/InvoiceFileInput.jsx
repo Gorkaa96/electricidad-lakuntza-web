@@ -12,6 +12,27 @@ function formatFileSize(bytes) {
 export default function InvoiceFileInput() {
   const inputId = useId();
   const [file, setFile] = useState(null);
+  const [error, setError] = useState('');
+  const maxSize = 10 * 1024 * 1024;
+  const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
+
+  function handleFileChange(event) {
+    const selected = event.target.files?.[0] || null;
+    setError('');
+    if (selected && selected.size > maxSize) {
+      event.target.value = '';
+      setFile(null);
+      setError('El archivo supera los 10 MB. Selecciona una factura más ligera.');
+      return;
+    }
+    if (selected && !allowedTypes.includes(selected.type)) {
+      event.target.value = '';
+      setFile(null);
+      setError('Formato no admitido. Sube PDF, JPG, PNG o WebP. Si tu foto es HEIC, envía una captura de pantalla.');
+      return;
+    }
+    setFile(selected);
+  }
 
   return (
     <div className="min-w-0 text-sm font-black text-neutral-800">
@@ -27,9 +48,9 @@ export default function InvoiceFileInput() {
           required
           type="file"
           accept="application/pdf,image/jpeg,image/png,image/webp"
-          aria-describedby={`${inputId}-ayuda`}
+          aria-describedby={error ? `${inputId}-ayuda ${inputId}-error` : `${inputId}-ayuda`}
           className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
-          onChange={(event) => setFile(event.target.files?.[0] || null)}
+          onChange={handleFileChange}
         />
         <span className="block min-w-0">
           <span className="flex items-start gap-4">
@@ -56,6 +77,7 @@ export default function InvoiceFileInput() {
           </span>
         </span>
       </label>
+      {error ? <p id={`${inputId}-error`} role="alert" className="mt-3 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold leading-6 text-red-800">{error}</p> : null}
     </div>
   );
 }
