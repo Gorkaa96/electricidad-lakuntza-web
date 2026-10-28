@@ -85,9 +85,6 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
 }
 
 export async function submitInvoiceReview(formData) {
-  const supabase = await createSupabaseServerClient();
-  if (!supabase) redirect('/revision-factura-luz-gas?error=config');
-
   const name = cleanText(formData.get('name'));
   const phone = cleanText(formData.get('phone'));
   const email = cleanText(formData.get('email'));
@@ -101,12 +98,18 @@ export async function submitInvoiceReview(formData) {
   if (formData.get('website')) redirect('/revision-factura-luz-gas/gracias?estado=pending');
   const file = formData.get('invoice');
 
-  if (!name || !phone || !consentAccepted) redirect('/revision-factura-luz-gas?error=datos');
-  if (!file || typeof file === 'string' || !file.size) redirect('/revision-factura-luz-gas?error=factura');
-  if (!['luz', 'gas', 'luz_gas'].includes(supplyType) || !['vivienda', 'negocio', 'comunidad'].includes(customerType) || !['si', 'familia_numerosa', 'no', 'no_lo_se'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=datos');
-  if ((supplyType === 'luz' || supplyType === 'luz_gas') && ['si', 'familia_numerosa'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=bono');
-  if (!allowedFileTypes.includes(file.type)) redirect('/revision-factura-luz-gas?error=tipo');
-  if (file.size > maxFileSize) redirect('/revision-factura-luz-gas?error=tamano');
+  const phoneDigits = phone.replace(/\\D/g, '');
+  if (name.length < 2 || name.length > 100 || phoneDigits.length < 9 || phoneDigits.length > 15 || (email && (email.length > 254 || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))) || !consentAccepted) {
+    redirect('/revision-factura-luz-gas?error=datos#formulario');
+  }
+  if (!file || typeof file === 'string' || !file.size) redirect('/revision-factura-luz-gas?error=factura#formulario');
+  if (!['luz', 'gas', 'luz_gas'].includes(supplyType) || !['vivienda', 'negocio', 'comunidad'].includes(customerType) || !['si', 'familia_numerosa', 'no', 'no_lo_se'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=datos#formulario');
+  if ((supplyType === 'luz' || supplyType === 'luz_gas') && ['si', 'familia_numerosa'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=bono#formulario');
+  if (!allowedFileTypes.includes(file.type)) redirect('/revision-factura-luz-gas?error=tipo#formulario');
+  if (file.size > maxFileSize) redirect('/revision-factura-luz-gas?error=tamano#formulario');
+  // La comprobación barata de datos se realiza antes de crear clientes o leer archivos.
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) redirect('/revision-factura-luz-gas?error=config#formulario');
 
   const leadId = crypto.randomUUID();
   const fileName = safeFileName(file.name);
@@ -118,7 +121,7 @@ export async function submitInvoiceReview(formData) {
     (file.type === 'image/png' && bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) ||
     (file.type === 'image/webp' && bytes.subarray(0, 4).toString('ascii') === 'RIFF' && bytes.subarray(8, 12).toString('ascii') === 'WEBP')
   );
-  if (!validSignature) redirect('/revision-factura-luz-gas?error=tipo');
+  if (!validSignature) redirect('/revision-factura-luz-gas?error=tipo#formulario');
 
   const { error: uploadError } = await supabase.storage
     .from('invoice-files')
@@ -127,7 +130,7 @@ export async function submitInvoiceReview(formData) {
       upsert: false,
     });
 
-  if (uploadError) redirect('/revision-factura-luz-gas?error=subida');
+  if (uploadError) redirect('/revision-factura-luz-gas?error=subida#formulario');
 
   const precheckResult = getPrecheckResult({ bonusStatus, supplyType, customerType, currentCompany, notes });
   const userAgent = (await headers()).get('user-agent') || '';
@@ -155,7 +158,7 @@ export async function submitInvoiceReview(formData) {
 
   if (insertError) {
     await supabase.storage.from('invoice-files').remove([filePath]);
-    redirect('/revision-factura-luz-gas?error=registro');
+    redirect('/revision-factura-luz-gas?error=registro#formulario');
   }
 
   await notifyByEmail({
