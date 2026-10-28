@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         lakuntza: {
           green: '#55B927',
-          greenDark: '#3F981D',
+          greenDark: '#2E6F17',
           ink: '#121417',
           mist: '#F5F8F2',
           line: '#E4E9DF',
