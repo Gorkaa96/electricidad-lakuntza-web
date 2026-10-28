@@ -74,52 +74,60 @@ export default function HomePage() {
       <Header />
       <main>
         <section id="inicio" className="relative isolate overflow-hidden bg-[#101411] pt-20 text-white">
-          <div className="hero-grid absolute inset-0 opacity-50" />
-          <div className="absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-lakuntza-green/25 blur-3xl" />
-          <div className="absolute -left-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-white/10 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:py-20 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.72fr)] xl:gap-12 xl:px-8 xl:py-24">
+          <div className="hero-grid absolute inset-0 opacity-40" />
+          <div className="pointer-events-none absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-lakuntza-green/20 blur-3xl" />
+          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.85fr)] lg:gap-10 lg:px-8 lg:py-24">
             <div className="min-w-0">
               <div className="flex flex-wrap gap-3">
-                <Badge dark><MapPin size={14} /> Lakuntza · Navarra</Badge>
+                <Badge dark><MapPin size={14} /> Electricidad Lakuntza · Lakuntza</Badge>
                 <Badge dark><ShieldCheck size={14} /> Empresa delegada de Feníe Energía</Badge>
               </div>
-              <h1 className="mt-7 max-w-4xl text-4xl font-black leading-[0.98] tracking-[-0.055em] sm:text-6xl lg:text-7xl xl:text-[4.85rem]">
-                Electricidad, telecomunicaciones y energía con trato directo.
+              <p className="mt-9 text-xs font-black uppercase tracking-[.18em] text-[#9AE36F]">Luz y gas · Atención directa</p>
+              <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.08] tracking-[-.045em] sm:text-5xl lg:text-[clamp(2.75rem,4vw,4.2rem)]">
+                ¿Quieres revisar lo que pagas por tu luz o gas?
               </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/75 sm:text-xl">
-                Electricidad Lakuntza ofrece instalaciones eléctricas, telecomunicaciones y asesoría energética para viviendas, comunidades, comercios y pequeñas empresas desde Lakuntza.
+              <p className="mt-7 max-w-2xl text-base leading-8 text-white/80 sm:text-lg">
+                Estudiamos tu factura, te explicamos tus condiciones y valoramos una alternativa con Feníe Energía cuando tenga sentido. Sin compromiso, con trato directo y sin prometer ahorros que no podamos demostrar.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a href="#contacto" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-                  Solicitar presupuesto <ArrowRight className="ml-2" size={18} />
+                <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                  Revisar mi factura <ArrowRight className="ml-2" size={18} />
                 </a>
-                <a href="/servicios" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
-                  Ver servicios
-                </a>
-                <a href="#energia" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
-                  Revisar factura
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
+                  Consultar por WhatsApp
                 </a>
               </div>
-              <div className="mt-10 grid max-w-3xl gap-3 sm:grid-cols-3">
-                <div className="rounded-3xl border border-white/10 bg-white/[.07] p-5"><p className="text-3xl font-black">3</p><p className="mt-1 text-xs font-black uppercase tracking-[.16em] text-white/50">Áreas de servicio</p></div>
-                <div className="rounded-3xl border border-white/10 bg-white/[.07] p-5"><p className="text-3xl font-black">Sin</p><p className="mt-1 text-xs font-black uppercase tracking-[.16em] text-white/50">Compromiso</p></div>
-                <div className="rounded-3xl border border-white/10 bg-white/[.07] p-5"><p className="text-3xl font-black">1:1</p><p className="mt-1 text-xs font-black uppercase tracking-[.16em] text-white/50">Atención directa</p></div>
+              <p className="mt-5 text-sm leading-6 text-white/65">¿No tienes la factura a mano? Puedes consultarnos igualmente por WhatsApp.</p>
+              <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-white/70">
+                <span className="inline-flex items-center gap-2"><CheckCircle2 className="text-[#9AE36F]" size={17} /> Revisión humana</span>
+                <span className="inline-flex items-center gap-2"><CheckCircle2 className="text-[#9AE36F]" size={17} /> Sin obligación de contratar</span>
+                <span className="inline-flex items-center gap-2"><CheckCircle2 className="text-[#9AE36F]" size={17} /> Tú decides</span>
               </div>
+              <a href="/servicios" className="mt-10 inline-flex items-center text-sm font-bold text-white/65 underline-offset-4 hover:text-white hover:underline">
+                ¿Buscas instalaciones eléctricas o telecomunicaciones? Ver servicios <ArrowRight className="ml-2" size={16} />
+              </a>
             </div>
-            <div className="min-w-0 xl:justify-self-end">
-              <div className="mx-auto w-full max-w-xl rounded-[2rem] border border-white/10 bg-white/[.08] p-3 shadow-2xl backdrop-blur xl:max-w-[480px]">
-                <div className="rounded-[1.55rem] bg-white p-7 text-neutral-950 sm:p-8">
-                  <Logo />
-                  <div className="my-9 border-y border-neutral-200 py-8">
-                    <p className="text-xs font-black uppercase tracking-[.22em] text-lakuntza-greenDark">Instalación · Telecomunicaciones · Energía</p>
-                    <h2 className="mt-4 text-4xl font-black leading-none tracking-[-.06em] sm:text-5xl xl:text-4xl">Soluciones claras para tu vivienda o negocio.</h2>
-                    <p className="mt-4 text-sm leading-6 text-neutral-600">Presupuestos, averías, reformas, conectividad y revisión de facturas de luz y gas.</p>
-                  </div>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-3xl bg-[#F3FAEF] p-4"><Zap className="mb-3 text-lakuntza-green" /><p className="font-black">Instalaciones</p><p className="mt-1 text-sm text-neutral-600">Trabajo seguro y ordenado.</p></div>
-                    <div className="rounded-3xl bg-neutral-100 p-4"><FileText className="mb-3 text-neutral-900" /><p className="font-black">Facturas</p><p className="mt-1 text-sm text-neutral-600">Revisión sin compromiso.</p></div>
-                  </div>
+            <div className="min-w-0">
+              <div className="mx-auto w-full max-w-lg rounded-[2rem] border border-white/10 bg-white p-6 text-neutral-950 shadow-2xl sm:p-8">
+                <Logo />
+                <p className="mt-8 text-xs font-black uppercase tracking-[.18em] text-lakuntza-greenDark">Así funciona</p>
+                <h2 className="mt-3 text-3xl font-black leading-tight tracking-[-.04em]">Una revisión clara, paso a paso.</h2>
+                <div className="mt-7 grid gap-4">
+                  {[
+                    ['01', 'Envías tu factura', 'Desde la web, en un espacio privado.'],
+                    ['02', 'Revisamos las condiciones', 'Consumo, potencia, servicios y alternativas disponibles.'],
+                    ['03', 'Te explicamos el resultado', 'Decides si te interesa seguir adelante.'],
+                  ].map(([num, title, text]) => (
+                    <div key={num} className="flex gap-4 rounded-2xl bg-neutral-50 p-4">
+                      <span className="text-sm font-black text-lakuntza-greenDark">{num}</span>
+                      <div className="min-w-0">
+                        <p className="font-black">{title}</p>
+                        <p className="mt-1 text-sm leading-6 text-neutral-600">{text}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+                <p className="mt-6 text-xs leading-5 text-neutral-500">Trabajamos como empresa delegada de Feníe Energía. No somos un comparador independiente de todas las comercializadoras.</p>
               </div>
             </div>
           </div>

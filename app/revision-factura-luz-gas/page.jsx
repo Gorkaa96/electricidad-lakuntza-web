@@ -8,8 +8,9 @@ import { submitInvoiceReview } from './actions';
 
 export const metadata = {
   title: 'Revisión de factura de luz y gas',
+  alternates: { canonical: '/revision-factura-luz-gas' },
   description:
-    'Sube tu factura de luz o gas y Electricidad Lakuntza revisará si puedes mejorar tus condiciones en Navarra y zonas cercanas del País Vasco.',
+    'Revisión de facturas de luz y gas con Electricidad Lakuntza, empresa delegada de Feníe Energía. Atención directa y sin compromiso.',
 };
 
 const errorMessages = {
@@ -23,7 +24,7 @@ const errorMessages = {
 };
 
 const benefits = [
-  'Revisión sin compromiso.',
+  'Empresa delegada de Feníe Energía; te explicamos las opciones que ofrece.',
   'Te explicamos la comparativa antes de cambiar nada.',
   'Atención directa desde Electricidad Lakuntza.',
   'Si no te conviene cambiar, también te lo diremos.',
@@ -72,10 +73,10 @@ export default function RevisionFacturaPage({ searchParams }) {
             <div className="xl:col-span-8">
               <Badge dark><Leaf size={14} /> Luz y gas</Badge>
               <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
-                Sube tu factura y revisamos si puedes mejorar.
+                Revisa tu factura de luz o gas sin compromiso.
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
-                Envíanos tu factura de luz o gas. Hacemos un preanálisis y, si vemos margen de mejora o un caso especial, Electricidad Lakuntza contacta contigo para explicártelo sin compromiso.
+                Envíanos tu factura para que revisemos tus condiciones y valoremos si existe una alternativa interesante con Feníe Energía. Si no te conviene cambiar, también te lo diremos.
               </p>
             </div>
             <div className="xl:col-span-4">
@@ -141,6 +142,7 @@ export default function RevisionFacturaPage({ searchParams }) {
 
             <div className="xl:col-span-7">
               <form action={submitInvoiceReview} className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
+                <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="website-hp">Deja este campo vacío</label><input id="website-hp" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F3FAEF] text-lakuntza-greenDark">
@@ -244,7 +246,7 @@ export default function RevisionFacturaPage({ searchParams }) {
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
-                    Formatos permitidos: PDF, JPG, PNG o WebP. Tamaño máximo: 10 MB. No subas documentación que no sea necesaria para revisar tu factura.
+                    Formatos permitidos: PDF, JPG, PNG o WebP. Máximo 10 MB. No adjuntes DNI, IBAN ni documentación adicional: solo necesitamos la factura para esta primera revisión.
                   </p>
                 </div>
               </form>
@@ -272,6 +274,28 @@ export default function RevisionFacturaPage({ searchParams }) {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-white py-16 sm:py-24" aria-labelledby="faq-energia">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <p className="text-xs font-black uppercase tracking-[.18em] text-lakuntza-greenDark">Preguntas frecuentes</p>
+            <h2 id="faq-energia" className="mt-3 text-3xl font-black tracking-[-.04em] text-neutral-950 sm:text-4xl">Antes de enviar tu factura</h2>
+            <div className="mt-8 grid gap-3">
+              {[
+                ['¿Es obligatorio contratar?', 'No. Revisamos tu consulta y te explicamos las alternativas que podamos ofrecerte. Tú decides si continuar.'],
+                ['¿Comparáis todas las comercializadoras?', 'No. Electricidad Lakuntza trabaja como empresa delegada de Feníe Energía y estudia sus alternativas a partir de tus condiciones actuales.'],
+                ['¿Me quedaré sin luz o gas si cambio?', 'El cambio ordinario de comercializadora es administrativo y no exige interrumpir el suministro. Antes de contratar revisamos las condiciones aplicables.'],
+                ['¿Y si tengo bono social o tarifa regulada?', 'Indícalo en el formulario. Requiere especial cuidado: cambiar de modalidad puede hacerte perder determinadas ventajas. No aconsejamos cambios sin revisarlo.'],
+                ['¿No tengo la factura disponible?', 'Puedes preguntarnos primero por WhatsApp o llamarnos. No hace falta enviarla para una consulta inicial.'],
+              ].map(([question, answer]) => (
+                <details key={question} className="group rounded-2xl border border-neutral-200 bg-neutral-50 p-5 open:bg-white">
+                  <summary className="cursor-pointer text-base font-black leading-6 text-neutral-950">{question}</summary>
+                  <p className="mt-3 text-sm leading-7 text-neutral-600">{answer}</p>
+                </details>
+              ))}
+            </div>
+            <p className="mt-6 text-sm text-neutral-600">¿Prefieres hablar directamente? <a href="https://wa.me/34649853448?text=Hola%20Electricidad%20Lakuntza.%20Quiero%20consultar%20sobre%20luz%20o%20gas%20sin%20adjuntar%20todavia%20una%20factura." target="_blank" rel="noopener noreferrer" className="font-black text-lakuntza-greenDark underline">Consúltanos por WhatsApp</a>.</p>
           </div>
         </section>
       </main>
