@@ -19,8 +19,8 @@ export default function Footer() {
             <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white"><Image src="/logo-lakuntza.png" alt="" width={48} height={48} className="h-full w-full object-contain" /></span>
             <span className="text-base font-black">Electricidad Lakuntza</span>
           </a>
-          <p className="mt-6 max-w-md text-sm leading-7 text-white/65">Luz, gas y alarmas mediante nuestra colaboración con Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.</p>
-          <a href="/revision-factura-luz-gas" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-green">Revisar mi factura <ArrowRight size={16}/></a>
+          <p className="mt-6 max-w-md text-sm leading-7 text-white/65">Revisamos facturas de luz y gas de clientes de toda España, mediante Feníe Energía. También realizamos instalaciones y telecomunicaciones en Navarra y País Vasco, según disponibilidad.</p>
+          <a href="/revision-factura-luz-gas" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-green">Revisión gratuita <ArrowRight size={16}/></a>
         </div>
         <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7 lg:grid-cols-[.8fr_1.2fr]">
           <div>
