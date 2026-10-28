@@ -7,8 +7,8 @@ import ProjectsSection from '@/components/ProjectsSection';
 import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
-  title: 'Luz, gas y alarmas con atención directa',
-  description: 'Electricidad Lakuntza: revisión de luz y gas, alarmas Movistar Prosegur a través de Feníe Energía e instalaciones eléctricas en Navarra y País Vasco.',
+  title: 'Revisión gratuita de luz y gas',
+  description: 'Revisamos gratuitamente tu factura de luz o gas y valoramos alternativas de Feníe Energía sin compromiso. Instalaciones eléctricas y otros servicios profesionales.',
   alternates: { canonical: '/' },
 };
 
@@ -20,26 +20,26 @@ const routes = [
   {
     icon: Zap,
     label: 'Luz y gas',
-    title: 'Revisión de facturas y contratación',
-    text: 'Revisamos tus condiciones actuales y valoramos alternativas de Feníe Energía. Con explicación clara y sin obligación de contratar.',
+    title: '¿Pagas lo adecuado por tu energía?',
+    text: 'Envíanos tu factura en foto o PDF. Revisamos las condiciones y valoramos si una propuesta de Feníe Energía te conviene.',
     href: '/revision-factura-luz-gas',
-    action: 'Revisar mi factura',
+    action: 'Revisión gratuita',
+  },
+  {
+    icon: Wrench,
+    label: 'Electricidad y telecomunicaciones',
+    title: 'Instalaciones y mantenimiento',
+    text: 'Instalaciones, reformas, cuadros, averías y telecomunicaciones. Atendemos trabajos en Navarra y País Vasco según disponibilidad.',
+    href: '/servicios',
+    action: 'Ver servicios técnicos',
   },
   {
     icon: ShieldCheck,
     label: 'Alarmas',
     title: 'Movistar Prosegur Alarmas',
-    text: 'Te informamos sobre soluciones de seguridad para vivienda o negocio, a través de la colaboración con Feníe Energía.',
+    text: 'Información y acompañamiento comercial para soluciones de seguridad de viviendas y negocios a través de Feníe Energía.',
     href: '/alarmas-movistar-prosegur',
     action: 'Consultar alarmas',
-  },
-  {
-    icon: Wrench,
-    label: 'Electricidad y telecomunicaciones',
-    title: 'Instalaciones profesionales',
-    text: 'Instalaciones, reformas, averías, redes y telecomunicaciones. Trabajos en Navarra y País Vasco, según disponibilidad.',
-    href: '/servicios',
-    action: 'Ver instalaciones',
   },
 ];
 
@@ -54,28 +54,28 @@ export default function HomePage() {
           <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
             <div className="max-w-4xl">
               <p className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-[.12em] text-white/85">
-                <Leaf size={15} className="text-[#A9ED82]" /> Empresa delegada de Feníe Energía
+                <Leaf size={15} className="text-[#A9ED82]" /> Agentes energéticos de Feníe Energía
               </p>
               <h1 className="mt-9 max-w-4xl text-[clamp(2.65rem,6.5vw,5.35rem)] font-black leading-[1.04] tracking-[-.055em]">
-                Luz, gas y alarmas. <span className="text-[#A9ED82]">Atención directa, sin complicaciones.</span>
+                Revisamos tu factura de luz o gas. <span className="text-[#A9ED82]">Gratis y sin compromiso.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
-                En Electricidad Lakuntza te orientamos sobre tus contratos de luz y gas y sobre alarmas Movistar Prosegur. Conocemos el sector, escuchamos lo que necesitas y te explicamos cada propuesta antes de decidir.
+                Envíanos tu última factura en foto o PDF. Revisamos tus condiciones actuales y te explicamos si una alternativa de Feníe Energía puede interesarte. Si te conviene seguir como estás, también te lo diremos.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
-                  <FileText size={19} /> Revisar luz y gas <ArrowRight size={17} />
+                  <FileText size={19} /> Revisar mi factura gratis <ArrowRight size={17} />
                 </a>
-                <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/20">
-                  <ShieldCheck size={19} /> Consultar alarmas <ArrowRight size={17} />
+                <a href="/servicios" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/20">
+                  <Wrench size={19} /> Ver instalaciones <ArrowRight size={17} />
                 </a>
               </div>
               <div className="mt-7 flex flex-wrap gap-x-7 gap-y-2 text-sm font-medium text-white/75">
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Revisión gratuita</span>
                 <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Atención personal</span>
-                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Condiciones claras</span>
-                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Sin compromiso de contratación</span>
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Sin obligación de contratar</span>
               </div>
-              <a href="/servicios" className="mt-10 inline-flex items-center gap-2 text-sm font-bold text-white/85 underline-offset-4 hover:text-white hover:underline">También realizamos instalaciones eléctricas y telecomunicaciones <ArrowRight size={16} /></a>
+              <a href="/alarmas-movistar-prosegur" className="mt-10 inline-flex items-center gap-2 text-sm font-bold text-white/85 underline-offset-4 hover:text-white hover:underline">También te orientamos sobre alarmas Movistar Prosegur <ArrowRight size={16} /></a>
             </div>
           </div>
         </section>
@@ -84,8 +84,8 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <Badge>Servicios</Badge>
-              <h2 className="mt-5 text-3xl font-black leading-tight tracking-[-.045em] sm:text-5xl">Encuentra lo que necesitas.</h2>
-              <p className="mt-4 text-base leading-7 text-neutral-600">Tres opciones claras, sin buscar entre páginas ni formularios innecesarios.</p>
+              <h2 className="mt-5 text-3xl font-black leading-tight tracking-[-.045em] sm:text-5xl">Elige cómo podemos ayudarte.</h2>
+              <p className="mt-4 text-base leading-7 text-neutral-600">Revisión de energía, instalaciones o alarmas: cada servicio tiene su propio recorrido, sin distracciones.</p>
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-3">
               {routes.map((item) => {
@@ -111,7 +111,7 @@ export default function HomePage() {
           <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
             <div className="lg:col-span-7">
               <p className="text-xs font-black uppercase tracking-[.16em] text-[#A9ED82]">Contacto</p>
-              <h2 className="mt-5 max-w-2xl text-3xl font-black leading-tight tracking-[-.045em] sm:text-5xl">¿Te ayudamos con tu próxima decisión?</h2>
+              <h2 className="mt-5 max-w-2xl text-3xl font-black leading-tight tracking-[-.045em] sm:text-5xl">Hablemos de lo que necesitas.</h2>
               <p className="mt-5 max-w-xl text-base leading-8 text-white/70">Escríbenos o llámanos. Te atendemos directamente, tanto si buscas luz o gas como una alarma o una instalación.</p>
             </div>
             <div className="grid gap-3 lg:col-span-5">
