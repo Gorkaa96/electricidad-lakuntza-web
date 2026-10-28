@@ -26,8 +26,8 @@ export default function LoginForm() {
       return;
     }
 
-    const next = searchParams.get('next') || '/admin/proyectos';
-    router.push(next);
+    // Never navigate to an untrusted URL from query parameters.
+    router.push('/admin/facturas');
     router.refresh();
   }
 
@@ -57,7 +57,8 @@ export default function LoginForm() {
         />
       </label>
 
-      {error ? <p className="rounded-2xl bg-red-50 p-4 text-sm font-bold text-red-700">{error}</p> : null}
+      {searchParams.get('error') === 'unauthorized' ? <p role="alert" className="rounded-xl bg-amber-50 p-4 text-sm font-bold text-amber-950">Esta cuenta no tiene acceso al panel. Contacta con la persona responsable de Electricidad Lakuntza.</p> : null}
+      {error ? <p role="alert" className="rounded-xl bg-red-50 p-4 text-sm font-bold text-red-700">{error}</p> : null}
 
       <button
         type="submit"
