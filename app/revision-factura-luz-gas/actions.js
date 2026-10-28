@@ -140,9 +140,10 @@ export async function submitInvoiceReview(formData) {
     locality: locality || null,
     supply_type: supplyType,
     customer_type: customerType,
-    bonus_status: bonusStatus,
+    // Reuse existing DB values until the column's CHECK/enum can be verified.
+    bonus_status: bonusStatus === 'familia_numerosa' ? 'si' : bonusStatus,
     current_company: currentCompany || null,
-    notes: notes || null,
+    notes: bonusStatus === 'familia_numerosa' ? ['Familia numerosa declarada (consulta de gas).', notes].filter(Boolean).join(' ').slice(0, 500) : (notes || null),
     file_path: filePath,
     file_name: file.name,
     file_type: file.type,
