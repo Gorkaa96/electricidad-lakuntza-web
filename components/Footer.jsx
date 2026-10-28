@@ -8,7 +8,7 @@ const mainLinks = [
   ['Revisión factura luz/gas', '/revision-factura-luz-gas'],
   ['Servicios', '/servicios'],
   ['Trabajos realizados', '/trabajos-realizados'],
-  ['Luz y gas', '/#energia'],
+  ['Feníe Energía', '/#fenie'],
   ['Zona de servicio', '/zona-servicio'],
   ['Contacto', '/#contacto'],
 ];
@@ -35,12 +35,12 @@ export default function Footer() {
           </div>
 
           <p className="mt-6 max-w-md text-sm leading-7 text-white/60">
-            Servicio cercano desde Lakuntza para viviendas, comunidades, comercios y pequeñas empresas en Navarra y País Vasco.
+            Revisión de luz y gas con Feníe Energía y atención directa desde Lakuntza. Instalaciones eléctricas y telecomunicaciones en Navarra y zonas cercanas.
           </p>
 
           <div className="mt-6 rounded-[1.6rem] border border-lakuntza-green/30 bg-lakuntza-green/10 p-5">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Revisión gratuita</p>
-            <h3 className="mt-3 text-2xl font-black tracking-[-0.04em] text-white">Revisa tu factura gratis</h3>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Luz y gas</p>
+            <h3 className="mt-3 text-2xl font-black tracking-[-0.04em] text-white">Revisamos tu factura, tú decides.</h3>
             <p className="mt-3 text-sm leading-6 text-white/65">Sube tu factura de luz o gas y te decimos si merece la pena mejorar condiciones.</p>
             <a href="/revision-factura-luz-gas" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
               <FileText size={17} /> Subir factura
