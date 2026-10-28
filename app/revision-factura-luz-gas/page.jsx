@@ -48,7 +48,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="relative isolate overflow-hidden bg-neutral-950 pt-28 text-white">
+        <section className="brand-dark-surface relative isolate overflow-hidden pt-28 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
           <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-10 sm:gap-10 sm:px-6 sm:pb-16 xl:grid-cols-12 xl:items-end xl:px-8">
