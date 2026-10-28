@@ -57,7 +57,7 @@ export default function EnergyEligibilityFields() {
           <AlertTriangle className="mt-0.5 shrink-0" size={20} />
           <div>
             <p className="font-black">Para tu suministro eléctrico, consulta primero el bono social.</p>
-            <p className="mt-1">Feníe Energía no es comercializadora de referencia y no puede aplicar el bono social. No recomendamos tramitar aquí un cambio de luz que pueda perjudicarte. Puedes solicitar **solo gas** si te interesa, o consultar alarmas por separado.</p>
+            <p className="mt-1">Feníe Energía no es comercializadora de referencia y no puede aplicar el bono social. No recomendamos tramitar aquí un cambio de luz que pueda perjudicarte. Puedes solicitar solo gas si te interesa, o consultar alarmas por separado.</p>
             <a className="mt-2 inline-block font-black underline underline-offset-4" href="https://www.miteco.gob.es/es/energia/pobreza-energetica/pe-001/preguntas-frecuentes-bono-social.html" target="_blank" rel="noopener noreferrer">Información oficial sobre bono social</a>
           </div>
         </div>
