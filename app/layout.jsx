@@ -67,7 +67,7 @@ export const metadata = {
   openGraph: {
     title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
-      'Luz, gas y alarmas con atención directa a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.'
+      'Luz, gas y alarmas con atención directa a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
     url: siteUrl,
     siteName: siteConfig.name,
     type: 'website',
@@ -85,7 +85,7 @@ export const metadata = {
     card: 'summary',
     title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
-      'Luz, gas y alarmas con atención directa y sin compromiso. Instalaciones eléctricas y telecomunicaciones.'
+      'Luz, gas y alarmas con atención directa y sin compromiso. Instalaciones eléctricas y telecomunicaciones.',
     images: ['/logo-lakuntza.png'],
   },
   robots: {
