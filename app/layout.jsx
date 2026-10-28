@@ -32,13 +32,10 @@ const localBusinessSchema = {
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Electricidad Lakuntza | Elektrizitatea',
+    default: 'Electricidad Lakuntza | Luz y gas e instalaciones eléctricas',
     template: '%s | Electricidad Lakuntza',
   },
   description: siteConfig.description,
-  alternates: {
-    canonical: '/',
-  },
   keywords: [
     'Electricidad Lakuntza',
     'electricista Lakuntza',
@@ -48,7 +45,7 @@ export const metadata = {
     'instalaciones eléctricas País Vasco',
     'telecomunicaciones Navarra',
     'asesoría energética Navarra',
-    'Fenie Energía Navarra',
+    'Feníe Energía Navarra',
     'comparar factura luz gas',
   ],
   icons: {
@@ -62,9 +59,9 @@ export const metadata = {
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
-    title: 'Electricidad Lakuntza | Elektrizitatea',
+    title: 'Electricidad Lakuntza | Luz y gas e instalaciones eléctricas',
     description:
-      'Instalaciones eléctricas, telecomunicaciones y asesoría energética en Lakuntza, Navarra y País Vasco.',
+      'Revisión de luz y gas con Feníe Energía y atención directa desde Lakuntza. Instalaciones eléctricas y telecomunicaciones en Navarra.',
     url: siteUrl,
     siteName: siteConfig.name,
     type: 'website',
