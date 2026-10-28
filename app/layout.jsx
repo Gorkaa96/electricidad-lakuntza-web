@@ -30,10 +30,13 @@ const localBusinessSchema = {
   ],
 };
 
+// Dejar el dominio provisional fuera de buscadores hasta el lanzamiento oficial.
+const publicLaunchEnabled = process.env.NEXT_PUBLIC_PUBLICATION_ENABLED === 'true';
+
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Electricidad Lakuntza | Luz y gas e instalaciones eléctricas',
+    default: 'Luz, gas y alarmas | Electricidad Lakuntza',
     template: '%s | Electricidad Lakuntza',
   },
   description: siteConfig.description,
@@ -60,7 +63,7 @@ export const metadata = {
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
-    title: 'Electricidad Lakuntza | Luz y gas e instalaciones eléctricas',
+    title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
       'Luz, gas y asesoramiento para alarmas Movistar Prosegur a través de Feníe Energía. Electricidad y telecomunicaciones en Navarra.',
     url: siteUrl,
@@ -78,17 +81,17 @@ export const metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Electricidad Lakuntza | Elektrizitatea',
+    title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
       'Luz, gas y alarmas con atención directa; instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
     images: ['/logo-lakuntza.png'],
   },
   robots: {
-    index: true,
-    follow: true,
+    index: publicLaunchEnabled,
+    follow: publicLaunchEnabled,
     googleBot: {
-      index: true,
-      follow: true,
+      index: publicLaunchEnabled,
+      follow: publicLaunchEnabled,
       'max-image-preview': 'large',
       'max-snippet': -1,
       'max-video-preview': -1,
