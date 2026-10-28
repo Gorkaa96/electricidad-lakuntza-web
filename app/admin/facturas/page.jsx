@@ -130,13 +130,14 @@ function customerLabel(value) {
 }
 
 export default async function AdminInvoiceLeadsPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
   const { supabase } = await requireAdmin();
   const { data: leads = [] } = await supabase
     .from('invoice_review_leads')
     .select('id, created_at, name, phone, locality, supply_type, customer_type, bonus_status, status, precheck_result, analysis_result, contacted_at, converted_at, ocr_status, ocr_confidence_avg, invoice_total_eur, consumption_kwh, contracted_power_kw, has_extra_services')
     .order('created_at', { ascending: false });
 
-  const selectedView = views.includes(searchParams?.view) ? searchParams.view : 'pending';
+  const selectedView = views.includes(resolvedSearchParams?.view) ? resolvedSearchParams.view : 'pending';
   const enrichedLeads = leads.map((lead) => ({ ...lead, view: getView(lead), action: getAction(lead) }));
   const filteredLeads = selectedView === 'all' ? enrichedLeads : enrichedLeads.filter((lead) => lead.view === selectedView);
 
@@ -150,7 +151,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
 
   return (
     <AdminShell title="Facturas" description="Vista sencilla para revisar facturas recibidas, contactar y cerrar el seguimiento.">
-      <AdminNotice success={searchParams?.success} error={searchParams?.error} />
+      <AdminNotice success={resolvedSearchParams?.success} error={resolvedSearchParams?.error} />
 
       <section className="rounded-[2rem] border border-neutral-200 bg-white p-4 shadow-card sm:p-5">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
