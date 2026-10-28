@@ -8,10 +8,10 @@ const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hace
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const navItems = [
+  ['Luz y gas', '/revision-factura-luz-gas'],
+  ['Feníe Energía', '/#fenie'],
   ['Servicios', '/servicios'],
   ['Trabajos', '/#trabajos'],
-  ['Energía', '/#energia'],
-  ['Feníe Energía', '/#fenie'],
   ['Zona', '/zona-servicio'],
   ['Contacto', '/#contacto'],
 ];
@@ -26,7 +26,7 @@ export default function Header() {
           <Logo compact />
         </a>
 
-        <nav className="hidden min-w-0 items-center gap-5 text-[13px] font-black text-neutral-700 xl:flex" aria-label="Navegación principal">
+        <nav className="hidden min-w-0 items-center gap-4 text-[13px] font-black text-neutral-700 2xl:flex" aria-label="Navegación principal">
           {navItems.map(([label, href]) => (
             <a key={href} href={href} className="whitespace-nowrap rounded-full px-1 py-2 transition hover:text-lakuntza-greenDark">
               {label}
@@ -34,7 +34,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-3 xl:flex">
+        <div className="hidden shrink-0 items-center gap-3 2xl:flex">
           <a href="tel:+34649853448" className="rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-black text-neutral-900 shadow-sm transition hover:border-lakuntza-green hover:text-lakuntza-greenDark">
             649 853 448
           </a>
@@ -46,7 +46,7 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-950 shadow-sm xl:hidden"
+          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-neutral-200 bg-white text-neutral-950 shadow-sm 2xl:hidden"
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={open}
         >
@@ -55,7 +55,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl xl:hidden">
+        <div className="border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl 2xl:hidden">
           <div className="mx-auto grid max-w-7xl gap-5">
             <div className="rounded-[1.6rem] border border-lakuntza-green/20 bg-[#F3FAEF] p-4">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión de factura</p>
