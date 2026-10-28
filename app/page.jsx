@@ -54,7 +54,7 @@ export default function HomePage() {
                 <Leaf size={15} className="text-[#A9ED82]" /> Empresa delegada de Feníe Energía
               </p>
               <h1 className="mt-9 max-w-4xl text-[clamp(2.5rem,5.7vw,4.9rem)] font-extrabold leading-[1.08] tracking-[-.045em]">
-                Luz, gas y alarmas. <span className="text-[#A9ED82]">Atención directa, sin complicaciones.</span>
+                Revisamos tu luz y gas. <span className="text-[#A9ED82]">Te ayudamos a decidir.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
                 Revisamos tus condiciones de luz y gas y te informamos sobre alarmas Movistar Prosegur a través de Feníe Energía. Te explicamos las opciones disponibles antes de que tomes una decisión.
@@ -63,7 +63,7 @@ export default function HomePage() {
                 <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
                   <FileText size={19} /> Revisar mi factura <ArrowRight size={17} />
                 </a>
-                <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
+                <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/20">
                   <ShieldCheck size={19} /> Consultar alarmas <ArrowRight size={17} />
                 </a>
               </div>
