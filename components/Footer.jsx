@@ -1,11 +1,12 @@
 import Image from 'next/image';
-import { FileText, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { FileText, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const mainLinks = [
   ['Revisión factura luz/gas', '/revision-factura-luz-gas'],
+  ['Alarmas Movistar Prosegur', '/alarmas-movistar-prosegur'],
   ['Servicios', '/servicios'],
   ['Trabajos realizados', '/trabajos-realizados'],
   ['Feníe Energía', '/#fenie'],
@@ -30,20 +31,23 @@ export default function Footer() {
             </span>
             <div>
               <p className="text-base font-black text-white">Electricidad Lakuntza · Elektrizitatea</p>
-              <p className="mt-1 text-sm text-white/60">Instalaciones eléctricas · Telecomunicaciones · Energía</p>
+              <p className="mt-1 text-sm text-white/60">Luz · Gas · Alarmas · Electricidad</p>
             </div>
           </div>
 
           <p className="mt-6 max-w-md text-sm leading-7 text-white/60">
-            Revisión de luz y gas con Feníe Energía y atención directa desde Lakuntza. Instalaciones eléctricas y telecomunicaciones en Navarra y zonas cercanas.
+            Luz y gas con Feníe Energía y asesoramiento sobre alarmas Movistar Prosegur a través de su colaboración. Instalaciones eléctricas y telecomunicaciones desde Lakuntza.
           </p>
 
           <div className="mt-6 rounded-[1.6rem] border border-lakuntza-green/30 bg-lakuntza-green/10 p-5">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Luz y gas</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-green">Luz, gas y alarmas</p>
             <h3 className="mt-3 text-2xl font-black tracking-[-0.04em] text-white">Revisamos tu factura, tú decides.</h3>
-            <p className="mt-3 text-sm leading-6 text-white/65">Sube tu factura de luz o gas y te decimos si merece la pena mejorar condiciones.</p>
+            <p className="mt-3 text-sm leading-6 text-white/65">Revisamos tu factura y te informamos sobre soluciones de seguridad para hogar y negocio.</p>
             <a href="/revision-factura-luz-gas" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-              <FileText size={17} /> Subir factura
+              <FileText size={17} /> Revisar luz y gas
+            </a>
+            <a href="/alarmas-movistar-prosegur" className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/20 px-4 py-3 text-sm font-black text-white transition hover:bg-white/10">
+              <ShieldCheck size={17} /> Consultar alarmas
             </a>
           </div>
 
