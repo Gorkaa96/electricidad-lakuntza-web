@@ -6,6 +6,12 @@ import FenieEnergySection from '@/components/FenieEnergySection';
 import ProjectsSection from '@/components/ProjectsSection';
 import MobileContactBar from '@/components/MobileContactBar';
 
+export const metadata = {
+  title: 'Luz, gas y alarmas con atención directa',
+  description: 'Electricidad Lakuntza: revisión de luz y gas, alarmas Movistar Prosegur a través de Feníe Energía e instalaciones eléctricas en Navarra y País Vasco.',
+  alternates: { canonical: '/' },
+};
+
 const luzWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero consultar sobre luz o gas.');
 const alarmWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero información sobre alarmas Movistar Prosegur.');
 const generalWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
