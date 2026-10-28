@@ -7,6 +7,7 @@ const fenieLogoUrl = 'https://storage.googleapis.com/stb-drupal-p-ew4-01/styles/
 const points = [
   'Comercializadora creada por empresas instaladoras.',
   'Contratación de electricidad y gas a través de agentes energéticos.',
+  'Colaboración con Movistar Prosegur Alarmas para soluciones de seguridad.',
   'Asesoramiento cercano para entender consumo, potencia y condiciones.',
 ];
 
@@ -33,7 +34,7 @@ export default function FenieEnergySection() {
                 <div className="mt-4 rounded-[1.25rem] bg-[#F3FAEF] p-4">
                   <p className="text-xs font-black uppercase tracking-[0.14em] text-lakuntza-greenDark">Empresa delegada</p>
                   <p className="mt-2 text-sm font-bold leading-6 text-neutral-700">
-                    Electricidad Lakuntza trabaja como empresa delegada de Feníe Energía para la revisión y contratación de luz y gas.
+                    Electricidad Lakuntza actúa como empresa delegada de Feníe Energía para luz, gas y consultas sobre alarmas a través de su colaboración con Movistar Prosegur.
                   </p>
                 </div>
               </div>
@@ -42,10 +43,10 @@ export default function FenieEnergySection() {
             <div className="xl:col-span-7">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Energía con acompañamiento</p>
               <h2 className="mt-4 max-w-3xl text-4xl font-black leading-[.95] tracking-[-.055em] text-neutral-950 sm:text-5xl">
-                Luz y gas con el acompañamiento de Electricidad Lakuntza y Feníe Energía.
+                Luz, gas y seguridad, con acompañamiento directo.
               </h2>
               <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-600">
-                Feníe Energía es una comercializadora nacida del sector de las empresas instaladoras. Electricidad Lakuntza actúa como empresa delegada: revisamos tu caso, explicamos las condiciones de Feníe y te acompañamos si decides contratar. No comparamos ofertas de todas las compañías del mercado.
+                Feníe Energía es una comercializadora nacida del sector de las empresas instaladoras. Como empresa delegada, te ayudamos a revisar luz y gas y a consultar soluciones de Movistar Prosegur Alarmas mediante su colaboración. Te explicamos las condiciones antes de decidir. No somos un comparador independiente ni una compañía de seguridad.
               </p>
 
               <div className="mt-7 grid gap-3">
@@ -73,6 +74,9 @@ export default function FenieEnergySection() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">
                   Revisar mi factura <ArrowRight className="ml-2" size={17} />
+                </a>
+                <a href="/alarmas-movistar-prosegur" className="inline-flex items-center justify-center rounded-2xl border border-neutral-300 bg-white px-5 py-3 text-sm font-black text-neutral-950 transition hover:border-lakuntza-green">
+                  Consultar alarmas <ArrowRight className="ml-2" size={17} />
                 </a>
                 <a href={fenieUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-2xl border border-neutral-300 bg-white px-5 py-3 text-sm font-black text-neutral-950 transition hover:border-lakuntza-green">
                   Web oficial de Feníe <ArrowUpRight className="ml-2" size={17} />

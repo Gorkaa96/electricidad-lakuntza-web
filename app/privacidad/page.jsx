@@ -35,9 +35,16 @@ const sections = [
     ],
   },
   {
+    title: 'Consultas sobre alarmas',
+    content: [
+      'Si solicitas información sobre alarmas de Movistar Prosegur a través de Feníe Energía, podremos utilizar los datos de contacto y de la consulta que nos facilites para responder y, si decides continuar, gestionar la solicitud comercial.',
+      'No es necesario enviar fotografías de documentos de identidad, datos bancarios ni información adicional para la primera consulta.',
+    ],
+  },
+  {
     title: 'Finalidades',
     content: [
-      'Responder consultas, preparar presupuestos, gestionar solicitudes de servicio, valorar trabajos técnicos, revisar facturas de luz o gas y mantener la comunicación necesaria con el cliente.',
+      'Responder consultas, preparar presupuestos, gestionar solicitudes de servicio, valorar trabajos técnicos, revisar facturas de luz o gas, informar sobre alarmas y mantener la comunicación necesaria con el cliente.',
       'También podemos conservar información mínima de trabajos realizados para gestión interna, historial de servicio y obligaciones legales cuando corresponda.',
       'No utilizamos los datos recibidos para publicidad masiva ni cesiones comerciales no solicitadas.',
     ],
@@ -61,7 +68,7 @@ const sections = [
     title: 'Destinatarios y proveedores técnicos',
     content: [
       'No se cederán datos a terceros salvo obligación legal o cuando sea necesario para prestar el servicio solicitado.',
-      'Para servicios energéticos, si el cliente decide avanzar con una contratación, podrán comunicarse los datos necesarios a la comercializadora, distribuidora, entidad delegada o entidades implicadas en la gestión del contrato.',
+      'Para luz, gas o alarmas, si el cliente decide avanzar con una contratación y existe base jurídica para ello, podrán comunicarse los datos necesarios a Feníe Energía, Movistar Prosegur Alarmas y las entidades que intervengan en el servicio solicitado, informando al interesado según corresponda.',
       'La web puede utilizar proveedores técnicos de alojamiento, almacenamiento, formularios, correo electrónico, analítica o comunicaciones para que el servicio funcione correctamente. Estos proveedores solo deben tratar los datos en la medida necesaria para prestar el servicio técnico correspondiente.',
       'Al usar WhatsApp, email u otros servicios externos, la comunicación se rige también por las condiciones y políticas de privacidad de dichos proveedores.',
     ],

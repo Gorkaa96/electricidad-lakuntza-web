@@ -44,7 +44,7 @@ export default function ServiceDetailPage({ params }) {
   const Icon = iconBySlug[service.slug] || PlugZap;
   const isEnergy = service.slug === 'asesoria-energetica-luz-gas';
   const primaryCtaHref = isEnergy ? '/revision-factura-luz-gas' : '#contacto-servicio';
-  const primaryCtaLabel = isEnergy ? 'Subir factura gratis' : 'Consultar servicio';
+  const primaryCtaLabel = isEnergy ? 'Revisar factura sin compromiso' : 'Consultar servicio';
 
   const serviceSchema = {
     '@context': 'https://schema.org',
@@ -85,7 +85,7 @@ export default function ServiceDetailPage({ params }) {
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">{service.intro}</p>
               {isEnergy ? (
                 <a href="/revision-factura-luz-gas" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-                  Subir factura gratis <ArrowRight className="ml-2" size={18} />
+                  Revisar factura sin compromiso <ArrowRight className="ml-2" size={18} />
                 </a>
               ) : null}
             </div>
@@ -143,7 +143,7 @@ export default function ServiceDetailPage({ params }) {
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               {isEnergy ? (
                 <a href="/revision-factura-luz-gas" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
-                  Subir factura gratis <ArrowRight className="ml-2" size={18} />
+                  Revisar factura sin compromiso <ArrowRight className="ml-2" size={18} />
                 </a>
               ) : (
                 <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">

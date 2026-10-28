@@ -15,7 +15,7 @@ const sections = [
       'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Navarra.',
       'Teléfono: 649 853 448.',
       'Correo electrónico: eleclakuntza@yahoo.es.',
-      'Actividad: instalaciones eléctricas, telecomunicaciones y asesoría energética.',
+      'Actividad: instalaciones eléctricas, telecomunicaciones, revisión de luz y gas y asesoramiento comercial sobre alarmas a través de Feníe Energía.',
     ],
   },
   {
@@ -28,8 +28,15 @@ const sections = [
   {
     title: 'Servicios energéticos',
     content: [
-      'Electricidad Lakuntza ofrece asesoramiento energético y revisión de facturas de luz y gas, incluyendo la posibilidad de acompañar al cliente en la contratación como empresa delegada de Fenie Energía.',
+      'Electricidad Lakuntza ofrece asesoramiento energético y revisión de facturas de luz y gas, incluyendo la posibilidad de acompañar al cliente en la contratación como empresa delegada de Feníe Energía.',
       'La comparación de facturas se realiza con la información aportada por el cliente y no implica obligación de contratación.',
+    ],
+  },
+  {
+    title: 'Consultas sobre alarmas',
+    content: [
+      'Electricidad Lakuntza ofrece información y acompañamiento comercial para contratar soluciones de Movistar Prosegur Alarmas a través de la colaboración con Feníe Energía.',
+      'La instalación, prestaciones de seguridad, precios, permanencia y condiciones de las ofertas corresponden al proveedor del servicio y deben confirmarse antes de la contratación.',
     ],
   },
   {
@@ -83,7 +90,7 @@ export default function AvisoLegalPage() {
                 ))}
               </div>
               <p className="mt-10 rounded-2xl bg-neutral-50 p-4 text-xs leading-6 text-neutral-500">
-                Última actualización: junio de 2026.
+                Última actualización: octubre de 2026.
               </p>
             </div>
           </div>

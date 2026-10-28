@@ -9,6 +9,7 @@ const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const navItems = [
   ['Luz y gas', '/revision-factura-luz-gas'],
+  ['Alarmas', '/alarmas-movistar-prosegur'],
   ['Feníe Energía', '/#fenie'],
   ['Servicios', '/servicios'],
   ['Trabajos', '/#trabajos'],
@@ -59,7 +60,7 @@ export default function Header() {
           <div className="mx-auto grid max-w-7xl gap-5">
             <div className="rounded-[1.6rem] border border-lakuntza-green/20 bg-[#F3FAEF] p-4">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión de factura</p>
-              <p className="mt-2 text-sm leading-6 text-neutral-600">Sube tu factura de luz o gas y revisamos si merece la pena mejorar condiciones.</p>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">Sube tu factura de luz o gas para revisarla. También puedes consultarnos por alarmas de Movistar Prosegur.</p>
               <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-lakuntza-green px-4 py-3 text-sm font-black text-white shadow-green">
                 <FileText size={17} /> Revisar mi factura
               </a>
