@@ -13,6 +13,7 @@ export default function sitemap() {
     { path: '/servicios', changeFrequency: 'monthly', priority: 0.9 },
     ...serviceRoutes,
     { path: '/revision-factura-luz-gas', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/alarmas-movistar-prosegur', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/zona-servicio', changeFrequency: 'monthly', priority: 0.85 },
     { path: '/trabajos-realizados', changeFrequency: 'weekly', priority: 0.8 },
     { path: '/aviso-legal', changeFrequency: 'yearly', priority: 0.2 },
