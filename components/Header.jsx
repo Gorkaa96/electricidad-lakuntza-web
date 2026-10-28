@@ -55,7 +55,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl 2xl:hidden">
+        <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-neutral-200 bg-white px-4 py-5 shadow-2xl 2xl:hidden">
           <div className="mx-auto grid max-w-7xl gap-5">
             <div className="rounded-[1.6rem] border border-lakuntza-green/20 bg-[#F3FAEF] p-4">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Revisión de factura</p>
