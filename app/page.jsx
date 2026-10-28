@@ -47,7 +47,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section id="inicio" className="relative isolate overflow-hidden bg-[#121915] pt-20 text-white">
+        <section id="inicio" className="brand-dark-surface relative isolate overflow-hidden pt-20 text-white">
           <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
             <div className="max-w-4xl">
               <p className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-[.12em] text-white/85">
@@ -104,7 +104,7 @@ export default function HomePage() {
         <FenieEnergySection />
         <ProjectsSection />
 
-        <section id="contacto" className="scroll-mt-20 bg-neutral-950 py-20 text-white sm:py-24">
+        <section id="contacto" className="brand-dark-surface scroll-mt-20 py-20 text-white sm:py-24">
           <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
             <div className="lg:col-span-7">
               <p className="text-xs font-black uppercase tracking-[.16em] text-[#A9ED82]">Contacto</p>
