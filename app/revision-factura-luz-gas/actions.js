@@ -22,9 +22,9 @@ function safeFileName(name) {
     .slice(0, 90);
 }
 
-function getPrecheckResult({ bonusStatus }) {
-  // A form submission is not evidence of savings. Human review is always required.
-  return bonusStatus === 'si' ? 'bonus_social_case' : 'manual_review';
+function getPrecheckResult() {
+  // A form submission is never proof of savings or contract eligibility.
+  return 'manual_review';
 }
 
 async function notifyByEmail({ leadId, name, phone, email, locality, supplyType, customerType, bonusStatus, currentCompany }) {
@@ -103,7 +103,8 @@ export async function submitInvoiceReview(formData) {
 
   if (!name || !phone || !consentAccepted) redirect('/revision-factura-luz-gas?error=datos');
   if (!file || typeof file === 'string' || !file.size) redirect('/revision-factura-luz-gas?error=factura');
-  if (!['luz', 'gas', 'luz_gas'].includes(supplyType) || !['vivienda', 'negocio', 'comunidad'].includes(customerType) || !['si', 'no', 'no_lo_se'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=datos');
+  if (!['luz', 'gas', 'luz_gas'].includes(supplyType) || !['vivienda', 'negocio', 'comunidad'].includes(customerType) || !['si', 'familia_numerosa', 'no', 'no_lo_se'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=datos');
+  if ((supplyType === 'luz' || supplyType === 'luz_gas') && ['si', 'familia_numerosa'].includes(bonusStatus)) redirect('/revision-factura-luz-gas?error=bono');
   if (!allowedFileTypes.includes(file.type)) redirect('/revision-factura-luz-gas?error=tipo');
   if (file.size > maxFileSize) redirect('/revision-factura-luz-gas?error=tamano');
 
