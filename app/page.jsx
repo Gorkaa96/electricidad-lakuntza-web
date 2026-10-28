@@ -57,7 +57,7 @@ export default function HomePage() {
                 En Electricidad Lakuntza te orientamos sobre tus contratos de luz y gas y sobre alarmas Movistar Prosegur. Conocemos el sector, escuchamos lo que necesitas y te explicamos cada propuesta antes de decidir.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-lakuntza-green">
+                <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
                   <FileText size={19} /> Revisar luz y gas <ArrowRight size={17} />
                 </a>
                 <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/20">
@@ -109,7 +109,7 @@ export default function HomePage() {
               <p className="mt-5 max-w-xl text-base leading-8 text-white/70">Escríbenos o llámanos. Te atendemos directamente, tanto si buscas luz o gas como una alarma o una instalación.</p>
             </div>
             <div className="grid gap-3 lg:col-span-5">
-              <a href={generalWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-lakuntza-greenDark px-5 py-4 text-sm font-black text-white transition hover:bg-lakuntza-green"><MessageCircle size={19}/> Consultar por WhatsApp</a>
+              <a href={generalWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-lakuntza-greenDark px-5 py-4 text-sm font-black text-white transition hover:bg-neutral-950"><MessageCircle size={19}/> Consultar por WhatsApp</a>
               <a href="tel:+34649853448" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl border border-white/30 px-5 py-4 text-sm font-black text-white hover:bg-white/10"><Phone size={19}/> Llamar: 649 853 448</a>
               <a href="mailto:eleclakuntza@yahoo.es" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-xl border border-white/30 px-5 py-4 text-sm font-black text-white hover:bg-white/10"><Mail size={19}/> eleclakuntza@yahoo.es</a>
             </div>
