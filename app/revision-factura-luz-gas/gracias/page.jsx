@@ -9,8 +9,8 @@ const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
 
 const messages = {
   potential_improvement: {
-    title: 'Factura recibida. Parece revisable.',
-    text: 'Por los datos iniciales, puede haber margen de mejora o al menos merece una revisión prioritaria. Electricidad Lakuntza revisará la factura y contactará contigo para explicártelo sin compromiso.',
+    title: 'Hemos recibido tu factura.',
+    text: 'La revisaremos antes de determinar si existe alguna alternativa interesante. Después te explicaremos las opciones sin compromiso.',
     tone: 'green',
   },
   bonus_social_case: {
@@ -32,7 +32,7 @@ const messages = {
 
 export const metadata = {
   title: 'Factura recibida',
-  description: 'Confirmación de recepción de factura para revisión gratuita.',
+  description: 'Confirmación de recepción de factura para revisión de luz y gas.',
   robots: { index: false, follow: false },
 };
 
