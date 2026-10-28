@@ -54,7 +54,7 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
     `Abrir la solicitud en admin: ${adminUrl}`,
     '',
     'La factura no se adjunta por email; se consulta desde el panel privado.',
-  ].join('\\n');
+  ].join('\n');
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
@@ -111,6 +111,13 @@ export async function submitInvoiceReview(formData) {
   const fileName = safeFileName(file.name);
   const filePath = `${leadId}/${Date.now()}-${fileName}`;
   const bytes = Buffer.from(await file.arrayBuffer());
+  const validSignature = (
+    (file.type === 'application/pdf' && bytes.subarray(0, 5).toString('ascii') === '%PDF-') ||
+    (file.type === 'image/jpeg' && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) ||
+    (file.type === 'image/png' && bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) ||
+    (file.type === 'image/webp' && bytes.subarray(0, 4).toString('ascii') === 'RIFF' && bytes.subarray(8, 12).toString('ascii') === 'WEBP')
+  );
+  if (!validSignature) redirect('/revision-factura-luz-gas?error=tipo');
 
   const { error: uploadError } = await supabase.storage
     .from('invoice-files')
