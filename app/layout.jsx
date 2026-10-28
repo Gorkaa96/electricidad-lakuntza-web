@@ -26,6 +26,7 @@ const localBusinessSchema = {
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Telecomunicaciones' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asesoría energética y comparación de facturas' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Contratación de luz y gas' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asesoramiento sobre alarmas Movistar Prosegur a través de Feníe Energía' } },
   ],
 };
 
@@ -61,7 +62,7 @@ export const metadata = {
   openGraph: {
     title: 'Electricidad Lakuntza | Luz y gas e instalaciones eléctricas',
     description:
-      'Revisión de luz y gas con Feníe Energía y atención directa desde Lakuntza. Instalaciones eléctricas y telecomunicaciones en Navarra.',
+      'Luz, gas y asesoramiento para alarmas Movistar Prosegur a través de Feníe Energía. Electricidad y telecomunicaciones en Navarra.',
     url: siteUrl,
     siteName: siteConfig.name,
     type: 'website',
