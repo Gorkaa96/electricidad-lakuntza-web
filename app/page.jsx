@@ -8,7 +8,7 @@ import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
   title: 'Luz, gas y alarmas con atención directa',
-  description: 'Revisamos tu factura de luz o gas y te informamos sobre alarmas Movistar Prosegur a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones.'
+  description: 'Revisamos tu factura de luz o gas y te informamos sobre alarmas Movistar Prosegur a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones.',
   alternates: { canonical: '/' },
 };
 
@@ -39,7 +39,8 @@ const routes = [
     text: 'Instalaciones, reformas, cuadros, averías y redes de datos. Trabajos en Navarra y País Vasco, según disponibilidad.',
     href: '/servicios',
     action: 'Ver instalaciones',
-  },];
+  },
+];
 
 export default function HomePage() {
   return (
