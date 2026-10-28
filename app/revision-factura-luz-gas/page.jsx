@@ -213,7 +213,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                     </label>
                   </div>
 
-                  <button className="w-full rounded-2xl bg-lakuntza-green px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">
+                  <button className="w-full rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
                     Enviar factura para revisión
                   </button>
 
