@@ -98,8 +98,8 @@ export async function submitInvoiceReview(formData) {
   if (formData.get('website')) redirect('/revision-factura-luz-gas/gracias?estado=pending');
   const file = formData.get('invoice');
 
-  const phoneDigits = phone.replace(/\\D/g, '');
-  if (name.length < 2 || name.length > 100 || phoneDigits.length < 9 || phoneDigits.length > 15 || (email && (email.length > 254 || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))) || !consentAccepted) {
+  const phoneDigits = phone.replace(/\D/g, '');
+  if (name.length < 2 || name.length > 100 || phoneDigits.length < 9 || phoneDigits.length > 15 || (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) || !consentAccepted) {
     redirect('/revision-factura-luz-gas?error=datos#formulario');
   }
   if (!file || typeof file === 'string' || !file.size) redirect('/revision-factura-luz-gas?error=factura#formulario');
