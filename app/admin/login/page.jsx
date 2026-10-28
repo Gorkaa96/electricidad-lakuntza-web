@@ -13,7 +13,7 @@ export default async function AdminLoginPage() {
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
 
   if (data?.user) {
-    redirect('/admin/proyectos');
+    redirect('/admin/facturas');
   }
 
   return (
@@ -25,10 +25,10 @@ export default async function AdminLoginPage() {
             <div className="mt-14">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-lakuntza-green">Panel privado</p>
               <h1 className="mt-5 text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-6xl">
-                Gestión de trabajos realizados.
+                Gestión de solicitudes y trabajos.
               </h1>
               <p className="mt-6 text-base leading-8 text-white/65">
-                Acceso reservado para actualizar los trabajos que se muestran en la web de Electricidad Lakuntza.
+                Acceso privado para revisar las facturas recibidas y mantener los trabajos publicados.
               </p>
             </div>
           </section>
@@ -37,7 +37,7 @@ export default async function AdminLoginPage() {
             <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Acceso seguro</p>
             <h2 className="mt-4 text-3xl font-black tracking-[-0.05em] text-neutral-950">Entrar al panel</h2>
             <p className="mt-3 text-sm leading-6 text-neutral-600">
-              Introduce el correo y la contraseña autorizados para gestionar el contenido de la web.
+              Introduce las credenciales autorizadas para gestionar las solicitudes y el contenido de la web.
             </p>
             <LoginForm />
           </section>
