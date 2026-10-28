@@ -67,7 +67,7 @@ export const metadata = {
   openGraph: {
     title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
-      'Revisión gratuita de facturas de luz y gas con Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
+      'Luz, gas y alarmas con atención directa a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.'
     url: siteUrl,
     siteName: siteConfig.name,
     type: 'website',
@@ -83,9 +83,9 @@ export const metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Revisión de luz y gas | Electricidad Lakuntza',
+    title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
-      'Revisión gratuita y sin compromiso de luz y gas mediante Feníe Energía, además de instalaciones eléctricas y telecomunicaciones.',
+      'Luz, gas y alarmas con atención directa y sin compromiso. Instalaciones eléctricas y telecomunicaciones.'
     images: ['/logo-lakuntza.png'],
   },
   robots: {
