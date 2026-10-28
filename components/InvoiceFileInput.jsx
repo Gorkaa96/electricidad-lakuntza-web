@@ -17,20 +17,20 @@ export default function InvoiceFileInput() {
     <div className="min-w-0 text-sm font-black text-neutral-800">
       <span className="block">Factura PDF o imagen *</span>
 
-      <input
-        id={inputId}
-        name="invoice"
-        required
-        type="file"
-        accept="application/pdf,image/jpeg,image/png,image/webp"
-        className="sr-only"
-        onChange={(event) => setFile(event.target.files?.[0] || null)}
-      />
-
       <label
         htmlFor={inputId}
-        className="mt-2 block cursor-pointer rounded-[1.4rem] border border-dashed border-neutral-300 bg-neutral-50 p-4 transition focus-within:border-lakuntza-green hover:border-lakuntza-green/70 hover:bg-[#F8FCF6]"
+        className="relative mt-2 block cursor-pointer rounded-[1.4rem] border border-dashed border-neutral-300 bg-neutral-50 p-4 transition-colors focus-within:border-lakuntza-greenDark focus-within:ring-2 focus-within:ring-lakuntza-greenDark/40 hover:border-lakuntza-greenDark hover:bg-[#F8FCF6]"
       >
+        <input
+          id={inputId}
+          name="invoice"
+          required
+          type="file"
+          accept="application/pdf,image/jpeg,image/png,image/webp"
+          aria-describedby={`${inputId}-ayuda`}
+          className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+          onChange={(event) => setFile(event.target.files?.[0] || null)}
+        />
         <span className="block min-w-0">
           <span className="flex items-start gap-4">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-lakuntza-greenDark shadow-sm ring-1 ring-neutral-200">
@@ -44,8 +44,8 @@ export default function InvoiceFileInput() {
               <span className="mt-1 block text-xs font-bold leading-5 text-neutral-500">
                 {file ? `${file.type || 'Archivo'} · ${formatFileSize(file.size)}` : 'PDF, JPG, PNG o WebP'}
               </span>
-              <span className="mt-1 block text-xs font-bold leading-5 text-neutral-400">
-                Tamaño máximo: 10 MB
+              <span id={`${inputId}-ayuda`} className="mt-1 block text-xs font-bold leading-5 text-neutral-500">
+                Tamaño máximo: 10 MB. Si haces una foto, comprueba que se pueda leer.
               </span>
             </span>
           </span>
