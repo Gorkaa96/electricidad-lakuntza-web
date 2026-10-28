@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
 import InvoiceFileInput from '@/components/InvoiceFileInput';
+import InvoiceSubmitButton from '@/components/InvoiceSubmitButton';
 import EnergyEligibilityFields from '@/components/EnergyEligibilityFields';
 import { submitInvoiceReview } from './actions';
 
@@ -39,21 +40,22 @@ const privacyPoints = [
   'Puedes pedir la eliminación de la solicitud y del archivo enviado.',
 ];
 
-export default function RevisionFacturaPage({ searchParams }) {
-  const error = searchParams?.error;
+export default async function RevisionFacturaPage({ searchParams }) {
+  const resolvedParams = await searchParams;
+  const error = resolvedParams?.error;
 
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
-        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
+        <section className="relative isolate overflow-hidden bg-neutral-950 pt-28 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 pb-16 sm:px-6 xl:grid-cols-12 xl:items-end xl:px-8">
+          <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-10 sm:gap-10 sm:px-6 sm:pb-16 xl:grid-cols-12 xl:items-end xl:px-8">
             <div className="xl:col-span-8">
               <Badge dark><Leaf size={14} /> Luz y gas</Badge>
-              <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
-                Revisa tu factura de luz o gas sin compromiso.
+              <h1 className="mt-6 max-w-5xl text-4xl font-black leading-[1.06] tracking-[-.05em] sm:text-6xl">
+                Revisión de luz y gas, con trato directo.
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
                 Envíanos tu factura para que revisemos tus condiciones y valoremos si existe una alternativa interesante con Feníe Energía. Si no te conviene cambiar, también te lo diremos.
@@ -83,7 +85,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                 Revisamos las condiciones antes de que decidas.
               </h2>
               <p className="mt-6 text-base leading-8 text-neutral-600">
-                No prometemos ahorro automático. Revisamos tu caso y te decimos con honestidad si merece la pena cambiar, ajustar condiciones o mantener lo que tienes.
+                Revisamos tu caso y te explicamos si existe una alternativa interesante. Si conviene mantener tus condiciones actuales, también te lo diremos.
               </p>
 
               <div className="mt-8 grid gap-3">
@@ -191,9 +193,7 @@ export default function RevisionFacturaPage({ searchParams }) {
                     </label>
                   </div>
 
-                  <button className="w-full rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
-                    Enviar factura para revisión
-                  </button>
+                  <InvoiceSubmitButton />
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
