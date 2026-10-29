@@ -10,13 +10,28 @@ export const metadata = {
 export const revalidate = 0;
 
 export default async function AdminProjectsPage({ searchParams }) {
+  const resolvedParams = await searchParams;
   const { supabase } = await requireAdmin();
-  const { data: projects = [] } = await supabase
+  const { data, error: loadError } = await supabase
     .from('projects')
     .select('id, slug, title, category, location, year, featured, published, sort_order, created_at')
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false });
 
+  if (loadError) {
+    console.error('[admin-projects] Database error', { code: loadError.code || 'unknown' });
+    return (
+      <AdminShell title="Trabajos" description="Publicaciones y referencias de trabajos realizados.">
+        <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-6">
+          <h2 className="text-lg font-semibold text-amber-950">No se han podido cargar los trabajos</h2>
+          <p className="mt-2 text-sm leading-6 text-amber-900">Comprueba la conexión con Supabase y vuelve a intentarlo. Tus trabajos no se han eliminado.</p>
+          <a href="/admin/proyectos" className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-amber-950 px-5 py-3 text-sm font-semibold text-white hover:bg-amber-900">Reintentar</a>
+        </div>
+      </AdminShell>
+    );
+  }
+
+  const projects = data || [];
   const published = projects.filter((project) => project.published).length;
   const drafts = projects.length - published;
   const featured = projects.filter((project) => project.featured).length;
@@ -27,7 +42,7 @@ export default async function AdminProjectsPage({ searchParams }) {
       description="Trabajos realizados que se muestran en la web pública. Mantén solo ejemplos reales, claros y bien presentados."
       action={<a href="/admin/proyectos/nuevo" className="rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Nuevo trabajo</a>}
     >
-      <AdminNotice success={searchParams?.success} error={searchParams?.error} />
+      <AdminNotice success={resolvedParams?.success} error={resolvedParams?.error} />
 
       <section className="mb-6 grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-neutral-200 bg-white p-5">
