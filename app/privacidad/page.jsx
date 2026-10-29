@@ -22,7 +22,7 @@ const sections = [
     content: [
       'Podemos tratar los datos que el usuario facilita voluntariamente al contactar por teléfono, correo electrónico, WhatsApp o formulario web: nombre, teléfono, email, mensaje, ubicación aproximada del trabajo y documentación que el usuario decida enviar.',
       'En el caso de revisión de facturas de luz o gas, la factura puede incluir datos como nombre y apellidos, dirección del suministro, CUPS, compañía comercializadora, tarifa o peaje, potencia contratada, consumo, importes, periodo facturado y otros conceptos asociados al contrato.',
-      'No se deben enviar datos de terceros ni información especialmente sensible salvo que sea imprescindible para atender la solicitud.',
+      'Si remites una factura a nombre de otra persona, debes contar con permiso para facilitarla y solicitar su revisión. Los datos de contacto pueden corresponder a alguien distinto del titular de la factura. No debes remitir DNI, documentación bancaria adicional ni datos que no sean necesarios.',
     ],
   },
   {
