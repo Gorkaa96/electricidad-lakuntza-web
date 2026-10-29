@@ -47,32 +47,49 @@ export default function HomePage() {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main>
+
         <section id="inicio" className="brand-dark-surface relative isolate overflow-hidden pt-20 text-white">
-          <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
-            <div className="max-w-4xl">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-[.12em] text-white/85">
-                <Leaf size={15} className="text-[#A9ED82]" /> Empresa delegada de Feníe Energía
+          <div aria-hidden="true" className="pointer-events-none absolute -right-28 top-16 h-[32rem] w-[32rem] rounded-full border border-white/10 opacity-60" />
+          <div aria-hidden="true" className="pointer-events-none absolute -right-52 top-8 h-[46rem] w-[46rem] rounded-full border border-white/5 opacity-50" />
+          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-12 lg:gap-10 lg:px-8 lg:py-28">
+            <div className="lg:col-span-7">
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[.07] px-4 py-2 text-xs font-bold text-white/85">
+                <Leaf size={15} className="text-[#ADEB8D]" aria-hidden="true" /> Empresa delegada de Feníe Energía
               </p>
-              <h1 className="mt-9 max-w-4xl text-[clamp(2.5rem,5.7vw,4.9rem)] font-extrabold leading-[1.08] tracking-[-.045em]">
-                Revisamos tu luz y gas. <span className="text-[#A9ED82]">Te ayudamos a decidir.</span>
+              <h1 className="mt-8 max-w-3xl text-[clamp(2.7rem,5.4vw,4.9rem)] font-extrabold leading-[1.08] tracking-[-.045em]">
+                Luz, gas y alarmas. <span className="text-[#ADEB8D]">Decide con información clara.</span>
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
-                Revisamos tus condiciones de luz y gas y te informamos sobre alarmas Movistar Prosegur a través de Feníe Energía. Te explicamos las opciones disponibles antes de que tomes una decisión.
+                Revisamos tu factura de energía y te orientamos sobre alarmas para tu vivienda o negocio. Atención directa, propuestas explicadas y ninguna obligación de contratar.
               </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
-                  <FileText size={19} /> Revisar mi factura <ArrowRight size={17} />
-                </a>
-                <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/20">
-                  <ShieldCheck size={19} /> Consultar alarmas <ArrowRight size={17} />
-                </a>
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/80">
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="shrink-0 text-[#ADEB8D]" aria-hidden="true" /> Revisión energética sin coste</span>
+                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="shrink-0 text-[#ADEB8D]" aria-hidden="true" /> Atención personal</span>
               </div>
-              <div className="mt-7 flex flex-wrap gap-x-7 gap-y-2 text-sm font-medium text-white/75">
-                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Revisión de facturas sin coste</span>
-                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Atención personal</span>
-                <span className="inline-flex items-center gap-2"><CheckCircle2 size={17} className="text-[#A9ED82]" /> Sin obligación de contratar</span>
-              </div>
-              <a href="/servicios" className="mt-10 inline-flex items-center gap-2 text-sm font-bold text-white/85 underline-offset-4 hover:text-white hover:underline">También realizamos instalaciones eléctricas y telecomunicaciones <ArrowRight size={16} /></a>
+              <a href="/servicios" className="mt-9 inline-flex items-center gap-2 text-sm font-semibold text-white/85 underline-offset-4 hover:text-white hover:underline">
+                ¿Buscas una instalación eléctrica? <ArrowRight size={16} aria-hidden="true" />
+              </a>
+            </div>
+            <div className="grid gap-4 lg:col-span-5" aria-label="Elige el servicio que necesitas">
+              <a href="/revision-factura-luz-gas" className="group block rounded-[1.5rem] border border-white/20 bg-white p-6 text-neutral-950 shadow-2xl shadow-black/10 transition hover:-translate-y-0.5 hover:shadow-black/20 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#ADEB8D] sm:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EBF6E5] text-lakuntza-greenDark"><FileText size={24} aria-hidden="true" /></span>
+                  <ArrowRight size={22} className="text-lakuntza-greenDark transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </div>
+                <p className="mt-5 text-xs font-bold uppercase tracking-[.12em] text-lakuntza-greenDark">Luz y gas</p>
+                <h2 className="mt-2 text-2xl font-extrabold tracking-[-.035em]">Revisar mi factura</h2>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">Envíanos una factura y valoraremos tus condiciones antes de recomendar nada.</p>
+              </a>
+              <a href="/alarmas-movistar-prosegur" className="group block rounded-[1.5rem] border border-white/20 bg-white p-6 text-neutral-950 shadow-2xl shadow-black/10 transition hover:-translate-y-0.5 hover:shadow-black/20 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[#ADEB8D] sm:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EBF6E5] text-lakuntza-greenDark"><ShieldCheck size={24} aria-hidden="true" /></span>
+                  <ArrowRight size={22} className="text-lakuntza-greenDark transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </div>
+                <p className="mt-5 text-xs font-bold uppercase tracking-[.12em] text-lakuntza-greenDark">Alarmas</p>
+                <h2 className="mt-2 text-2xl font-extrabold tracking-[-.035em]">Consultar una alarma</h2>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">Consulta las opciones disponibles de Movistar Prosegur Alarmas a través de Feníe Energía.</p>
+              </a>
+              <p className="px-1 text-xs leading-5 text-white/65">Te informamos de las condiciones aplicables antes de que tomes una decisión.</p>
             </div>
           </div>
         </section>
