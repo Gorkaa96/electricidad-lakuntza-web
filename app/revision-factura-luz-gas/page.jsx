@@ -49,40 +49,24 @@ export default async function RevisionFacturaPage({ searchParams }) {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
-        <section className="brand-dark-surface relative isolate overflow-hidden pt-28 text-white">
-          <div className="hero-grid absolute inset-0 opacity-30" />
-          <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-10 sm:gap-10 sm:px-6 sm:pb-16 xl:grid-cols-12 xl:items-end xl:px-8">
-            <div className="xl:col-span-8">
-              <Badge dark><Leaf size={14} /> Luz y gas</Badge>
-              <h1 className="mt-6 max-w-5xl text-4xl font-black leading-[1.06] tracking-[-.05em] sm:text-6xl">
-                Revisión de luz y gas, con trato directo.
-              </h1>
-              <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
-                Envíanos tu factura para que revisemos tus condiciones y valoremos si existe una alternativa interesante con Feníe Energía. Si no te conviene cambiar, también te lo diremos.
-              </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-lakuntza-greenDark px-6 py-3 text-sm font-black text-white transition-colors hover:bg-neutral-950">Subir mi factura</a>
-                <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 bg-white/10 px-6 py-3 text-sm font-black text-white transition-colors hover:bg-white/20">Consultar sin factura</a>
+      <main id="contenido-principal">
+        <section className="brand-dark-surface relative isolate overflow-hidden pt-20 text-white">
+          <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-12 lg:gap-14 lg:px-8">
+            <div className="lg:col-span-8">
+              <p className="text-sm font-medium text-[#B6E6A4]">Luz y gas · Revisión de facturas</p>
+              <h1 className="mt-5 max-w-4xl text-[clamp(2.65rem,5vw,4.5rem)] font-semibold leading-[1.06] tracking-[-.05em]">Tu factura merece una revisión cuidadosa.</h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">Sube una factura de luz o gas y revisaremos las condiciones para valorar si te conviene una propuesta de Feníe Energía. Si es mejor mantener lo que tienes, también te lo explicaremos.</p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">Subir mi factura</a>
+                <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Consultar sin factura</a>
               </div>
             </div>
-            <div className="hidden xl:col-span-4 xl:block">
-              <div className="rounded-[2rem] border border-white/10 bg-white/[.07] p-7">
-                <FileText className="mb-6 text-lakuntza-green" size={34} />
-                <p className="text-sm leading-7 text-white/70">
-                  La factura se guarda en un espacio privado y solo se utiliza para estudiar tu consulta.
-                </p>
-                <div className="mt-5 grid gap-3 text-xs font-bold text-white/65">
-                  <div className="flex gap-2"><Lock size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Archivo privado</div>
-                  <div className="flex gap-2"><ShieldCheck size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Revisión humana</div>
-                  <div className="flex gap-2"><MessageCircle size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Contacto directo</div>
-                </div>
-              </div>
+            <div className="border-l-2 border-[#9BDC83] pl-6 text-sm leading-7 text-white/80 lg:col-span-4">
+              <p className="text-base font-semibold text-white">Una persona revisará tu caso</p>
+              <p className="mt-3">Sin resultados automáticos ni obligación de contratar. Necesitamos una factura y un teléfono para explicarte lo que encontremos.</p>
             </div>
           </div>
         </section>
-
         <section className="bg-lakuntza-mist py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 xl:grid-cols-12 xl:px-8">
             <div className="order-2 xl:order-1 xl:col-span-5">
@@ -96,8 +80,8 @@ export default async function RevisionFacturaPage({ searchParams }) {
 
               <div className="mt-8 grid gap-3">
                 {benefits.map((item) => (
-                  <div key={item} className="flex gap-3 rounded-2xl bg-white p-4 text-sm font-bold text-neutral-700 shadow-sm">
-                    <CheckCircle2 className="mt-0.5 shrink-0 text-lakuntza-green" size={18} />
+                  <div key={item} className="flex gap-3 border-b border-[#DCE8D9] py-3 text-sm leading-6 text-neutral-700">
+                    <CheckCircle2 className="mt-0.5 shrink-0 text-[#2C7331]" size={18} aria-hidden="true" />
                     <span>{item}</span>
                   </div>
                 ))}
