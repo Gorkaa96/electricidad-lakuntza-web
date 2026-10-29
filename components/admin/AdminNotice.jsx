@@ -19,6 +19,7 @@ const errorMessages = {
   estado: 'No se ha podido actualizar el estado.',
   analisis: 'No se ha podido guardar el análisis.',
   eliminar: 'No se ha podido eliminar la solicitud.',
+  archivo_eliminar: 'No se ha podido borrar el archivo privado. La solicitud se ha conservado para evitar una eliminación incompleta; revisa los permisos de almacenamiento.',
   confirmacion: 'Para eliminar la solicitud tienes que escribir ELIMINAR.',
   ocr: 'No se ha podido procesar la lectura.',
   ocr_archivo: 'No hay archivo de factura asociado o no se ha podido leer.',
