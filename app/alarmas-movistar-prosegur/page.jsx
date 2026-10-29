@@ -36,51 +36,39 @@ export default function AlarmasMovistarProsegurPage() {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
-        <section className="brand-dark-surface relative isolate overflow-hidden pt-32 text-white">
-          <div className="hero-grid pointer-events-none absolute inset-0 opacity-35" />
-          <div className="pointer-events-none absolute -right-32 top-10 h-80 w-80 rounded-full bg-lakuntza-green/20 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-20 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,.8fr)] lg:px-8">
-            <div className="min-w-0">
-              <Badge dark><ShieldCheck size={14} /> Seguridad · Hogares y negocios</Badge>
-              <h1 className="mt-7 max-w-3xl text-4xl font-black leading-[1.06] tracking-[-.05em] sm:text-6xl">
-                Alarmas de Movistar Prosegur, con atención cercana.
-              </h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80">
-                Electricidad Lakuntza te informa sobre la contratación de Movistar Prosegur Alarmas a través de Feníe Energía. Te ayudamos a entender las opciones y condiciones antes de decidir.
-              </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
-                  Consultar mi alarma <MessageCircle className="ml-2" size={18} />
+      <main id="contenido-principal">
+        <section className="brand-dark-surface relative isolate overflow-hidden pt-20 text-white">
+          <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-12 lg:gap-16 lg:px-8">
+            <div className="lg:col-span-7">
+              <p className="text-sm font-medium text-[#B6E6A4]">Alarmas para hogares y negocios</p>
+              <h1 className="mt-5 max-w-4xl text-[clamp(2.65rem,5vw,4.5rem)] font-semibold leading-[1.06] tracking-[-.05em]">Conoce tus opciones de seguridad antes de decidir.</h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">Te informamos sobre Movistar Prosegur Alarmas a través de Feníe Energía. Te explicamos las condiciones y el proceso de contratación sin compromiso.</p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">
+                  <MessageCircle size={18} aria-hidden="true" /> Consultar una alarma
                 </a>
-                <a href="tel:+34649853448" className="inline-flex items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-6 py-4 text-sm font-black text-white transition hover:bg-white/15">
-                  Llamar <Phone className="ml-2" size={18} />
+                <a href="tel:+34649853448" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+                  <Phone size={18} aria-hidden="true" /> Llamar
                 </a>
               </div>
-              <p className="mt-5 text-sm leading-6 text-white/65">Consulta sin compromiso. Confirmamos precio, permanencia y promociones aplicables antes de contratar.</p>
+              <p className="mt-5 text-sm leading-6 text-white/65">Confirmamos precios, promociones, equipamiento y permanencia aplicables en cada caso.</p>
             </div>
-            <div className="min-w-0 rounded-[2rem] bg-white p-6 text-neutral-950 shadow-2xl sm:p-8">
-              <p className="text-xs font-black uppercase tracking-[.17em] text-lakuntza-greenDark">Colaboración comercial</p>
-              <h2 className="mt-3 text-2xl font-black tracking-[-.04em] sm:text-3xl">Electricidad Lakuntza · Feníe Energía · Movistar Prosegur Alarmas</h2>
-              <p className="mt-5 text-sm leading-7 text-neutral-600">
-                Feníe Energía y Movistar Prosegur Alarmas colaboran para ofrecer soluciones de seguridad. Electricidad Lakuntza actúa como empresa delegada de Feníe, no como compañía de seguridad.
-              </p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl bg-neutral-50 p-5">
-                  <Home className="text-lakuntza-greenDark" size={25} />
-                  <p className="mt-3 font-black">Viviendas</p>
-                  <p className="mt-1 text-sm leading-6 text-neutral-600">Solicita información para proteger tu hogar.</p>
+            <div className="overflow-hidden rounded-[1.2rem] border border-white/20 bg-white p-7 text-[#16241A] lg:col-span-5 sm:p-9">
+              <h2 className="text-xl font-semibold tracking-[-.03em]">¿Para qué necesitas la alarma?</h2>
+              <div className="mt-7 grid gap-5">
+                <div className="flex items-start gap-4 border-b border-[#E1EAE0] pb-5">
+                  <Home size={23} className="mt-0.5 shrink-0 text-[#306D32]" aria-hidden="true" />
+                  <div><p className="font-semibold">Para mi vivienda</p><p className="mt-1 text-sm leading-6 text-[#57635A]">Consultar una solución para tu hogar.</p></div>
                 </div>
-                <div className="rounded-2xl bg-neutral-50 p-5">
-                  <Store className="text-lakuntza-greenDark" size={25} />
-                  <p className="mt-3 font-black">Negocios</p>
-                  <p className="mt-1 text-sm leading-6 text-neutral-600">Consulta soluciones para tu actividad.</p>
+                <div className="flex items-start gap-4">
+                  <Store size={23} className="mt-0.5 shrink-0 text-[#306D32]" aria-hidden="true" />
+                  <div><p className="font-semibold">Para mi negocio</p><p className="mt-1 text-sm leading-6 text-[#57635A]">Conocer opciones para tu actividad.</p></div>
                 </div>
               </div>
+              <p className="mt-7 border-t border-[#E1EAE0] pt-5 text-xs leading-6 text-[#667068]">Electricidad Lakuntza asesora comercialmente a través de Feníe Energía. La instalación y el servicio de seguridad corresponden al proveedor.</p>
             </div>
           </div>
         </section>
-
         <section className="bg-lakuntza-mist py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
@@ -89,7 +77,7 @@ export default function AlarmasMovistarProsegurPage() {
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-3">
               {steps.map(([number, title, description]) => (
-                <article key={number} className="rounded-[1.8rem] border border-neutral-200 bg-white p-6 shadow-card">
+                <article key={number} className="border-t-2 border-[#438C44] pt-6">
                   <p className="text-sm font-black text-lakuntza-greenDark">{number}</p>
                   <h3 className="mt-4 text-xl font-black">{title}</h3>
                   <p className="mt-3 text-sm leading-7 text-neutral-600">{description}</p>
