@@ -141,6 +141,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Nombre de la persona de contacto *
+                        <span className="text-xs font-medium leading-5 text-neutral-500">Puede ser distinto de quien figura como titular en la factura.</span>
                         <input name="name" required autoComplete="name" minLength={2} maxLength={100} className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
@@ -172,7 +173,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     <label className="flex gap-3 text-xs leading-5 text-neutral-600">
                       <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-lakuntza-green" />
                       <span>
-                        Acepto que Electricidad Lakuntza use mis datos y la factura enviada únicamente para revisar la consulta y contactarme. Entiendo que el preanálisis es orientativo y que la recomendación final requiere revisión humana. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
+                        Confirmo que tengo autorización para facilitar esta factura, incluso si está a nombre de otra persona. Acepto que Electricidad Lakuntza la utilice junto con mis datos para atender esta consulta. No se contratará nada sin autorización. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
                       </span>
                     </label>
                   </div>
