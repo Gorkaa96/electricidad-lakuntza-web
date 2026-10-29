@@ -143,7 +143,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
 
   let signedUrl = null;
   if (lead.file_path) {
-    const { data } = await supabase.storage.from('invoice-files').createSignedUrl(lead.file_path, 60 * 30);
+    const { data } = await supabase.storage.from('invoice-files').createSignedUrl(lead.file_path, 60 * 5);
     signedUrl = data?.signedUrl || null;
   }
 
