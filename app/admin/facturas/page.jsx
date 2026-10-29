@@ -132,11 +132,25 @@ function customerLabel(value) {
 export default async function AdminInvoiceLeadsPage({ searchParams }) {
   const resolvedSearchParams = await searchParams;
   const { supabase } = await requireAdmin();
-  const { data: leads = [] } = await supabase
+  const { data, error: loadError } = await supabase
     .from('invoice_review_leads')
     .select('id, created_at, name, phone, locality, supply_type, customer_type, bonus_status, status, precheck_result, analysis_result, contacted_at, converted_at, ocr_status, ocr_confidence_avg, invoice_total_eur, consumption_kwh, contracted_power_kw, has_extra_services')
     .order('created_at', { ascending: false });
 
+  if (loadError) {
+    console.error('[admin-invoices] Could not load requests', { code: loadError.code || 'unknown' });
+    return (
+      <AdminShell title="Facturas" description="Solicitudes recibidas para revisión energética.">
+        <div role="alert" className="rounded-2xl border border-amber-200 bg-amber-50 p-6">
+          <h2 className="text-lg font-bold text-amber-950">No se han podido cargar las solicitudes.</h2>
+          <p className="mt-2 text-sm leading-6 text-amber-900">Comprueba que el servicio de datos esté disponible e inténtalo de nuevo. No significa que no haya facturas recibidas.</p>
+          <a href="/admin/facturas" className="mt-4 inline-flex min-h-11 items-center rounded-xl bg-amber-900 px-5 py-2 text-sm font-bold text-white hover:bg-amber-950">Volver a intentar</a>
+        </div>
+      </AdminShell>
+    );
+  }
+
+  const leads = data || [];
   const selectedView = views.includes(resolvedSearchParams?.view) ? resolvedSearchParams.view : 'pending';
   const enrichedLeads = leads.map((lead) => ({ ...lead, view: getView(lead), action: getAction(lead) }));
   const filteredLeads = selectedView === 'all' ? enrichedLeads : enrichedLeads.filter((lead) => lead.view === selectedView);
