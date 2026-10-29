@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { createInvoiceIntakeClient } from '@/lib/supabase/intake';
 import { siteUrl } from '@/lib/site';
 import { validateInvoiceContact } from '@/lib/invoice/validate-contact.mjs';
 
@@ -108,7 +108,7 @@ export async function submitInvoiceReview(formData) {
   if (!allowedFileTypes.includes(file.type)) redirect('/revision-factura-luz-gas?error=tipo#formulario');
   if (file.size > maxFileSize) redirect('/revision-factura-luz-gas?error=tamano#formulario');
   // La comprobación barata de datos se realiza antes de crear clientes o leer archivos.
-  const supabase = await createSupabaseServerClient();
+  const supabase = createInvoiceIntakeClient();
   if (!supabase) redirect('/revision-factura-luz-gas?error=config#formulario');
 
   const leadId = crypto.randomUUID();
