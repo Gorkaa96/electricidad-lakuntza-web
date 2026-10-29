@@ -161,7 +161,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                         <span className="text-xs font-medium leading-5 text-neutral-500">Puede ser distinto del titular de la factura. Queremos saber con quién hablamos.</span>
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Teléfono *
+                        Teléfono de contacto *
                         <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
