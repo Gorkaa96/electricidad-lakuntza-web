@@ -17,29 +17,29 @@ export default async function AdminLoginPage({ searchParams }) {
   }
 
   return (
-    <main className="min-h-screen bg-lakuntza-mist px-4 py-10 text-neutral-950 sm:px-6 lg:px-8">
-      <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl items-center justify-center">
-        <div className="grid w-full overflow-hidden rounded-[2.2rem] border border-neutral-200 bg-white shadow-2xl lg:grid-cols-2">
-          <section className="brand-dark-surface p-8 text-white sm:p-10 lg:p-12">
+    <main className="min-h-screen bg-[#F3F7F1] px-4 py-12 text-[#152017] sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-5xl items-center">
+        <div className="grid w-full overflow-hidden rounded-[1.5rem] border border-[#D8E4D7] bg-white shadow-[0_24px_70px_rgba(21,42,23,.07)] lg:grid-cols-2">
+          <section className="brand-dark-surface p-8 text-white sm:p-10 lg:p-14">
             <Logo dark />
-            <div className="mt-14">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-lakuntza-green">Panel privado</p>
-              <h1 className="mt-5 text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-6xl">
-                Gestión de solicitudes y trabajos.
+            <div className="mt-16">
+              <p className="text-sm font-medium text-[#AFE19C]">Área privada</p>
+              <h1 className="mt-5 max-w-sm text-4xl font-semibold leading-[1.12] tracking-[-.05em] sm:text-5xl">
+                Todo el trabajo, en un lugar.
               </h1>
-              <p className="mt-6 text-base leading-8 text-white/65">
-                Acceso privado para revisar las facturas recibidas y mantener los trabajos publicados.
+              <p className="mt-7 max-w-sm text-base leading-8 text-white/70">
+                Revisa solicitudes de clientes y gestiona los trabajos publicados desde un panel accesible solo para personal autorizado.
               </p>
             </div>
           </section>
-
-          <section className="p-8 sm:p-10 lg:p-12">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Acceso seguro</p>
-            <h2 className="mt-4 text-3xl font-black tracking-[-0.05em] text-neutral-950">Entrar al panel</h2>
-            <p className="mt-3 text-sm leading-6 text-neutral-600">
-              Introduce las credenciales autorizadas para gestionar las solicitudes y el contenido de la web.
-            </p>
-            <LoginForm unauthorized={resolvedParams?.error === 'unauthorized'} />
+          <section className="p-8 sm:p-10 lg:p-14">
+            <div className="my-auto">
+              <h2 className="text-3xl font-semibold tracking-[-.04em] text-[#152017]">Acceder al panel</h2>
+              <p className="mt-4 text-sm leading-7 text-neutral-600">
+                Utiliza el correo y la contraseña de tu cuenta de administración.
+              </p>
+              <LoginForm unauthorized={resolvedParams?.error === 'unauthorized'} />
+            </div>
           </section>
         </div>
       </div>
