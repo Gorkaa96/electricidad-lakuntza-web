@@ -45,6 +45,7 @@ const privacyPoints = [
 export default async function RevisionFacturaPage({ searchParams }) {
   const resolvedParams = await searchParams;
   const error = resolvedParams?.error;
+  const intakeReady = process.env.INVOICE_INTAKE_ENABLED === 'true' && Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
@@ -178,7 +179,12 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     </label>
                   </div>
 
-                  <InvoiceSubmitButton />
+                  {!intakeReady ? (
+                    <div role="status" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+                      El envío de facturas desde la web todavía no está operativo. Para una consulta inicial, puedes <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">escribirnos por WhatsApp</a>. No intentes enviar datos personales hasta que activemos este servicio.
+                    </div>
+                  ) : null}
+                  <InvoiceSubmitButton disabled={!intakeReady} />
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
