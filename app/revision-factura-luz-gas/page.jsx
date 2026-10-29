@@ -156,15 +156,16 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">2. Datos de contacto</p>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Nombre *
-                        <input name="name" required autoComplete="name" minLength={2} maxLength={100} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        Nombre de la persona de contacto *
+                        <input name="name" required autoComplete="name" minLength={2} maxLength={100} placeholder="¿Cómo te llamas?" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                        <span className="text-xs font-medium leading-5 text-neutral-500">Puede ser distinto del titular de la factura. Queremos saber con quién hablamos.</span>
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Teléfono *
                         <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Email
+                        Correo electrónico (opcional)
                         <input name="email" type="email" autoComplete="email" maxLength={254} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
 
@@ -179,7 +180,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     </div>
 
                     <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
-                      Comentarios
+                      ¿Hay algo que debamos saber? (opcional)
                       <textarea name="notes" rows={3} maxLength={500} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
                     </label>
                   </div>
