@@ -189,7 +189,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     <label className="flex gap-3 text-xs leading-5 text-neutral-600">
                       <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-lakuntza-green" />
                       <span>
-                        Acepto que Electricidad Lakuntza use mis datos y la factura enviada únicamente para revisar la consulta y contactarme. Entiendo que el preanálisis es orientativo y que la recomendación final requiere revisión humana. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
+                        Confirmo que puedo facilitar esta factura, aunque esté a nombre de otra persona, y acepto que Electricidad Lakuntza la utilice junto con mis datos de contacto únicamente para atender la revisión solicitada. La recomendación será humana y no se contratará nada sin autorización. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
                       </span>
                     </label>
                   </div>
