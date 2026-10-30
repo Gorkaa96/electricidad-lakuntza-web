@@ -128,12 +128,12 @@ grant select, insert, update, delete on public.admin_users,
 
 -- Close access to the automatic RLS event-trigger helper from the public Data API.
 -- This function is owned by Supabase and is only needed by the database event trigger.
-do $
+do $harden$
 begin
   if to_regprocedure('public.rls_auto_enable()') is not null then
     execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';
   end if;
-end $;
+end $harden$;
 
 -- No unauthenticated access to customer data (service-role backend bypasses RLS).
 revoke all on public.admin_users, public.invoice_review_leads,
