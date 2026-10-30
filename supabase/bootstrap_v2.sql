@@ -119,6 +119,22 @@ alter table public.invoice_lead_events enable row level security;
 alter table public.projects enable row level security;
 alter table public.project_images enable row level security;
 
+-- The new project disables automatic Data API grants. Give only the necessary roles
+-- database access; RLS still decides which rows authenticated users may reach.
+grant usage on schema public to anon, authenticated, service_role;
+grant select, insert, update, delete on public.admin_users,
+  public.invoice_review_leads, public.invoice_ocr_results,
+  public.invoice_lead_events, public.projects, public.project_images to service_role;
+
+-- Close access to the automatic RLS event-trigger helper from the public Data API.
+-- This function is owned by Supabase and is only needed by the database event trigger.
+do $
+begin
+  if to_regprocedure('public.rls_auto_enable()') is not null then
+    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';
+  end if;
+end $;
+
 -- No unauthenticated access to customer data (service-role backend bypasses RLS).
 revoke all on public.admin_users, public.invoice_review_leads,
   public.invoice_ocr_results, public.invoice_lead_events from anon;
