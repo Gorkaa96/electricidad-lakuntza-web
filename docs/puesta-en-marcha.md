@@ -1,29 +1,32 @@
 # Guía de puesta en marcha — Electricidad Lakuntza (sin activar captación)
 
-Última revisión: 29/10/2026. Documento interno. Ninguna credencial real está en el repositorio.
+Última revisión: 30/10/2026. Documento interno. Ninguna credencial real está en el repositorio.
 
-## 1. Supabase y cuota
+## 1. Supabase — proyecto ya creado
 
-La organización `electricidad-lakuntza` (`wdijjhuqptvwhhmhncss`) no tiene proyectos actualmente. Si un proyecto gratuito no puede crearse aun así, verificar la cuota del usuario y la de otros propietarios o administradores de esa organización. El límite Free se calcula considerando los proyectos activos de los miembros con esos permisos en todas sus organizaciones. No crear otra cuenta Gmail como primera medida.
+- Organización: `electricidad-lakuntza` (`wdijjhuqptvwhhmhncss`).
+- Proyecto: `electricidad-lakuntza-web` (`yvrjrvropgouvzltwwvm`).
+- Región: `eu-west-1` (Europa / Irlanda).
+- Dashboard: https://supabase.com/dashboard/project/yvrjrvropgouvzltwwvm
+- URL de API pública: `https://yvrjrvropgouvzltwwvm.supabase.co`.
+- Estado comprobado: `ACTIVE_HEALTHY` el 30/10/2026.
+- **No publicar ni conectar a producción** hasta completar usuarios, variables de Vercel y pruebas de seguridad.
 
-El coste consultado para crear un proyecto Free en esta organización fue **0 por mes**, pero su creación requiere una confirmación explícita en Supabase. No se ha aplicado ningún esquema ni se han creado usuarios.
+## 2. Base de datos — migración aplicada y verificada
 
-## 2. Base de datos
+- Migración aplicada: `20261030112700_bootstrap_electricidad_lakuntza_secure_v2`.
+- Fuente versionada: `supabase/bootstrap_v2.sql`. **No volver a ejecutarla** sin revisar las migraciones existentes.
+- Seis tablas con RLS activado: `admin_users`, `invoice_review_leads`, `invoice_ocr_results`, `invoice_lead_events`, `projects`, `project_images`.
+- Buckets: `invoice-files` **privado**, 10 MB; `project-images` público, 5 MB para imágenes de trabajos autorizados.
+- Políticas inspeccionadas. El analizador de **seguridad** de Supabase no devolvió incidencias.
+- Avisos de **rendimiento**: índices sin uso en una base vacía y políticas de lectura superpuestas para proyectos publicados/administradores. No son bloqueos de seguridad, pero conviene revisar tras empezar a usar el sistema.
+- **Aún no probado de extremo a extremo**: inicio de sesión real, denegación por usuarios anónimos, subida, notificación y borrado de una factura sintética.
 
-Una vez creado el proyecto: revisar y ejecutar `supabase/bootstrap_v2.sql` solo si el proyecto está nuevo y vacío. No ejecutarlo sobre bases existentes sin auditoría/migración. Validar que existen tablas, políticas RLS y buckets. El archivo es un **borrador sin ensayo en una base real**.
-
-Comprobar expresamente:
-- No se pueden consultar solicitudes, OCR o documentos con clave pública y sin sesión.
-- Usuario autenticado que no esté en `admin_users`: denegado.
-- Administrador legítimo: acceso únicamente tras inicio de sesión.
-- El bucket `invoice-files` es **privado**.
-- `project-images` es público: subir únicamente fotografías autorizadas y sin datos de terceros (incluso si el proyecto aún es borrador).
-
-Crear un usuario individual en Supabase Auth, verificar su email y añadir su UUID al registro `public.admin_users`. No publicar contraseñas ni guardarlas en el código. Desactivar el registro público si no está previsto.
+Para dar acceso al primer administrador, crear personalmente un usuario individual en Supabase **Authentication > Users** y confirmar su correo; después insertar su UUID en `public.admin_users` mediante un proceso autorizado. Nunca enviar contraseñas ni compartir claves secretas por chat. Deshabilitar registro público si no está previsto.
 
 ## 3. Variables Vercel
 
-La Preview y Production necesitan la URL y clave pública correctas del proyecto. La base antigua fue eliminada; no reutilizar su referencia.
+**Configurar primero SOLO Preview.** La base antigua fue eliminada y la producción continúa en una versión anterior. No reutilizar su referencia.
 
 | Nombre | Visibilidad | Función |
 |---|---|---|
@@ -35,7 +38,7 @@ La Preview y Production necesitan la URL y clave pública correctas del proyecto
 | `RESEND_FROM` | Servidor | Remitente verificado en Resend |
 | `INVOICE_REVIEW_TO` | Servidor | Destinatario interno autorizado |
 
-La clave `SUPABASE_SERVICE_ROLE_KEY` nunca puede llevar el prefijo `NEXT_PUBLIC_`. Después de modificar claves públicas, recompilar para que el navegador use la referencia nueva. La herramienta de Vercel actualmente no permite inspeccionar variables (403); se necesita el acceso adecuado.
+La clave `SUPABASE_SERVICE_ROLE_KEY` nunca puede llevar el prefijo `NEXT_PUBLIC_`. Después de modificar claves públicas, recompilar para que el navegador use la referencia nueva. **Bloqueo confirmado el 30/10/2026:** la integración de Vercel devolvió HTTP 403 tanto al listar como al crear variables. El propietario del proyecto deberá introducirlas desde Vercel > Project > Settings > Environment Variables o revisar los permisos del conector. No se ha configurado ninguna variable nueva desde esta sesión.
 
 ## 4. Prueba controlada antes de publicar
 
@@ -52,4 +55,4 @@ La clave `SUPABASE_SERVICE_ROLE_KEY` nunca puede llevar el prefijo `NEXT_PUBLIC_
 
 ## 5. Contexto de diseño
 
-Diseño V3 en PR #8. Mejora de facturas en PR #6. Rama `integration/launch-prep-2026-10-29` reúne el trabajo y añade control de acceso al envío. No fusionar a `main` hasta la validación de esta rama y la del backend.
+Diseño V3 y mejoras de facturas integradas en PR #9; los antiguos PR #6 y #8 están cerrados como propuestas independientes. Rama `integration/launch-prep-2026-10-29` reúne el trabajo y añade control de acceso al envío. No fusionar a `main` hasta la validación de esta rama y la del backend.
