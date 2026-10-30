@@ -24,6 +24,16 @@
 
 Para dar acceso al primer administrador, crear personalmente un usuario individual en Supabase **Authentication > Users** y confirmar su correo; después insertar su UUID en `public.admin_users` mediante un proceso autorizado. Nunca enviar contraseñas ni compartir claves secretas por chat. Deshabilitar registro público si no está previsto.
 
+### Verificación posterior (30/10/2026)
+
+- Usuario de Authentication: **1**, correo confirmado.
+- Tabla `public.admin_users`: **1 administrador**, asociado al usuario autenticado. No hay facturas ni trabajos creados.
+- La comprobación de seguridad detecta **`auth_leaked_password_protection`**, funcionalidad de Supabase Pro; se mantiene en Free. Exigir una contraseña larga y única; valorar MFA antes del lanzamiento.
+- El despliegue de prueba `dpl_GGWpqSjsDsAite5CCHJJjkTzvibZ` recompiló la rama con las variables Preview actuales.
+- En el bundle de la nueva preview se comprobó la **clave publishable del Supabase nuevo**, pero `NEXT_PUBLIC_SUPABASE_URL` todavía apunta al antiguo `vprczjegprkwzashxyul`. **No probar acceso ni usar facturas hasta actualizar la URL de Preview** a `https://yvrjrvropgouvzltwwvm.supabase.co` y lanzar una nueva compilación.
+- La API de Vercel devuelve 403 al consultar las variables; el propietario debe cambiar la URL desde Project Settings > Environment Variables, evitando valores duplicados o específicos de rama.
+- El acceso real autenticado al administrador y las pruebas E2E siguen pendientes.
+
 ## 3. Variables Vercel
 
 **Configurar primero SOLO Preview.** La base antigua fue eliminada y la producción continúa en una versión anterior. No reutilizar su referencia.
