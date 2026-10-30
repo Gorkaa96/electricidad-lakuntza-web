@@ -24,6 +24,7 @@ body {
   color: var(--ink);
   background: #ffffff;
   text-rendering: optimizeLegibility;
+  font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -80,3 +81,6 @@ body {
 }
 
 :where(h1, h2, h3) { text-wrap: balance; }
+
+:where(a,button,input,select,textarea) { touch-action: manipulation; }
+:where([id="contenido-principal"]) { scroll-margin-top: 5rem; }

@@ -49,8 +49,8 @@ function numberValue(value) {
 
 function card(label, value) {
   return (
-    <div className="min-w-0 rounded-2xl bg-neutral-50 p-4">
-      <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">{label}</p>
+    <div className="min-w-0 rounded-lg bg-[#F4F7F3] p-4">
+      <p className="text-xs font-medium text-neutral-500">{label}</p>
       <p className="mt-2 break-words text-sm font-bold leading-6 text-neutral-800">{display(value)}</p>
     </div>
   );
@@ -143,7 +143,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
 
   let signedUrl = null;
   if (lead.file_path) {
-    const { data } = await supabase.storage.from('invoice-files').createSignedUrl(lead.file_path, 60 * 30);
+    const { data } = await supabase.storage.from('invoice-files').createSignedUrl(lead.file_path, 60 * 5);
     signedUrl = data?.signedUrl || null;
   }
 
@@ -161,15 +161,15 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
       <SimpleInvoiceActionPanel lead={lead} latestOcr={latestOcr} telHref={telHref} />
 
       <div className="mt-6 grid gap-6 lg:grid-cols-12">
-        <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card lg:col-span-8 sm:p-8">
+        <section className="rounded-xl border border-neutral-200 bg-white p-6 lg:col-span-8 sm:p-8">
           <div className="flex flex-wrap gap-2">
             <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${badgeClass(lead.status)}`}>{statusLabels[lead.status] || lead.status}</span>
             <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${badgeClass(ocrStatus)}`}>Lectura: {ocrLabels[ocrStatus] || ocrStatus}</span>
             <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${badgeClass(lead.analysis_result)}`}>{analysisLabels[lead.analysis_result] || 'Pendiente'}</span>
           </div>
 
-          <h2 className="mt-4 break-words text-3xl font-black tracking-[-0.05em] text-neutral-950">{lead.name}</h2>
-          <p className="mt-2 text-sm text-neutral-500">Recibida el {new Date(lead.created_at).toLocaleString('es-ES')}</p>
+          <h2 className="mt-4 break-words text-3xl font-semibold tracking-[-0.04em] text-neutral-950">{lead.name}</h2>
+          <p className="mt-2 text-sm text-neutral-500">Recibida el {new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(lead.created_at))}</p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {card('Teléfono', lead.phone)}
@@ -183,23 +183,23 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           </div>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
-            <div className="min-w-0 rounded-2xl bg-neutral-50 p-5">
-              <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Comentario del cliente</p>
+            <div className="min-w-0 rounded-lg bg-[#F4F7F3] p-5">
+              <p className="text-xs font-medium text-neutral-500">Comentario del cliente</p>
               <p className="mt-3 break-words text-sm leading-7 text-neutral-700">{lead.notes || 'Sin comentario.'}</p>
             </div>
-            <div className="min-w-0 rounded-2xl bg-neutral-50 p-5">
-              <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Notas internas</p>
+            <div className="min-w-0 rounded-lg bg-[#F4F7F3] p-5">
+              <p className="text-xs font-medium text-neutral-500">Notas internas</p>
               <p className="mt-3 whitespace-pre-line break-words text-sm leading-7 text-neutral-700">{lead.admin_notes || 'Sin notas internas.'}</p>
             </div>
           </div>
         </section>
 
         <aside className="grid gap-6 lg:col-span-4">
-          <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Factura</p>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-neutral-950">Archivo recibido</h2>
+          <section className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
+            <p className="text-sm font-semibold text-lakuntza-greenDark">Factura</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-neutral-950">Archivo recibido</h2>
             <p className="mt-3 break-all text-sm leading-6 text-neutral-500">{lead.file_name || 'Sin archivo'}</p>
-            {signedUrl ? <a href={signedUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">Abrir factura</a> : null}
+            {signedUrl ? <a href={signedUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Abrir factura</a> : null}
             <form action={prepareInvoiceOcr} className="mt-3">
               <input type="hidden" name="id" value={lead.id} />
               <button className="inline-flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">Procesar lectura</button>
@@ -207,14 +207,14 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <p className="mt-4 text-xs leading-5 text-neutral-500">La lectura sirve como apoyo. Revisa siempre los datos importantes contra la factura.</p>
           </section>
 
-          <section className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Gestión</p>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-neutral-950">Notas y estado</h2>
+          <section className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
+            <p className="text-sm font-semibold text-lakuntza-greenDark">Gestión</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-neutral-950">Notas y estado</h2>
             <form action={updateInvoiceLead} className="mt-6 grid gap-4">
               <input type="hidden" name="id" value={lead.id} />
               <label className="grid gap-2 text-sm font-black text-neutral-800">
                 Estado
-                <select name="status" defaultValue={lead.status} className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-bold outline-none focus:border-lakuntza-green">
+                <select name="status" defaultValue={lead.status} className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-bold outline-none focus:border-lakuntza-green">
                   <option value="new">Nueva</option>
                   <option value="reviewing">En revisión</option>
                   <option value="contacted">Contactado</option>
@@ -224,20 +224,20 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
               </label>
               <label className="grid gap-2 text-sm font-black text-neutral-800">
                 Notas internas
-                <textarea name="adminNotes" rows={5} defaultValue={lead.admin_notes || ''} className="rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Ej.: llamar por la tarde, revisar potencia, interesado en luz y gas..." />
+                <textarea name="adminNotes" rows={5} defaultValue={lead.admin_notes || ''} className="rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Ej.: llamar por la tarde, revisar potencia, interesado en luz y gas..." />
               </label>
-              <button className="rounded-2xl bg-lakuntza-green px-5 py-3 text-sm font-black text-white shadow-green transition hover:bg-lakuntza-greenDark">Guardar gestión</button>
+              <button className="rounded-2xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Guardar gestión</button>
             </form>
             <a href={`/admin/facturas/${lead.id}/eliminar`} className="mt-5 inline-flex w-full items-center justify-center rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Eliminar solicitud</a>
           </section>
         </aside>
       </div>
 
-      <section className="mt-6 rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-card sm:p-8">
+      <section className="mt-6 rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Datos y decisión</p>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.05em] text-neutral-950">Análisis interno</h2>
+            <p className="text-sm font-semibold text-lakuntza-greenDark">Datos y decisión</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-neutral-950">Análisis interno</h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600">Datos internos para decidir cómo responder. No son una promesa automática de ahorro.</p>
           </div>
           <span className={`inline-flex rounded-full px-4 py-2 text-xs font-black uppercase tracking-[0.14em] ${badgeClass(lead.analysis_result)}`}>{analysisLabels[lead.analysis_result] || 'Pendiente'}</span>
@@ -247,7 +247,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           <div className="mt-6 rounded-2xl border border-neutral-200 bg-white p-5">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Resumen de lectura</p>
+                <p className="text-xs font-medium text-neutral-500">Resumen de lectura</p>
                 <p className="mt-2 text-sm leading-6 text-neutral-600">Datos extraídos automáticamente. Confirmar contra la factura antes de contactar.</p>
               </div>
               <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-neutral-500">Confianza {latestOcr?.confidence_avg || '—'}%</span>
@@ -256,25 +256,25 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           </div>
         ) : null}
 
-        <div className="mt-6 rounded-2xl bg-neutral-50 p-5">
-          <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-400">Motivos actuales</p>
+        <div className="mt-6 rounded-lg bg-[#F4F7F3] p-5">
+          <p className="text-xs font-medium text-neutral-500">Motivos actuales</p>
           {analysisReasons.length > 0 ? <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-700">{analysisReasons.map((reason) => <li key={reason} className="break-words">• {reason}</li>)}</ul> : <p className="mt-3 text-sm leading-6 text-neutral-500">Sin motivos guardados todavía.</p>}
         </div>
 
         <form action={updateInvoiceAnalysis} className="mt-6 grid gap-5">
           <input type="hidden" name="id" value={lead.id} />
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <label className="grid gap-2 text-sm font-black text-neutral-800">CUPS<input name="extractedCups" defaultValue={lead.extracted_cups || ''} className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
-            <label className="grid gap-2 text-sm font-black text-neutral-800">Tarifa / peaje<input name="extractedTariff" defaultValue={lead.extracted_tariff || ''} className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
-            <label className="grid gap-2 text-sm font-black text-neutral-800">Potencia kW<input name="contractedPowerKw" defaultValue={numberValue(lead.contracted_power_kw)} inputMode="decimal" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
-            <label className="grid gap-2 text-sm font-black text-neutral-800">Consumo kWh<input name="consumptionKwh" defaultValue={numberValue(lead.consumption_kwh)} inputMode="decimal" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
-            <label className="grid gap-2 text-sm font-black text-neutral-800">Total €<input name="invoiceTotalEur" defaultValue={numberValue(lead.invoice_total_eur)} inputMode="decimal" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
-            <label className="grid gap-2 text-sm font-black text-neutral-800">Días<input name="billingDays" defaultValue={lead.billing_days || ''} inputMode="numeric" className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
-            <label className="grid gap-2 text-sm font-black text-neutral-800">Resultado<select name="analysisResult" defaultValue={lead.analysis_result || 'pending'} className="min-h-12 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-bold outline-none focus:border-lakuntza-green"><option value="pending">Pendiente</option><option value="viable">Viable</option><option value="review">Revisar</option><option value="not_viable">No viable</option></select></label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">CUPS<input name="extractedCups" defaultValue={lead.extracted_cups || ''} className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">Tarifa / peaje<input name="extractedTariff" defaultValue={lead.extracted_tariff || ''} className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">Potencia kW<input name="contractedPowerKw" defaultValue={numberValue(lead.contracted_power_kw)} inputMode="decimal" className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">Consumo kWh<input name="consumptionKwh" defaultValue={numberValue(lead.consumption_kwh)} inputMode="decimal" className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">Total €<input name="invoiceTotalEur" defaultValue={numberValue(lead.invoice_total_eur)} inputMode="decimal" className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">Días<input name="billingDays" defaultValue={lead.billing_days || ''} inputMode="numeric" className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
+            <label className="grid gap-2 text-sm font-black text-neutral-800">Resultado<select name="analysisResult" defaultValue={lead.analysis_result || 'pending'} className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-bold outline-none focus:border-lakuntza-green"><option value="pending">Pendiente</option><option value="viable">Viable</option><option value="review">Revisar</option><option value="not_viable">No viable</option></select></label>
             <label className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm font-black text-neutral-800"><input name="hasExtraServices" type="checkbox" defaultChecked={Boolean(lead.has_extra_services)} className="h-4 w-4 accent-lakuntza-green" />Servicios añadidos</label>
           </div>
-          <label className="grid gap-2 text-sm font-black text-neutral-800">Motivos / observaciones<textarea name="analysisReasons" rows={5} defaultValue={analysisReasons.join('\n')} className="rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Un motivo por línea" /></label>
-          <button className="rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white transition hover:bg-lakuntza-greenDark">Guardar análisis</button>
+          <label className="grid gap-2 text-sm font-black text-neutral-800">Motivos / observaciones<textarea name="analysisReasons" rows={5} defaultValue={analysisReasons.join('\n')} className="rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Un motivo por línea" /></label>
+          <button className="rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Guardar análisis</button>
         </form>
       </section>
     </AdminShell>

@@ -56,6 +56,11 @@ export default function EnergyEligibilityFields() {
           <input type="hidden" name="bonusStatus" value="no" />
         )}
       </div>
+      {supplyType === 'luz_gas' ? (
+        <p className="mt-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm leading-6 text-neutral-700">
+          Para revisar <strong>luz y gas</strong> normalmente necesitaremos una factura de cada suministro. Puedes enviar ahora la que tengas; si falta la otra, te la pediremos después.
+        </p>
+      ) : null}
       {blocked ? (
         <div role="alert" className="mt-4 flex gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
           <AlertTriangle className="mt-0.5 shrink-0" size={20} />

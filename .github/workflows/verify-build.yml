@@ -23,5 +23,7 @@ jobs:
           node-version: '24'
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Test invoice validation
+        run: npm test
       - name: Verify production build
         run: npm run build

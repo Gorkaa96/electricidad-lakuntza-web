@@ -2,8 +2,9 @@
 
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { createInvoiceIntakeClient } from '@/lib/supabase/intake';
 import { siteUrl } from '@/lib/site';
+import { validateInvoiceContact } from '@/lib/invoice/validate-contact.mjs';
 
 const allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
 const maxFileSize = 10 * 1024 * 1024;
@@ -98,8 +99,7 @@ export async function submitInvoiceReview(formData) {
   if (formData.get('website')) redirect('/revision-factura-luz-gas/gracias?estado=pending');
   const file = formData.get('invoice');
 
-  const phoneDigits = phone.replace(/\D/g, '');
-  if (name.length < 2 || name.length > 100 || phoneDigits.length < 9 || phoneDigits.length > 15 || (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) || !consentAccepted) {
+  if (!validateInvoiceContact({ name, phone, email, consentAccepted })) {
     redirect('/revision-factura-luz-gas?error=datos#formulario');
   }
   if (!file || typeof file === 'string' || !file.size) redirect('/revision-factura-luz-gas?error=factura#formulario');
@@ -108,7 +108,7 @@ export async function submitInvoiceReview(formData) {
   if (!allowedFileTypes.includes(file.type)) redirect('/revision-factura-luz-gas?error=tipo#formulario');
   if (file.size > maxFileSize) redirect('/revision-factura-luz-gas?error=tamano#formulario');
   // La comprobación barata de datos se realiza antes de crear clientes o leer archivos.
-  const supabase = await createSupabaseServerClient();
+  const supabase = createInvoiceIntakeClient();
   if (!supabase) redirect('/revision-factura-luz-gas?error=config#formulario');
 
   const leadId = crypto.randomUUID();

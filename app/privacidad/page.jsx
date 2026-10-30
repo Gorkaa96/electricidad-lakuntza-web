@@ -22,7 +22,7 @@ const sections = [
     content: [
       'Podemos tratar los datos que el usuario facilita voluntariamente al contactar por teléfono, correo electrónico, WhatsApp o formulario web: nombre, teléfono, email, mensaje, ubicación aproximada del trabajo y documentación que el usuario decida enviar.',
       'En el caso de revisión de facturas de luz o gas, la factura puede incluir datos como nombre y apellidos, dirección del suministro, CUPS, compañía comercializadora, tarifa o peaje, potencia contratada, consumo, importes, periodo facturado y otros conceptos asociados al contrato.',
-      'No se deben enviar datos de terceros ni información especialmente sensible salvo que sea imprescindible para atender la solicitud.',
+      'Si envías una factura a nombre de otra persona, debes contar con autorización para facilitarla y solicitar su revisión. Los datos de contacto pueden pertenecer a una persona diferente del titular. No adjuntes DNI, documentación bancaria adicional ni información innecesaria.',
     ],
   },
   {
@@ -102,7 +102,7 @@ export default function PrivacidadPage() {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
+      <main id="contenido-principal">
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />

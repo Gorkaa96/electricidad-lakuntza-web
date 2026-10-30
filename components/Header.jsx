@@ -1,53 +1,46 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowRight, FileText, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 import Logo from './Logo';
 
 const navigation = [
   ['Luz y gas', '/revision-factura-luz-gas'],
   ['Alarmas', '/alarmas-movistar-prosegur'],
   ['Instalaciones', '/servicios'],
-  ['Contacto', '/#contacto'],
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#E3E9E2] bg-white/95 backdrop-blur-md">
+      <a href="#contenido-principal" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[90] focus:rounded-lg focus:bg-[#235E2C] focus:px-4 focus:py-3 focus:text-white">
+        Ir al contenido
+      </a>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
-        <a href="/#inicio" aria-label="Electricidad Lakuntza, inicio" className="shrink-0" onClick={() => setOpen(false)}>
+        <a href="/" aria-label="Electricidad Lakuntza, página de inicio" className="shrink-0" onClick={() => setOpen(false)}>
           <Logo compact />
         </a>
-        <nav className="hidden items-center gap-6 text-sm font-bold text-neutral-700 xl:flex" aria-label="Navegación principal">
+        <nav className="hidden items-center gap-7 text-sm font-semibold text-[#334139] lg:flex" aria-label="Navegación principal">
           {navigation.map(([label, href]) => (
-            <a key={href} href={href} className="whitespace-nowrap transition hover:text-lakuntza-greenDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lakuntza-greenDark">{label}</a>
+            <a key={href} href={href} className="whitespace-nowrap transition-colors hover:text-[#2F7C36]">{label}</a>
           ))}
         </nav>
-        <div className="hidden shrink-0 items-center gap-2 xl:flex">
-          <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">
-            <FileText size={17} aria-hidden="true" /> Luz y gas
-          </a>
-          <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">
-            Alarmas <ArrowRight size={17} aria-hidden="true" />
+        <div className="hidden lg:flex">
+          <a href="/#contacto" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#194D20]">
+            Contactar <ArrowRight size={16} aria-hidden="true"/>
           </a>
         </div>
-        <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="focus-ring inline-flex h-12 w-12 items-center justify-center rounded-xl border border-neutral-300 text-neutral-950 xl:hidden">
-          {open ? <X size={23} /> : <Menu size={23} />}
+        <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#D6DED4] text-[#152017] lg:hidden">
+          {open ? <X size={23} aria-hidden="true"/> : <Menu size={23} aria-hidden="true"/>}
         </button>
       </div>
-      <div id="public-nav-mobile" className={open ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-neutral-200 bg-white px-4 pb-5 pt-3 shadow-lg xl:hidden' : 'hidden'}>
+      <div id="public-nav-mobile" className={open ? 'max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-[#E2E9E0] bg-white px-4 py-4 shadow-lg lg:hidden' : 'hidden'}>
         <nav className="mx-auto grid max-w-7xl gap-1" aria-label="Navegación móvil">
-          {navigation.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)} className="rounded-xl px-4 py-3 text-base font-bold text-neutral-900 hover:bg-neutral-100">{label}</a>)}
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            <a href="/revision-factura-luz-gas" onClick={() => setOpen(false)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-3 py-3 text-sm font-black text-white">
-              Luz y gas <ArrowRight size={17} aria-hidden="true" />
-            </a>
-            <a href="/alarmas-movistar-prosegur" onClick={() => setOpen(false)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-3 py-3 text-sm font-black text-white">
-              Alarmas <ArrowRight size={17} aria-hidden="true" />
-            </a>
-          </div>
+          {navigation.map(([label, href]) => (
+            <a key={href} href={href} onClick={() => setOpen(false)} className="flex min-h-12 items-center rounded-xl px-4 py-3 text-base font-semibold text-neutral-800 transition-colors hover:bg-[#F0F6ED]">{label}</a>
+          ))}
+          <a href="/#contacto" onClick={() => setOpen(false)} className="mt-2 flex min-h-12 items-center justify-center rounded-xl bg-[#24662D] px-4 py-3 text-sm font-semibold text-white">Contactar</a>
         </nav>
       </div>
     </header>
