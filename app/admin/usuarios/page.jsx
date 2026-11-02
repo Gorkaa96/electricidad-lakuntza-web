@@ -22,8 +22,8 @@ const errors = {
 function PermissionFields({ selected = [], manager, prefix }) {
   return (
     <fieldset className="mt-5">
-      <input type="hidden" name="permissionsPresent" value="true" />
       <legend className="text-sm font-semibold text-neutral-800">Permisos individuales</legend>
+      <input type="hidden" name="permissionsPresent" value="true" />
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         {PERMISSION_OPTIONS.map((option) => (
           <label key={prefix + option.key} className="flex min-h-11 items-center gap-3 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm">
@@ -45,7 +45,8 @@ export default async function TeamMembersPage({ searchParams }) {
     .select('user_id, email, role, permissions, active, created_at')
     .order('created_at', { ascending: true });
 
-  const readyToInvite = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY && process.env.ADMIN_INVITATION_BASE_URL);
+  const readyToManage = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const readyToInvite = readyToManage && Boolean(process.env.ADMIN_INVITATION_BASE_URL);
   const canInviteAdmin = admin.role === 'owner';
 
   return (
@@ -96,7 +97,7 @@ export default async function TeamMembersPage({ searchParams }) {
                     </label>
                     <PermissionFields selected={member.permissions || []} manager={admin} prefix={member.user_id}/>
                     <label className="mt-5 flex items-center gap-3 text-sm"><input type="checkbox" name="active" defaultChecked={member.active} className="h-4 w-4 accent-[#24662D]"/>Permitir acceso al panel</label>
-                    <button type="submit" disabled={!readyToInvite} className="mt-5 min-h-11 rounded-xl bg-neutral-950 px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50">Guardar permisos</button>
+                    <button type="submit" disabled={!readyToManage} className="mt-5 min-h-11 rounded-xl bg-neutral-950 px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50">Guardar permisos</button>
                   </form> : null}
                 </article>
               );
