@@ -45,7 +45,7 @@ test('validates a narrowly scoped agent and privileged admin', () => {
 });
 
 test('admins may not grant rights they do not hold', () => {
-  const limited = { role: 'admin', active: true, permissions: ['leads.read_assigned'] };
+  const limited = { role: 'admin', active: true, permissions: ['users.manage', 'leads.read_assigned'] };
   assert.equal(validateMemberPermissions(limited, 'agent', ['projects.manage']), null);
   assert.deepEqual(validateMemberPermissions(limited, 'agent', ['leads.read_assigned']), ['leads.read_assigned']);
 });
