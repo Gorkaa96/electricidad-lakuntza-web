@@ -7,7 +7,9 @@ import Logo from './Logo';
 const navigation = [
   ['Luz y gas', '/revision-factura-luz-gas'],
   ['Alarmas', '/alarmas-movistar-prosegur'],
-  ['Instalaciones', '/servicios'],
+  ['Cargadores eléctricos', '/cargadores-electricos'],
+  ['Asesoría energética', '/asesoria-energetica'],
+  ['Servicios', '/servicios'],
 ];
 
 export default function Header() {
