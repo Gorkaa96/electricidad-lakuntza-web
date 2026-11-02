@@ -1,8 +1,11 @@
 import Logo from '@/components/Logo';
 import { signOutAdmin } from '@/app/admin/actions';
 import AdminNavigation from './AdminNavigation';
+import { getAdminContext } from '@/lib/admin';
+import { ROLE_LABELS } from '@/lib/rolePermissions';
 
-export default function AdminShell({ children, title, description, action }) {
+export default async function AdminShell({ children, title, description, action }) {
+  const { admin } = await getAdminContext();
   return (
     <div className="min-h-screen bg-[#F5F7F4] text-neutral-950">
       <a href="#admin-contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-xl focus:bg-white focus:p-4">
@@ -15,9 +18,10 @@ export default function AdminShell({ children, title, description, action }) {
             <Logo compact />
           </a>
           <p className="mt-4 text-xs font-semibold text-neutral-500">Panel privado de gestión</p>
+          {admin ? <p className="mt-1 text-xs text-neutral-500">{ROLE_LABELS[admin.role] || 'Usuario autorizado'}</p> : null}
         </div>
         <div className="flex-1 px-4 py-6">
-          <AdminNavigation />
+          <AdminNavigation member={admin} />
         </div>
         <div className="border-t border-neutral-200 p-5">
           <p className="mb-4 text-xs leading-5 text-neutral-600">Datos y facturas de clientes. Utiliza el panel solo desde un dispositivo autorizado.</p>
@@ -37,7 +41,7 @@ export default function AdminShell({ children, title, description, action }) {
               <button className="min-h-10 rounded-xl border border-neutral-300 px-4 text-xs font-semibold text-neutral-700">Salir</button>
             </form>
           </div>
-          <div className="mt-3"><AdminNavigation compact /></div>
+          <div className="mt-3"><AdminNavigation compact member={admin} /></div>
         </div>
 
         <header className="border-b border-neutral-200 bg-white">
