@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { requirePermission } from '@/lib/admin';
 import { createUserManagementClient } from '@/lib/supabase/management';
-import { allowedRoleForManager, ROLE_DEFAULTS, validateMemberPermissions } from '@/lib/rolePermissions';
+import { allowedRoleForManager, validateMemberPermissions } from '@/lib/rolePermissions';
 
 function inviteError(code) {
   redirect('/admin/usuarios?error=' + encodeURIComponent(code));
@@ -17,7 +17,7 @@ function validEmail(value) {
 
 function permissionsFromForm(data, manager, role) {
   const values = data.getAll('permissions');
-  const permissions = values.length ? values.map(String) : ROLE_DEFAULTS[role] || [];
+  const permissions = values.map(String);
   return validateMemberPermissions(manager, role, permissions);
 }
 
