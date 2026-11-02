@@ -13,7 +13,7 @@ export default async function AdminLoginPage({ searchParams }) {
   const { admin } = await getAdminContext();
 
   if (admin) {
-    redirect('/admin/facturas');
+    redirect('/admin/entrada');
   }
 
   return (
