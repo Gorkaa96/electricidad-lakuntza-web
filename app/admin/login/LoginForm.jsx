@@ -34,7 +34,7 @@ export default function LoginForm({ unauthorized = false }) {
     }
 
     // Never navigate to an untrusted URL from query parameters.
-    router.push('/admin/facturas');
+    router.push('/admin/entrada');
     router.refresh();
   }
 
