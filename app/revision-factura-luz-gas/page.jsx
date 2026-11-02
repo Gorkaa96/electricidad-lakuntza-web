@@ -12,7 +12,7 @@ export const metadata = {
   title: 'Revisión de factura de luz y gas',
   alternates: { canonical: '/revision-factura-luz-gas' },
   description:
-    'Revisión de facturas de luz y gas con Electricidad Lakuntza, empresa delegada de Feníe Energía. Atención directa y sin compromiso.',
+    'Revisión de facturas de luz y gas con Electricidad Lakuntza, agente de Feníe Energía. Atención directa y sin compromiso.',
 };
 
 const errorMessages = {
@@ -45,6 +45,7 @@ const privacyPoints = [
 export default async function RevisionFacturaPage({ searchParams }) {
   const resolvedParams = await searchParams;
   const error = resolvedParams?.error;
+  const initialSupplyType = ['luz', 'gas', 'luz_gas'].includes(resolvedParams?.servicio) ? resolvedParams.servicio : 'luz';
   const intakeReady = process.env.INVOICE_INTAKE_ENABLED === 'true' && Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
   return (
@@ -56,9 +57,9 @@ export default async function RevisionFacturaPage({ searchParams }) {
             <div className="lg:col-span-8">
               <p className="text-sm font-medium text-[#B6E6A4]">Luz y gas · Revisión de facturas</p>
               <h1 className="mt-5 max-w-4xl text-[clamp(2.65rem,5vw,4.5rem)] font-semibold leading-[1.06] tracking-[-.05em]">Tu factura merece una revisión cuidadosa.</h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">Sube una factura de luz o gas y revisaremos las condiciones para valorar si te conviene una propuesta de Feníe Energía. Si es mejor mantener lo que tienes, también te lo explicaremos.</p>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">Cuéntanos tu situación y revisaremos las condiciones de luz o gas para valorar si te conviene una propuesta de Feníe Energía. Si es mejor mantener lo que tienes, también te lo explicaremos.</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">Subir mi factura</a>
+                <a href={intakeReady ? '#formulario' : initialQuestionWhatsapp} target={intakeReady ? undefined : '_blank'} rel={intakeReady ? undefined : 'noopener noreferrer'} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">{intakeReady ? 'Subir mi factura' : 'Solicitar revisión'}</a>
                 <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Consultar sin factura</a>
               </div>
             </div>
@@ -136,7 +137,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                 </div>
 
                 <div className="grid gap-7 p-5 sm:p-8">
-                  <EnergyEligibilityFields />
+                  <EnergyEligibilityFields initialSupplyType={initialSupplyType} />
                   <div className="border-t border-neutral-200 pt-7">
                     <p className="text-sm font-semibold text-neutral-700">2. Datos de contacto</p>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
