@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { ArrowRight, CheckCircle2, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -40,6 +41,8 @@ export const metadata = {
 };
 
 export default function ZonaServicioPage() {
+  // Conservada para una posible recuperación de las instalaciones tradicionales.
+  notFound();
   const areaSchema = {
     '@context': 'https://schema.org',
     '@type': 'Electrician',
