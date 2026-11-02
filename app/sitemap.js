@@ -1,8 +1,8 @@
 import { siteUrl } from '@/lib/site';
-import { servicePages } from '@/lib/servicePages';
+import { publicServicePages } from '@/lib/servicePages';
 
 export default function sitemap() {
-  const serviceRoutes = servicePages.map((service) => ({
+  const serviceRoutes = publicServicePages.map((service) => ({
     path: '/servicios/' + service.slug,
     changeFrequency: 'monthly',
     priority: 0.85,
@@ -14,8 +14,8 @@ export default function sitemap() {
     ...serviceRoutes,
     { path: '/revision-factura-luz-gas', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/alarmas-movistar-prosegur', changeFrequency: 'monthly', priority: 0.9 },
-    { path: '/zona-servicio', changeFrequency: 'monthly', priority: 0.85 },
-    { path: '/trabajos-realizados', changeFrequency: 'weekly', priority: 0.8 },
+    { path: '/cargadores-electricos', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/asesoria-energetica', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/aviso-legal', changeFrequency: 'yearly', priority: 0.2 },
     { path: '/privacidad', changeFrequency: 'yearly', priority: 0.2 },
     { path: '/cookies', changeFrequency: 'yearly', priority: 0.2 },
