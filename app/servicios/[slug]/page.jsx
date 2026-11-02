@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
-import { getServicePage, servicePages } from '@/lib/servicePages';
+import { getServicePage, publicServicePages } from '@/lib/servicePages';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
@@ -16,7 +16,7 @@ const iconBySlug = {
 };
 
 export function generateStaticParams() {
-  return servicePages.map((service) => ({ slug: service.slug }));
+  return publicServicePages.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({ params }) {
@@ -39,7 +39,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ServiceDetailPage({ params }) {
-  const service = getServicePage(params.slug);
+  const { slug } = await params;
+  const service = getServicePage(slug);
   if (!service) notFound();
 
   const Icon = iconBySlug[service.slug] || PlugZap;
