@@ -18,10 +18,10 @@ export default function FenieEnergySection() {
             Te explicamos las opciones, sin letra pequeña escondida.
           </h2>
           <p className="mt-6 max-w-xl text-base leading-8 text-neutral-600">
-            A través de Feníe Energía podemos ayudarte a valorar propuestas de luz y gas y a consultar soluciones de Movistar Prosegur Alarmas.
+            A través de Feníe Energía te orientamos sobre luz, gas, alarmas Movistar Prosegur, cargadores eléctricos y soluciones de eficiencia energética.
           </p>
           <p className="mt-4 max-w-xl text-sm leading-7 text-neutral-600">
-            No somos un comparador independiente de todo el mercado ni instalamos directamente los sistemas de alarma. Confirmamos las condiciones de cada producto antes de plantearte una contratación.
+            No somos un comparador independiente de todo el mercado ni instalamos directamente los sistemas de alarma. Los cargadores requieren estudio y presupuesto individualizado. Confirmamos las condiciones y la disponibilidad de cada producto antes de plantear una contratación.
           </p>
           <a href={fenieUrl} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#28632D] underline underline-offset-4 hover:text-[#153D1A]">
             Conocer Feníe Energía <ArrowUpRight size={16} aria-hidden="true"/>
