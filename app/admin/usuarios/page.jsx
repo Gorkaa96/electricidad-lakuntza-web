@@ -3,6 +3,7 @@ import AdminShell from '@/components/admin/AdminShell';
 import { requirePermission } from '@/lib/admin';
 import { hasPermission, ROLE_DEFAULTS, ROLE_LABELS, PERMISSION_OPTIONS } from '@/lib/rolePermissions';
 import { inviteTeamMember, updateTeamMember } from './actions';
+import InviteRoleSelect from '@/components/admin/InviteRoleSelect';
 
 export const metadata = { title: 'Usuarios y permisos', robots: { index: false, follow: false } };
 export const revalidate = 0;
@@ -32,7 +33,7 @@ function PermissionFields({ selected = [], manager, prefix }) {
           </label>
         ))}
       </div>
-      <p className="mt-3 text-xs leading-6 text-neutral-500">Un agente solo ve las solicitudes asignadas, salvo que se le concedan otros permisos. Las restricciones se aplican también en la base de datos.</p>
+      <p className="mt-3 text-xs leading-6 text-neutral-500">Un agente solo ve las solicitudes asignadas de forma predeterminada. Al cambiar de rol en una invitación se aplican los permisos iniciales; puedes ajustarlos individualmente. La base de datos aplica también estas restricciones.</p>
     </fieldset>
   );
 }
@@ -63,10 +64,7 @@ export default async function TeamMembersPage({ searchParams }) {
               <input name="email" type="email" required autoComplete="off" maxLength={254} placeholder="agente@empresa.com" className="min-h-12 rounded-xl border border-neutral-300 px-4 py-3 font-normal" />
             </label>
             <label className="grid gap-2 text-sm font-semibold">Rol
-              <select name="role" defaultValue="agent" className="min-h-12 rounded-xl border border-neutral-300 px-4 py-3">
-                <option value="agent">Agente</option>
-                {canInviteAdmin ? <option value="admin">Administrador</option> : null}
-              </select>
+              <InviteRoleSelect allowAdmin={canInviteAdmin} />
             </label>
           </div>
           <PermissionFields selected={ROLE_DEFAULTS.agent} manager={admin} prefix="new-" />
