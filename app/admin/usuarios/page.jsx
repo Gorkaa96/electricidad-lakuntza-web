@@ -22,6 +22,7 @@ const errors = {
 function PermissionFields({ selected = [], manager, prefix }) {
   return (
     <fieldset className="mt-5">
+      <input type="hidden" name="permissionsPresent" value="true" />
       <legend className="text-sm font-semibold text-neutral-800">Permisos individuales</legend>
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         {PERMISSION_OPTIONS.map((option) => (
