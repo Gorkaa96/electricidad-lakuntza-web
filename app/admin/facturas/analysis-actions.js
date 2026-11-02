@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { requireAdmin } from '@/lib/admin';
+import { requireAnyPermission } from '@/lib/admin';
 
 const allowedResults = ['pending', 'viable', 'review', 'not_viable'];
 
@@ -28,7 +28,7 @@ function integerOrNull(value) {
 }
 
 export async function updateInvoiceAnalysis(formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requireAnyPermission('leads.edit_all', 'leads.edit_assigned');
   const id = clean(formData.get('id'), 80);
   if (!id) redirect('/admin/facturas?error=datos');
 
