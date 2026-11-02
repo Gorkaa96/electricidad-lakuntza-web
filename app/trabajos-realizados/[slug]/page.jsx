@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
 import { getProjectBySlug } from '@/lib/projects';
+import { publicLegacyPortfolioEnabled } from '@/lib/servicePages';
 
 export const revalidate = 60;
 
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProjectDetailPage({ params }) {
+  if (!publicLegacyPortfolioEnabled) notFound();
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
 
