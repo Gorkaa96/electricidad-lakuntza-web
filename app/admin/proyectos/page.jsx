@@ -1,6 +1,6 @@
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
-import { requireAdmin } from '@/lib/admin';
+import { requirePermission } from '@/lib/admin';
 
 export const metadata = {
   title: 'Trabajos',
@@ -11,7 +11,7 @@ export const revalidate = 0;
 
 export default async function AdminProjectsPage({ searchParams }) {
   const resolvedParams = await searchParams;
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('projects.manage');
   const { data, error: loadError } = await supabase
     .from('projects')
     .select('id, slug, title, category, location, year, featured, published, sort_order, created_at')
