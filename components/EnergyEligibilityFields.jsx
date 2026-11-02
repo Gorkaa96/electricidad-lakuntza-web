@@ -5,8 +5,9 @@ import { AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 const blockedValues = ['si', 'familia_numerosa'];
 
-export default function EnergyEligibilityFields() {
-  const [supplyType, setSupplyType] = useState('luz');
+export default function EnergyEligibilityFields({ initialSupplyType = 'luz' }) {
+  const initialValue = ['luz', 'gas', 'luz_gas'].includes(initialSupplyType) ? initialSupplyType : 'luz';
+  const [supplyType, setSupplyType] = useState(initialValue);
   const [bonusStatus, setBonusStatus] = useState('');
   const statusRef = useRef(null);
   const includesElectricity = supplyType === 'luz' || supplyType === 'luz_gas';
