@@ -50,6 +50,26 @@ Las instalaciones eléctricas tradicionales, telecomunicaciones, averías, refor
 - https://www.fenieenergia.es/es/condiciones-productos
 - Confirmar antes de cada contratación: precio base vs IVA/otros impuestos, vigencia, cuota fija, término de potencia, indexación, servicios adicionales, condiciones de cancelación, desistimiento, permanencia si existiese, área comercial y quién formaliza el contrato.
 
+## Ejemplos de precios públicos verificados (consulta del 02/11/2026)
+
+**Solo referencia interna para analizar el mercado.** No son ofertas cerradas de Electricidad Lakuntza ni incluyen necesariamente todos los conceptos de una factura. Cada página muestra dos importes para algunos conceptos, relacionados con su presentación fiscal; confirmar en la propia ficha cuál corresponde al precio total con impuestos, la fecha de vigencia y las condiciones de contratación antes de utilizar cualquiera en una propuesta.
+
+| Producto publicado por Feníe | Energía, dos importes mostrados | Potencia / término fijo, dos importes mostrados | Fuente oficial |
+|---|---|---|---|
+| Luz Fijo Energético 1P 2.0TD | 0,149426 / 0,190045 €/kWh | P1: 0,123346 / 0,156875 €/kW·día; P2: 0,033103 / 0,042101 €/kW·día | https://www.fenieenergia.es/es/hogar/tarifas-de-luz/fijo-energetico-1p |
+| Luz Fijo Uniprecio 2.0TD | 0,205426 / 0,261267 €/kWh | P1: 0,075903 / 0,096536 €/kW·día; P2: 0,001987 / 0,002527 €/kW·día | https://www.fenieenergia.es/es/hogar/tarifas-de-luz/fijo-uniprecio |
+| Gas Fijo RL1 (0–5.000 kWh/año) | 0,095993 / 0,118983 €/kWh | 4,04 / 4,89 €/mes | https://www.fenieenergia.es/es/hogar/tarifas-de-gas/rl1 |
+| Gas Fijo RL2 (5.000–15.000 kWh/año) | 0,093955 / 0,116517 €/kWh | 9,18 / 11,11 €/mes | https://www.fenieenergia.es/es/hogar/tarifas-de-gas/rl2 |
+| Gas Index RL1 | kWh variable según mercado; la cifra de remuneración no es un precio final todo incluido | 4,04 / 4,89 €/mes | https://www.fenieenergia.es/es/hogar/tarifas-de-gas/rl1-index |
+| Alarmas Movistar Prosegur | Cuota mensual de alarma **no fijada universalmente** en la web Feníe | Promoción de instalación gratuita sujeta a condiciones; hasta 240 € en Plan Épico (10 €/mes durante 24 meses, no efectivo) | https://www.fenieenergia.es/es/movistar-prosegur-alarmas |
+| Cargadores y asesoría | Sin precio estándar contrastado para el servicio que prestaría Electricidad Lakuntza | Presupuesto y alcance individualizados; confirmar quién instala, legaliza y ofrece garantía | https://www.fenieenergia.es/es/hogar/cargadores-electricos |
+
+**Condiciones y cumplimiento a revisar:** ficha de producto vigente; término de energía y potencia/fijo; peajes, cargos, impuestos y servicios añadidos; actualización de precios en indexadas; derecho de desistimiento; permanencia específica (especialmente alarmas); financiación de equipos; garantías; cobertura; elegibilidad de promociones; privacidad y consentimiento; tramitación y firma a cargo de la comercializadora/proveedor. No aplicar sin más el lema general «sin permanencia» de las tarifas de energía a alarmas o instalaciones.
+
+## Visibilidad de instalaciones tradicionales
+
+El escaparate de instalaciones y telecomunicaciones se mantiene desactivado. Las rutas `/servicios/instalaciones-electricas`, `/servicios/telecomunicaciones` y el portafolio público `/trabajos-realizados` (incluidos detalles) devuelven 404. El material se conserva en el repositorio y en el administrador; bandera de reactivación `publicLegacyPortfolioEnabled` en `lib/servicePages.js`. No borrar proyectos ni imágenes.
+
 ## Lo que no se sabe aún (confirmar con Javier)
 
 Catálogos y tarifarios vigentes del canal agente; comisiones/márgenes y recurrencia; quién genera presupuesto e instala cargadores; cobertura geográfica de cada producto; proceso documental y titularidad; condiciones actuales concretas de alarmas y elegibilidad; posventa, incidencias, bajas, garantías y reparto de responsabilidad entre Electricidad Lakuntza/Feníe/terceros.
