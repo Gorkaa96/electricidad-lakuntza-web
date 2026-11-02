@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
 import SimpleInvoiceActionPanel from '@/components/admin/SimpleInvoiceActionPanel';
-import { requireAdmin } from '@/lib/admin';
+import { requireAnyPermission } from '@/lib/admin';
 import { updateInvoiceLead } from '../actions';
 import { updateInvoiceAnalysis } from '../analysis-actions';
 import { prepareInvoiceOcr } from '../ocr-actions';
@@ -124,7 +124,7 @@ function summaryRows(ocrData) {
 export default async function AdminInvoiceLeadDetailPage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requireAnyPermission('leads.read_all', 'leads.read_assigned');
   const { data: lead } = await supabase
     .from('invoice_review_leads')
     .select('*')
