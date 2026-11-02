@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
@@ -5,6 +6,7 @@ import ProjectCard from '@/components/ProjectCard';
 import MobileContactBar from '@/components/MobileContactBar';
 import { Camera, CheckCircle2 } from 'lucide-react';
 import { getPublishedProjects, projectCategories } from '@/lib/projects';
+import { publicLegacyPortfolioEnabled } from '@/lib/servicePages';
 
 export const revalidate = 60;
 
@@ -15,6 +17,7 @@ export const metadata = {
 };
 
 export default async function TrabajosRealizadosPage() {
+  if (!publicLegacyPortfolioEnabled) notFound();
   const publishedProjects = await getPublishedProjects();
   const hasProjects = publishedProjects.length > 0;
 
