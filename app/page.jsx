@@ -1,13 +1,13 @@
-import { ArrowRight, CheckCircle2, FileText, Mail, MessageCircle, Phone, ShieldCheck, Wrench } from 'lucide-react';
+import { ArrowRight, BatteryCharging, FileText, Mail, MessageCircle, Phone, ShieldCheck, TrendingDown } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FenieEnergySection from '@/components/FenieEnergySection';
-import ProjectsSection from '@/components/ProjectsSection';
+import { commercialCatalog } from '@/lib/commercialCatalog';
 import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
-  title: 'Luz, gas y alarmas con atención directa',
-  description: 'Revisamos facturas de luz y gas y orientamos sobre alarmas Movistar Prosegur a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones.',
+  title: 'Luz, gas, alarmas, cargadores y asesoría energética',
+  description: 'Luz, gas, alarmas, cargadores eléctricos y asesoría energética con Electricidad Lakuntza, como agente de Feníe Energía.',
   alternates: { canonical: '/' },
 };
 
@@ -16,7 +16,7 @@ const whatsappHref = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hol
 const process = [
   {
     title: 'Cuéntanos qué necesitas',
-    description: 'Envía tu factura para revisar la energía o consulta directamente por una alarma.',
+    description: 'Escríbenos para valorar tu suministro, una alarma o un cargador eléctrico.',
   },
   {
     title: 'Revisamos tu caso',
@@ -45,12 +45,13 @@ export default function HomePage() {
                   Energía y seguridad, con criterio.
                 </h1>
                 <p className="mt-8 max-w-xl text-lg leading-[1.75] text-white/80 sm:text-xl">
-                  Te ayudamos a revisar tu luz y gas y a conocer las opciones de alarmas para tu hogar o negocio. Trato directo, condiciones claras y decisiones sin presión.
+                  Luz, gas, alarmas, cargadores eléctricos y asesoría energética. Te ayudamos a encontrar una solución adecuada para tu hogar o negocio, con condiciones claras y trato directo.
                 </p>
                 <p className="mt-6 max-w-xl text-sm leading-6 text-white/60">Atención comercial a través de Feníe Energía. Sin obligación de contratar.</p>
-                <a href="/servicios" className="mt-9 inline-flex items-center gap-2 text-sm font-semibold text-white underline decoration-[#9CDD81] decoration-2 underline-offset-8 transition-colors hover:text-[#B4F19B]">
-                  <Wrench size={16} aria-hidden="true" /> ¿Necesitas una instalación eléctrica?
-                </a>
+                <div className="mt-9 flex flex-wrap gap-4 text-sm font-semibold">
+                  <a href="/cargadores-electricos" className="inline-flex items-center gap-2 text-white underline decoration-[#9CDD81] decoration-2 underline-offset-8 transition-colors hover:text-[#B4F19B]"><BatteryCharging size={17} aria-hidden="true" /> Cargadores eléctricos</a>
+                  <a href="/asesoria-energetica" className="inline-flex items-center gap-2 text-white underline decoration-[#9CDD81] decoration-2 underline-offset-8 transition-colors hover:text-[#B4F19B]"><TrendingDown size={17} aria-hidden="true" /> Asesoría energética</a>
+                </div>
               </div>
               <div className="min-w-0 lg:col-span-5">
                 <div className="overflow-hidden rounded-[1.35rem] border border-white/20 bg-white text-[#152017] shadow-[0_28px_85px_rgba(0,0,0,.18)]">
@@ -91,7 +92,7 @@ export default function HomePage() {
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
               <div className="lg:col-span-4">
                 <h2 className="max-w-sm text-3xl font-semibold leading-tight tracking-[-.04em] sm:text-4xl">Un proceso sencillo, de principio a fin.</h2>
-                <p className="mt-5 max-w-sm text-base leading-7 text-neutral-600">Sin comparativas automáticas que prometen ahorros imposibles. Una persona revisa tu consulta.</p>
+                <p className="mt-5 max-w-sm text-base leading-7 text-neutral-600">Sin promesas de ahorro automáticas ni presupuestos inventados. Revisamos cada necesidad personalmente.</p>
               </div>
               <ol className="grid gap-0 border-t border-neutral-200 lg:col-span-8">
                 {process.map((step, index) => (
@@ -108,14 +109,32 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section id="servicios-comerciales" className="bg-[#F5F8F4] py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold text-[#2E7136]">Qué podemos hacer por ti</p>
+              <h2 className="mt-5 text-3xl font-semibold tracking-[-.04em] sm:text-4xl">Cinco soluciones, una atención cercana.</h2>
+              <p className="mt-5 text-base leading-8 text-neutral-600">Desde estudiar tu energía hasta valorar una alarma o un punto de recarga. Confirma las condiciones de cada servicio con nosotros antes de contratar.</p>
+            </div>
+            <div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {commercialCatalog.map((service) => (
+                <a href={service.href} key={service.slug} className="group rounded-2xl border border-[#DEE9DC] bg-white p-7 transition-colors hover:border-[#82B283] hover:bg-[#FBFDF9]">
+                  <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#327837]">{service.eyebrow}</p>
+                  <h3 className="mt-4 text-xl font-semibold tracking-[-.025em]">{service.title}</h3>
+                  <p className="mt-3 min-h-20 text-sm leading-7 text-neutral-600">{service.description}</p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#28632D]">{service.action}<ArrowRight size={17} aria-hidden="true" className="transition-transform group-hover:translate-x-1" /></span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
         <FenieEnergySection />
-        <ProjectsSection />
 
         <section id="contacto" className="scroll-mt-20 border-t border-[#D8E7D6] bg-[#F0F6ED] py-20 sm:py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
             <div className="lg:col-span-7">
               <h2 className="max-w-xl text-4xl font-semibold tracking-[-.045em] text-[#152017] sm:text-5xl">Hablemos de lo que necesitas.</h2>
-              <p className="mt-5 max-w-xl text-base leading-8 text-[#516051]">Consulta sobre luz, gas, alarmas o instalaciones. Te atenderemos directamente y te explicaremos las opciones reales.</p>
+              <p className="mt-5 max-w-xl text-base leading-8 text-[#516051]">Consulta sobre luz, gas, alarmas, cargadores eléctricos o asesoría energética. Te explicaremos las opciones y condiciones reales.</p>
             </div>
             <div className="grid gap-3 lg:col-span-5">
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-xl bg-[#245E2A] px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-[#164B20]">
