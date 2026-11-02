@@ -3,6 +3,8 @@ import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
 import SimpleInvoiceActionPanel from '@/components/admin/SimpleInvoiceActionPanel';
 import { requireAnyPermission } from '@/lib/admin';
+import { hasPermission, canEditLeads } from '@/lib/rolePermissions';
+import { assignInvoiceLead } from '../assignment-actions';
 import { updateInvoiceLead } from '../actions';
 import { updateInvoiceAnalysis } from '../analysis-actions';
 import { prepareInvoiceOcr } from '../ocr-actions';
@@ -124,7 +126,10 @@ function summaryRows(ocrData) {
 export default async function AdminInvoiceLeadDetailPage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const { supabase } = await requireAnyPermission('leads.read_all', 'leads.read_assigned');
+  const { supabase, admin } = await requireAnyPermission('leads.read_all', 'leads.read_assigned');
+  const mayEdit = canEditLeads(admin);
+  const mayDelete = hasPermission(admin, 'leads.delete');
+  const mayAssign = hasPermission(admin, 'leads.assign') && hasPermission(admin, 'leads.edit_all');
   const { data: lead } = await supabase
     .from('invoice_review_leads')
     .select('*')
@@ -132,6 +137,11 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
     .maybeSingle();
 
   if (!lead) notFound();
+
+  const { data: agents } = mayAssign ? await supabase
+    .from('admin_users')
+    .select('user_id, email, role, active')
+    .eq('role', 'agent').eq('active', true).order('email') : { data: [] };
 
   const { data: latestOcr } = await supabase
     .from('invoice_ocr_results')
@@ -158,7 +168,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
     <AdminShell title="Factura recibida" description="Ficha sencilla para revisar datos, contactar y dejar el estado actualizado.">
       <AdminNotice success={resolvedSearchParams?.success} error={resolvedSearchParams?.error} />
 
-      <SimpleInvoiceActionPanel lead={lead} latestOcr={latestOcr} telHref={telHref} />
+      <SimpleInvoiceActionPanel lead={lead} latestOcr={latestOcr} telHref={telHref} canEdit={mayEdit} />
 
       <div className="mt-6 grid gap-6 lg:grid-cols-12">
         <section className="rounded-xl border border-neutral-200 bg-white p-6 lg:col-span-8 sm:p-8">
@@ -200,17 +210,17 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-neutral-950">Archivo recibido</h2>
             <p className="mt-3 break-all text-sm leading-6 text-neutral-500">{lead.file_name || 'Sin archivo'}</p>
             {signedUrl ? <a href={signedUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Abrir factura</a> : null}
-            <form action={prepareInvoiceOcr} className="mt-3">
+            {mayEdit ? <form action={prepareInvoiceOcr} className="mt-3">
               <input type="hidden" name="id" value={lead.id} />
               <button className="inline-flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">Procesar lectura</button>
-            </form>
+            </form> : null}
             <p className="mt-4 text-xs leading-5 text-neutral-500">La lectura sirve como apoyo. Revisa siempre los datos importantes contra la factura.</p>
           </section>
 
           <section className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
             <p className="text-sm font-semibold text-lakuntza-greenDark">Gestión</p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-neutral-950">Notas y estado</h2>
-            <form action={updateInvoiceLead} className="mt-6 grid gap-4">
+            {mayEdit ? <form action={updateInvoiceLead} className="mt-6 grid gap-4">
               <input type="hidden" name="id" value={lead.id} />
               <label className="grid gap-2 text-sm font-black text-neutral-800">
                 Estado
@@ -227,9 +237,23 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
                 <textarea name="adminNotes" rows={5} defaultValue={lead.admin_notes || ''} className="rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Ej.: llamar por la tarde, revisar potencia, interesado en luz y gas..." />
               </label>
               <button className="rounded-2xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Guardar gestión</button>
-            </form>
-            <a href={`/admin/facturas/${lead.id}/eliminar`} className="mt-5 inline-flex w-full items-center justify-center rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Eliminar solicitud</a>
+            </form> : <p className="mt-4 text-sm text-neutral-500">Sin permiso para modificar esta solicitud.</p>}
+            {mayDelete ? <a href={`/admin/facturas/${lead.id}/eliminar`} className="mt-5 inline-flex w-full items-center justify-center rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Eliminar solicitud</a> : null}
           </section>
+          {mayAssign ? <section className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
+            <h2 className="text-xl font-semibold">Asignar a un agente</h2>
+            <p className="mt-2 text-sm leading-6 text-neutral-600">Los agentes solo acceden a solicitudes autorizadas o asignadas a su cuenta.</p>
+            <form action={assignInvoiceLead} className="mt-5 grid gap-3">
+              <input type="hidden" name="id" value={lead.id} />
+              <label className="grid gap-2 text-sm font-semibold">Responsable
+                <select name="assignedTo" defaultValue={lead.assigned_to || ''} className="min-h-12 rounded-xl border border-neutral-300 px-3 py-2">
+                  <option value="">Sin asignar</option>
+                  {(agents || []).map((agent) => <option value={agent.user_id} key={agent.user_id}>{agent.email}</option>)}
+                </select>
+              </label>
+              <button className="min-h-11 rounded-xl bg-neutral-950 px-5 py-3 text-sm font-semibold text-white">Guardar asignación</button>
+            </form>
+          </section> : null}
         </aside>
       </div>
 
@@ -261,7 +285,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           {analysisReasons.length > 0 ? <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-700">{analysisReasons.map((reason) => <li key={reason} className="break-words">• {reason}</li>)}</ul> : <p className="mt-3 text-sm leading-6 text-neutral-500">Sin motivos guardados todavía.</p>}
         </div>
 
-        <form action={updateInvoiceAnalysis} className="mt-6 grid gap-5">
+        {mayEdit ? <form action={updateInvoiceAnalysis} className="mt-6 grid gap-5">
           <input type="hidden" name="id" value={lead.id} />
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <label className="grid gap-2 text-sm font-black text-neutral-800">CUPS<input name="extractedCups" defaultValue={lead.extracted_cups || ''} className="min-h-12 rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium outline-none focus:border-lakuntza-green" /></label>
@@ -275,7 +299,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           </div>
           <label className="grid gap-2 text-sm font-black text-neutral-800">Motivos / observaciones<textarea name="analysisReasons" rows={5} defaultValue={analysisReasons.join('\n')} className="rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Un motivo por línea" /></label>
           <button className="rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Guardar análisis</button>
-        </form>
+        </form> : null}
       </section>
     </AdminShell>
   );
