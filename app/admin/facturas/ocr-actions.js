@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { requireAdmin } from '@/lib/admin';
+import { requireAnyPermission } from '@/lib/admin';
 import { extractPdfTextFree, parseInvoiceTextFree } from '@/lib/invoice/free-ocr';
 
 const allowedAnalysisResults = new Set(['pending', 'viable', 'review', 'not_viable']);
@@ -133,7 +133,7 @@ async function saveExtractedInvoice({ supabase, leadId, ocrId, extracted }) {
 }
 
 export async function prepareInvoiceOcr(formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requireAnyPermission('leads.edit_all', 'leads.edit_assigned');
   const id = String(formData.get('id') || '').trim();
 
   if (!id) redirect('/admin/facturas?error=datos');
