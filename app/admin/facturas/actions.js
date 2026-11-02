@@ -58,12 +58,14 @@ export async function updateInvoiceLead(formData) {
     admin_notes: adminNotes || null,
   };
 
-  const { error } = await supabase
+  const { data: updatedLead, error } = await supabase
     .from('invoice_review_leads')
     .update(payload)
-    .eq('id', id);
+    .eq('id', id)
+    .select('id')
+    .maybeSingle();
 
-  if (error) {
+  if (error || !updatedLead) {
     redirect(`/admin/facturas/${id}?error=estado`);
   }
 
@@ -84,12 +86,14 @@ export async function quickUpdateInvoiceStatus(formData) {
     redirect('/admin/facturas?error=datos');
   }
 
-  const { error } = await supabase
+  const { data: updatedLead, error } = await supabase
     .from('invoice_review_leads')
     .update(statusPayload(status))
-    .eq('id', id);
+    .eq('id', id)
+    .select('id')
+    .maybeSingle();
 
-  if (error) {
+  if (error || !updatedLead) {
     redirect(`/admin/facturas/${id}?error=estado`);
   }
 
