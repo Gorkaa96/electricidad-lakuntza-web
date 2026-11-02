@@ -84,7 +84,7 @@ async function recentEvents(leadId) {
   return data || [];
 }
 
-export default async function SimpleInvoiceActionPanel({ lead, latestOcr, telHref }) {
+export default async function SimpleInvoiceActionPanel({ lead, latestOcr, telHref, canEdit = false }) {
   const [title, text, tone] = decision(lead, latestOcr);
   const events = await recentEvents(lead.id);
   const phone = normalizePhone(lead.phone);
@@ -108,7 +108,7 @@ export default async function SimpleInvoiceActionPanel({ lead, latestOcr, telHre
         <div className="rounded-lg bg-white/75 p-4">
           <p className="text-xs font-semibold text-neutral-500">Estado rápido</p>
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            {statusActions.map(([status, label]) => (
+            {canEdit ? statusActions.map(([status, label]) => (
               <form key={status} action={quickUpdateInvoiceStatus}>
                 <input type="hidden" name="id" value={lead.id} />
                 <input type="hidden" name="status" value={status} />
@@ -116,7 +116,7 @@ export default async function SimpleInvoiceActionPanel({ lead, latestOcr, telHre
                   {lead.status === status ? `${label} ✓` : label}
                 </button>
               </form>
-            ))}
+            )) : <p className="text-sm text-neutral-500">Consulta en modo solo lectura.</p>}
           </div>
         </div>
         <div className="rounded-lg bg-white/75 p-4">
