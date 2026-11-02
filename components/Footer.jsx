@@ -6,8 +6,8 @@ const whatsappHref = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hol
 const links = [
   ['Revisión de luz y gas', '/revision-factura-luz-gas'],
   ['Alarmas', '/alarmas-movistar-prosegur'],
-  ['Instalaciones', '/servicios'],
-  ['Trabajos realizados', '/trabajos-realizados'],
+  ['Cargadores eléctricos', '/cargadores-electricos'],
+  ['Asesoría energética', '/asesoria-energetica'],
 ];
 
 export default function Footer() {
@@ -22,7 +22,7 @@ export default function Footer() {
             <span className="text-base font-semibold">Electricidad Lakuntza</span>
           </a>
           <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
-            Revisión de luz y gas a través de Feníe Energía, consultas de alarmas e instalaciones eléctricas según disponibilidad.
+            Luz, gas, alarmas, cargadores eléctricos y asesoría energética, con atención directa y propuestas a través de Feníe Energía.
           </p>
         </div>
         <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
