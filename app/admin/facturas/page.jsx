@@ -1,6 +1,6 @@
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
-import { requireAdmin } from '@/lib/admin';
+import { requireAnyPermission } from '@/lib/admin';
 
 export const metadata = {
   title: 'Facturas recibidas',
@@ -131,7 +131,7 @@ function customerLabel(value) {
 
 export default async function AdminInvoiceLeadsPage({ searchParams }) {
   const resolvedSearchParams = await searchParams;
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requireAnyPermission('leads.read_all', 'leads.read_assigned');
   const { data, error: loadError } = await supabase
     .from('invoice_review_leads')
     .select('id, created_at, name, phone, locality, supply_type, customer_type, bonus_status, status, precheck_result, analysis_result, contacted_at, converted_at, ocr_status, ocr_confidence_avg, invoice_total_eur, consumption_kwh, contracted_power_kw, has_extra_services')
