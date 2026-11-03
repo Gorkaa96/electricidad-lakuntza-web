@@ -19,7 +19,7 @@ export default function FenieEnergySection() {
             Feníe Energía es una comercializadora española de electricidad y gas impulsada por profesionales de las instalaciones. Su modelo se basa en una red de agentes energéticos que asesoran y acompañan a los clientes.
           </p>
           <p className="mt-4 max-w-xl text-base leading-8 text-neutral-600">
-            Electricidad Lakuntza es tu agente de confianza: revisamos tu caso, te explicamos las opciones disponibles y te ayudamos con las gestiones. Los productos, sus precios y sus condiciones se confirman antes de contratar.
+            Para luz y gas actuamos como agentes de Feníe Energía: revisamos tu factura, comparamos las propuestas de su portal profesional y te acompañamos en la contratación con la comercializadora. En alarmas, comercializamos las soluciones que instala y presta Movistar Prosegur.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
             <a href={fenieWebsite} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#24662D] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#194D20]">
@@ -55,13 +55,13 @@ export default function FenieEnergySection() {
                 <div>
                   <h3 className="text-lg font-semibold text-[#152017]">Electricidad Lakuntza</h3>
                   <p className="mt-2 text-sm leading-7 text-neutral-600">
-                    Tu agente cercano: escucha, revisa las condiciones, te orienta y acompaña las gestiones que correspondan.
+                    Te atendemos como agentes de Feníe para luz y gas y como comerciales para alarmas. Además, hacemos directamente el asesoramiento energético y las instalaciones de cargadores eléctricos.
                   </p>
                 </div>
               </div>
             </div>
             <p className="border-t border-[#DDE9DA] bg-white px-6 py-5 text-xs leading-6 text-neutral-600 sm:px-8">
-              En alarmas y cargadores también intervienen proveedores o instaladores específicos. Confirmaremos quién presta cada servicio antes de realizar una propuesta.
+              Las alarmas las instala y presta Movistar Prosegur. Los cargadores eléctricos y la asesoría energética los realizamos nosotros, desde Electricidad Lakuntza.
             </p>
           </div>
         </div>
