@@ -77,7 +77,8 @@ function getAction(lead) {
 
   if (isClosed(lead)) return { label: 'Cerrada', tone: 'neutral' };
   if (ocrStatus === 'failed') return { label: 'Revisar manual', tone: 'amber' };
-  if (ocrStatus !== 'succeeded') return { label: 'Leer factura', tone: 'neutral' };
+  if (ocrStatus === 'processing') return {label:'Lectura en curso',tone:'neutral'};
+  if (ocrStatus !== 'succeeded') return { label: 'Lectura pendiente', tone: 'neutral' };
   if (lead.bonus_status === 'si' || lead.precheck_result === 'bonus_social_case') return { label: 'Confirmar condiciones', tone: 'amber' };
   if (lead.analysis_result === 'viable' || lead.has_extra_services || isBusiness || (total !== null && total >= 90) || (consumption !== null && consumption >= 300)) return { label: 'Contactar', tone: 'green' };
   if (lead.analysis_result === 'not_viable') return { label: 'Sin urgencia', tone: 'neutral' };
@@ -152,7 +153,9 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
   const leads = data || [];
   const selectedView = views.includes(resolvedSearchParams?.view) ? resolvedSearchParams.view : 'pending';
   const enrichedLeads = leads.map((lead) => ({ ...lead, view: getView(lead), action: getAction(lead) }));
-  const filteredLeads = selectedView === 'all' ? enrichedLeads : enrichedLeads.filter((lead) => lead.view === selectedView);
+  const query=String(resolvedSearchParams?.q||'').trim().slice(0,100);
+  const viewLeads=selectedView === 'all' ? enrichedLeads : enrichedLeads.filter((lead)=>lead.view===selectedView);
+  const filteredLeads=viewLeads.filter(lead=>!query || [lead.name,lead.phone,lead.locality].filter(Boolean).join(' ').toLocaleLowerCase('es').includes(query.toLocaleLowerCase('es')));
 
   const counts = {
     pending: enrichedLeads.filter((lead) => lead.view === 'pending').length,
@@ -163,15 +166,21 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
   };
 
   return (
-    <AdminShell title="Solicitudes" description="Consulta las facturas recibidas, revisa cada caso y registra el siguiente paso.">
+    <AdminShell title="Facturas" description="Lectura automática al recibir cada PDF. Revisa sus datos y registra el siguiente paso.">
       <AdminNotice success={resolvedSearchParams?.success} error={resolvedSearchParams?.error} />
 
+      <form method="get" className="mb-5 flex flex-col gap-3 rounded-xl border border-[#DFE6E2] bg-white p-4 sm:flex-row sm:items-end">
+        <input type="hidden" name="view" value={selectedView}/>
+        <label className="grid flex-1 gap-2 text-sm font-medium text-[#425A4C]">Buscar factura<input name="q" defaultValue={query} placeholder="Nombre, teléfono o localidad" className="min-h-11 w-full border bg-white px-3 py-2 font-normal"/></label>
+        <button className="min-h-11 rounded-lg bg-[#1B4E3D] px-5 py-2 text-sm font-semibold text-white">Buscar</button>
+        {query?<a href={href(selectedView)} className="inline-flex min-h-11 items-center px-3 text-sm text-[#3B634B] underline">Limpiar</a>:null}
+      </form>
       <section className="overflow-x-auto rounded-2xl border border-neutral-200 bg-white p-2 shadow-sm" aria-label="Filtrar solicitudes">
         <nav className="flex min-w-max gap-1 sm:min-w-0 sm:flex-wrap" aria-label="Vistas de facturas">
           {views.map((view) => (
             <a
               key={view}
-              href={href(view)}
+              href={href(view)+(query?(view==='pending'?'?':'&')+'q='+encodeURIComponent(query):'')}
               aria-current={selectedView === view ? 'page' : undefined}
               className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${selectedView === view ? 'bg-[#EAF5E4] text-lakuntza-greenDark' : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950'}`}
             >

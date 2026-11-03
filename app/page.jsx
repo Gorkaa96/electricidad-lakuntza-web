@@ -62,43 +62,27 @@ export default function HomePage() {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <main id="contenido-principal">
-        <section id="inicio" className="brand-dark-surface relative isolate overflow-hidden pt-20 text-white">
-          <div className="relative mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
-            <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-12 lg:gap-16">
+        <section id="inicio" className="relative overflow-hidden border-b border-[#DCE6DE] bg-[#F7FAF6] pt-20">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-14 lg:px-8 lg:py-20">
+            <div className="grid items-center gap-6 sm:gap-12 lg:grid-cols-12 lg:gap-16">
               <div className="min-w-0 lg:col-span-7">
-                <div className="hidden items-center gap-3 text-sm font-medium text-white/70 lg:flex">
-                  <span aria-hidden="true" className="h-[2px] w-8 bg-[#9CDD81]" />
-                  Electricidad Lakuntza <span aria-hidden="true" className="text-white/40">·</span> <span className="text-[#B7F0A5]">Agentes de Feníe Energía</span>
+                <p className="hidden text-sm font-semibold text-[#376044] sm:block">Electricidad Lakuntza · Atención directa en Navarra</p>
+                <h1 className="max-w-[15ch] text-[2.25rem] font-semibold leading-[1.06] tracking-[-.05em] text-[#173A29] sm:mt-6 sm:text-[clamp(3rem,5.5vw,5rem)]">Tu energía, en buenas manos.</h1>
+                <p className="mt-4 max-w-xl text-base leading-6 text-[#526256] sm:mt-6 sm:text-xl sm:leading-8">Luz y gas, alarmas, cargadores y asesoría energética para tu hogar o negocio. Te ayudamos a decidir con información clara.</p>
+                <div className="mt-8 hidden flex-wrap gap-3 sm:flex">
+                  <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-lg bg-[#245E36] px-6 py-3 text-sm font-semibold text-white hover:bg-[#194A28]">Revisar mi factura <ArrowRight size={18} aria-hidden="true"/></a>
+                  <a href="#contacto" className="inline-flex min-h-12 items-center justify-center rounded-lg border border-[#B7CABA] bg-white px-6 py-3 text-sm font-semibold text-[#264F32] hover:bg-[#EDF4EB]">Hablar con el equipo</a>
                 </div>
-                <h1 className="max-w-[16ch] text-[2.25rem] sm:mt-8 sm:max-w-[12ch] sm:text-[clamp(2.9rem,6vw,5.6rem)] font-semibold leading-[1.02] tracking-[-.058em]">
-                  Energía y seguridad, con criterio.
-                </h1>
-                <p className="mt-4 max-w-xl text-base leading-6 text-white/80 sm:mt-8 sm:text-xl sm:leading-[1.75]">
-                  Luz y gas, alarmas, cargadores y asesoría energética para tu hogar o negocio. Atención directa desde Lakuntza.
-                </p>
-                <p className="mt-6 hidden max-w-xl text-sm leading-6 text-white/75 lg:block">Somos agentes de Feníe Energía para luz y gas. Las alarmas las instala Movistar Prosegur; nosotros instalamos cargadores y realizamos asesoría energética. <a href="#fenie" className="font-semibold text-[#B7F0A5] underline decoration-[#8CCB79] underline-offset-4 hover:text-white">Descubre qué es Feníe</a>.</p>
+                <p className="mt-6 hidden max-w-lg text-sm leading-6 text-[#5B6B5E] lg:block">Agentes de Feníe Energía para luz y gas. Cargadores y asesoría, directamente con nuestro equipo.</p>
               </div>
               <div className="min-w-0 lg:col-span-5">
-                <div className="overflow-hidden rounded-[1.35rem] border border-white/20 bg-white text-[#152017] shadow-[0_28px_85px_rgba(0,0,0,.18)]">
-                  <div className="border-b border-[#DFE9DD] px-5 py-4 sm:px-6 sm:py-5">
-                    <h2 className="text-base font-semibold text-[#284C2F]">¿En qué podemos ayudarte?</h2>
-                  </div>
-                  <div className="divide-y divide-[#DFE9DD]">
-                    {heroServices.map(({ title, description, href, icon: Icon }) => (
-                      <a key={href} href={href} className="group flex min-h-16 items-center gap-3 px-4 py-3 sm:min-h-[96px] sm:px-5 sm:py-4 transition-colors hover:bg-[#F2F8EF] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#286B2C] sm:gap-4 sm:px-6">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#E8F3E4] text-[#286B2C]">
-                          <Icon size={21} aria-hidden="true" />
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block text-base font-semibold leading-6 tracking-[-.02em] text-[#173C22] sm:text-lg">{title}</span>
-                          <span className="mt-1 hidden text-sm leading-5 text-[#536257] sm:block">{description}</span>
-                        </span>
-                        <ArrowRight size={18} aria-hidden="true" className="shrink-0 text-[#316C35] transition-transform group-hover:translate-x-1" />
-                      </a>
-                    ))}
+                <div className="overflow-hidden rounded-2xl border border-[#C9DCCC] bg-white shadow-[0_12px_35px_rgba(26,67,42,.06)]">
+                  <div className="border-b border-[#DFE9DD] bg-[#1C4C32] px-5 py-4 sm:px-6 sm:py-5"><h2 className="text-base font-semibold text-white">¿En qué podemos ayudarte?</h2></div>
+                  <div className="divide-y divide-[#E5ECE3]">
+                    {heroServices.map(({title,description,href,icon:Icon})=><a key={href} href={href} className="group flex min-h-16 items-center gap-3 px-4 py-3 hover:bg-[#F2F7EF] sm:min-h-[92px] sm:gap-4 sm:px-6 sm:py-4"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EEF5E9] text-[#32623C]"><Icon size={21} aria-hidden="true"/></span><span className="min-w-0 flex-1"><span className="block text-base font-semibold leading-6 text-[#22482E]">{title}</span><span className="mt-1 hidden text-sm leading-5 text-[#596A5D] sm:block">{description}</span></span><ArrowRight size={17} aria-hidden="true" className="shrink-0 text-[#49764D]"/></a>)}
                   </div>
                 </div>
-                <p className="mt-4 text-center text-xs leading-5 text-white/60">Una consulta no supone contratación ni compromiso.</p>
+                <p className="mt-3 text-center text-xs leading-5 text-[#647467]">Te orientamos antes de contratar. Tú decides.</p>
               </div>
             </div>
           </div>
@@ -143,13 +127,13 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
               <p className="text-sm font-semibold text-[#2E7136]">Qué podemos hacer por ti</p>
-              <h2 className="mt-5 text-3xl font-semibold tracking-[-.04em] sm:text-4xl">Cinco soluciones, una atención cercana.</h2>
+              <h2 className="mt-5 text-3xl font-semibold tracking-[-.04em] sm:text-4xl">El servicio que necesitas, con las funciones claras.</h2>
               <p className="mt-5 text-base leading-8 text-neutral-600">Desde estudiar tu energía hasta valorar una alarma o un punto de recarga. Confirma las condiciones de cada servicio con nosotros antes de contratar.</p>
             </div>
-            <div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {commercialCatalog.map((service) => (
+            <div className="mt-9 grid gap-4 md:grid-cols-2">
+              {[{...commercialCatalog[0], slug:'luz-gas',title:'Luz y gas',description:'Como agentes de Feníe Energía, comparamos sus propuestas en el CRM oficial. El contrato se firma con Feníe Energía.',href:'/revision-factura-luz-gas'}, ...commercialCatalog.slice(2)].map((service) => (
                 <a href={service.href} key={service.slug} className="group rounded-2xl border border-[#DEE9DC] bg-white p-7 transition-colors hover:border-[#82B283] hover:bg-[#FBFDF9]">
-                  <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#327837]">{service.eyebrow}</p>
+                  <p className="text-sm font-medium text-[#52725A]">{service.eyebrow}</p>
                   <h3 className="mt-4 text-xl font-semibold tracking-[-.025em]">{service.title}</h3>
                   <p className="mt-3 min-h-20 text-sm leading-7 text-neutral-600">{service.description}</p>
                   <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#28632D]">{service.action}<ArrowRight size={17} aria-hidden="true" className="transition-transform group-hover:translate-x-1" /></span>
