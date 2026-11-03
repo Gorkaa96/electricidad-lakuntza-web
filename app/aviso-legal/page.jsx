@@ -15,21 +15,21 @@ const sections = [
       'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Navarra.',
       'Teléfono: 649 853 448.',
       'Correo electrónico: eleclakuntza@yahoo.es.',
-      'Actividad: instalaciones eléctricas, telecomunicaciones, revisión de luz y gas y asesoramiento comercial sobre alarmas a través de Feníe Energía.',
+      'Actividad ofrecida actualmente: asesoría energética e instalación de cargadores eléctricos por Electricidad Lakuntza; comercialización de contratos de luz y gas como agente de Feníe Energía y de alarmas de Movistar Prosegur a través de Feníe.',
     ],
   },
   {
     title: 'Objeto de la web',
     content: [
-      'Esta web tiene carácter informativo y comercial. Su finalidad es presentar los servicios de Electricidad Lakuntza, facilitar el contacto con clientes potenciales y mostrar trabajos realizados.',
+      'Esta web tiene carácter informativo y comercial. Su finalidad es presentar los servicios ofrecidos actualmente por Electricidad Lakuntza y facilitar el contacto con clientes potenciales.',
       'La información publicada no constituye presupuesto cerrado ni oferta vinculante. Cada trabajo se valorará según alcance, disponibilidad, ubicación, condiciones técnicas y necesidades concretas del cliente.',
     ],
   },
   {
     title: 'Servicios energéticos',
     content: [
-      'Electricidad Lakuntza ofrece asesoramiento energético y revisión de facturas de luz y gas, incluyendo la posibilidad de acompañar al cliente en la contratación como empresa delegada de Feníe Energía.',
-      'La comparación de facturas se realiza con la información aportada por el cliente y no implica obligación de contratación.',
+      'Electricidad Lakuntza realiza directamente la asesoría energética y la revisión de facturas. Para comparar y tramitar contratos de luz y gas actúa como agente de Feníe Energía, que es la comercializadora con la que se formaliza el contrato.',
+      'La comparación de suministros utiliza las condiciones actuales del cliente y las ofertas disponibles del portal profesional de Feníe. No es una comparación de todo el mercado ni implica obligación de contratación. Electricidad Lakuntza realiza directamente el estudio, presupuesto e instalación de cargadores eléctricos.',
     ],
   },
   {
