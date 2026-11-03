@@ -22,7 +22,7 @@ export default function Footer() {
             <span className="text-base font-semibold">Electricidad Lakuntza</span>
           </a>
           <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
-            Luz, gas, alarmas, cargadores eléctricos y asesoría energética, con atención directa y propuestas a través de Feníe Energía.
+            Agentes de Feníe Energía para luz y gas y comerciales de alarmas. Electricidad Lakuntza realiza directamente instalaciones de cargadores eléctricos y asesoría energética.
           </p>
           <a href="https://www.fenieenergia.es/es/sobre-fenie/historia" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-[#B8EAA7] underline underline-offset-4 hover:text-white">
             ¿Qué es Feníe Energía? Visita su web oficial
