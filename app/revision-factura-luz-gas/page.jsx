@@ -18,14 +18,14 @@ export const metadata = {
 };
 
 const errorMessages = {
-  config: 'La configuración del formulario no está disponible ahora mismo. Puedes enviar la factura por WhatsApp o email.',
+  config: 'La configuración del formulario no está disponible ahora mismo. Puedes consultarnos por WhatsApp o teléfono.',
   bono: 'No tramitamos el cambio de suministro eléctrico con bono social o posible derecho por familia numerosa. Puedes consultar una comercializadora de referencia o elegir solo gas.',
   datos: 'Revisa nombre, teléfono y consentimiento antes de enviar.',
   factura: 'Debes adjuntar una factura en PDF o imagen.',
   tipo: 'Formato no válido. Sube un PDF, JPG, PNG o WebP.',
   tamano: 'La factura supera el tamaño máximo de 10 MB.',
-  subida: 'No se ha podido subir la factura. Inténtalo de nuevo o envíala por WhatsApp.',
-  registro: 'No se ha podido registrar la solicitud. Inténtalo de nuevo o envíala por WhatsApp.',
+  subida: 'No se ha podido subir la factura. Inténtalo de nuevo o consúltanos por teléfono.',
+  registro: 'No se ha podido registrar la solicitud. Inténtalo de nuevo o consúltanos por teléfono.',
   verificacion: 'No se ha completado la verificación de seguridad. Inténtalo de nuevo.',
   limite: 'Hemos recibido demasiados intentos desde este contacto. Inténtalo más tarde o consúltanos por teléfono.',
 };
@@ -38,6 +38,8 @@ const benefits = [
 ];
 
 const initialQuestionWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero consultar la revisión de luz o gas, pero ahora mismo no tengo la factura.');
+
+const reviewWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero solicitar una revisión de mi factura de luz o gas. ¿Cómo podemos continuar?');
 
 const privacyPoints = [
   'La factura se guarda en un espacio privado, no público.',
@@ -63,7 +65,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
               <h1 className="mt-5 max-w-4xl text-[clamp(2.65rem,5vw,4.5rem)] font-semibold leading-[1.06] tracking-[-.05em]">Tu factura merece una revisión cuidadosa.</h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">Cuéntanos tu situación y revisaremos las condiciones de luz o gas para valorar si te conviene una propuesta de Feníe Energía. Si es mejor mantener lo que tienes, también te lo explicaremos.</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a href={intakeReady ? '#formulario' : initialQuestionWhatsapp} target={intakeReady ? undefined : '_blank'} rel={intakeReady ? undefined : 'noopener noreferrer'} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">{intakeReady ? 'Subir mi factura' : 'Solicitar revisión'}</a>
+                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">{intakeReady ? 'Subir mi factura' : 'Solicitar revisión'}</a>
                 <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Consultar sin factura</a>
               </div>
             </div>
@@ -206,9 +208,9 @@ export default async function RevisionFacturaPage({ searchParams }) {
               </form> : (
                 <section id="formulario" className="scroll-mt-24 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
                   <h2 className="text-2xl font-semibold text-[#152017]">Solicita tu revisión de luz o gas</h2>
-                  <p className="mt-4 text-base leading-8 text-neutral-600">Te atendemos personalmente. Cuéntanos qué necesitas y te indicaremos cómo continuar con la revisión.</p>
+                  <p className="mt-4 text-base leading-8 text-neutral-600">Cuéntanos qué necesitas por WhatsApp o teléfono y te indicaremos cómo continuar. El envío de facturas desde esta web aún no está disponible.</p>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white">Consultar por WhatsApp</a>
+                    <a href={reviewWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white">Consultar por WhatsApp</a>
                     <a href="tel:+34649853448" className="inline-flex min-h-12 items-center rounded-xl border border-neutral-300 px-5 py-3 text-sm font-semibold text-[#205127]">Llamar</a>
                   </div>
                 </section>

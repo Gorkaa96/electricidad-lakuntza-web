@@ -17,7 +17,7 @@ const whatsappHref = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hol
 const process = [
   {
     title: 'Cuéntanos qué necesitas',
-    description: 'Escríbenos para valorar tu suministro, una alarma o un cargador eléctrico.',
+    description: 'Cuéntanos qué necesitas: luz y gas, alarmas, cargadores o asesoría.',
   },
   {
     title: 'Revisamos tu caso',
@@ -63,20 +63,20 @@ export default function HomePage() {
       <Header />
       <main id="contenido-principal">
         <section id="inicio" className="brand-dark-surface relative isolate overflow-hidden pt-20 text-white">
-          <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
-            <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
+          <div className="relative mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
+            <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-12 lg:gap-16">
               <div className="min-w-0 lg:col-span-7">
-                <div className="flex items-center gap-3 text-sm font-medium text-white/70">
+                <div className="hidden items-center gap-3 text-sm font-medium text-white/70 lg:flex">
                   <span aria-hidden="true" className="h-[2px] w-8 bg-[#9CDD81]" />
                   Electricidad Lakuntza <span aria-hidden="true" className="text-white/40">·</span> <span className="text-[#B7F0A5]">Agentes de Feníe Energía</span>
                 </div>
-                <h1 className="mt-8 max-w-[12ch] text-[clamp(2.9rem,6vw,5.6rem)] font-semibold leading-[1.02] tracking-[-.058em]">
+                <h1 className="max-w-[16ch] text-[2.25rem] sm:mt-8 sm:max-w-[12ch] sm:text-[clamp(2.9rem,6vw,5.6rem)] font-semibold leading-[1.02] tracking-[-.058em]">
                   Energía y seguridad, con criterio.
                 </h1>
-                <p className="mt-8 max-w-xl text-lg leading-[1.75] text-white/80 sm:text-xl">
-                  Luz, gas, alarmas, cargadores eléctricos y asesoría energética. Te ayudamos a encontrar una solución adecuada para tu hogar o negocio, con condiciones claras y trato directo.
+                <p className="mt-4 max-w-xl text-base leading-6 text-white/80 sm:mt-8 sm:text-xl sm:leading-[1.75]">
+                  Luz y gas, alarmas, cargadores y asesoría energética para tu hogar o negocio. Atención directa desde Lakuntza.
                 </p>
-                <p className="mt-6 max-w-xl text-sm leading-6 text-white/75">Somos agentes de Feníe Energía para luz y gas. Las alarmas las instala Movistar Prosegur; nosotros instalamos cargadores y realizamos asesoría energética. <a href="#fenie" className="font-semibold text-[#B7F0A5] underline decoration-[#8CCB79] underline-offset-4 hover:text-white">Descubre qué es Feníe</a>.</p>
+                <p className="mt-6 hidden max-w-xl text-sm leading-6 text-white/75 lg:block">Somos agentes de Feníe Energía para luz y gas. Las alarmas las instala Movistar Prosegur; nosotros instalamos cargadores y realizamos asesoría energética. <a href="#fenie" className="font-semibold text-[#B7F0A5] underline decoration-[#8CCB79] underline-offset-4 hover:text-white">Descubre qué es Feníe</a>.</p>
               </div>
               <div className="min-w-0 lg:col-span-5">
                 <div className="overflow-hidden rounded-[1.35rem] border border-white/20 bg-white text-[#152017] shadow-[0_28px_85px_rgba(0,0,0,.18)]">
@@ -85,13 +85,13 @@ export default function HomePage() {
                   </div>
                   <div className="divide-y divide-[#DFE9DD]">
                     {heroServices.map(({ title, description, href, icon: Icon }) => (
-                      <a key={href} href={href} className="group flex min-h-[96px] items-center gap-3 px-5 py-4 transition-colors hover:bg-[#F2F8EF] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#286B2C] sm:gap-4 sm:px-6">
+                      <a key={href} href={href} className="group flex min-h-16 items-center gap-3 px-4 py-3 sm:min-h-[96px] sm:px-5 sm:py-4 transition-colors hover:bg-[#F2F8EF] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#286B2C] sm:gap-4 sm:px-6">
                         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#E8F3E4] text-[#286B2C]">
                           <Icon size={21} aria-hidden="true" />
                         </span>
                         <span className="min-w-0 flex-1">
                           <span className="block text-base font-semibold leading-6 tracking-[-.02em] text-[#173C22] sm:text-lg">{title}</span>
-                          <span className="mt-1 block text-sm leading-5 text-[#536257]">{description}</span>
+                          <span className="mt-1 hidden text-sm leading-5 text-[#536257] sm:block">{description}</span>
                         </span>
                         <ArrowRight size={18} aria-hidden="true" className="shrink-0 text-[#316C35] transition-transform group-hover:translate-x-1" />
                       </a>
@@ -122,7 +122,7 @@ export default function HomePage() {
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
               <div className="lg:col-span-4">
                 <h2 className="max-w-sm text-3xl font-semibold leading-tight tracking-[-.04em] sm:text-4xl">Un proceso sencillo, de principio a fin.</h2>
-                <p className="mt-5 max-w-sm text-base leading-7 text-neutral-600">Sin promesas de ahorro automáticas ni presupuestos inventados. Revisamos cada necesidad personalmente.</p>
+                <p className="mt-5 max-w-sm text-base leading-7 text-neutral-600">Revisamos tu caso y te explicamos las condiciones antes de que decidas.</p>
               </div>
               <ol className="grid gap-0 border-t border-neutral-200 lg:col-span-8">
                 {process.map((step, index) => (

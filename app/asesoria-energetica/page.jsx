@@ -31,7 +31,7 @@ export default function AsesoriaEnergeticaPage() {
                 <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#E7F4DF] px-6 py-4 text-sm font-semibold text-[#22582A] hover:bg-white">Consultar revisión de factura <ArrowRight size={17} aria-hidden="true"/></a>
                 <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 px-6 py-4 text-sm font-semibold text-white hover:bg-white/10"><MessageCircle size={17} aria-hidden="true"/> Hablar con nosotros</a>
               </div>
-              <p className="mt-4 text-sm text-white/65">La subida de facturas online se habilitará tras finalizar las pruebas de privacidad y seguridad.</p>
+              <p className="mt-4 text-sm text-white/65">La asesoría la realiza directamente Electricidad Lakuntza. Consulta el alcance y el presupuesto para tu caso.</p>
             </div>
             <aside className="rounded-2xl border border-white/20 bg-white p-7 text-[#17271D] lg:col-span-4">
               <ShieldCheck size={33} className="text-[#35763B]" aria-hidden="true" />

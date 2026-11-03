@@ -93,3 +93,27 @@ test('preview indexing remains disabled', async ({ request }) => {
   const response = await request.get('/');
   expect(await response.text()).toMatch(/noindex/);
 });
+
+test('mobile visitors discover all four services before the contact bar', async ({ page }, info) => {
+  test.skip(info.project.name !== 'mobile');
+  await page.goto('/');
+  const card = page.getByRole('heading', {name:'¿En qué podemos ayudarte?',exact:true}).locator('../..');
+  const last = card.getByRole('link', {name:/Asesoría energética/});
+  const box = await last.boundingBox();
+  const bar = await page.getByRole('navigation',{name:'Accesos rápidos de contacto'}).boundingBox();
+  expect(box.y + box.height).toBeLessThanOrEqual(bar.y);
+  await expect(page.getByRole('navigation',{name:'Accesos rápidos de contacto'}).getByRole('link',{name:'Servicios',exact:true})).toHaveAttribute('href','/servicios');
+});
+
+test('invoice actions distinguish starting a review from having no invoice', async ({page}) => {
+  await page.goto('/revision-factura-luz-gas');
+  const primary = page.getByRole('link',{name:'Solicitar revisión',exact:true});
+  await expect(primary).toHaveAttribute('href','#formulario');
+  await primary.click();
+  await expect(page).toHaveURL(/#formulario$/);
+  const contact = page.getByRole('link',{name:'Consultar por WhatsApp',exact:true});
+  const noInvoice = page.getByRole('link',{name:'Consultar sin factura',exact:true});
+  expect(await contact.getAttribute('href')).not.toBe(await noInvoice.getAttribute('href'));
+  expect(decodeURIComponent(await contact.getAttribute('href'))).not.toContain('no tengo la factura');
+  await expect(page.locator('input[type="file"]')).toHaveCount(0);
+});
