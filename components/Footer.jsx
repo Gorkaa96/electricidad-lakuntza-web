@@ -24,6 +24,9 @@ export default function Footer() {
           <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
             Luz, gas, alarmas, cargadores eléctricos y asesoría energética, con atención directa y propuestas a través de Feníe Energía.
           </p>
+          <a href="https://www.fenieenergia.es/es/sobre-fenie/historia" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-[#B8EAA7] underline underline-offset-4 hover:text-white">
+            ¿Qué es Feníe Energía? Visita su web oficial
+          </a>
         </div>
         <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
           <div>
