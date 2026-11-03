@@ -1,5 +1,14 @@
 # Auditoría de cierre en Work — 3 de noviembre de 2026
 
+## Cierre técnico actualizado
+Este apartado sustituye los recuentos y pendientes técnicos anteriores del documento. [CI aprobada](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41627055477): 25 pruebas unitarias, 48 pruebas públicas Chromium en escritorio/móvil/tablet, axe A/AA sin infracciones detectadas, compilación y auditoría de dependencias de producción sin vulnerabilidades detectadas. Esto no certifica WCAG ni prueba los servicios reales.
+
+Corregidos nombre accesible del logo, cierre con Escape y devolución del foco del menú móvil, contraste del formulario y ocultación completa del selector de archivos cuando la recepción está cerrada. Actualizado pdf-parse a 2.4.5 con worker y CanvasFactory explícitos; extracción validada sobre PDF sintético válido. GitHub Actions actualizado a Node 24 y acciones fijadas por SHA. Instalación reproducible mediante npm ci y lock actualizado.
+
+Regresión SQL reversible repetida y aprobada. Configuración no secreta guardada por UI en Vercel, solo Preview de esta rama: orígenes administrativos y tres flags false. El conector de variables devuelve 403, pero esta configuración sí se ha completado por UI. No se han leído ni cambiado claves. Producción permanece intacta.
+
+Pendientes vigentes consolidados: [lista única](lista-unica-cierre.md). Procedimientos preparados: [operativa y recuperación](operativa-y-recuperacion.md). Los flujos autenticados, SMTP, Turnstile, Storage y restauración reales siguen sin validar; dependen de sesión/configuración/decisiones del propietario. Las capturas y resultados axe se guardan como artefacto public-browser-report en CI durante siete días.
+
 ## Dictamen
 **NO APTO para lanzar captación pública ni fusionar a producción.** Se han implementado y comprobado correcciones adicionales en la rama `integration/launch-prep-2026-10-29`, PR #9 draft. Hay controles técnicos aprobados y bloqueos externos concretos. No se presenta como E2E completo ni como certificación de cumplimiento RGPD/WCAG.
 
