@@ -28,6 +28,33 @@ const process = [
   },
 ];
 
+const heroServices = [
+  {
+    title: 'Luz y gas',
+    description: 'Revisamos tu factura y valoramos las tarifas disponibles.',
+    href: '/revision-factura-luz-gas',
+    icon: FileText,
+  },
+  {
+    title: 'Alarmas',
+    description: 'Consulta soluciones de seguridad para tu hogar o negocio.',
+    href: '/alarmas-movistar-prosegur',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Cargadores eléctricos',
+    description: 'Solicita un estudio para instalar tu punto de recarga.',
+    href: '/cargadores-electricos',
+    icon: BatteryCharging,
+  },
+  {
+    title: 'Asesoría energética',
+    description: 'Revisamos consumos, potencia y condiciones del contrato.',
+    href: '/asesoria-energetica',
+    icon: TrendingDown,
+  },
+];
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
@@ -48,38 +75,26 @@ export default function HomePage() {
                   Luz, gas, alarmas, cargadores eléctricos y asesoría energética. Te ayudamos a encontrar una solución adecuada para tu hogar o negocio, con condiciones claras y trato directo.
                 </p>
                 <p className="mt-6 max-w-xl text-sm leading-6 text-white/75">Trabajamos como agentes de Feníe Energía para ayudarte con luz, gas y soluciones relacionadas. <a href="#fenie" className="font-semibold text-[#B7F0A5] underline decoration-[#8CCB79] underline-offset-4 hover:text-white">Descubre qué es Feníe</a>.</p>
-                <div className="mt-9 flex flex-wrap gap-4 text-sm font-semibold">
-                  <a href="/cargadores-electricos" className="inline-flex items-center gap-2 text-white underline decoration-[#9CDD81] decoration-2 underline-offset-8 transition-colors hover:text-[#B4F19B]"><BatteryCharging size={17} aria-hidden="true" /> Cargadores eléctricos</a>
-                  <a href="/asesoria-energetica" className="inline-flex items-center gap-2 text-white underline decoration-[#9CDD81] decoration-2 underline-offset-8 transition-colors hover:text-[#B4F19B]"><TrendingDown size={17} aria-hidden="true" /> Asesoría energética</a>
-                </div>
               </div>
               <div className="min-w-0 lg:col-span-5">
                 <div className="overflow-hidden rounded-[1.35rem] border border-white/20 bg-white text-[#152017] shadow-[0_28px_85px_rgba(0,0,0,.18)]">
-                  <div className="border-b border-[#DFE9DD] px-6 py-5 sm:px-8">
-                    <p className="text-sm font-semibold text-[#38503F]">¿En qué podemos ayudarte?</p>
+                  <div className="border-b border-[#DFE9DD] px-5 py-4 sm:px-6 sm:py-5">
+                    <h2 className="text-base font-semibold text-[#284C2F]">¿En qué podemos ayudarte?</h2>
                   </div>
-                  <a href="/revision-factura-luz-gas" className="group flex items-start gap-4 border-b border-[#DFE9DD] p-6 transition-colors hover:bg-[#F2F8EF] sm:p-8">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#E8F3E4] text-[#286B2C]">
-                      <FileText size={22} aria-hidden="true"/>
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold text-[#316C35]">Luz y gas</span>
-                      <span className="mt-2 block text-2xl font-semibold leading-tight tracking-[-.035em]">Revisar mi factura</span>
-                      <span className="mt-3 block text-sm leading-6 text-[#536257]">Comprobamos tus condiciones y te explicamos si merece la pena cambiar.</span>
-                    </span>
-                    <ArrowRight size={20} aria-hidden="true" className="mt-2 shrink-0 text-[#316C35] transition-transform group-hover:translate-x-1"/>
-                  </a>
-                  <a href="/alarmas-movistar-prosegur" className="group flex items-start gap-4 p-6 transition-colors hover:bg-[#F2F8EF] sm:p-8">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#E8F3E4] text-[#286B2C]">
-                      <ShieldCheck size={22} aria-hidden="true"/>
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold text-[#316C35]">Alarmas</span>
-                      <span className="mt-2 block text-2xl font-semibold leading-tight tracking-[-.035em]">Consultar una alarma</span>
-                      <span className="mt-3 block text-sm leading-6 text-[#536257]">Conoce las soluciones de Movistar Prosegur y sus condiciones actuales.</span>
-                    </span>
-                    <ArrowRight size={20} aria-hidden="true" className="mt-2 shrink-0 text-[#316C35] transition-transform group-hover:translate-x-1"/>
-                  </a>
+                  <div className="divide-y divide-[#DFE9DD]">
+                    {heroServices.map(({ title, description, href, icon: Icon }) => (
+                      <a key={href} href={href} className="group flex min-h-[96px] items-center gap-3 px-5 py-4 transition-colors hover:bg-[#F2F8EF] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#286B2C] sm:gap-4 sm:px-6">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#E8F3E4] text-[#286B2C]">
+                          <Icon size={21} aria-hidden="true" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-base font-semibold leading-6 tracking-[-.02em] text-[#173C22] sm:text-lg">{title}</span>
+                          <span className="mt-1 block text-sm leading-5 text-[#536257]">{description}</span>
+                        </span>
+                        <ArrowRight size={18} aria-hidden="true" className="shrink-0 text-[#316C35] transition-transform group-hover:translate-x-1" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
                 <p className="mt-4 text-center text-xs leading-5 text-white/60">Una consulta no supone contratación ni compromiso.</p>
               </div>
