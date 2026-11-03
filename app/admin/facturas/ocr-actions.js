@@ -83,7 +83,7 @@ async function saveExtractedInvoice({ supabase, leadId, ocrId, extracted }) {
   const contractedPower = valueFromPower(extracted.electricity?.contracted_power_kw);
   const requiresManualReview = extracted.review?.requires_manual_review !== false || confidenceAvg === null || confidenceAvg < 85;
 
-  await supabase
+  const { error: ocrSaveError } = await supabase
     .from('invoice_ocr_results')
     .update({
       ocr_status: 'succeeded',
@@ -95,8 +95,9 @@ async function saveExtractedInvoice({ supabase, leadId, ocrId, extracted }) {
       processed_at: now,
     })
     .eq('id', ocrId);
+  if (ocrSaveError) throw new Error('No se pudo guardar la lectura del documento.');
 
-  await supabase
+  const { error: analysisSaveError } = await supabase
     .from('invoice_review_leads')
     .update({
       extracted_cups: extracted.electricity?.cups || null,
@@ -114,6 +115,7 @@ async function saveExtractedInvoice({ supabase, leadId, ocrId, extracted }) {
       ocr_processed_at: now,
     })
     .eq('id', leadId);
+  if (analysisSaveError) throw new Error('No se pudo guardar el resultado de revisión.');
 
   await insertOcrEvent({
     supabase,
@@ -201,6 +203,7 @@ export async function prepareInvoiceOcr(formData) {
     redirect(`/admin/facturas/${id}?error=ocr_tipo`);
   }
 
+  let resultError = null;
   try {
     const arrayBuffer = await fileData.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -214,13 +217,13 @@ export async function prepareInvoiceOcr(formData) {
         sourceFilePath: lead.file_path,
         message: 'El PDF no contiene texto suficiente. Probablemente es una factura escaneada o una imagen dentro de PDF.',
       });
-      revalidatePath('/admin/facturas');
-      revalidatePath(`/admin/facturas/${id}`);
-      redirect(`/admin/facturas/${id}?error=ocr_texto`);
+      resultError = 'ocr_texto';
     }
 
-    const extracted = parseInvoiceTextFree(rawText);
-    await saveExtractedInvoice({ supabase, leadId: id, ocrId: ocrRow.id, extracted });
+    if (!resultError) {
+      const extracted = parseInvoiceTextFree(rawText);
+      await saveExtractedInvoice({ supabase, leadId: id, ocrId: ocrRow.id, extracted });
+    }
   } catch (error) {
     await markOcrFailure({
       supabase,
@@ -229,11 +232,14 @@ export async function prepareInvoiceOcr(formData) {
       sourceFilePath: lead.file_path,
       message: error?.message || 'Error inesperado al extraer texto del PDF.',
     });
-    revalidatePath('/admin/facturas');
-    revalidatePath(`/admin/facturas/${id}`);
-    redirect(`/admin/facturas/${id}?error=ocr`);
+    resultError = 'ocr';
   }
 
+  if (resultError) {
+    revalidatePath('/admin/facturas');
+    revalidatePath(`/admin/facturas/${id}`);
+    redirect(`/admin/facturas/${id}?error=${resultError}`);
+  }
   revalidatePath('/admin/facturas');
   revalidatePath(`/admin/facturas/${id}`);
   redirect(`/admin/facturas/${id}?success=ocr_completado`);

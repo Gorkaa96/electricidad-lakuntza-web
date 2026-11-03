@@ -215,7 +215,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
             <div className="mt-8 grid gap-3">
               {[
                 ['¿Es obligatorio contratar?', 'No. Revisamos tu consulta y te explicamos las alternativas que podamos ofrecerte. Tú decides si continuar.'],
-                ['¿Comparáis todas las comercializadoras?', 'No. Electricidad Lakuntza compara tu situación actual con las ofertas disponibles en el portal de Feníe Energía, de la que somos agentes. El contrato final de luz o gas se formaliza con Feníe Energía.'],
+                ['¿Comparáis todas las comercializadoras?', 'No. Electricidad Lakuntza compara tu situación actual con las ofertas disponibles en el CRM oficial de Feníe Energía, de la que somos agentes. El contrato final de luz o gas se formaliza con Feníe Energía.'],
                 ['¿Me quedaré sin luz o gas si cambio?', 'El cambio ordinario de comercializadora es administrativo y no exige interrumpir el suministro. Antes de contratar revisamos las condiciones aplicables.'],
                 ['¿Y si tengo bono social eléctrico o título de familia numerosa?', 'No podemos tramitar el cambio de luz a una tarifa con bono social. El PVPC y el descuento se solicitan ante una comercializadora de referencia. Para gas o alarmas puedes consultarnos por separado.'],
                 ['¿No tengo la factura disponible?', 'Puedes preguntarnos primero por WhatsApp o llamarnos. No hace falta enviarla para una consulta inicial.'],

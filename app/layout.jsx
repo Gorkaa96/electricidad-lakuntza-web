@@ -65,7 +65,7 @@ export const metadata = {
   openGraph: {
     title: 'Luz, gas, alarmas y cargadores | Electricidad Lakuntza',
     description:
-      'Luz, gas, alarmas, cargadores eléctricos y asesoría energética con atención directa a través de Feníe Energía.',
+      'Agentes de Feníe Energía para luz y gas y comerciales de alarmas Movistar Prosegur. Instalación de cargadores y asesoría energética por Electricidad Lakuntza.',
     url: siteUrl,
     siteName: siteConfig.name,
     type: 'website',

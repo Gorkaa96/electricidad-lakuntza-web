@@ -19,7 +19,7 @@ export default function FenieEnergySection() {
             Feníe Energía es una comercializadora española de electricidad y gas impulsada por profesionales de las instalaciones. Su modelo se basa en una red de agentes energéticos que asesoran y acompañan a los clientes.
           </p>
           <p className="mt-4 max-w-xl text-base leading-8 text-neutral-600">
-            Para luz y gas actuamos como agentes de Feníe Energía: revisamos tu factura, comparamos las propuestas de su portal profesional y te acompañamos en la contratación con la comercializadora. En alarmas, comercializamos las soluciones que instala y presta Movistar Prosegur.
+            Para luz y gas actuamos como agentes de Feníe Energía: revisamos tu factura, comparamos las propuestas de su CRM oficial y te acompañamos en la contratación con la comercializadora. En alarmas, comercializamos las soluciones que instala y presta Movistar Prosegur.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
             <a href={fenieWebsite} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#24662D] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#194D20]">

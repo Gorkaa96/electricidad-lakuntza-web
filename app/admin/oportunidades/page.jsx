@@ -21,7 +21,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
   const selectedService = Object.hasOwn(serviceNames, params?.servicio) ? params.servicio : '';
 
   let request = supabase.from('commercial_leads')
-    .select('id,service,contact_name,contact_phone,contact_email,origin,status,assigned_to,next_contact_on,created_at')
+    .select('id,service,contact_name,contact_phone,contact_email,origin,status,assigned_to,next_contact_on,created_at,notification_status')
     .order('created_at', { ascending: false }).limit(200);
   if (selectedStatus) request = request.eq('status', selectedStatus);
   if (selectedService) request = request.eq('service', selectedService);
@@ -83,6 +83,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
                   </div>
                   <h2 className="mt-3 break-words text-lg font-semibold text-neutral-900">{lead.contact_name}</h2>
                   <p className="mt-1 text-sm text-neutral-600">{lead.contact_phone || lead.contact_email || 'Sin contacto visible'} · {lead.origin}</p>
+                  {['pending','failed'].includes(lead.notification_status) ? <p className="mt-2 text-sm font-semibold text-amber-800">Aviso por correo sin confirmar: atender desde el panel.</p> : null}
                   {lead.next_contact_on ? <p className="mt-1 text-xs text-[#8D5E00]">Próximo seguimiento: {lead.next_contact_on}</p> : null}
                 </div>
                 <span className="text-sm font-semibold text-[#24662D]">Abrir expediente</span>

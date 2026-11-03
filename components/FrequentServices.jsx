@@ -47,7 +47,7 @@ const frequentServices = [
   {
     icon: CheckCircle2,
     title: 'Contratación luz y gas',
-    text: 'Acompañamiento en la contratación de luz y gas como empresa delegada de Fenie Energía, sin compromiso previo.',
+    text: 'Acompañamiento en la contratación de luz y gas como agentes de Feníe Energía, sin compromiso previo.',
     href: '/servicios/asesoria-energetica-luz-gas',
   },
 ];
