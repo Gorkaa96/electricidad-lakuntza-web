@@ -6,7 +6,7 @@ import { commercialCatalog } from '@/lib/commercialCatalog';
 
 export const metadata = {
   title: 'Servicios de luz, gas, alarmas y movilidad',
-  description: 'Luz, gas, alarmas Movistar Prosegur, cargadores eléctricos y asesoría energética con Electricidad Lakuntza y Feníe Energía. Consulta sin compromiso.',
+  description: 'Electricidad Lakuntza: luz y gas como agentes de Feníe, alarmas Movistar Prosegur, instalación propia de cargadores y asesoría energética directa.',
   alternates: { canonical: '/servicios' },
 };
 
@@ -34,7 +34,7 @@ export default function ServiciosPage() {
             <div className="mb-10 max-w-2xl">
               <p className="text-sm font-semibold text-[#2E7136]">Qué ofrecemos</p>
               <h2 className="mt-4 text-3xl font-semibold tracking-[-.04em] sm:text-4xl">Elige cómo podemos ayudarte.</h2>
-              <p className="mt-5 text-base leading-8 text-neutral-600">Comparamos las condiciones disponibles dentro del catálogo de Feníe Energía y revisamos los presupuestos de instalación caso a caso. No anunciamos precios sin confirmarlos.</p>
+              <p className="mt-5 text-base leading-8 text-neutral-600">Para luz y gas comparamos las propuestas del portal de Feníe Energía; las alarmas las instala Movistar Prosegur. Los cargadores eléctricos y la asesoría energética los realizamos directamente en Electricidad Lakuntza.</p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {commercialCatalog.map((service) => {
