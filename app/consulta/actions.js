@@ -29,7 +29,7 @@ async function notifyCommercial(leadId, service) {
         text: [
           'Nueva consulta registrada en el CRM.',
           'Servicio: ' + service,
-          'Consultar expediente: ' + siteUrl + '/admin/oportunidades/' + leadId,
+          'Consultar expediente: ' + (process.env.ADMIN_PANEL_BASE_URL?.startsWith('https://') ? process.env.ADMIN_PANEL_BASE_URL.replace(/\/$/, '') : siteUrl) + '/admin/oportunidades/' + leadId,
           'Los datos de contacto solo están disponibles en el panel privado.',
         ].join('\n'),
       }),
