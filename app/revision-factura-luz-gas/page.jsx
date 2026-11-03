@@ -27,6 +27,7 @@ const errorMessages = {
   subida: 'No se ha podido subir la factura. Inténtalo de nuevo o consúltanos por teléfono.',
   registro: 'No se ha podido registrar la solicitud. Inténtalo de nuevo o consúltanos por teléfono.',
   verificacion: 'No se ha completado la verificación de seguridad. Inténtalo de nuevo.',
+  servicio: 'No podemos recibir tu solicitud en este momento. Inténtalo de nuevo más tarde o llámanos.',
   limite: 'Hemos recibido demasiados intentos desde este contacto. Inténtalo más tarde o consúltanos por teléfono.',
 };
 

@@ -21,6 +21,7 @@ const errors = {
   config: 'El formulario todavía no está disponible. Puedes escribirnos por WhatsApp o llamarnos.',
   datos: 'Revisa el servicio, nombre, contacto y mensaje antes de enviar.',
   verificacion: 'No se ha completado la comprobación de seguridad. Inténtalo de nuevo.',
+  servicio: 'No podemos recibir tu solicitud en este momento. Inténtalo de nuevo más tarde o llámanos.',
   limite: 'Demasiados intentos desde este contacto. Inténtalo más tarde o llámanos.',
   registro: 'No hemos podido registrar tu consulta. Puedes llamarnos o escribir por WhatsApp.',
 };

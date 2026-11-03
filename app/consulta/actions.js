@@ -3,7 +3,7 @@
 import { headers, cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { createCommercialIntakeClient } from '@/lib/supabase/commercial-intake';
-import { commercialIntakeReady, verifyPublicHuman, consumePublicQuotas } from '@/lib/invoice/protection';
+import { commercialIntakeReady, verifyPublicHuman, checkPublicQuotas } from '@/lib/invoice/protection';
 import { newCommercialReceipt } from '@/lib/commercial/receipt';
 import { validContactChannels } from '@/lib/contact-validation.mjs';
 import { PRIVACY_NOTICE_VERSION } from '@/lib/privacy-notice.mjs';
@@ -71,12 +71,13 @@ export async function submitCommercialInquiry(formData) {
   const client = createCommercialIntakeClient();
   if (!client) redirect('/consulta?error=config');
 
-  if (!(await consumePublicQuotas({
+  const quota = await checkPublicQuotas({
     supabase: client,
     requestHeaders: h,
     contact: phone || email,
     flow: 'commercial',
-  }))) redirect('/consulta?error=limite');
+  });
+  if (quota !== 'allowed') redirect('/consulta?error=' + (quota === 'limited' ? 'limite' : 'servicio'));
 
   const { data: lead, error } = await client.from('commercial_leads')
     .insert({

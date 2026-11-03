@@ -8,7 +8,7 @@ import { PRIVACY_NOTICE_VERSION } from '@/lib/privacy-notice.mjs';
 import { recordNotificationResult } from '@/lib/intake-notification';
 import { siteUrl } from '@/lib/site';
 import { validateInvoiceContact } from '@/lib/invoice/validate-contact.mjs';
-import { invoiceIntakeReady, verifyInvoiceHuman, consumeInvoiceQuotas } from '@/lib/invoice/protection';
+import { invoiceIntakeReady, verifyInvoiceHuman, checkInvoiceQuotas } from '@/lib/invoice/protection';
 
 const allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
 // Leave multipart overhead below Vercel's 4.5 MB request limit.
@@ -117,8 +117,9 @@ export async function submitInvoiceReview(formData) {
   if (!(await verifyInvoiceHuman({ token: formData.get('cf-turnstile-response'), requestHeaders }))) {
     redirect('/revision-factura-luz-gas?error=verificacion#formulario');
   }
-  if (!(await consumeInvoiceQuotas({ supabase, requestHeaders, phone }))) {
-    redirect('/revision-factura-luz-gas?error=limite#formulario');
+  const quota = await checkInvoiceQuotas({ supabase, requestHeaders, phone });
+  if (quota !== 'allowed') {
+    redirect('/revision-factura-luz-gas?error=' + (quota === 'limited' ? 'limite' : 'servicio') + '#formulario');
   }
 
   const leadId = crypto.randomUUID();
