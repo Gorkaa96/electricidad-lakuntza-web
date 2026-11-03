@@ -14,7 +14,7 @@ export default async function AdminShell({ children, title, description, action 
 
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-neutral-200 bg-white lg:flex">
         <div className="border-b border-neutral-200 px-7 py-7">
-          <a href="/admin/facturas" aria-label="Electricidad Lakuntza, panel de gestión">
+          <a href="/admin/entrada" aria-label="Electricidad Lakuntza, panel de gestión">
             <Logo compact />
           </a>
           <p className="mt-4 text-xs font-semibold text-neutral-500">Panel privado de gestión</p>
@@ -36,7 +36,7 @@ export default async function AdminShell({ children, title, description, action 
       <main className="min-w-0 lg:pl-72">
         <div className="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
           <div className="flex items-center justify-between gap-4">
-            <a href="/admin/facturas" aria-label="Electricidad Lakuntza, panel de gestión"><Logo compact /></a>
+            <a href="/admin/entrada" aria-label="Electricidad Lakuntza, panel de gestión"><Logo compact /></a>
             <form action={signOutAdmin}>
               <button className="min-h-10 rounded-xl border border-neutral-300 px-4 text-xs font-semibold text-neutral-700">Salir</button>
             </form>
