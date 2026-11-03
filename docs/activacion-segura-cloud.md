@@ -61,3 +61,16 @@ Solo con todos los puntos verificados se podrán cambiar las banderas de intake 
 ## Modalidad cloud
 
 Las modificaciones se versionan en GitHub y se despliegan en Vercel por rama. No es necesario un repositorio local en el portátil. Para el E2E navegando por una sesión autenticada, utilizar **Work** con navegador conectado o Codex cloud con acceso autorizado y pruebas reproducibles.
+
+
+## Verificación adicional en Work — 03/11/2026
+
+La API de Vercel devuelve 403 para variables, pero se ha revisado la pantalla de Environment Variables con la sesión existente, sin revelar valores. Solo se muestran `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `INVOICE_INTAKE_ENABLED`, `OPENAI_OCR_MODEL` y `OPENAI_API_KEY`. Las variables de servidor/Turnstile/Resend/invitaciones de la tabla superior no figuran. No basta con cambiar la bandera de facturas.
+
+Los nombres OPENAI corresponden a configuración anterior: el código actual inspeccionado no los utiliza. Revisar su necesidad con el propietario; no se han leído ni eliminado sus valores.
+
+La aceptación web registra fecha y versión del aviso. El estado del aviso por email se conserva como pending/accepted/failed y aparece en el panel; accepted significa aceptación por Resend, no entrega al destinatario. Si queda pending o failed, atender la solicitud desde el CRM.
+
+Pendiente para Javier/Kristina: [preguntas concretas](preguntas-javier-kristina.md). Las banderas siguen sin habilitarse.
+
+Antes de publicar, el propietario debe proteger `main` con un ruleset: PR obligatorio, revisión aprobada y CI requerido. La consulta de GitHub devolvió `protected=false`; el estado draft por sí solo no impone estas garantías.
