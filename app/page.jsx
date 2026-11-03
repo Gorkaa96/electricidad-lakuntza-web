@@ -39,7 +39,7 @@ export default function HomePage() {
               <div className="min-w-0 lg:col-span-7">
                 <div className="flex items-center gap-3 text-sm font-medium text-white/70">
                   <span aria-hidden="true" className="h-[2px] w-8 bg-[#9CDD81]" />
-                  Electricidad Lakuntza
+                  Electricidad Lakuntza <span aria-hidden="true" className="text-white/40">·</span> <span className="text-[#B7F0A5]">Agentes de Feníe Energía</span>
                 </div>
                 <h1 className="mt-8 max-w-[12ch] text-[clamp(2.9rem,6vw,5.6rem)] font-semibold leading-[1.02] tracking-[-.058em]">
                   Energía y seguridad, con criterio.
@@ -47,7 +47,7 @@ export default function HomePage() {
                 <p className="mt-8 max-w-xl text-lg leading-[1.75] text-white/80 sm:text-xl">
                   Luz, gas, alarmas, cargadores eléctricos y asesoría energética. Te ayudamos a encontrar una solución adecuada para tu hogar o negocio, con condiciones claras y trato directo.
                 </p>
-                <p className="mt-6 max-w-xl text-sm leading-6 text-white/60">Atención comercial a través de Feníe Energía. Sin obligación de contratar.</p>
+                <p className="mt-6 max-w-xl text-sm leading-6 text-white/75">Trabajamos como agentes de Feníe Energía para ayudarte con luz, gas y soluciones relacionadas. <a href="#fenie" className="font-semibold text-[#B7F0A5] underline decoration-[#8CCB79] underline-offset-4 hover:text-white">Descubre qué es Feníe</a>.</p>
                 <div className="mt-9 flex flex-wrap gap-4 text-sm font-semibold">
                   <a href="/cargadores-electricos" className="inline-flex items-center gap-2 text-white underline decoration-[#9CDD81] decoration-2 underline-offset-8 transition-colors hover:text-[#B4F19B]"><BatteryCharging size={17} aria-hidden="true" /> Cargadores eléctricos</a>
                   <a href="/asesoria-energetica" className="inline-flex items-center gap-2 text-white underline decoration-[#9CDD81] decoration-2 underline-offset-8 transition-colors hover:text-[#B4F19B]"><TrendingDown size={17} aria-hidden="true" /> Asesoría energética</a>
@@ -83,6 +83,19 @@ export default function HomePage() {
                 </div>
                 <p className="mt-4 text-center text-xs leading-5 text-white/60">Una consulta no supone contratación ni compromiso.</p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Feníe Energía y Electricidad Lakuntza" className="border-b border-[#D9E6D5] bg-[#F1F7EE]">
+          <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#286B2C]"><ShieldCheck size={20} aria-hidden="true" /></span>
+              <p className="text-sm leading-6 text-[#305038]"><strong className="font-semibold text-[#173E20]">Agentes de Feníe Energía.</strong> Te atendemos desde Electricidad Lakuntza.</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pl-[3.25rem] text-sm font-semibold md:pl-0">
+              <a href="#fenie" className="text-[#235D2B] underline underline-offset-4 hover:text-[#123E1B]">¿Qué es Feníe?</a>
+              <a href="https://www.fenieenergia.es/es" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[#235D2B] hover:text-[#123E1B]">Web oficial <ArrowRight size={15} aria-hidden="true" /></a>
             </div>
           </div>
         </section>
