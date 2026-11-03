@@ -29,7 +29,7 @@ test('rehearsal rejects invalid phone and still enforces eligibility and consent
   await page.locator('input[name="phone"]').fill('---------');
   await page.locator('input[name="consent"]').check();
   await page.getByRole('button',{name:'Comprobar formulario sin enviar',exact:true}).click();
-  await expect(page.getByRole('alert')).toContainText('Revisa el teléfono');
+  await expect(page.locator('main').getByRole('alert')).toContainText('Revisa el teléfono');
 });
 
 test('without JavaScript no personal fields can be submitted',async({browser})=>{

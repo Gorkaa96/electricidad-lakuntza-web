@@ -50,7 +50,8 @@ Estas tareas NO son falta de información comercial ni se deben atribuir a Javie
 - [ ] Verificar remitente/dominio de Resend, destinatario de avisos y entrega real.
 - [x] Site URL de Supabase y redirección exacta de invitación configuradas hacia la Preview HTTPS protegida, con autorización del propietario.
 - [ ] Configurar SMTP Auth y acceder como owner a la aplicación; verificar entrega real.
-- [ ] Revisar protección de contraseñas filtradas (la UI exige Pro o superior; plan actual Free), MFA y desactivar alta libre de Auth para el panel interno.
+- [x] Alta libre de Auth desactivada y persistencia verificada tras recargar. El panel es interno; se mantiene acceso de cuentas existentes y circuito administrativo de invitación.
+- [ ] Revisar protección de contraseñas filtradas (la UI exige Pro o superior; plan actual Free) y MFA.
 - [x] Ruleset de main activo y verificado (26449542): una aprobación, dos checks de GitHub Actions requeridos, ramas actualizadas, conversaciones resueltas y bloqueo de borrado/force-push.
 
 Ya se configuraron en Vercel únicamente para Preview de esta rama los dos orígenes administrativos y tres flags false.
