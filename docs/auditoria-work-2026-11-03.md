@@ -37,6 +37,7 @@ La portada mantiene cuatro grupos con idéntico tratamiento: Luz y gas, Alarmas,
 - CI de la corrección de PostCSS: [ejecución 144](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41622853995), 0 vulnerabilidades de producción, 24/24 tests y build aprobados.
 - Dependencias bloqueadas y descarga autenticada: [ejecución 145](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41623288469) aprobada con npm ci, audit, tests y build.
 - Middleware de renovación de sesión: [ejecución 146](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41623518416) aprobada con audit, tests y build. La renovación con sesión real sigue pendiente.
+- HEAD documental 472dfa5: [ejecución 147](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41623841116) aprobada y Preview READY. Esta revisión documental posterior aclara la procedencia del 401 observado.
 - La ejecución 143 falló al descubrir PostCSS; se corrigió, no se omitió el control. Consultar siempre el check del HEAD final del PR.
 - Prueba SQL reproducible: `tests/sql/security-regression.sql`, ejecutada con BEGIN/ROLLBACK contra el proyecto indicado, sin contraseñas ni sesiones de usuario creadas.
 - PASS: owner con permisos; admin limitado sin delete/users.manage; agente solo ve su factura/oportunidad asignada; no puede cambiar identidad, aceptación ni asignación; no puede escalar rol.
@@ -53,7 +54,7 @@ Se revisaron respuestas HTTP de 18 rutas en la Preview de `081f3e3`, además de 
 1. **Portada/escritorio — correcto en observación:** cuatro opciones visibles en el orden solicitado, Feníe presente y atribuciones separadas. Captura de pantalla inspeccionada en navegador.
 2. **Servicios — HTTP correcto:** luz/gas, alarmas, cargadores y asesoría responden 200. Catálogo, atribución, enlaces y metadatos inspeccionados.
 3. **Captación — desactivada correctamente:** /consulta y revisión de facturas ofrecen contacto alternativo. No se envían facturas reales. Las páginas /gracias sin comprobante firmado muestran ayuda, no un éxito falso.
-4. **Área privada — acceso denegado sin sesión:** /admin/oportunidades y /admin/usuarios terminan en login. La descarga de factura con UUID válido devuelve 401 sin sesión.
+4. **Área privada — acceso denegado sin sesión:** /admin/oportunidades y /admin/usuarios terminan en login. En el navegador con acceso a Vercel, la descarga con UUID válido y sin sesión de la app muestra «Documento no disponible». El código contempla 401 sin usuario; el conector HTTP devolvió un 401 de la capa de protección de Vercel, por lo que no se usa como medición del status de la aplicación.
 5. **Rutas antiguas/SEO — correcto en HTTP:** instalaciones, telecomunicaciones y trabajos dan 404. robots.txt tiene Disallow: / y Preview noindex; sitemap sin catálogo antiguo.
 6. **Móvil, accesibilidad y E2E autenticado — pendientes:** la capacidad de viewport del navegador conectado no aplicó 390 px (medición real 1762 px); el navegador integrado encontró la protección de Vercel. No se afirma revisión móvil superada ni conformidad WCAG. La sesión de la aplicación en el navegador mostró login, no una cuenta owner abierta.
 
