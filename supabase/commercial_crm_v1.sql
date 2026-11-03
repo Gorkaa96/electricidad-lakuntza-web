@@ -153,9 +153,11 @@ begin
     insert into public.commercial_lead_events (lead_id,event_type,actor_id,description)
     values(new.id,'status_changed',auth.uid(),'Estado actualizado: ' || new.status);
   end if;
-  if tg_op = 'UPDATE' and new.assigned_to is distinct from old.assigned_to then
-    insert into public.commercial_lead_events (lead_id,event_type,actor_id,description)
-    values(new.id,'assignment_changed',auth.uid(),'Asignación de agente modificada');
+  if tg_op = 'UPDATE' then
+    if new.assigned_to is distinct from old.assigned_to then
+      insert into public.commercial_lead_events (lead_id,event_type,actor_id,description)
+      values(new.id,'assignment_changed',auth.uid(),'Asignación de agente modificada');
+    end if;
   end if;
   return new;
 end;
