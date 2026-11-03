@@ -209,7 +209,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <p className="text-sm font-semibold text-lakuntza-greenDark">Factura</p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-neutral-950">Archivo recibido</h2>
             <p className="mt-3 break-all text-sm leading-6 text-neutral-500">{lead.file_name || 'Sin archivo'}</p>
-            {documentUrl ? <a href={documentUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Abrir factura</a> : null}
+            {documentUrl ? <a href={documentUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Descargar factura</a> : null}
             {mayEdit ? <form action={prepareInvoiceOcr} className="mt-3">
               <input type="hidden" name="id" value={lead.id} />
               <button className="inline-flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">Procesar lectura</button>
