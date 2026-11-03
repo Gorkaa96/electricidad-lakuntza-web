@@ -37,7 +37,7 @@ export default function ActivateAccountForm() {
       const supabase = createSupabaseBrowserClient();
       const { error: updateError } = await supabase.auth.updateUser({ password });
       if (updateError) { setError('No hemos podido establecer la contraseña. Abre de nuevo tu enlace de invitación.'); return; }
-      router.replace('/admin/facturas');
+      router.replace('/admin/entrada');
       router.refresh();
     } catch {
       setError('No se ha podido contactar con el servicio de acceso.');
