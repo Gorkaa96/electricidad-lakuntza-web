@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { createClient } from '@supabase/supabase-js';
 import { buildSyntheticInvoicePdf } from '../fixtures/invoice-pdf.mjs';
 const f=JSON.parse(await readFile(process.env.QA_FIXTURES,'utf8'));
@@ -44,7 +44,7 @@ test('revocation blocks already-issued sessions and agent cannot change private 
 test('CRM link follows invoice status and all five service types can be managed',async()=>{
   const owner=await signed('owner');
   for(const type of ['luz','gas','alarmas','cargadores','asesoria']){
-    const r=await owner.from('commercial_leads').insert({service:type,contact_name:'Consulta ficticia',contact_phone:'600000002',customer_type:'vivienda'}).select('id').single();
+    const r=await owner.from('commercial_leads').insert({service:type,contact_name:'Consulta ficticia',contact_phone:'600000002',customer_type:'vivienda',created_by:f.users.owner.id}).select('id').single();
     assert.equal(r.error,null,type);
     assert.equal((await owner.from('commercial_leads').delete().eq('id',r.data.id)).error,null);
   }
@@ -66,4 +66,28 @@ test('synthetic file snapshot can be removed and restored byte-for-byte',async()
   const restored=await service.storage.from('invoice-files').download(path);
   assert.deepEqual(Buffer.from(await restored.data.arrayBuffer()),original);
   assert.equal((await service.storage.from('invoice-files').remove([path])).error,null);
+});
+
+test('Auth invitation reaches the isolated SMTP inbox',async()=>{
+  assert.equal(new URL(f.mailUrl).hostname,'127.0.0.1');
+  const invitation=await service.auth.admin.inviteUserByEmail('invitation@example.test',{redirectTo:'http://127.0.0.1:3002/admin/activar-cuenta'});
+  assert.equal(invitation.error,null);
+  let delivered;
+  for(let n=0;n<25;n++){
+    const response=await fetch(f.mailUrl+'/api/v1/messages');
+    assert.equal(response.ok,true);
+    const inbox=await response.json();
+    delivered=(inbox.messages||[]).find(m=>(m.To||[]).some(to=>to.Address==='invitation@example.test'));
+    if(delivered)break;
+    await new Promise(resolve=>setTimeout(resolve,200));
+  }
+  assert.ok(delivered,'Invitation should reach local SMTP, never an external mailbox');
+  const message=await (await fetch(f.mailUrl+'/api/v1/message/'+delivered.ID)).json();
+  const hrefs=[...(message.HTML||'').matchAll(/href="([^"]+)"/g)].map(m=>m[1].replaceAll('&amp;','&'));
+  const link=hrefs.find(h=>h.startsWith('http://127.0.0.1:54321/auth/v1/verify'));
+  assert.ok(link,'Local verification link must be present in the received email');
+  const member=await service.from('admin_users').insert({user_id:invitation.data.user.id,email:'invitation@example.test',role:'agent',permissions:['leads.read_assigned','leads.edit_assigned'],active:true});
+  assert.equal(member.error,null);
+  f.inviteLink=link;
+  await writeFile(process.env.QA_FIXTURES,JSON.stringify(f),{mode:0o600});
 });

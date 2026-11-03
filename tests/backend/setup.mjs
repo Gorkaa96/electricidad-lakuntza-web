@@ -15,7 +15,10 @@ const env = {
   SUPABASE_URL:url, SUPABASE_ANON:vars.ANON_KEY, SUPABASE_SERVICE:vars.SERVICE_ROLE_KEY,
   NEXT_PUBLIC_SUPABASE_URL:url, NEXT_PUBLIC_SUPABASE_ANON_KEY:vars.ANON_KEY,
   SUPABASE_SERVICE_ROLE_KEY:vars.SERVICE_ROLE_KEY,
-  INVOICE_INTAKE_ENABLED:'false',PUBLIC_COMMERCIAL_INTAKE_ENABLED:'false',NEXT_PUBLIC_PUBLICATION_ENABLED:'false',
+  INVOICE_INTAKE_ENABLED:'true',PUBLIC_COMMERCIAL_INTAKE_ENABLED:'true',NEXT_PUBLIC_PUBLICATION_ENABLED:'false',
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY:'qa-render-only-not-a-valid-key',TURNSTILE_SECRET_KEY:'qa-unused-no-provider-access',
+  INTAKE_RATE_LIMIT_SECRET:randomBytes(32).toString('hex'),RESEND_API_KEY:'qa-unused-no-provider-access',
+  RESEND_FROM:'QA <qa@example.test>',INVOICE_REVIEW_TO:'qa@example.test',COMMERCIAL_LEAD_TO:'qa@example.test',
 };
 for (const [k,v] of Object.entries(env)) {
   if (!v) throw new Error('Missing disposable configuration: '+k);
@@ -29,7 +32,7 @@ for (const file of [...scripts.map(n=>'supabase/'+n+'.sql'),'tests/sql/security-
   console.log('SQL OK: '+file);
 }
 const service=createClient(url,vars.SERVICE_ROLE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
-const fixtures={url,anon:vars.ANON_KEY,service:vars.SERVICE_ROLE_KEY,users:{}};
+const fixtures={url,anon:vars.ANON_KEY,service:vars.SERVICE_ROLE_KEY,users:{},mailUrl:vars.INBUCKET_URL};
 for (const role of ['owner','admin','agent','other']) {
   const email=role+'@example.test', password=randomBytes(24).toString('base64url');
   console.log('::add-mask::'+password);

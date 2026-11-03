@@ -33,6 +33,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/lakuntza-local"
           cd "$RUNNER_TEMP/lakuntza-local"
           supabase init
+          node --input-type=module -e "import fs from 'node:fs'; const p='supabase/config.toml'; const s=fs.readFileSync(p,'utf8').replace(/^site_url = .*$/m,'site_url = \"http://127.0.0.1:3002\"').replace(/^additional_redirect_urls = .*$/m,'additional_redirect_urls = [\"http://127.0.0.1:3002/admin/activar-cuenta\"]'); fs.writeFileSync(p,s);"
           supabase start > "$RUNNER_TEMP/supabase-start.log" 2>&1 || { docker ps --format '{{.Names}} {{.Status}}'; exit 1; }
           supabase status -o env > "$LOCAL_SUPABASE_ENV"
       - name: Apply shipped SQL and create fictitious accounts

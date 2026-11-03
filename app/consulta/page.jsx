@@ -31,6 +31,8 @@ export default async function CommercialInquiryPage({ searchParams }) {
   const ready = commercialIntakeReady();
   const selectedService = Object.hasOwn(services, params?.servicio) ? params.servicio : 'luz_gas';
 
+  const contactHref = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero información sobre ' + services[selectedService] + '.');
+
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
@@ -95,7 +97,7 @@ export default async function CommercialInquiryPage({ searchParams }) {
                 <h2 className="text-2xl font-semibold text-[#152017]">Estamos disponibles para ayudarte.</h2>
                 <p className="mt-4 text-base leading-8 text-neutral-600">Puedes enviarnos tu consulta por WhatsApp, llamarnos o escribirnos por correo. Te atenderemos personalmente.</p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <a className="rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white" target="_blank" rel="noopener noreferrer" href="https://wa.me/34649853448">Escribir por WhatsApp</a>
+                  <a className="rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white" target="_blank" rel="noopener noreferrer" href={contactHref}>Escribir por WhatsApp</a>
                   <a className="rounded-xl border border-neutral-300 px-5 py-3 text-sm font-semibold text-[#205127]" href="tel:+34649853448">Llamar</a>
                   <a className="rounded-xl border border-neutral-300 px-5 py-3 text-sm font-semibold text-[#205127]" href="mailto:eleclakuntza@yahoo.es">Enviar email</a>
                 </div>

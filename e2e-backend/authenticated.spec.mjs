@@ -55,3 +55,15 @@ test('owner deletes invoice through app and file, CRM and OCR disappear',async({
   }
   expect((await service.storage.from('invoice-files').download(f.path)).error).not.toBeNull();
 });
+
+test('received invitation activates a fictitious agent account',async({page},info)=>{
+  expect(new URL(f.inviteLink).hostname).toBe('127.0.0.1');
+  await page.goto(f.inviteLink);
+  await expect(page).toHaveURL(/\/admin\/activar-cuenta/);
+  const password=crypto.randomUUID()+'Aa9!';
+  await page.getByLabel('Contraseña nueva',{exact:true}).fill(password);
+  await page.getByLabel('Repetir contraseña',{exact:true}).fill(password);
+  await page.getByRole('button',{name:'Activar mi cuenta',exact:true}).click();
+  await expect(page).toHaveURL(/\/admin\/(entrada|oportunidades|facturas)/);
+  await info.attach('activated fictitious agent',{body:await page.screenshot({fullPage:true}),contentType:'image/png'});
+});

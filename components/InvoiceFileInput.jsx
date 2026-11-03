@@ -66,7 +66,7 @@ export default function InvoiceFileInput() {
                 {file ? `${file.type || 'Archivo'} · ${formatFileSize(file.size)}` : 'PDF, JPG, PNG o WebP'}
               </span>
               <span id={`${inputId}-ayuda`} className="mt-1 block text-xs font-bold leading-5 text-neutral-500">
-                Tamaño máximo: 10 MB. Si haces una foto, comprueba que se pueda leer.
+                Máximo 10 MB. Las fotos y los PDF escaneados se revisan manualmente; comprueba que se puedan leer.
               </span>
             </span>
           </span>
