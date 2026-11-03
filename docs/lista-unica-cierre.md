@@ -42,12 +42,13 @@ Estas tareas NO son falta de información comercial ni se deben atribuir a Javie
 - [ ] Completar los secretos servidor en Vercel Preview/Supabase, sin enviarlos por chat ni al repositorio.
 - [ ] Configurar Turnstile para el hostname de prueba.
 - [ ] Verificar remitente/dominio de Resend, destinatario de avisos y entrega real.
-- [ ] Configurar SMTP Auth y allowlist del enlace de invitación; acceder como owner a la aplicación.
-- [ ] Revisar protección de contraseñas filtradas y MFA según el plan.
-- [ ] Guardar el ruleset de main tras verificar la sesión de GitHub: preparado con una aprobación, dos checks requeridos, bloqueo de borrado y force-push. No afirmar que está activo hasta comprobarlo.
+- [x] Site URL de Supabase y redirección exacta de invitación configuradas hacia la Preview HTTPS protegida, con autorización del propietario.
+- [ ] Configurar SMTP Auth y acceder como owner a la aplicación; verificar entrega real.
+- [ ] Revisar protección de contraseñas filtradas (la UI exige Pro o superior; plan actual Free), MFA y desactivar alta libre de Auth para el panel interno.
+- [x] Ruleset de main activo y verificado (26449542): una aprobación, dos checks de GitHub Actions requeridos, ramas actualizadas, conversaciones resueltas y bloqueo de borrado/force-push.
 
 Ya se configuraron en Vercel únicamente para Preview de esta rama los dos orígenes administrativos y tres flags false.
-La conexión GitHub de herramientas tiene push y no administración. La sesión del navegador sí muestra la cuenta propietaria, pero GitHub exige reautenticación para guardar las reglas.
+La conexión GitHub de herramientas tiene push y no administración. La sesión del navegador de la cuenta propietaria permitió guardar las reglas tras la verificación de identidad autorizada por Gorka.
 
 ## Validación final sobre la instalación alojada
 - [ ] Repetir con datos sintéticos el circuito aprobado en CI sobre la Preview protegida y configuración real, incluido captcha y entrega de correo.

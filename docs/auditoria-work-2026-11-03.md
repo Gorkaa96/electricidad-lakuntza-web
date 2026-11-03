@@ -1,5 +1,35 @@
 # Auditoría de cierre en Work — 3 de noviembre de 2026
 
+## Estado final de esta ronda
+Este apartado sustituye los recuentos, configuración y pendientes históricos que siguen debajo. La referencia vigente de pendientes es [lista única de cierre](lista-unica-cierre.md).
+
+Versión preparada para enseñar: [Preview protegida](https://electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app/) y [guion de presentación](presentacion-javier-kristina.md). Diseño conservado y ajustado: cuatro servicios visibles en móvil, barra de contacto, acciones diferenciadas con/sin factura y contraste del panel.
+
+Código verificado en 33aa490d355a75d3e2746f0ecfd5337b5452278d:
+- [CI pública aprobada](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41638196374): 27 pruebas unitarias, 52 públicas aprobadas y 2 omisiones intencionadas por tamaño de pantalla; compilación y auditoría de dependencias de producción.
+- [Backend aislado aprobado](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41638196270): regresión SQL con rollback, 7 pruebas API y 12 pruebas de navegador con Auth, Postgres, Storage y SMTP local auténticos.
+- Circuito sintético completo: formulario → archivo privado → CRM → aviso aceptado → acceso owner → extracción PDF → asignación → borrado del expediente y archivo. Fallo de correo no pierde el expediente. Cinco servicios comerciales comprobados.
+- Sesiones owner/admin/agent, expediente ajeno bloqueado, revocación inmediata con token emitido, descarga privada no-store e invitación recibida y activada desde correo local.
+- Captcha y proveedor de avisos controlados solo en runner aislado; ninguna entrega corporativa ni captcha alojado se dan por probados. Fotos y PDF escaneados requieren revisión manual: no hay reconocimiento automático de imagen implementado.
+- Copia/restauración byte a byte de objeto sintético; falta restauración integral del servicio alojado y política de conservación.
+
+Errores encontrados y corregidos: sesión del enlace de invitación, contraste/nombre accesible del panel y trigger que impedía persistir el estado del aviso con service_role. La migración fix_intake_notification_trigger_scope se aplicó al Supabase alojado; se verificó su definición y ausencia de nuevos permisos sobre app_private. La regresión completa actualizada se aprobó en el entorno desechable; el intento remoto adicional caducó sin ejecutarse y no se cuenta como aprobado.
+
+Configuración completada:
+- Ruleset main 26449542 activo, sin excepciones: una aprobación, dos checks requeridos, ramas actualizadas, conversaciones resueltas y bloqueo de borrado/force-push.
+- Supabase Site URL y única redirección exacta /admin/activar-cuenta hacia la Preview protegida guardadas tras autorización explícita.
+- Vercel Preview mantiene orígenes administrativos y tres flags false. No hay publicación ni recepción pública activada.
+- Advisors: protección de contraseñas filtradas desactivada y disponible solo en Pro o superior según la UI (actual Free); INFO de cuota privada sin políticas, cerrada por diseño.
+
+Quedan credenciales/proveedores y entrega real, sesión owner y circuito alojado, datos legales/operativos, recuperación integral, revisión manual de accesibilidad y aceptación final. No se certifica cumplimiento RGPD/WCAG ni se declara producción lista. PR #9 sigue draft; main y producción no se han cambiado.
+
+Rollback: cerrar primero las banderas de captación. Revertir cambios de aplicación mediante commits trazables y comprobar CI/Preview. Conservar el arreglo de trigger y las columnas de trazabilidad al volver a código anterior; retirarlos reintroduciría el fallo del aviso o perdería evidencias. No borrar esquema, archivos ni datos automáticamente.
+
+## Registro histórico anterior de la sesión
+Las observaciones siguientes conservan su fecha y alcance original; no son la lista vigente de pendientes.
+
+# Auditoría de cierre en Work — 3 de noviembre de 2026
+
 ## Cierre técnico actualizado
 Este apartado sustituye los recuentos y pendientes técnicos anteriores del documento. [CI aprobada](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41627055477): 25 pruebas unitarias, 48 pruebas públicas Chromium en escritorio/móvil/tablet, axe A/AA sin infracciones detectadas, compilación y auditoría de dependencias de producción sin vulnerabilidades detectadas. Esto no certifica WCAG ni prueba los servicios reales.
 

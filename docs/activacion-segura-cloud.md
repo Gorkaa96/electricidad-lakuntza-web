@@ -68,7 +68,7 @@ Se guardaron por UI en Vercel exclusivamente para Preview de la rama de integrac
 - ADMIN_PANEL_BASE_URL y ADMIN_INVITATION_BASE_URL: https://electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app
 - INVOICE_INTAKE_ENABLED=false, PUBLIC_COMMERCIAL_INTAKE_ENABLED=false y NEXT_PUBLIC_PUBLICATION_ENABLED=false.
 
-La redirección que debe autorizarse en Supabase Auth es:
+Configurado y verificado en Supabase Auth el 03/11/2026, con autorización expresa: Site URL = origen Preview anterior; única redirección exacta registrada:
 https://electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app/admin/activar-cuenta
 
 La API de variables de Vercel devuelve 403. La sesión del navegador permite consultar/configurar Preview, pero no se han revelado ni rotado secretos. No figuran aún las credenciales servidor/captcha/correo necesarias; no basta con habilitar los flags.
@@ -81,7 +81,7 @@ El preload de proveedores vive solo en tests/backend, exige CI y URL loopback y 
 Las invitaciones de esa prueba sí recorren Auth y SMTP local hasta el buzón de prueba. No certifican entrega del SMTP corporativo.
 
 ## Activación controlada sobre Preview alojada
-1. Completar credenciales desde las cuentas autorizadas, el hostname y la allowlist anterior.
+1. Completar credenciales desde las cuentas autorizadas y hostname Turnstile. La Site URL y allowlist exacta de Supabase ya están guardadas.
 2. Mantener protegida la Preview con Vercel Authentication. Usar solo datos sintéticos y destinatarios de prueba autorizados.
 3. Cuando estén cerrados los controles previos, habilitar cada flujo solo en esa Preview protegida para repetir el circuito. No habilitar recepción pública ni Production.
 4. Registrar evidencias de captcha real, guardado, CRM, aviso y entrega, permisos, revocación y borrado; volver a cerrar el flujo si falla un control.
@@ -90,7 +90,7 @@ Las invitaciones de esa prueba sí recorren Auth y SMTP local hasta el buzón de
 El aviso accepted significa aceptación por el proveedor, no entrega. pending/failed se atienden desde el CRM. No adjuntar facturas a los avisos.
 
 ## Protección y publicación
-El ruleset de main se ha dejado preparado en la cuenta propietaria del navegador; GitHub exige verificación de sesión para guardarlo. Incluye una revisión aprobada, los checks Build with Node.js 24 e Isolated Auth, Storage, CRM and browser, ramas actualizadas y bloqueo de borrado/force-push.
-No afirmar que está activo hasta verificar el resultado guardado. PR #9 permanece draft. No fusionar ni promocionar Production automáticamente.
+El ruleset de main 26449542 está guardado, activo y verificado mediante la API de GitHub tras la verificación de identidad de la cuenta propietaria. Incluye una revisión aprobada, los checks Build with Node.js 24 e Isolated Auth, Storage, CRM and browser, ramas actualizadas y bloqueo de borrado/force-push.
+PR #9 permanece draft. No fusionar ni promocionar Production automáticamente.
 
 Pendientes vigentes: [lista única](lista-unica-cierre.md).
