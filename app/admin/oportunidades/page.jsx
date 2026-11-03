@@ -6,7 +6,7 @@ export const metadata = { title: 'Oportunidades comerciales', robots: { index: f
 export const revalidate = 0;
 
 const serviceNames = {
-  luz: 'Luz', gas: 'Gas', alarmas: 'Alarmas',
+  luz: 'Luz', gas: 'Gas', luz_gas: 'Luz y gas', alarmas: 'Alarmas',
   cargadores: 'Cargadores eléctricos', asesoria: 'Asesoría energética',
 };
 const statusNames = {
@@ -32,7 +32,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
   return (
     <AdminShell
       title="Oportunidades"
-      description="Todas las consultas comerciales de luz, gas, alarmas, cargadores y asesoría, con responsable y seguimiento. Las facturas se gestionan por separado hasta completar su integración."
+      description="Seguimiento comercial de luz, gas, alarmas, cargadores y asesoría. Las solicitudes de factura se vinculan automáticamente a su oportunidad."
       action={hasPermission(admin, 'leads.edit_all') ? (
         <a href="/admin/oportunidades/nueva" className="inline-flex min-h-11 items-center rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white hover:bg-[#194D20]">Nueva oportunidad</a>
       ) : null}
