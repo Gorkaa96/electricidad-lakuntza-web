@@ -37,3 +37,6 @@ La copia inicial confundió la clave pública de Turnstile con su secreto. Ese s
 Se corrigió la variable pública contrastándola con site_key del widget. Gorka rotó el secreto en Cloudflare; se comprobó que el nuevo difiere del anterior y se guardó exclusivamente como Secret servidor de Vercel. No se incluye ningún valor en este documento.
 Cloudflare mantiene una transición de dos horas para el secreto antiguo: https://developers.cloudflare.com/turnstile/troubleshooting/rotate-secret-key/. No utilizar el despliegue antiguo; el enlace estable debe apuntar al despliegue posterior a esta corrección. La incidencia no se oculta como prueba aprobada.
 Antes del envío del propietario, el recuento alojado era 0 solicitudes y 0 archivos privados. No se creó otro ejemplo.
+
+## Tamaño de archivo para este alojamiento
+La solicitud multipart pasa por Vercel Functions, cuyo límite de cuerpo es 4.5 MB. Se ha ajustado el archivo público a 4 MiB (indicado como 4 MB) en selector y servidor, con prueba del límite +1 byte, dejando margen para los campos y el multipart. El bucket privado conserva su capacidad de 10 MiB; esa capacidad no es una promesa del formulario público. Referencia: https://vercel.com/docs/functions/limitations#request-body-size.

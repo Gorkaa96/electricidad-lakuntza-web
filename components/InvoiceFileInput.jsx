@@ -13,7 +13,7 @@ export default function InvoiceFileInput() {
   const inputId = useId();
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
-  const maxSize = 10 * 1024 * 1024;
+  const maxSize = 4 * 1024 * 1024;
   const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
 
   function handleFileChange(event) {
@@ -22,7 +22,7 @@ export default function InvoiceFileInput() {
     if (selected && selected.size > maxSize) {
       event.target.value = '';
       setFile(null);
-      setError('El archivo supera los 10 MB. Selecciona una factura más ligera.');
+      setError('El archivo supera los 4 MB. Selecciona una factura más ligera.');
       return;
     }
     if (selected && !allowedTypes.includes(selected.type)) {
@@ -66,7 +66,7 @@ export default function InvoiceFileInput() {
                 {file ? `${file.type || 'Archivo'} · ${formatFileSize(file.size)}` : 'PDF, JPG, PNG o WebP'}
               </span>
               <span id={`${inputId}-ayuda`} className="mt-1 block text-xs font-bold leading-5 text-neutral-500">
-                Máximo 10 MB. Las fotos y los PDF escaneados se revisan manualmente; comprueba que se puedan leer.
+                Máximo 4 MB. Las fotos y los PDF escaneados se revisan manualmente; comprueba que se puedan leer.
               </span>
             </span>
           </span>

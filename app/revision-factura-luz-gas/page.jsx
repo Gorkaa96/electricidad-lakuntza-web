@@ -23,7 +23,7 @@ const errorMessages = {
   datos: 'Revisa nombre, teléfono y consentimiento antes de enviar.',
   factura: 'Debes adjuntar una factura en PDF o imagen.',
   tipo: 'Formato no válido. Sube un PDF, JPG, PNG o WebP.',
-  tamano: 'La factura supera el tamaño máximo de 10 MB.',
+  tamano: 'La factura supera el tamaño máximo de 4 MB.',
   subida: 'No se ha podido subir la factura. Inténtalo de nuevo o consúltanos por teléfono.',
   registro: 'No se ha podido registrar la solicitud. Inténtalo de nuevo o consúltanos por teléfono.',
   verificacion: 'No se ha completado la verificación de seguridad. Inténtalo de nuevo.',
@@ -205,7 +205,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
-                    Formatos permitidos: PDF, JPG, PNG o WebP. Máximo 10 MB. No adjuntes DNI, IBAN ni documentación adicional: solo necesitamos la factura para esta primera revisión.
+                    Formatos permitidos: PDF, JPG, PNG o WebP. Máximo 4 MB. No adjuntes DNI, IBAN ni documentación adicional: solo necesitamos la factura para esta primera revisión.
                   </p>
                 </div>
               </form> : (

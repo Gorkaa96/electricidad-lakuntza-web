@@ -11,7 +11,8 @@ import { validateInvoiceContact } from '@/lib/invoice/validate-contact.mjs';
 import { invoiceIntakeReady, verifyInvoiceHuman, consumeInvoiceQuotas } from '@/lib/invoice/protection';
 
 const allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
-const maxFileSize = 10 * 1024 * 1024;
+// Leave multipart overhead below Vercel's 4.5 MB request limit.
+const maxFileSize = 4 * 1024 * 1024;
 
 function cleanText(value, fallback = '') {
   return String(value || fallback).trim().slice(0, 500);

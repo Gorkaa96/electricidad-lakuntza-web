@@ -23,8 +23,8 @@ test('invoice form enforces eligibility, file size, format and consent',async({p
   const input=form.locator('input[type=file]');
   await input.setInputFiles({name:'unsupported.txt',mimeType:'text/plain',buffer:Buffer.from('not an invoice')});
   await expect(page.locator('main [role="alert"]')).toContainText('Formato no admitido');
-  await input.setInputFiles({name:'large.pdf',mimeType:'application/pdf',buffer:Buffer.alloc(10*1024*1024+1)});
-  await expect(page.locator('main [role="alert"]')).toContainText('supera los 10 MB');
+  await input.setInputFiles({name:'large.pdf',mimeType:'application/pdf',buffer:Buffer.alloc(4*1024*1024+1)});
+  await expect(page.locator('main [role="alert"]')).toContainText('supera los 4 MB');
   await input.setInputFiles({name:'factura-ficticia.pdf',mimeType:'application/pdf',buffer:buildSyntheticInvoicePdf()});
   await expect(page.locator('main [role="alert"]')).toHaveCount(0);
   await form.locator('[name=name]').fill('Prueba ficticia');
