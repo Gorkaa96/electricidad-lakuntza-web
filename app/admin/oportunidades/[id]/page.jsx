@@ -12,7 +12,7 @@ const statusNames = {
   converted: 'Convertido', discarded: 'Descartado',
 };
 const serviceNames = {
-  luz: 'Luz', gas: 'Gas', alarmas: 'Alarmas',
+  luz: 'Luz', gas: 'Gas', luz_gas: 'Luz y gas', alarmas: 'Alarmas',
   cargadores: 'Cargadores eléctricos', asesoria: 'Asesoría energética',
 };
 const sourceNames = {
@@ -35,7 +35,7 @@ export default async function CommercialOpportunityDetail({ params, searchParams
   const { id } = await params;
   const alerts = await searchParams;
   const { data: lead, error } = await supabase.from('commercial_leads')
-    .select('id,service,contact_name,contact_phone,contact_email,customer_type,origin,status,notes,next_contact_on,assigned_to,created_at,updated_at')
+    .select('id,service,contact_name,contact_phone,contact_email,customer_type,origin,status,notes,next_contact_on,assigned_to,invoice_review_lead_id,created_at,updated_at')
     .eq('id', id).maybeSingle();
 
   if (error || !lead) notFound();
@@ -63,6 +63,12 @@ export default async function CommercialOpportunityDetail({ params, searchParams
     >
       {alerts?.success ? <p role="status" className="mb-6 rounded-xl bg-[#ECF7EA] p-4 text-sm text-[#24662D]">Cambios guardados correctamente.</p> : null}
       {alerts?.error ? <p role="alert" className="mb-6 rounded-xl bg-red-50 p-4 text-sm text-red-800">No se ha podido completar la operación. Comprueba los datos y permisos.</p> : null}
+      {lead.invoice_review_lead_id ? (
+        <div className="mb-6 rounded-xl border border-[#CFE4CA] bg-[#EDF7E9] p-5 text-sm text-[#254D29]">
+          <p className="font-semibold">Esta oportunidad está vinculada a una factura de luz o gas.</p>
+          <a href={'/admin/facturas/' + lead.invoice_review_lead_id} className="mt-2 inline-block font-semibold underline underline-offset-4">Abrir la factura para revisar su documentación</a>
+        </div>
+      ) : null}
       <section className="rounded-2xl border border-neutral-200 bg-white p-6 sm:p-8">
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-[#ECF7EA] px-3 py-1 text-xs font-semibold text-[#2B6C33]">{serviceNames[lead.service] || lead.service}</span>
