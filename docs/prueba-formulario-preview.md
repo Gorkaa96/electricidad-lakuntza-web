@@ -31,3 +31,9 @@ Para avisar a Javier u otros destinatarios hay que verificar un dominio remitent
 
 ## Rollback
 Ante fallo, volver a false los dos flags de Preview y redesplegar esa rama. No borrar claves, documentos o registros sin autorización; revocar claves si se comprometen. No publicar producción automáticamente.
+
+## Incidencia corregida durante la conexión
+La copia inicial confundió la clave pública de Turnstile con su secreto. Ese secreto quedó en NEXT_PUBLIC_TURNSTILE_SITE_KEY y en el despliegue protegido dpl_7BZc6tA4KbLj9Qh64rwwTmCyWmg3; la comprobación real del navegador lo detectó por el error 400020. No se consideran válidas las comprobaciones del captcha de esa versión.
+Se corrigió la variable pública contrastándola con site_key del widget. Gorka rotó el secreto en Cloudflare; se comprobó que el nuevo difiere del anterior y se guardó exclusivamente como Secret servidor de Vercel. No se incluye ningún valor en este documento.
+Cloudflare mantiene una transición de dos horas para el secreto antiguo: https://developers.cloudflare.com/turnstile/troubleshooting/rotate-secret-key/. No utilizar el despliegue antiguo; el enlace estable debe apuntar al despliegue posterior a esta corrección. La incidencia no se oculta como prueba aprobada.
+Antes del envío del propietario, el recuento alojado era 0 solicitudes y 0 archivos privados. No se creó otro ejemplo.
