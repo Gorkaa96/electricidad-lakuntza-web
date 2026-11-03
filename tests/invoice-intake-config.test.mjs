@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isInvoiceIntakeConfigured } from '../lib/invoice/intake-config.mjs';
+import { isInvoiceIntakeConfigured, isCommercialIntakeConfigured } from '../lib/invoice/intake-config.mjs';
 
 const complete = {
   INVOICE_INTAKE_ENABLED: 'true',
@@ -29,4 +29,20 @@ test('intake refuses a short fingerprint salt', () => {
 
 test('intake may be enabled only with all required protections', () => {
   assert.equal(isInvoiceIntakeConfigured(complete), true);
+});
+
+test('public commercial intake requires its own enable flag, bot protection and active notifications', () => {
+  const enabled = {
+    ...complete,
+    PUBLIC_COMMERCIAL_INTAKE_ENABLED: 'true',
+    RESEND_API_KEY: 'unit-test-key',
+    RESEND_FROM: 'not-a-real-address@example.org',
+    COMMERCIAL_LEAD_TO: 'not-a-real-address@example.org',
+  };
+  assert.equal(isCommercialIntakeConfigured(enabled), true);
+  for (const key of ['PUBLIC_COMMERCIAL_INTAKE_ENABLED', 'RESEND_API_KEY', 'RESEND_FROM', 'COMMERCIAL_LEAD_TO', 'TURNSTILE_SECRET_KEY', 'INTAKE_RATE_LIMIT_SECRET']) {
+    const trial = { ...enabled };
+    delete trial[key];
+    assert.equal(isCommercialIntakeConfigured(trial), false, key);
+  }
 });
