@@ -10,6 +10,8 @@ import InvoiceSubmitButton from '@/components/InvoiceSubmitButton';
 import EnergyEligibilityFields from '@/components/EnergyEligibilityFields';
 import { submitInvoiceReview } from './actions';
 
+export const maxDuration = 60;
+
 export const metadata = {
   title: 'Revisión de factura de luz y gas',
   alternates: { canonical: '/revision-factura-luz-gas' },

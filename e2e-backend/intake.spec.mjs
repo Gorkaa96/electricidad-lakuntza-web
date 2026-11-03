@@ -46,8 +46,9 @@ test('synthetic invoice travels from public form through Storage, CRM, OCR and c
   await page.getByRole('button',{name:'Entrar al panel',exact:true}).click();
   await expect(page).not.toHaveURL(/\/admin\/login/);
   await page.goto('/admin/facturas/'+lead.id);
-  await page.getByRole('button',{name:'Procesar lectura',exact:true}).click();
-  await expect(page).toHaveURL(/success=ocr_completado/);
+  expect(lead.ocr_status).toBe('succeeded');
+  expect(lead.ocr_requires_manual_review).toBe(true);
+  await expect(page.locator('span').filter({hasText:/^Campos detectados/})).toBeVisible();
   expect((await service.from('invoice_ocr_results').select('ocr_status').eq('lead_id',lead.id).single()).data.ocr_status).toBe('succeeded');
   await page.locator('select[name=assignedTo]').selectOption(f.users.agent.id);
   await page.getByRole('button',{name:'Guardar asignación',exact:true}).click();

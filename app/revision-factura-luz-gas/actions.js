@@ -1,5 +1,6 @@
 'use server';
 
+import { processInvoiceReading } from '@/lib/invoice/process-reading';
 import { headers, cookies } from 'next/headers';
 import { receiptCookie } from '@/lib/invoice/receipt';
 import { redirect } from 'next/navigation';
@@ -176,6 +177,13 @@ export async function submitInvoiceReview(formData) {
 
   const notified = await notifyByEmail({ leadId, supplyType, customerType });
   await recordNotificationResult(supabase, 'invoice_review_leads', leadId, notified);
+
+  // Await on the server: no browser visit or manual action is needed to start reading.
+  // Intake and notification are already committed; extraction failure never loses the file.
+  try { await processInvoiceReading({supabase,id:leadId,automatic:true}); }
+  catch { console.error('[invoice-intake] Automatic reading unavailable');
+    await supabase.from('invoice_review_leads').update({ocr_status:'failed',ocr_requires_manual_review:true}).eq('id',leadId).eq('ocr_status','processing');
+  }
 
   const receipt = receiptCookie();
   if (receipt) (await cookies()).set(receipt.name, receipt.value, receipt.options);

@@ -117,6 +117,7 @@ function summaryRows(ocrData) {
     ...[1, 2, 3, 4, 5, 6].map((n) => ['Consumo P' + n, consumption['p' + n] != null ? display(consumption['p' + n]) + ' kWh' : null]),
     ['Importe energía', amounts.energy_amount_eur ? `${display(amounts.energy_amount_eur)} €` : null],
     ['Importe potencia', amounts.power_amount_eur ? `${display(amounts.power_amount_eur)} €` : null],
+    ['Otros cargos regulados', amounts.other_charges_eur != null ? `${display(amounts.other_charges_eur)} €` : null],
     ['IVA', amounts.vat_eur ? `${display(amounts.vat_eur)} €` : null],
     ['Total factura', amounts.total_eur ? `${display(amounts.total_eur)} €` : null],
     ['Servicios facturados', signals.has_extra_services_billed],

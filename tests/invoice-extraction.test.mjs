@@ -42,3 +42,9 @@ test('taxable base and generic prose do not become invoice values', () => {
   assert.equal(parsed.amounts.vat_eur, null);
   assert.equal(parsed.amounts.energy_amount_eur, null);
 });
+
+test('regulated financing is read separately and does not mean beneficiary status',()=>{
+ const parsed=parseInvoiceTextFree('Financiación Bono Social 0,91 €\\nTotal factura 60,00 €'.replace('\\n','\n'));
+ assert.equal(parsed.amounts.other_charges_eur,0.91);
+ assert.equal(parsed.commercial_signals.possible_sensitive_case,false);
+});

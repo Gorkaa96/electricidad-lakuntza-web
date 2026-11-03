@@ -18,7 +18,8 @@ function clean(value, limit = 500) {
 }
 
 function numberOrNull(value) {
-  const parsed = Number(String(value || '').replace(',', '.').trim());
+  if (value === null || value === undefined || String(value).trim() === '') return null;
+  const parsed = Number(String(value).replace(',', '.').trim());
   return Number.isFinite(parsed) ? parsed : null;
 }
 
