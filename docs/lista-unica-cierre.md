@@ -7,6 +7,11 @@ Actualizada el 03/11/2026. Rama integration/launch-prep-2026-10-29, PR #9 en bor
 
 Configuradas en Vercel exclusivamente para Preview y esta rama: ADMIN_PANEL_BASE_URL, ADMIN_INVITATION_BASE_URL y los tres interruptores de publicación/captación en false. No requieren pedir sus valores al propietario. Los secretos y las pruebas reales siguen pendientes.
 
+## Nueva información recibida el 03/11
+Revisados los tres folletos de alarmas enviados por Javier. Precio base, beneficio de puntos y fechas de campañas documentados; la cerradura promocionada hasta octubre está caducada. [Detalle y preguntas restantes](revision-correos-2026-11-03.md).
+
+Factura real disponible y lectura PDF/parser contrastados en temporal privado, sin subirla a GitHub/Keep ni al entorno de aplicación. Añadidas dos regresiones con valores inventados; comprobación de la versión actual en los checks de PR #9. La recepción y circuito E2E desplegado siguen pendientes.
+
 ## Información que hay que pedir (una sola recopilación)
 
 ### Javier y Kristina
@@ -14,7 +19,7 @@ Configuradas en Vercel exclusivamente para Preview y esta rama: ADMIN_PANEL_BASE
 - [ ] Confirmación de domicilio y teléfono publicados. El correo eleclakuntza@yahoo.es ya está confirmado; no volver a pedirlo como desconocido.
 - [ ] Dominio definitivo, correo corporativo y quién tiene acceso al DNS.
 - [ ] Responsable diario de solicitudes, suplente y plazo de respuesta aceptado.
-- [ ] Tarifas/productos/comisiones/promociones del canal Feníe, cobertura, permanencia y condiciones.
+- [ ] Confirmar campaña vigente de alarmas del canal Feníe (folletos ya recibidos), renovación de cerradura si existe, cobertura, permanencia/penalización y comisiones. Condiciones vigentes de productos luz/gas.
 - [ ] Alarmas: circuito contractual y posventa con Movistar Prosegur mediante Feníe.
 - [ ] Cargadores propios: alcance, capacidad, zonas, presupuestación, garantías y posventa.
 - [ ] Asesoría propia: alcance y coste.
@@ -37,7 +42,7 @@ Configuradas en Vercel exclusivamente para Preview y esta rama: ADMIN_PANEL_BASE
 Pasos y nombres de variables: [activación segura](activacion-segura-cloud.md). No comprar dominio, ampliar plan ni conceder accesos sin decisión del titular.
 
 ## Validaciones pendientes por esas dependencias
-- [ ] Factura sintética: subida → Storage privado → CRM → aviso → seguimiento → borrado integral.
+- [ ] Factura sintética (la lectura aislada de una factura real ya se ha probado): subida → Storage privado → CRM → aviso → seguimiento → borrado integral.
 - [ ] Sesiones owner/admin/agent: asignación, descarga, expediente ajeno, renovación y revocación.
 - [ ] Invitación real: entrega, activación, caducidad y desactivación.
 - [ ] Turnstile real, cuota y fallo de correo sin pérdida de solicitud.

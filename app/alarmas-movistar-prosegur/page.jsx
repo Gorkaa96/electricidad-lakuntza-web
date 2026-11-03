@@ -25,7 +25,10 @@ const steps = [
 ];
 
 const questions = [
-  ['¿Electricidad Lakuntza instala las alarmas?', 'Nuestra función es comercial y de acompañamiento a través de Feníe Energía. La instalación y el servicio de seguridad corresponden a los profesionales del proveedor de alarmas.'],
+  ['¿Qué opciones puedo consultar para mi hogar?', 'Podemos informarte sobre conexión a la Central Receptora de Alarmas, control desde la app, detectores y opciones para exteriores o mascotas. También puedes consultar la compatibilidad de una cerradura inteligente. El equipo y los servicios incluidos se concretan en la propuesta de Movistar Prosegur Alarmas.'],
+  ['¿La cerradura inteligente está incluida?', 'Depende de la oferta contratada y de la compatibilidad de tu puerta. Consulta el coste de instalación, la cuota y las condiciones antes de contratar.'],
+  ['¿El Plan Épico supone un descuento directo?', 'Los beneficios de campañas para clientes de Feníe Energía se asignan como puntos del Plan Épico y están sujetos a sus condiciones. Confirmamos la campaña aplicable y los requisitos para mantener el beneficio.'],
+  ['¿Electricidad Lakuntza instala las alarmas?', 'Nuestra función es comercial y de acompañamiento a través de Feníe Energía. Movistar Prosegur Alarmas realiza la instalación y presta el servicio de seguridad.'],
   ['¿Tengo que ser cliente de Feníe Energía?', 'La promoción publicada por Feníe Energía está dirigida a sus clientes. Si todavía no lo eres, podemos aclarar las condiciones actuales y, si te interesa, estudiar por separado tu suministro de luz o gas.'],
   ['¿Cuánto cuesta y qué permanencia tiene?', 'El precio, equipamiento, promociones y permanencia dependen de las condiciones concretas vigentes. Te las explicaremos antes de que tomes una decisión.'],
   ['¿Puedo contratarla para un negocio?', 'El acuerdo entre Feníe Energía y Movistar Prosegur Alarmas contempla hogares, negocios y pequeñas empresas. La disponibilidad y propuesta concreta deben confirmarse.'],
@@ -65,7 +68,7 @@ export default function AlarmasMovistarProsegurPage() {
                   <div><p className="font-semibold">Para mi negocio</p><p className="mt-1 text-sm leading-6 text-[#57635A]">Conocer opciones para tu actividad.</p></div>
                 </div>
               </div>
-              <p className="mt-7 border-t border-[#E1EAE0] pt-5 text-xs leading-6 text-[#667068]">Electricidad Lakuntza asesora comercialmente a través de Feníe Energía. La instalación y el servicio de seguridad corresponden al proveedor.</p>
+              <p className="mt-7 border-t border-[#E1EAE0] pt-5 text-xs leading-6 text-[#667068]">Electricidad Lakuntza asesora comercialmente a través de Feníe Energía. Movistar Prosegur Alarmas realiza la instalación y presta el servicio de seguridad.</p>
             </div>
           </div>
         </section>
@@ -121,7 +124,7 @@ export default function AlarmasMovistarProsegurPage() {
             <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center justify-center rounded-2xl bg-lakuntza-greenDark px-6 py-4 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
               Solicitar información por WhatsApp <ArrowRight className="ml-2" size={18} />
             </a>
-            <p className="mt-5 text-xs leading-6 text-white/50">El botón abre WhatsApp. El mensaje no se envía hasta que tú lo confirmes. También puedes llamar al 649 853 448.</p>
+            <p className="mt-5 text-xs leading-6 text-white/50">También puedes llamar al 649 853 448.</p>
           </div>
         </section>
       </main>

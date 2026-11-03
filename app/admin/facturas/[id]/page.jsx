@@ -112,10 +112,9 @@ function summaryRows(ocrData) {
     ['Periodo', invoice.billing_period_start && invoice.billing_period_end ? `${invoice.billing_period_start} → ${invoice.billing_period_end}` : null],
     ['CUPS', electricity.cups],
     ['Tarifa / peaje', electricity.access_tariff],
-    ['Potencia P1', power.p1 ? `${display(power.p1)} kW` : null],
-    ['Potencia P2', power.p2 ? `${display(power.p2)} kW` : null],
-    ['Consumo total', consumption.total ? `${display(consumption.total)} kWh` : null],
-    ['Punta / Llano / Valle', [consumption.p1, consumption.p2, consumption.p3].some((item) => item !== null && item !== undefined) ? `${display(consumption.p1)} / ${display(consumption.p2)} / ${display(consumption.p3)} kWh` : null],
+    ...[1, 2, 3, 4, 5, 6].map((n) => ['Potencia P' + n, power['p' + n] != null ? display(power['p' + n]) + ' kW' : null]),
+    ['Consumo total', consumption.total != null ? `${display(consumption.total)} kWh` : null],
+    ...[1, 2, 3, 4, 5, 6].map((n) => ['Consumo P' + n, consumption['p' + n] != null ? display(consumption['p' + n]) + ' kWh' : null]),
     ['Importe energía', amounts.energy_amount_eur ? `${display(amounts.energy_amount_eur)} €` : null],
     ['Importe potencia', amounts.power_amount_eur ? `${display(amounts.power_amount_eur)} €` : null],
     ['IVA', amounts.vat_eur ? `${display(amounts.vat_eur)} €` : null],
@@ -272,9 +271,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-xs font-medium text-neutral-500">Resumen de lectura</p>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">Datos extraídos automáticamente. Confirmar contra la factura antes de contactar.</p>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">Datos extraídos automáticamente. El porcentaje indica campos detectados, no exactitud. Confirmar contra la factura antes de contactar.</p>
               </div>
-              <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-neutral-500">Confianza {latestOcr?.confidence_avg || '—'}%</span>
+              <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-neutral-500">Campos detectados {latestOcr?.confidence_avg ?? '—'}%</span>
             </div>
             <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{rows.map(([label, value]) => card(label, value))}</div>
           </div>
