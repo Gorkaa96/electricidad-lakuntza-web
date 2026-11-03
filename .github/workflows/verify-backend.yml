@@ -1,0 +1,59 @@
+name: Verify isolated backend
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  backend:
+    name: Isolated Auth, Storage, CRM and browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      LOCAL_SUPABASE_ENV: ${{ runner.temp }}/lakuntza-supabase.env
+      QA_FIXTURES: ${{ runner.temp }}/lakuntza-fixtures.json
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - name: Install pinned official Supabase CLI
+        run: |
+          curl --fail --location --silent --show-error https://github.com/supabase/cli/releases/download/v2.119.0/supabase_2.119.0_linux_amd64.tar.gz -o "$RUNNER_TEMP/supabase.tar.gz"
+          echo "bf1c3ae93be98533eb8a3105dbf4564bd0b2d9dc24690d8a920f980ef975c1b4  $RUNNER_TEMP/supabase.tar.gz" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/supabase-cli"
+          tar -xzf "$RUNNER_TEMP/supabase.tar.gz" -C "$RUNNER_TEMP/supabase-cli" supabase
+          echo "$RUNNER_TEMP/supabase-cli" >> "$GITHUB_PATH"
+      - name: Start disposable services with no cloud link
+        run: |
+          supabase --help > /dev/null
+          supabase start --help > /dev/null
+          mkdir -p "$RUNNER_TEMP/lakuntza-local"
+          cd "$RUNNER_TEMP/lakuntza-local"
+          supabase init
+          supabase start > "$RUNNER_TEMP/supabase-start.log" 2>&1 || { docker ps --format '{{.Names}} {{.Status}}'; exit 1; }
+          supabase status -o env > "$LOCAL_SUPABASE_ENV"
+      - name: Apply shipped SQL and create fictitious accounts
+        run: node tests/backend/setup.mjs
+      - name: Verify SQL permissions and API lifecycle
+        run: node --test tests/backend/api.test.mjs
+      - name: Build with disposable backend only
+        run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Verify authenticated application
+        run: npx playwright test --config backend.playwright.config.mjs
+      - name: Preserve synthetic evidence only
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: isolated-backend-browser
+          path: backend-report/
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Stop disposable services
+        if: always()
+        run: |
+          cd "$RUNNER_TEMP/lakuntza-local"
+          supabase stop --no-backup
