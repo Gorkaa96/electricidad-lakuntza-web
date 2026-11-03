@@ -44,7 +44,7 @@ const sections = [
   {
     title: 'Finalidades',
     content: [
-      'Responder consultas, preparar presupuestos, gestionar solicitudes de servicio, valorar trabajos técnicos, revisar facturas de luz o gas, informar sobre alarmas y mantener la comunicación necesaria con el cliente.',
+      'Responder consultas y gestionar las oportunidades comerciales del cliente, realizar asesoría energética e instalaciones de cargadores eléctricos, revisar facturas y gestionar, como agentes, propuestas de luz y gas con Feníe Energía, así como consultas comerciales sobre alarmas de Movistar Prosegur.',
       'También podemos conservar información mínima de trabajos realizados para gestión interna, historial de servicio y obligaciones legales cuando corresponda.',
       'No utilizamos los datos recibidos para publicidad masiva ni cesiones comerciales no solicitadas.',
     ],
@@ -127,7 +127,7 @@ export default function PrivacidadPage() {
                 ))}
               </div>
               <p className="mt-10 rounded-2xl bg-neutral-50 p-4 text-xs leading-6 text-neutral-500">
-                Última actualización: junio de 2026. Esta política tiene carácter informativo y podrá actualizarse si cambian los servicios, herramientas o requisitos aplicables.
+                Última actualización: noviembre de 2026. Esta política tiene carácter informativo y podrá actualizarse si cambian los servicios, herramientas o requisitos aplicables.
               </p>
             </div>
           </div>
