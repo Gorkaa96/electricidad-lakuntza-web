@@ -9,6 +9,9 @@ const complete = {
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: 'unit-test-public',
   TURNSTILE_SECRET_KEY: 'unit-test-secret',
   INTAKE_RATE_LIMIT_SECRET: 'x'.repeat(32),
+  RESEND_API_KEY: 'unit-test-key',
+  RESEND_FROM: 'not-a-real-address@example.org',
+  INVOICE_REVIEW_TO: 'not-a-real-address@example.org',
 };
 
 test('intake remains off unless explicitly enabled', () => {
