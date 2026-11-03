@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
 import InvoiceFileInput from '@/components/InvoiceFileInput';
-import InvoiceReviewForm from '@/components/InvoiceReviewForm';
 import InvoiceSubmitButton from '@/components/InvoiceSubmitButton';
 import EnergyEligibilityFields from '@/components/EnergyEligibilityFields';
 import { submitInvoiceReview } from './actions';
@@ -55,7 +54,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
   const initialSupplyType = ['luz', 'gas', 'luz_gas'].includes(resolvedParams?.servicio) ? resolvedParams.servicio : 'luz';
   const intakeReady = invoiceIntakeReady();
   // Trusted hosting environment only; never enable intake from a query parameter.
-  const rehearsal = !intakeReady && process.env.VERCEL_ENV === 'preview' &&
+  const showPreviewForm = !intakeReady && process.env.VERCEL_ENV === 'preview' &&
     process.env.VERCEL_GIT_COMMIT_REF === 'integration/launch-prep-2026-10-29';
 
   return (
@@ -69,7 +68,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
               <h1 className="mt-5 max-w-4xl text-[clamp(2.65rem,5vw,4.5rem)] font-semibold leading-[1.06] tracking-[-.05em]">Tu factura merece una revisión cuidadosa.</h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">Cuéntanos tu situación y revisaremos las condiciones de luz o gas para valorar si te conviene una propuesta de Feníe Energía. Si es mejor mantener lo que tienes, también te lo explicaremos.</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">{intakeReady ? 'Subir mi factura' : rehearsal ? 'Probar formulario de factura' : 'Solicitar revisión'}</a>
+                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">{intakeReady || showPreviewForm ? 'Subir mi factura' : 'Solicitar revisión'}</a>
                 <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Consultar sin factura</a>
               </div>
             </div>
@@ -125,7 +124,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
             </div>
 
             <div className="order-1 xl:order-2 xl:col-span-7">
-              {intakeReady || rehearsal ? <InvoiceReviewForm id="formulario" rehearsal={rehearsal} action={intakeReady ? submitInvoiceReview : undefined} className="scroll-mt-24 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm">
+              {intakeReady || showPreviewForm ? <form id="formulario" action={submitInvoiceReview} className="scroll-mt-24 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm">
                 <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="website-hp">Deja este campo vacío</label><input id="website-hp" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -190,9 +189,9 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     </label>
                   </div>
 
-                  {!intakeReady && !rehearsal ? (
+                  {!intakeReady ? (
                     <div role="status" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
-                      El envío de facturas desde la web todavía no está operativo. Para una consulta inicial, puedes <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">escribirnos por WhatsApp</a>. No intentes enviar datos personales hasta que activemos este servicio.
+                      El envío no está disponible en este momento. Puedes <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">escribirnos por WhatsApp</a>. y te indicaremos cómo continuar.
                     </div>
                   ) : null}
                   {intakeReady ? (
@@ -202,14 +201,14 @@ export default async function RevisionFacturaPage({ searchParams }) {
                       <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-action="invoice_review" data-theme="light" />
                     </div>
                   ) : null}
-                  {intakeReady ? <InvoiceSubmitButton /> : null}
+                  <InvoiceSubmitButton disabled={!intakeReady} />
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
                     Formatos permitidos: PDF, JPG, PNG o WebP. Máximo 10 MB. No adjuntes DNI, IBAN ni documentación adicional: solo necesitamos la factura para esta primera revisión.
                   </p>
                 </div>
-              </InvoiceReviewForm> : (
+              </form> : (
                 <section id="formulario" className="scroll-mt-24 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
                   <h2 className="text-2xl font-semibold text-[#152017]">Solicita tu revisión de luz o gas</h2>
                   <p className="mt-4 text-base leading-8 text-neutral-600">Cuéntanos qué necesitas por WhatsApp o teléfono y te indicaremos cómo continuar. El envío de facturas desde esta web aún no está disponible.</p>

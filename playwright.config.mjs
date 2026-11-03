@@ -15,10 +15,10 @@ export default defineConfig({
     video: 'off',
   },
   projects: [
-    { name: 'desktop', testIgnore: '**/invoice-rehearsal.spec.mjs', use: { browserName: 'chromium', viewport: { width: 1440, height: 1000 } } },
-    { name: 'mobile', testIgnore: '**/invoice-rehearsal.spec.mjs', use: { browserName: 'chromium', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } },
-    { name: 'tablet', testIgnore: '**/invoice-rehearsal.spec.mjs', use: { browserName: 'chromium', viewport: { width: 768, height: 1024 }, hasTouch: true } },
-    { name: 'invoice-preview', testMatch: '**/invoice-rehearsal.spec.mjs', use: { browserName: 'chromium', baseURL: 'http://127.0.0.1:3003', viewport: {width:390,height:844} } },
+    { name: 'desktop', testIgnore: '**/invoice-client-form.spec.mjs', use: { browserName: 'chromium', viewport: { width: 1440, height: 1000 } } },
+    { name: 'mobile', testIgnore: '**/invoice-client-form.spec.mjs', use: { browserName: 'chromium', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } },
+    { name: 'tablet', testIgnore: '**/invoice-client-form.spec.mjs', use: { browserName: 'chromium', viewport: { width: 768, height: 1024 }, hasTouch: true } },
+    { name: 'invoice-preview', testMatch: '**/invoice-client-form.spec.mjs', use: { browserName: 'chromium', baseURL: 'http://127.0.0.1:3003', viewport: {width:390,height:844} } },
   ],
   webServer: [{
     command: 'npm run start -- --hostname 127.0.0.1',
