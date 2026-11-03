@@ -4,6 +4,8 @@ import { headers, cookies } from 'next/headers';
 import { receiptCookie } from '@/lib/invoice/receipt';
 import { redirect } from 'next/navigation';
 import { createInvoiceIntakeClient } from '@/lib/supabase/intake';
+import { PRIVACY_NOTICE_VERSION } from '@/lib/privacy-notice.mjs';
+import { recordNotificationResult } from '@/lib/intake-notification';
 import { siteUrl } from '@/lib/site';
 import { validateInvoiceContact } from '@/lib/invoice/validate-contact.mjs';
 import { invoiceIntakeReady, verifyInvoiceHuman, consumeInvoiceQuotas } from '@/lib/invoice/protection';
@@ -159,14 +161,19 @@ export async function submitInvoiceReview(formData) {
     file_size: file.size,
     precheck_result: precheckResult,
     consent_accepted: consentAccepted,
+    consent_accepted_at: new Date().toISOString(),
+    privacy_notice_version: PRIVACY_NOTICE_VERSION,
+    notification_status: 'pending',
   });
 
   if (insertError) {
-    await supabase.storage.from('invoice-files').remove([filePath]);
+    const { error: cleanupError } = await supabase.storage.from('invoice-files').remove([filePath]);
+    if (cleanupError) console.error('[invoice-intake] Orphan file requires cleanup', { leadId, code: cleanupError.statusCode || 'unknown' });
     redirect('/revision-factura-luz-gas?error=registro#formulario');
   }
 
-  await notifyByEmail({ leadId, supplyType, customerType });
+  const notified = await notifyByEmail({ leadId, supplyType, customerType });
+  await recordNotificationResult(supabase, 'invoice_review_leads', leadId, notified);
 
   const receipt = receiptCookie();
   if (receipt) (await cookies()).set(receipt.name, receipt.value, receipt.options);

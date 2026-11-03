@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { requireAnyPermission, requirePermission } from '@/lib/admin';
+import { validContactChannels } from '@/lib/contact-validation.mjs';
 import { hasPermission } from '@/lib/rolePermissions';
 
 const services = new Set(['luz', 'gas', 'luz_gas', 'alarmas', 'cargadores', 'asesoria']);
@@ -22,12 +23,6 @@ function followupDate(value) {
   return date;
 }
 
-function validContact(phone, email) {
-  if (!phone && !email) return false;
-  if (phone && (phone.length < 7 || phone.length > 35 || !/^[+\d\s().-]+$/.test(phone))) return false;
-  if (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) return false;
-  return true;
-}
 
 export async function createCommercialLead(formData) {
   const { supabase, user } = await requirePermission('leads.edit_all');
@@ -40,7 +35,7 @@ export async function createCommercialLead(formData) {
   const notes = clean(formData.get('notes'), 4000);
   const nextContactOn = followupDate(formData.get('nextContactOn'));
 
-  if (!services.has(service) || contactName.length < 2 || !validContact(phone, email) ||
+  if (!services.has(service) || contactName.length < 2 || !validContactChannels(phone, email) ||
       !customerTypes.has(customerType) || !origins.has(origin) || nextContactOn === undefined) {
     redirect('/admin/oportunidades/nueva?error=datos');
   }

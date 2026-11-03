@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import IntakeNotificationNotice from '@/components/admin/IntakeNotificationNotice';
 import AdminShell from '@/components/admin/AdminShell';
 import { requireAnyPermission } from '@/lib/admin';
 import { canEditLeads, hasPermission } from '@/lib/rolePermissions';
@@ -35,7 +36,7 @@ export default async function CommercialOpportunityDetail({ params, searchParams
   const { id } = await params;
   const alerts = await searchParams;
   const { data: lead, error } = await supabase.from('commercial_leads')
-    .select('id,service,contact_name,contact_phone,contact_email,customer_type,origin,status,notes,next_contact_on,assigned_to,invoice_review_lead_id,created_at,updated_at')
+    .select('id,service,contact_name,contact_phone,contact_email,customer_type,origin,status,notes,next_contact_on,assigned_to,invoice_review_lead_id,created_at,updated_at,notification_status,consent_accepted_at,privacy_notice_version')
     .eq('id', id).maybeSingle();
 
   if (error || !lead) notFound();
@@ -61,6 +62,7 @@ export default async function CommercialOpportunityDetail({ params, searchParams
       description="Seguimiento comercial interno. No se ha realizado ninguna contratación desde el panel."
       action={<a href="/admin/oportunidades" className="text-sm font-semibold text-[#24662D] underline underline-offset-4">Volver a oportunidades</a>}
     >
+      <IntakeNotificationNotice status={lead.notification_status} />
       {alerts?.success ? <p role="status" className="mb-6 rounded-xl bg-[#ECF7EA] p-4 text-sm text-[#24662D]">Cambios guardados correctamente.</p> : null}
       {alerts?.error ? <p role="alert" className="mb-6 rounded-xl bg-red-50 p-4 text-sm text-red-800">No se ha podido completar la operación. Comprueba los datos y permisos.</p> : null}
       {lead.invoice_review_lead_id ? (
@@ -82,6 +84,8 @@ export default async function CommercialOpportunityDetail({ params, searchParams
           {detail('Tipo de cliente', lead.customer_type)}
           {detail('Fecha de registro', new Date(lead.created_at).toLocaleDateString('es-ES'))}
           {detail('Siguiente seguimiento', lead.next_contact_on)}
+          {detail('Aviso de correo', ({ accepted: 'Aceptado por el proveedor; entrega no verificada', failed: 'Fallido', pending: 'Pendiente', not_requested: 'No solicitado' })[lead.notification_status])}
+          {detail('Aviso de privacidad aceptado', lead.consent_accepted_at ? lead.privacy_notice_version : 'Sin aceptación web registrada')}
         </dl>
       </section>
 

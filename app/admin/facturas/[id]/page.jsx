@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import IntakeNotificationNotice from '@/components/admin/IntakeNotificationNotice';
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
 import SimpleInvoiceActionPanel from '@/components/admin/SimpleInvoiceActionPanel';
@@ -168,6 +169,8 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
     <AdminShell title="Factura recibida" description="Ficha sencilla para revisar datos, contactar y dejar el estado actualizado.">
       <AdminNotice success={resolvedSearchParams?.success} error={resolvedSearchParams?.error} />
 
+      <IntakeNotificationNotice status={lead.notification_status} />
+
       <SimpleInvoiceActionPanel lead={lead} latestOcr={latestOcr} telHref={telHref} canEdit={mayEdit} />
 
       <div className="mt-6 grid gap-6 lg:grid-cols-12">
@@ -185,6 +188,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
             {card('Teléfono', lead.phone)}
             {card('Email', lead.email)}
             {card('Localidad', lead.locality)}
+            {card('Aviso de privacidad aceptado', lead.consent_accepted_at ? lead.privacy_notice_version : 'Sin aceptación web registrada')}
             {card('Compañía actual', lead.current_company)}
             {card('Suministro', supplyLabel(lead.supply_type))}
             {card('Cliente', customerLabel(lead.customer_type))}

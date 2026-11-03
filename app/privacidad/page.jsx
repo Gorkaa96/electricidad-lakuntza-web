@@ -69,7 +69,9 @@ const sections = [
     content: [
       'No se cederán datos a terceros salvo obligación legal o cuando sea necesario para prestar el servicio solicitado.',
       'Para luz, gas o alarmas, si el cliente decide avanzar con una contratación y existe base jurídica para ello, podrán comunicarse los datos necesarios a Feníe Energía, Movistar Prosegur Alarmas y las entidades que intervengan en el servicio solicitado, informando al interesado según corresponda.',
-      'La web puede utilizar proveedores técnicos de alojamiento, almacenamiento, formularios, correo electrónico, analítica o comunicaciones para que el servicio funcione correctamente. Estos proveedores solo deben tratar los datos en la medida necesaria para prestar el servicio técnico correspondiente.',
+      'El alojamiento utiliza Vercel y la gestión de acceso y almacenamiento privado utiliza Supabase. Cuando se habilitan los formularios web, Cloudflare Turnstile verifica los envíos y Resend tramita los avisos internos sin adjuntar facturas ni datos de contacto del cliente.',
+      'La prevención de abuso utiliza identificadores de contacto e IP seudonimizados mediante HMAC para limitar envíos. Los contadores se depuran al recibir nuevas solicitudes una vez superado el periodo técnico de dos días; la seudonimización no equivale a anonimización.',
+      'La aceptación del aviso de privacidad se registra con fecha y versión del texto. No implica consentimiento para publicidad.',
       'Al usar WhatsApp, email u otros servicios externos, la comunicación se rige también por las condiciones y políticas de privacidad de dichos proveedores.',
     ],
   },

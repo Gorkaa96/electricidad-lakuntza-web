@@ -49,3 +49,9 @@ test('admins may not grant rights they do not hold', () => {
   assert.equal(validateMemberPermissions(limited, 'agent', ['projects.manage']), null);
   assert.deepEqual(validateMemberPermissions(limited, 'agent', ['leads.read_assigned']), ['leads.read_assigned']);
 });
+
+test('unknown roles and unknown permission keys always fail closed', () => {
+  assert.equal(hasPermission(owner, 'unknown.permission'), false);
+  assert.equal(hasPermission({ active: true, role: 'unexpected', permissions: ['users.manage'] }, 'users.manage'), false);
+  assert.equal(allowedRoleForManager({ ...agent, permissions: ['users.manage'] }, 'agent'), false);
+});

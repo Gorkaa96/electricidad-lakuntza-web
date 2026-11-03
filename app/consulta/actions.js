@@ -5,6 +5,9 @@ import { redirect } from 'next/navigation';
 import { createCommercialIntakeClient } from '@/lib/supabase/commercial-intake';
 import { commercialIntakeReady, verifyPublicHuman, consumePublicQuotas } from '@/lib/invoice/protection';
 import { newCommercialReceipt } from '@/lib/commercial/receipt';
+import { validContactChannels } from '@/lib/contact-validation.mjs';
+import { PRIVACY_NOTICE_VERSION } from '@/lib/privacy-notice.mjs';
+import { recordNotificationResult } from '@/lib/intake-notification';
 import { siteUrl } from '@/lib/site';
 
 const services = new Set(['luz','gas','luz_gas','alarmas','cargadores','asesoria']);
@@ -55,9 +58,7 @@ export async function submitCommercialInquiry(formData) {
 
   if (formData.get('website')) redirect('/consulta?error=verificacion');
   if (!services.has(service) || contactName.length < 2 || !types.has(customerType) ||
-      (!phone && !email) ||
-      (phone && (phone.length < 7 || !/^[+\d\s().-]+$/.test(phone))) ||
-      (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) ||
+      !validContactChannels(phone, email) ||
       notes.length < 10 || formData.get('consent') !== 'on') {
     redirect('/consulta?error=datos');
   }
@@ -85,6 +86,9 @@ export async function submitCommercialInquiry(formData) {
       contact_email: email || null,
       customer_type: customerType,
       origin: 'web',
+      consent_accepted_at: new Date().toISOString(),
+      privacy_notice_version: PRIVACY_NOTICE_VERSION,
+      notification_status: 'pending',
       status: 'new',
       notes,
     }).select('id').single();
@@ -95,6 +99,7 @@ export async function submitCommercialInquiry(formData) {
   }
 
   const notified = await notifyCommercial(lead.id, service);
+  await recordNotificationResult(client, 'commercial_leads', lead.id, notified);
   if (!notified) {
     console.warn('[commercial-intake] Lead saved but email notification was not delivered');
   }

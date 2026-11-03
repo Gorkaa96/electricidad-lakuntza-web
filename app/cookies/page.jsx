@@ -12,6 +12,7 @@ const sections = [
     title: 'Uso actual de cookies',
     content: [
       'La parte pública de esta web está preparada para funcionar sin cookies publicitarias, sin píxeles de seguimiento y sin analítica avanzada.',
+      'Cuando los formularios web están habilitados, Cloudflare Turnstile verifica los envíos para prevenir abuso. Tras guardar una solicitud, se crea una cookie técnica de confirmación (lakuntza_invoice_receipt o lakuntza_commercial_receipt), limitada a su página de confirmación y con una duración de cinco minutos. No contiene datos de contacto ni documentación.',
       'El panel privado de administración puede utilizar cookies técnicas o mecanismos equivalentes estrictamente necesarios para mantener la sesión de usuario autenticado y garantizar la seguridad del acceso.',
     ],
   },
@@ -72,7 +73,7 @@ export default function CookiesPage() {
                 ))}
               </div>
               <p className="mt-10 rounded-2xl bg-neutral-50 p-4 text-xs leading-6 text-neutral-500">
-                Última actualización: junio de 2026.
+                Última actualización: 3 de noviembre de 2026.
               </p>
             </div>
           </div>
