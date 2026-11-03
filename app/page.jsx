@@ -7,7 +7,7 @@ import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
   title: 'Luz, gas, alarmas, cargadores y asesoría energética',
-  description: 'Luz, gas, alarmas, cargadores eléctricos y asesoría energética con Electricidad Lakuntza, como agente de Feníe Energía.',
+  description: 'Electricidad Lakuntza: agentes de Feníe Energía para luz y gas, comerciales de alarmas Movistar Prosegur, instalación propia de cargadores y asesoría energética.',
   alternates: { canonical: '/' },
 };
 
@@ -74,7 +74,7 @@ export default function HomePage() {
                 <p className="mt-8 max-w-xl text-lg leading-[1.75] text-white/80 sm:text-xl">
                   Luz, gas, alarmas, cargadores eléctricos y asesoría energética. Te ayudamos a encontrar una solución adecuada para tu hogar o negocio, con condiciones claras y trato directo.
                 </p>
-                <p className="mt-6 max-w-xl text-sm leading-6 text-white/75">Trabajamos como agentes de Feníe Energía para ayudarte con luz, gas y soluciones relacionadas. <a href="#fenie" className="font-semibold text-[#B7F0A5] underline decoration-[#8CCB79] underline-offset-4 hover:text-white">Descubre qué es Feníe</a>.</p>
+                <p className="mt-6 max-w-xl text-sm leading-6 text-white/75">Somos agentes de Feníe Energía para luz y gas. Las alarmas las instala Movistar Prosegur; nosotros instalamos cargadores y realizamos asesoría energética. <a href="#fenie" className="font-semibold text-[#B7F0A5] underline decoration-[#8CCB79] underline-offset-4 hover:text-white">Descubre qué es Feníe</a>.</p>
               </div>
               <div className="min-w-0 lg:col-span-5">
                 <div className="overflow-hidden rounded-[1.35rem] border border-white/20 bg-white text-[#152017] shadow-[0_28px_85px_rgba(0,0,0,.18)]">
@@ -106,7 +106,7 @@ export default function HomePage() {
           <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#286B2C]"><ShieldCheck size={20} aria-hidden="true" /></span>
-              <p className="text-sm leading-6 text-[#305038]"><strong className="font-semibold text-[#173E20]">Agentes de Feníe Energía.</strong> Te atendemos desde Electricidad Lakuntza.</p>
+              <p className="text-sm leading-6 text-[#305038]"><strong className="font-semibold text-[#173E20]">Agentes de Feníe Energía para luz y gas.</strong> También realizamos instalaciones de cargadores y asesoría propia.</p>
             </div>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pl-[3.25rem] text-sm font-semibold md:pl-0">
               <a href="#fenie" className="text-[#235D2B] underline underline-offset-4 hover:text-[#123E1B]">¿Qué es Feníe?</a>
