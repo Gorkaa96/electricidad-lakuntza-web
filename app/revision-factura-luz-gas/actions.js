@@ -37,8 +37,9 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
     return false;
   }
 
-  const to = process.env.INVOICE_REVIEW_TO || 'eleclakuntza@yahoo.es';
-  const from = process.env.RESEND_FROM || 'Electricidad Lakuntza <onboarding@resend.dev>';
+  const to = process.env.INVOICE_REVIEW_TO;
+  const from = process.env.RESEND_FROM;
+  if (!to || !from) return false;
   const adminUrl = `${siteUrl}/admin/facturas/${leadId}`;
 
   const body = [
