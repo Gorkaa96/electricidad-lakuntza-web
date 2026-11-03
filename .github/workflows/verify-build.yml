@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '24'
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm install --no-audit --no-fund # Cloud lock refresh for the verified PDF reader update.
       - name: Preserve dependency lock for cloud review
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
