@@ -1,6 +1,12 @@
 # Lista única de cierre — Electricidad Lakuntza
 Actualizada el 03/11/2026. Rama integration/launch-prep-2026-10-29; PR #9 en borrador.
 
+## Formulario visible para validar sin NIF ni dominio final
+En la Preview de esta rama, cuando la recepción real está cerrada, se muestra el formulario completo en modo de comprobación local. Usa «Usar datos y factura de ejemplo», elige suministro/bono social y marca consentimiento. «Comprobar formulario sin enviar» valida campos y selección de archivo sin transmitirlos, guardarlos ni crear CRM/avisos.
+No equivale a una subida o extracción PDF alojadas. El selector sigue oculto en Production cuando intake no está listo. Esta modalidad no depende del NIF, dominio, service role, Turnstile ni SMTP.
+
+Para una prueba privada real tampoco se exige dominio definitivo ni NIF; sí credenciales de servidor, captcha y configuración de avisos. No cambiar los flags a true sin esas dependencias.
+
 ## Versión preparada para presentar
 [Web Preview protegida](https://electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app/) · [guion para Javier y Kristina](presentacion-javier-kristina.md).
 Se mantiene la identidad visual. Corregidos descubrimiento de los cuatro servicios en móvil, barra de servicios/teléfono/WhatsApp, acciones de revisión con y sin factura y contraste del panel.
