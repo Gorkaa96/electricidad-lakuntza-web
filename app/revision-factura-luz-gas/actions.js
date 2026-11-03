@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { createInvoiceIntakeClient } from '@/lib/supabase/intake';
 import { siteUrl } from '@/lib/site';
 import { validateInvoiceContact } from '@/lib/invoice/validate-contact.mjs';
+import { invoiceIntakeReady, verifyInvoiceHuman, consumeInvoiceQuotas } from '@/lib/invoice/protection';
 
 const allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
 const maxFileSize = 10 * 1024 * 1024;
@@ -42,14 +43,8 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
   const body = [
     'Nueva factura recibida para revisión.',
     '',
-    `Nombre: ${name}`,
-    `Teléfono: ${phone}`,
-    `Email: ${email || 'No indicado'}`,
-    `Localidad: ${locality || 'No indicada'}`,
     `Suministro: ${supplyType}`,
-    `Cliente: ${customerType}`,
-    `Bono social / familia numerosa: ${bonusStatus}`,
-    `Compañía actual: ${currentCompany || 'No indicada'}`,
+    `Tipo de cliente: ${customerType}`,
     '',
     'Revisión humana pendiente: no se ha realizado comparación de tarifas.',
     `Abrir la solicitud en admin: ${adminUrl}`,
@@ -86,6 +81,7 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
 }
 
 export async function submitInvoiceReview(formData) {
+  if (!invoiceIntakeReady()) redirect('/revision-factura-luz-gas?error=config#formulario');
   const name = cleanText(formData.get('name'));
   const phone = cleanText(formData.get('phone'));
   const email = cleanText(formData.get('email'));
@@ -111,6 +107,14 @@ export async function submitInvoiceReview(formData) {
   const supabase = createInvoiceIntakeClient();
   if (!supabase) redirect('/revision-factura-luz-gas?error=config#formulario');
 
+  const requestHeaders = await headers();
+  if (!(await verifyInvoiceHuman({ token: formData.get('cf-turnstile-response'), requestHeaders }))) {
+    redirect('/revision-factura-luz-gas?error=verificacion#formulario');
+  }
+  if (!(await consumeInvoiceQuotas({ supabase, requestHeaders, phone }))) {
+    redirect('/revision-factura-luz-gas?error=limite#formulario');
+  }
+
   const leadId = crypto.randomUUID();
   const fileName = safeFileName(file.name);
   const filePath = `${leadId}/${Date.now()}-${fileName}`;
@@ -133,7 +137,7 @@ export async function submitInvoiceReview(formData) {
   if (uploadError) redirect('/revision-factura-luz-gas?error=subida#formulario');
 
   const precheckResult = getPrecheckResult({ bonusStatus, supplyType, customerType, currentCompany, notes });
-  const userAgent = (await headers()).get('user-agent') || '';
+  const userAgent = (requestHeaders.get('user-agent') || '').slice(0, 350);
 
   const { error: insertError } = await supabase.from('invoice_review_leads').insert({
     id: leadId,
@@ -161,17 +165,7 @@ export async function submitInvoiceReview(formData) {
     redirect('/revision-factura-luz-gas?error=registro#formulario');
   }
 
-  await notifyByEmail({
-    leadId,
-    name,
-    phone,
-    email,
-    locality,
-    supplyType,
-    customerType,
-    bonusStatus,
-    currentCompany,
-  });
+  await notifyByEmail({ leadId, supplyType, customerType });
 
   redirect(`/revision-factura-luz-gas/gracias?estado=${precheckResult}`);
 }
