@@ -43,7 +43,7 @@ const ocrLabels = {
 function display(value) {
   if (value === null || value === undefined || value === '') return 'No indicado';
   if (typeof value === 'boolean') return value ? 'Sí' : 'No';
-  return String(value).replace('.', ',');
+  return typeof value === 'number' ? String(value).replace('.', ',') : String(value);
 }
 
 function numberValue(value) {
