@@ -5,7 +5,8 @@ import { FileText, FolderOpen, ExternalLink, UsersRound } from 'lucide-react';
 import { canViewLeads, hasPermission } from '@/lib/rolePermissions';
 
 const navItems = [
-  { href: '/admin/facturas', label: 'Solicitudes', icon: FileText, allowed: canViewLeads },
+  { href: '/admin/oportunidades', label: 'Oportunidades', icon: FileText, allowed: canViewLeads },
+  { href: '/admin/facturas', label: 'Facturas', icon: FileText, allowed: canViewLeads },
   { href: '/admin/proyectos', label: 'Trabajos', icon: FolderOpen, allowed: (member) => hasPermission(member, 'projects.manage') },
   { href: '/admin/usuarios', label: 'Usuarios', icon: UsersRound, allowed: (member) => hasPermission(member, 'users.manage') },
   { href: '/', label: 'Ver web', icon: ExternalLink, allowed: () => true },
@@ -16,7 +17,7 @@ export default function AdminNavigation({ compact = false, member }) {
   const visible = navItems.filter((item) => item.allowed(member));
 
   return (
-    <nav aria-label="Navegación del administrador" className={compact ? 'grid grid-cols-2 gap-2 sm:grid-cols-4' : 'grid gap-2'}>
+    <nav aria-label="Navegación del administrador" className={compact ? 'grid grid-cols-2 gap-2 sm:grid-cols-5' : 'grid gap-2'}>
       {visible.map((item) => {
         const Icon = item.icon;
         const current = item.href !== '/' && (pathname === item.href || pathname.startsWith(item.href + '/'));
