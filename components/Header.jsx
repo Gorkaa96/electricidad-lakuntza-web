@@ -10,6 +10,7 @@ const navigation = [
   ['Cargadores eléctricos', '/cargadores-electricos'],
   ['Asesoría energética', '/asesoria-energetica'],
   ['Servicios', '/servicios'],
+  ['Feníe Energía', '/#fenie'],
 ];
 
 export default function Header() {
@@ -23,7 +24,7 @@ export default function Header() {
         <a href="/" aria-label="Electricidad Lakuntza, página de inicio" className="shrink-0" onClick={() => setOpen(false)}>
           <Logo compact />
         </a>
-        <nav className="hidden items-center gap-7 text-sm font-semibold text-[#334139] lg:flex" aria-label="Navegación principal">
+        <nav className="hidden items-center gap-3 text-xs font-semibold text-[#334139] lg:flex xl:gap-6 xl:text-sm" aria-label="Navegación principal">
           {navigation.map(([label, href]) => (
             <a key={href} href={href} className="whitespace-nowrap transition-colors hover:text-[#2F7C36]">{label}</a>
           ))}
