@@ -14,7 +14,7 @@ test('invoice form enforces eligibility, file size, format and consent',async({p
   const form=page.locator('form#formulario');
   await expect(form).toBeVisible();
   await form.locator('[name=bonusStatus]').selectOption('si');
-  await expect(page.getByRole('alert')).toContainText('consulta primero el bono social');
+  await expect(page.locator('main [role="alert"]')).toContainText('consulta primero el bono social');
   expect(await form.locator('[name=bonusStatus]').evaluate(el=>el.validity.valid)).toBe(false);
   await form.locator('[name=supplyType]').selectOption('gas');
   await expect(form.locator('select[name=bonusStatus]')).toHaveCount(0);
@@ -22,11 +22,11 @@ test('invoice form enforces eligibility, file size, format and consent',async({p
   await form.locator('[name=bonusStatus]').selectOption('no');
   const input=form.locator('input[type=file]');
   await input.setInputFiles({name:'unsupported.txt',mimeType:'text/plain',buffer:Buffer.from('not an invoice')});
-  await expect(page.getByRole('alert')).toContainText('Formato no admitido');
+  await expect(page.locator('main [role="alert"]')).toContainText('Formato no admitido');
   await input.setInputFiles({name:'large.pdf',mimeType:'application/pdf',buffer:Buffer.alloc(10*1024*1024+1)});
-  await expect(page.getByRole('alert')).toContainText('supera los 10 MB');
+  await expect(page.locator('main [role="alert"]')).toContainText('supera los 10 MB');
   await input.setInputFiles({name:'factura-ficticia.pdf',mimeType:'application/pdf',buffer:buildSyntheticInvoicePdf()});
-  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.locator('main [role="alert"]')).toHaveCount(0);
   await form.locator('[name=name]').fill('Prueba ficticia');
   await form.locator('[name=phone]').fill('600000003');
   expect(await form.locator('[name=consent]').evaluate(el=>el.validity.valueMissing)).toBe(true);
@@ -37,7 +37,7 @@ test('invoice form enforces eligibility, file size, format and consent',async({p
   expect(audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
   await page.getByRole('button',{name:'Enviar factura para revisión',exact:true}).click();
   await expect(page).toHaveURL(/error=verificacion/);
-  await expect(page.getByRole('alert')).toContainText('verificación de seguridad');
+  await expect(page.locator('main [role="alert"]')).toContainText('verificación de seguridad');
 });
 test('all five commercial services render with context and reject missing human verification',async({page},info)=>{
   for(const service of ['luz','gas','alarmas','cargadores','asesoria']){
@@ -53,5 +53,5 @@ test('all five commercial services render with context and reject missing human 
   expect(audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
   await page.getByRole('button',{name:'Enviar consulta',exact:true}).click();
   await expect(page).toHaveURL(/error=verificacion/);
-  await expect(page.getByRole('alert')).toContainText('comprobación de seguridad');
+  await expect(page.locator('main [role="alert"]')).toContainText('comprobación de seguridad');
 });

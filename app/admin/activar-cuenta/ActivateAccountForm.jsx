@@ -16,9 +16,33 @@ export default function ActivateAccountForm() {
   useEffect(() => {
     const supabase = createSupabaseBrowserClient();
     let alive = true;
-    supabase.auth.getUser().then(({ data }) => {
-      if (alive) { setAuthenticated(Boolean(data?.user)); setReady(true); }
-    }).catch(() => { if (alive) setReady(true); });
+    // Invitations can return an implicit fragment; normal sign-in uses PKCE.
+    // Capture it explicitly and verify the resulting user with Auth.
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const code = new URLSearchParams(window.location.search).get('code');
+    const accessToken = fragment.get('access_token');
+    const refreshToken = fragment.get('refresh_token');
+    const invitationType = fragment.get('type');
+    async function initializeInvitation() {
+      try {
+        if (accessToken && refreshToken && ['invite', 'recovery'].includes(invitationType)) {
+          const { error: sessionError } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          if (sessionError) throw sessionError;
+        } else if (code) {
+          const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+          if (exchangeError) throw exchangeError;
+        }
+        const { data, error: userError } = await supabase.auth.getUser();
+        if (alive) setAuthenticated(!userError && Boolean(data?.user));
+      } catch {
+        if (alive) setAuthenticated(false);
+      } finally {
+        // Avoid leaving invitation credentials in the address bar or history.
+        if (window.location.hash || code) window.history.replaceState(null, '', window.location.pathname);
+        if (alive) setReady(true);
+      }
+    }
+    initializeInvitation();
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (alive && session) { setAuthenticated(true); setReady(true); }
     });

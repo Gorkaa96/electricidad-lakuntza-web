@@ -53,7 +53,7 @@ function numberValue(value) {
 function card(label, value) {
   return (
     <div className="min-w-0 rounded-lg bg-[#F4F7F3] p-4">
-      <p className="text-xs font-medium text-neutral-500">{label}</p>
+      <p className="text-xs font-medium text-neutral-600">{label}</p>
       <p className="mt-2 break-words text-sm font-bold leading-6 text-neutral-800">{display(value)}</p>
     </div>
   );
@@ -86,7 +86,7 @@ function badgeClass(value) {
   if (value === 'review' || value === 'reviewing' || value === 'failed') return 'bg-amber-50 text-amber-700';
   if (value === 'not_viable' || value === 'discarded') return 'bg-red-50 text-red-700';
   if (value === 'contacted' || value === 'processing') return 'bg-blue-50 text-blue-700';
-  return 'bg-neutral-100 text-neutral-500';
+  return 'bg-neutral-100 text-neutral-600';
 }
 
 function normalizeSpanishPhone(phone) {
@@ -177,7 +177,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           </div>
 
           <h2 className="mt-4 break-words text-3xl font-semibold tracking-[-0.04em] text-neutral-950">{lead.name}</h2>
-          <p className="mt-2 text-sm text-neutral-500">Recibida el {new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(lead.created_at))}</p>
+          <p className="mt-2 text-sm text-neutral-600">Recibida el {new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(lead.created_at))}</p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {card('Teléfono', lead.phone)}
@@ -193,11 +193,11 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <div className="min-w-0 rounded-lg bg-[#F4F7F3] p-5">
-              <p className="text-xs font-medium text-neutral-500">Comentario del cliente</p>
+              <p className="text-xs font-medium text-neutral-600">Comentario del cliente</p>
               <p className="mt-3 break-words text-sm leading-7 text-neutral-700">{lead.notes || 'Sin comentario.'}</p>
             </div>
             <div className="min-w-0 rounded-lg bg-[#F4F7F3] p-5">
-              <p className="text-xs font-medium text-neutral-500">Notas internas</p>
+              <p className="text-xs font-medium text-neutral-600">Notas internas</p>
               <p className="mt-3 whitespace-pre-line break-words text-sm leading-7 text-neutral-700">{lead.admin_notes || 'Sin notas internas.'}</p>
             </div>
           </div>
@@ -207,13 +207,13 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           <section className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
             <p className="text-sm font-semibold text-lakuntza-greenDark">Factura</p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-neutral-950">Archivo recibido</h2>
-            <p className="mt-3 break-all text-sm leading-6 text-neutral-500">{lead.file_name || 'Sin archivo'}</p>
+            <p className="mt-3 break-all text-sm leading-6 text-neutral-600">{lead.file_name || 'Sin archivo'}</p>
             {documentUrl ? <a href={documentUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Descargar factura</a> : null}
             {mayEdit ? <form action={prepareInvoiceOcr} className="mt-3">
               <input type="hidden" name="id" value={lead.id} />
               <button className="inline-flex w-full items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">Procesar lectura</button>
             </form> : null}
-            <p className="mt-4 text-xs leading-5 text-neutral-500">La lectura sirve como apoyo. Revisa siempre los datos importantes contra la factura.</p>
+            <p className="mt-4 text-xs leading-5 text-neutral-600">La lectura sirve como apoyo. Revisa siempre los datos importantes contra la factura.</p>
           </section>
 
           <section className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
@@ -236,7 +236,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
                 <textarea name="adminNotes" rows={5} defaultValue={lead.admin_notes || ''} className="rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Ej.: llamar por la tarde, revisar potencia, interesado en luz y gas..." />
               </label>
               <button className="rounded-2xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Guardar gestión</button>
-            </form> : <p className="mt-4 text-sm text-neutral-500">Sin permiso para modificar esta solicitud.</p>}
+            </form> : <p className="mt-4 text-sm text-neutral-600">Sin permiso para modificar esta solicitud.</p>}
             {mayDelete ? <a href={`/admin/facturas/${lead.id}/eliminar`} className="mt-5 inline-flex w-full items-center justify-center rounded-2xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Eliminar solicitud</a> : null}
           </section>
           {mayAssign ? <section className="rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
@@ -270,18 +270,18 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           <div className="mt-6 rounded-2xl border border-neutral-200 bg-white p-5">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-medium text-neutral-500">Resumen de lectura</p>
+                <p className="text-xs font-medium text-neutral-600">Resumen de lectura</p>
                 <p className="mt-2 text-sm leading-6 text-neutral-600">Datos extraídos automáticamente. El porcentaje indica campos detectados, no exactitud. Confirmar contra la factura antes de contactar.</p>
               </div>
-              <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-neutral-500">Campos detectados {latestOcr?.confidence_avg ?? '—'}%</span>
+              <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-neutral-600">Campos detectados {latestOcr?.confidence_avg ?? '—'}%</span>
             </div>
             <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{rows.map(([label, value]) => card(label, value))}</div>
           </div>
         ) : null}
 
         <div className="mt-6 rounded-lg bg-[#F4F7F3] p-5">
-          <p className="text-xs font-medium text-neutral-500">Motivos actuales</p>
-          {analysisReasons.length > 0 ? <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-700">{analysisReasons.map((reason) => <li key={reason} className="break-words">• {reason}</li>)}</ul> : <p className="mt-3 text-sm leading-6 text-neutral-500">Sin motivos guardados todavía.</p>}
+          <p className="text-xs font-medium text-neutral-600">Motivos actuales</p>
+          {analysisReasons.length > 0 ? <ul className="mt-3 grid gap-2 text-sm leading-6 text-neutral-700">{analysisReasons.map((reason) => <li key={reason} className="break-words">• {reason}</li>)}</ul> : <p className="mt-3 text-sm leading-6 text-neutral-600">Sin motivos guardados todavía.</p>}
         </div>
 
         {mayEdit ? <form action={updateInvoiceAnalysis} className="mt-6 grid gap-5">

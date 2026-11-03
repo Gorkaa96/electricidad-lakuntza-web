@@ -14,11 +14,11 @@ export default async function AdminShell({ children, title, description, action 
 
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-neutral-200 bg-white lg:flex">
         <div className="border-b border-neutral-200 px-7 py-7">
-          <a href="/admin/entrada" aria-label="Electricidad Lakuntza, panel de gestión">
+          <a href="/admin/entrada">
             <Logo compact />
           </a>
-          <p className="mt-4 text-xs font-semibold text-neutral-500">Panel privado de gestión</p>
-          {admin ? <p className="mt-1 text-xs text-neutral-500">{ROLE_LABELS[admin.role] || 'Usuario autorizado'}</p> : null}
+          <p className="mt-4 text-xs font-semibold text-neutral-600">Panel privado de gestión</p>
+          {admin ? <p className="mt-1 text-xs text-neutral-600">{ROLE_LABELS[admin.role] || 'Usuario autorizado'}</p> : null}
         </div>
         <div className="flex-1 px-4 py-6">
           <AdminNavigation member={admin} />
@@ -36,7 +36,7 @@ export default async function AdminShell({ children, title, description, action 
       <main className="min-w-0 lg:pl-72">
         <div className="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
           <div className="flex items-center justify-between gap-4">
-            <a href="/admin/entrada" aria-label="Electricidad Lakuntza, panel de gestión"><Logo compact /></a>
+            <a href="/admin/entrada"><Logo compact /></a>
             <form action={signOutAdmin}>
               <button className="min-h-10 rounded-xl border border-neutral-300 px-4 text-xs font-semibold text-neutral-700">Salir</button>
             </form>
@@ -49,7 +49,7 @@ export default async function AdminShell({ children, title, description, action 
             <div className="mb-5 h-1 w-12 rounded-full bg-lakuntza-greenDark" aria-hidden="true" />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-semibold text-neutral-500">Electricidad Lakuntza · Gestión</p>
+                <p className="text-xs font-semibold text-neutral-600">Electricidad Lakuntza · Gestión</p>
                 <h1 className="mt-2 text-3xl font-extrabold tracking-[-.04em] text-neutral-950 sm:text-4xl">{title}</h1>
                 {description ? <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600">{description}</p> : null}
               </div>

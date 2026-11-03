@@ -29,7 +29,7 @@ test('owner runs actual PDF extraction through the application',async({page},inf
   await page.goto('/admin/facturas/'+f.invoiceId);
   await page.getByRole('button',{name:'Procesar lectura',exact:true}).click();
   await expect(page).toHaveURL(/success=ocr_completado/);
-  await expect(page.getByText('Campos detectados',{exact:false})).toBeVisible();
+  await expect(page.locator('span').filter({hasText:/^Campos detectados/})).toBeVisible();
   const service=createClient(f.url,f.service,{auth:{persistSession:false}});
   const r=await service.from('invoice_ocr_results').select('ocr_status,requires_manual_review,extracted_json').eq('lead_id',f.invoiceId).single();
   expect(r.error).toBeNull();expect(r.data.ocr_status).toBe('succeeded');
