@@ -2,8 +2,8 @@
 Actualizada el 03/11/2026. Rama integration/launch-prep-2026-10-29; PR #9 en borrador.
 
 ## Formulario de cliente final
-Retirado el modo de ejemplo y su comprobación local a petición de Gorka. La Preview de integración muestra el formulario final sin datos prellenados ni botón de ejemplo. Si aún faltan credenciales, el envío permanece deshabilitado; no se anuncia recepción ni aparece un expediente inexistente.
-NIF y dominio definitivo no son requisitos para probar el envío privado. Cuentas Cloudflare/Resend ya creadas; faltan sus credenciales y la configuración privada en Vercel.
+Retirado el modo de ejemplo y su comprobación local a petición de Gorka. La Preview de integración muestra el formulario final sin datos prellenados ni botón de ejemplo. Conectadas las credenciales y habilitado el envío real solo en Preview protegida. No se anuncia recepción ni aparece un expediente inexistente sin guardado correcto.
+NIF y dominio definitivo no son requisitos para probar el envío privado. Cuentas Cloudflare/Resend conectadas; avisos privados dirigidos exclusivamente al correo de Gorka. Pendiente el ejemplo que enviará el propietario para validar la instalación alojada.
 [Conexión del envío real](prueba-formulario-preview.md).
 
 ## Versión preparada para presentar
@@ -44,16 +44,17 @@ La factura real del correo se contrastó en temporal privado. No se copió al re
 
 ## Acciones de cuentas que necesitan acceso o verificación del propietario
 Estas tareas NO son falta de información comercial ni se deben atribuir a Javier si las cuentas las administra Gorka.
-- [ ] Completar los secretos servidor en Vercel Preview/Supabase, sin enviarlos por chat ni al repositorio.
-- [ ] Configurar Turnstile para el hostname de prueba.
-- [ ] Verificar remitente/dominio de Resend, destinatario de avisos y entrega real.
+- [x] Secretos servidor guardados en Vercel como Secret, solo en Preview de esta rama.
+- [x] Turnstile gestionado creado y conectado al hostname exacto de Preview, sin pre-clearance.
+- [x] Resend conectado con clave de solo envío y remitente de prueba, avisos solo a la cuenta de Gorka.
+- [ ] Comprobar entrega del aviso con el envío del propietario; verificar dominio remitente antes de otros destinatarios/lanzamiento.
 - [x] Site URL de Supabase y redirección exacta de invitación configuradas hacia la Preview HTTPS protegida, con autorización del propietario.
 - [ ] Configurar SMTP Auth y acceder como owner a la aplicación; verificar entrega real.
 - [x] Alta libre de Auth desactivada y persistencia verificada tras recargar. El panel es interno; se mantiene acceso de cuentas existentes y circuito administrativo de invitación.
 - [ ] Revisar protección de contraseñas filtradas (la UI exige Pro o superior; plan actual Free) y MFA.
 - [x] Ruleset de main activo y verificado (26449542): una aprobación, dos checks de GitHub Actions requeridos, ramas actualizadas, conversaciones resueltas y bloqueo de borrado/force-push.
 
-Ya se configuraron en Vercel únicamente para Preview de esta rama los dos orígenes administrativos y tres flags false.
+Ya se configuraron en Vercel únicamente para Preview de esta rama los dos orígenes administrativos. Tras autorización adicional, los dos flags de captación están true solo en Preview protegida; publicación sigue false.
 La conexión GitHub de herramientas tiene push y no administración. La sesión del navegador de la cuenta propietaria permitió guardar las reglas tras la verificación de identidad autorizada por Gorka.
 
 ## Validación final sobre la instalación alojada
@@ -65,4 +66,4 @@ La conexión GitHub de herramientas tiene push y no administración. La sesión 
 
 ## Referencias
 [Activación paso a paso y rollback](activacion-segura-cloud.md) · [Operativa y recuperación](operativa-y-recuperacion.md) · [Revisión de correos](revision-correos-2026-11-03.md).
-No comprar dominio, contratar proveedores, ampliar planes ni conceder nuevos accesos automáticamente. Producción y recepción pública continúan cerradas.
+No comprar dominio, contratar proveedores, ampliar planes ni conceder nuevos accesos automáticamente. Producción permanece sin cambios. Recepción habilitada solo en Preview protegida para validación privada.
