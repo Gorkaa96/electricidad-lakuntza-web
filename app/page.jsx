@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import FenieEnergySection from '@/components/FenieEnergySection';
 import { commercialCatalog } from '@/lib/commercialCatalog';
 import MobileContactBar from '@/components/MobileContactBar';
+import { commercialIntakeReady } from '@/lib/invoice/protection';
 
 export const metadata = {
   title: 'Luz, gas, alarmas, cargadores y asesoría energética',
@@ -56,6 +57,7 @@ const heroServices = [
 ];
 
 export default function HomePage() {
+  const inquiryReady = commercialIntakeReady();
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
@@ -165,6 +167,9 @@ export default function HomePage() {
               <p className="mt-5 max-w-xl text-base leading-8 text-[#516051]">Consulta sobre luz, gas, alarmas, cargadores eléctricos o asesoría energética. Te explicaremos las opciones y condiciones reales.</p>
             </div>
             <div className="grid gap-3 lg:col-span-5">
+              {inquiryReady ? (
+                <a href="/consulta" className="inline-flex min-h-14 items-center justify-center rounded-xl bg-[#245E2A] px-6 py-4 text-sm font-semibold text-white hover:bg-[#164B20]">Enviar consulta desde la web</a>
+              ) : null}
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-xl bg-[#245E2A] px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-[#164B20]">
                 <MessageCircle size={19} aria-hidden="true"/> Escribir por WhatsApp
               </a>
