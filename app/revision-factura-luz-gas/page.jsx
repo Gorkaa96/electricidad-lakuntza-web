@@ -119,7 +119,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
             </div>
 
             <div className="order-1 xl:order-2 xl:col-span-7">
-              <form id="formulario" action={submitInvoiceReview} className="scroll-mt-24 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm">
+              {intakeReady ? <form id="formulario" action={submitInvoiceReview} className="scroll-mt-24 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm">
                 <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="website-hp">Deja este campo vacío</label><input id="website-hp" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -163,7 +163,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                   </div>
 
                   <div className="border-t border-neutral-200 pt-7">
-                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">3. Factura y comentarios</p>
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-600">3. Factura y comentarios</p>
                     <div className="mt-4 grid gap-4">
 
                       <InvoiceFileInput />
@@ -171,7 +171,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
 
                     <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
                       ¿Algo que debamos saber? (opcional)
-                      <textarea name="notes" rows={3} maxLength={500} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                      <textarea name="notes" rows={3} maxLength={500} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-600 focus:border-lakuntza-green sm:text-sm" />
                     </label>
                   </div>
 
@@ -203,7 +203,16 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     Formatos permitidos: PDF, JPG, PNG o WebP. Máximo 10 MB. No adjuntes DNI, IBAN ni documentación adicional: solo necesitamos la factura para esta primera revisión.
                   </p>
                 </div>
-              </form>
+              </form> : (
+                <section id="formulario" className="scroll-mt-24 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+                  <h2 className="text-2xl font-semibold text-[#152017]">Solicita tu revisión de luz o gas</h2>
+                  <p className="mt-4 text-base leading-8 text-neutral-600">Te atendemos personalmente. Cuéntanos qué necesitas y te indicaremos cómo continuar con la revisión.</p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white">Consultar por WhatsApp</a>
+                    <a href="tel:+34649853448" className="inline-flex min-h-12 items-center rounded-xl border border-neutral-300 px-5 py-3 text-sm font-semibold text-[#205127]">Llamar</a>
+                  </div>
+                </section>
+              )}
             </div>
           </div>
         </section>

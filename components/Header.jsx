@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import Logo from './Logo';
 
@@ -15,13 +15,14 @@ const navigation = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const menuButton = useRef(null);
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#E3E9E2] bg-white/95 backdrop-blur-md">
+    <header onKeyDown={(event) => { if (event.key === 'Escape' && open) { setOpen(false); menuButton.current?.focus(); } }} className="fixed inset-x-0 top-0 z-50 border-b border-[#E3E9E2] bg-white/95 backdrop-blur-md">
       <a href="#contenido-principal" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[90] focus:rounded-lg focus:bg-[#235E2C] focus:px-4 focus:py-3 focus:text-white">
         Ir al contenido
       </a>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
-        <a href="/" aria-label="Electricidad Lakuntza, página de inicio" className="shrink-0" onClick={() => setOpen(false)}>
+        <a href="/" aria-label="Electricidad Lakuntza Elektrizitatea, página de inicio" className="shrink-0" onClick={() => setOpen(false)}>
           <Logo compact />
         </a>
         <nav className="hidden items-center gap-3 text-xs font-semibold text-[#334139] lg:flex xl:gap-6 xl:text-sm" aria-label="Navegación principal">
@@ -34,7 +35,7 @@ export default function Header() {
             Contactar <ArrowRight size={16} aria-hidden="true"/>
           </a>
         </div>
-        <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#D6DED4] text-[#152017] lg:hidden">
+        <button ref={menuButton} type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#D6DED4] text-[#152017] lg:hidden">
           {open ? <X size={23} aria-hidden="true"/> : <Menu size={23} aria-hidden="true"/>}
         </button>
       </div>

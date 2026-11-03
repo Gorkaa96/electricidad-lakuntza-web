@@ -33,7 +33,7 @@ test('four service priorities and keyboard skip link', async ({ page }) => {
     '/cargadores-electricos', '/asesoria-energetica',
   ];
   const heading = page.getByRole('heading', { name: '¿En qué podemos ayudarte?', exact: true });
-  const card = heading.locator('..');
+  const card = heading.locator('../..');
   const links = card.locator('a');
   await expect(links).toHaveCount(4);
   expect(await links.evaluateAll(items => items.map(a => a.getAttribute('href')))).toEqual(expected);
@@ -49,6 +49,9 @@ test('navigation works at every viewport', async ({ page }, info) => {
     const button = page.getByRole('button', { name: 'Abrir menú', exact: true });
     await button.click();
     await expect(page.getByRole('button', { name: 'Cerrar menú', exact: true })).toHaveAttribute('aria-expanded', 'true');
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('button', { name: 'Abrir menú', exact: true })).toBeFocused();
+    await page.getByRole('button', { name: 'Abrir menú', exact: true }).click();
     await page.getByRole('navigation', { name: 'Navegación móvil', exact: true }).getByRole('link', { name: 'Cargadores eléctricos', exact: true }).click();
   } else {
     await page.getByRole('navigation', { name: 'Navegación principal', exact: true }).getByRole('link', { name: 'Cargadores eléctricos', exact: true }).click();
