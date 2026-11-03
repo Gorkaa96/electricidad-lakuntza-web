@@ -29,9 +29,6 @@ export default function FenieEnergySection() {
               Conocer su historia <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
-          <p className="mt-4 text-xs leading-6 text-neutral-500">
-            Los enlaces llevan al sitio oficial de Feníe Energía y se abren en otra pestaña.
-          </p>
         </div>
         <div className="lg:col-span-6">
           <div className="overflow-hidden rounded-2xl border border-[#DDE9DA] bg-[#F5F8F4]">
