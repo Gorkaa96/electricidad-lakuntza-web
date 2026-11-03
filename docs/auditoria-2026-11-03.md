@@ -1,3 +1,5 @@
+> Actualización posterior: consultar [auditoría de cierre en Work](auditoria-work-2026-11-03.md) para las correcciones, pruebas y bloqueos más recientes.
+
 # Auditoría y plan de cierre — Electricidad Lakuntza
 
 Fecha: **03/11/2026** · alcance: PR #9 (DRAFT), rama `integration/launch-prep-2026-10-29` de `Gorkaa96/electricidad-lakuntza-web`. Supabase `yvrjrvropgouvzltwwvm`. Vercel `prj_CNVoTiZ9IcAxsRdWhpRYN9iqUqeZ`.
