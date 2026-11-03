@@ -5,15 +5,15 @@ import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
   title: 'Cargadores eléctricos para hogares y negocios',
-  description: 'Asesoramiento y presupuesto individualizado para puntos de recarga de vehículo eléctrico en viviendas, garajes y negocios con Electricidad Lakuntza.',
+  description: 'Electricidad Lakuntza estudia, presupuesta e instala cargadores para vehículos eléctricos en viviendas, garajes y negocios.',
   alternates: { canonical: '/cargadores-electricos' },
 };
 
 const whatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero estudiar la instalación de un cargador eléctrico. Mi ubicación es: ');
 const questions = [
   ['¿Qué precio tiene?', 'Depende del cargador, de la distancia al cuadro, del garaje y de los trabajos necesarios. Te ofreceremos un presupuesto tras revisar esos datos.'],
-  ['¿Tengo que contratar la luz con Feníe Energía?', 'Consultaremos las opciones disponibles en cada caso, sin dar por supuesta ninguna condición comercial ni contratación adicional.'],
-  ['¿Hacéis la instalación?', 'Se valorará la viabilidad técnica, la ubicación y la disponibilidad de instalación o coordinación del servicio antes de confirmar un presupuesto.'],
+  ['¿Tengo que contratar la luz con Feníe Energía?', 'No. Electricidad Lakuntza realiza el estudio, presupuesto e instalación del cargador. Si quieres revisar también tu contrato de luz, podemos asesorarte por separado como agentes de Feníe Energía.'],
+  ['¿Hacéis la instalación?', 'Sí. Electricidad Lakuntza realiza la instalación del cargador, previa visita o estudio técnico y aceptación del presupuesto.'],
   ['¿Hay ayudas?', 'Revisaremos si existen convocatorias vigentes aplicables a tu caso. No garantizamos subvenciones ni su concesión.'],
 ];
 
@@ -27,7 +27,7 @@ export default function CargadoresElectricosPage() {
             <div className="lg:col-span-8">
               <p className="text-sm font-semibold text-[#B6E6A4]">Movilidad eléctrica</p>
               <h1 className="mt-6 max-w-4xl text-[clamp(2.8rem,5.5vw,5.1rem)] font-semibold leading-[1.06] tracking-[-.055em]">Tu cargador eléctrico, bien planteado desde el principio.</h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80">Para tu vivienda, plaza de garaje o negocio. Revisamos las necesidades, te explicamos las opciones y preparamos una propuesta adaptada a la instalación.</p>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80">En Electricidad Lakuntza estudiamos, presupuestamos e instalamos tu punto de recarga en vivienda, garaje o negocio, adaptándolo a las necesidades de cada instalación.</p>
               <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-9 inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-[#E7F4DF] px-6 py-4 text-sm font-semibold text-[#22582A] hover:bg-white"><MessageCircle size={19} aria-hidden="true" /> Consultar mi instalación <ArrowRight size={17} aria-hidden="true" /></a>
               <p className="mt-4 text-sm leading-6 text-white/65">Sin presupuesto estándar ni compromiso por consultar.</p>
             </div>
@@ -71,7 +71,7 @@ export default function CargadoresElectricosPage() {
           <div className="mt-7 divide-y divide-neutral-200 border-t border-neutral-200">
             {questions.map(([q,a]) => <div className="grid gap-3 py-6 md:grid-cols-12" key={q}><h3 className="font-semibold md:col-span-5">{q}</h3><p className="text-sm leading-7 text-neutral-600 md:col-span-7">{a}</p></div>)}
           </div>
-          <div className="mt-10 border-l-4 border-[#34793B] bg-[#F5F8F4] p-6 text-sm leading-7 text-neutral-700">Feníe Energía comercializa soluciones de recarga. Electricidad Lakuntza estudia la atención comercial y la ejecución o coordinación según el proyecto y la disponibilidad. <a href="https://www.fenieenergia.es/es/hogar/cargadores-electricos" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">Información de Feníe Energía</a>.</div>
+          <div className="mt-10 border-l-4 border-[#34793B] bg-[#F5F8F4] p-6 text-sm leading-7 text-neutral-700">Electricidad Lakuntza realiza el estudio, presupuesto y montaje de tu cargador. La contratación de luz con Feníe Energía es un servicio diferente, que podemos estudiar si lo necesitas. <a href="https://www.fenieenergia.es/es/hogar/cargadores-electricos" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">Información de Feníe Energía</a>.</div>
         </section>
         <section className="bg-[#F0F6ED] py-16"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-6 px-4 sm:px-6 md:flex-row md:items-center lg:px-8"><div><h2 className="text-2xl font-semibold">¿Valoramos tu punto de recarga?</h2><p className="mt-2 text-sm text-neutral-600">Cuéntanos dónde lo necesitas y revisamos las opciones.</p></div><a href={whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#24662D] px-6 py-3 font-semibold text-white">Escribir por WhatsApp</a></div></section>
       </main>
