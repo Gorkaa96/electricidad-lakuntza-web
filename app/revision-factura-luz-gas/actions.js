@@ -40,7 +40,8 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
   const to = process.env.INVOICE_REVIEW_TO;
   const from = process.env.RESEND_FROM;
   if (!to || !from) return false;
-  const adminUrl = `${siteUrl}/admin/facturas/${leadId}`;
+  const adminBase = process.env.ADMIN_PANEL_BASE_URL?.startsWith('https://') ? process.env.ADMIN_PANEL_BASE_URL.replace(/\/$/, '') : siteUrl;
+  const adminUrl = `${adminBase}/admin/facturas/${leadId}`;
 
   const body = [
     'Nueva factura recibida para revisión.',
