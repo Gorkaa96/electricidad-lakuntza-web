@@ -5,7 +5,7 @@ import MobileContactBar from '@/components/MobileContactBar';
 
 export const metadata = {
   title: 'Asesoría energética y revisión de contratos',
-  description: 'Revisión personalizada de facturas, potencia y condiciones de luz y gas. Te explicamos las alternativas de Feníe Energía sin prometer ahorros automáticos.',
+  description: 'Asesoría energética realizada directamente por Electricidad Lakuntza: revisión de facturas, potencia, consumo y condiciones de contratación.',
   alternates: { canonical: '/asesoria-energetica' },
 };
 
@@ -36,7 +36,7 @@ export default function AsesoriaEnergeticaPage() {
             <aside className="rounded-2xl border border-white/20 bg-white p-7 text-[#17271D] lg:col-span-4">
               <ShieldCheck size={33} className="text-[#35763B]" aria-hidden="true" />
               <h2 className="mt-5 text-2xl font-semibold tracking-[-.03em]">Recomendaciones razonadas.</h2>
-              <p className="mt-3 text-sm leading-7 text-neutral-600">Estudiaremos contigo la conveniencia de mantener la tarifa o cambiar a una propuesta de Feníe Energía.</p>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">Electricidad Lakuntza analiza directamente tus consumos, la potencia contratada y las condiciones actuales para identificar oportunidades de mejora.</p>
             </aside>
           </div>
         </section>
@@ -55,7 +55,7 @@ export default function AsesoriaEnergeticaPage() {
               ['03', 'Tú decides', 'Te explicamos ventajas, riesgos y condiciones reales. Nada se contrata automáticamente.'],
             ].map(([num,title,text])=><li key={num} className="border-t border-neutral-200 pt-5"><p className="text-sm font-semibold text-[#347B3B]">{num}</p><h3 className="mt-3 text-lg font-semibold">{title}</h3><p className="mt-2 text-sm leading-7 text-neutral-600">{text}</p></li>)}
           </ol>
-          <p className="mt-9 max-w-3xl text-sm leading-7 text-neutral-600">Electricidad Lakuntza actúa como agente comercial de Feníe Energía: las alternativas analizadas pertenecen a su catálogo y no constituyen una comparación exhaustiva de todas las comercializadoras del mercado.</p>
+          <p className="mt-9 max-w-3xl text-sm leading-7 text-neutral-600">La asesoría la realiza Electricidad Lakuntza. Si recomendamos estudiar un cambio de comercializadora, comparamos tu situación con las ofertas disponibles en el portal profesional de Feníe Energía, de la que somos agentes. No actuamos como comparador de todo el mercado.</p>
         </section>
       </main><Footer /><MobileContactBar />
     </div>
