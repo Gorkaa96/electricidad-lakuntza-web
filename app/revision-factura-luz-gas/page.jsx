@@ -1,4 +1,6 @@
 import { AlertTriangle, CheckCircle2, FileText, Leaf, Lock, MessageCircle, ShieldCheck } from 'lucide-react';
+import Script from 'next/script';
+import { invoiceIntakeReady } from '@/lib/invoice/protection';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
@@ -24,6 +26,8 @@ const errorMessages = {
   tamano: 'La factura supera el tamaño máximo de 10 MB.',
   subida: 'No se ha podido subir la factura. Inténtalo de nuevo o envíala por WhatsApp.',
   registro: 'No se ha podido registrar la solicitud. Inténtalo de nuevo o envíala por WhatsApp.',
+  verificacion: 'No se ha completado la verificación de seguridad. Inténtalo de nuevo.',
+  limite: 'Hemos recibido demasiados intentos desde este contacto. Inténtalo más tarde o consúltanos por teléfono.',
 };
 
 const benefits = [
@@ -46,7 +50,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
   const resolvedParams = await searchParams;
   const error = resolvedParams?.error;
   const initialSupplyType = ['luz', 'gas', 'luz_gas'].includes(resolvedParams?.servicio) ? resolvedParams.servicio : 'luz';
-  const intakeReady = process.env.INVOICE_INTAKE_ENABLED === 'true' && Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const intakeReady = invoiceIntakeReady();
 
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
@@ -183,6 +187,13 @@ export default async function RevisionFacturaPage({ searchParams }) {
                   {!intakeReady ? (
                     <div role="status" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
                       El envío de facturas desde la web todavía no está operativo. Para una consulta inicial, puedes <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">escribirnos por WhatsApp</a>. No intentes enviar datos personales hasta que activemos este servicio.
+                    </div>
+                  ) : null}
+                  {intakeReady ? (
+                    <div className="rounded-xl border border-neutral-200 bg-white p-4">
+                      <p className="mb-3 text-sm font-semibold text-neutral-800">Comprobación de seguridad</p>
+                      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
+                      <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-action="invoice_review" data-theme="light" />
                     </div>
                   ) : null}
                   <InvoiceSubmitButton disabled={!intakeReady} />
