@@ -6,7 +6,7 @@ export const metadata = { title: 'Nueva oportunidad comercial', robots: { index:
 
 const field = 'min-h-12 w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm outline-none focus:border-[#347C3B]';
 const services = [
-  ['luz', 'Luz'], ['gas', 'Gas'], ['alarmas', 'Alarmas'],
+  ['luz', 'Luz'], ['gas', 'Gas'], ['luz_gas', 'Luz y gas'], ['alarmas', 'Alarmas'],
   ['cargadores', 'Cargadores eléctricos'], ['asesoria', 'Asesoría energética'],
 ];
 
