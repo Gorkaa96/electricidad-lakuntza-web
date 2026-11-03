@@ -1,6 +1,7 @@
 'use server';
 
-import { headers } from 'next/headers';
+import { headers, cookies } from 'next/headers';
+import { receiptCookie } from '@/lib/invoice/receipt';
 import { redirect } from 'next/navigation';
 import { createInvoiceIntakeClient } from '@/lib/supabase/intake';
 import { siteUrl } from '@/lib/site';
@@ -167,5 +168,7 @@ export async function submitInvoiceReview(formData) {
 
   await notifyByEmail({ leadId, supplyType, customerType });
 
+  const receipt = receiptCookie();
+  if (receipt) (await cookies()).set(receipt.name, receipt.value, receipt.options);
   redirect(`/revision-factura-luz-gas/gracias?estado=${precheckResult}`);
 }
