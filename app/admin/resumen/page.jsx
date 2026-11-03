@@ -1,4 +1,5 @@
 import AdminShell from '@/components/admin/AdminShell';
+import {canEditLeads} from '@/lib/rolePermissions';
 import {requireAnyPermission} from '@/lib/admin';
 import {ArrowUpRight, FileText, BriefcaseBusiness, Clock3, CircleCheck} from 'lucide-react';
 export const dynamic='force-dynamic';
@@ -6,7 +7,7 @@ export const metadata={title:'Resumen del CRM',robots:{index:false,follow:false}
 const statusLabels={new:'Nueva',reviewing:'En revisión',contacted:'Contactada',quoted:'Propuesta enviada',won:'Ganada',lost:'Descartada',converted:'Convertida',discarded:'Descartada'};
 const services={luz:'Luz',gas:'Gas',luz_gas:'Luz y gas',alarmas:'Alarmas',cargadores:'Cargadores',asesoria:'Asesoría'};
 export default async function CrmOverview(){
- const {supabase}=await requireAnyPermission('leads.read_all','leads.read_assigned');
+ const {supabase,admin}=await requireAnyPermission('leads.read_all','leads.read_assigned');
  // All queries use the member session and RLS: agents see only assigned records.
  const results=await Promise.all([
   supabase.from('commercial_leads').select('id,contact_name,service,status,created_at,invoice_review_lead_id').order('created_at',{ascending:false}).limit(8),
@@ -22,7 +23,7 @@ export default async function CrmOverview(){
   ['Lecturas por revisar',results[3].count,FileText,'/admin/facturas?view=all','Pendientes o no legibles'],
   ['Oportunidades ganadas',results[4].count,CircleCheck,'/admin/oportunidades','Contrataciones registradas'],
  ];
- return <AdminShell title="Resumen" description="Tu mesa de trabajo: nuevas consultas, seguimiento y facturas para revisar." action={<a href="/admin/oportunidades/nueva" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#1B4E3D] px-5 py-3 text-sm font-semibold text-white hover:bg-[#123D2E]">Nueva oportunidad</a>}>
+ return <AdminShell title="Resumen" description="Tu mesa de trabajo: nuevas consultas, seguimiento y facturas para revisar." action={canEditLeads(admin)?<a href="/admin/oportunidades/nueva" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#1B4E3D] px-5 py-3 text-sm font-semibold text-white hover:bg-[#123D2E]">Nueva oportunidad</a>:null}>
   {error?<div role="alert" className="mb-5 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">No se han podido cargar todos los datos. Recarga la página; los guiones no significan que no haya actividad.</div>:null}
   <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{cards.map(([label,count,Icon,href,caption])=><a href={href} key={label} className="rounded-xl border border-[#DFE6E2] bg-white p-5 hover:border-[#7DA58B]"><div className="flex items-center justify-between gap-3"><h2 className="text-sm font-medium text-[#52655C]">{label}</h2><Icon size={19} aria-hidden="true" className="text-[#3D6E54]"/></div><p className="mt-5 text-3xl font-semibold tabular-nums tracking-tight">{error?'—':count??0}</p><p className="mt-2 text-xs text-[#617269]">{caption}</p></a>)}</div>
   <section className="mt-7 overflow-hidden rounded-xl border border-[#DFE6E2] bg-white"><div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E5EBE8] p-5"><h2 className="text-lg font-semibold">Últimas oportunidades</h2><a href="/admin/oportunidades" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#285D44]">Ver todas <ArrowUpRight size={16} aria-hidden="true"/></a></div>

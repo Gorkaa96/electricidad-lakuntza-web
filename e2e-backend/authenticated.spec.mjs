@@ -64,6 +64,14 @@ test('received invitation activates a fictitious agent account',async({page},inf
   await page.getByLabel('Contraseña nueva',{exact:true}).fill(password);
   await page.getByLabel('Repetir contraseña',{exact:true}).fill(password);
   await page.getByRole('button',{name:'Activar mi cuenta',exact:true}).click();
-  await expect(page).toHaveURL(/\/admin\/(entrada|oportunidades|facturas)/);
+  await expect(page).toHaveURL(/\/admin\/(entrada|resumen|oportunidades|facturas)/);
   await info.attach('activated fictitious agent',{body:await page.screenshot({fullPage:true}),contentType:'image/png'});
+});
+
+test('CRM overview respects agent assignment and has accessible navigation',async({page})=>{
+ await login(page,'other'); await page.goto('/admin/resumen');
+ await expect(page.getByRole('heading',{name:'Resumen',exact:true})).toBeVisible();
+ await expect(page.getByText('Persona de prueba',{exact:true})).toHaveCount(0);
+ const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
+ expect(audit.violations.map(v=>v.id)).toEqual([]);
 });
