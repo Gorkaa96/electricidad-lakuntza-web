@@ -140,7 +140,6 @@ export async function submitInvoiceReview(formData) {
   if (uploadError) redirect('/revision-factura-luz-gas?error=subida#formulario');
 
   const precheckResult = getPrecheckResult({ bonusStatus, supplyType, customerType, currentCompany, notes });
-  const userAgent = (requestHeaders.get('user-agent') || '').slice(0, 350);
 
   const { error: insertError } = await supabase.from('invoice_review_leads').insert({
     id: leadId,
@@ -160,7 +159,6 @@ export async function submitInvoiceReview(formData) {
     file_size: file.size,
     precheck_result: precheckResult,
     consent_accepted: consentAccepted,
-    user_agent: userAgent,
   });
 
   if (insertError) {
