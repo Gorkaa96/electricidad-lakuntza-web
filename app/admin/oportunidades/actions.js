@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { requireAnyPermission, requirePermission } from '@/lib/admin';
 import { hasPermission } from '@/lib/rolePermissions';
 
-const services = new Set(['luz', 'gas', 'alarmas', 'cargadores', 'asesoria']);
+const services = new Set(['luz', 'gas', 'luz_gas', 'alarmas', 'cargadores', 'asesoria']);
 const customerTypes = new Set(['vivienda', 'negocio', 'comunidad', 'otro']);
 const origins = new Set(['manual', 'whatsapp', 'telefono', 'email']);
 const statuses = new Set(['new', 'reviewing', 'contacted', 'converted', 'discarded']);
@@ -120,6 +120,14 @@ export async function deleteCommercialLead(formData) {
     redirect('/admin/oportunidades/' + id + '?error=confirmacion');
   }
 
+  // A linked invoice owns its CRM entry. Delete it from the private invoice
+  // workflow so the document, the invoice and the linked CRM row disappear together.
+  const { data: linked, error: linkedError } = await supabase.from('commercial_leads')
+    .select('invoice_review_lead_id').eq('id', id).maybeSingle();
+  if (linkedError || !linked) redirect('/admin/oportunidades?error=datos');
+  if (linked.invoice_review_lead_id) {
+    redirect('/admin/facturas/' + linked.invoice_review_lead_id + '?error=eliminar_desde_factura');
+  }
   const { data, error } = await supabase.from('commercial_leads')
     .delete().eq('id', id).select('id').maybeSingle();
 
