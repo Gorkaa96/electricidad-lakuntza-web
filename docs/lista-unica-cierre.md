@@ -1,63 +1,61 @@
 # Lista única de cierre — Electricidad Lakuntza
+Actualizada el 03/11/2026. Rama integration/launch-prep-2026-10-29; PR #9 en borrador.
 
-Actualizada el 03/11/2026. Rama integration/launch-prep-2026-10-29, PR #9 en borrador.
+## Versión preparada para presentar
+[Web Preview protegida](https://electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app/) · [guion para Javier y Kristina](presentacion-javier-kristina.md).
+Se mantiene la identidad visual. Corregidos descubrimiento de los cuatro servicios en móvil, barra de servicios/teléfono/WhatsApp, acciones de revisión con y sin factura y contraste del panel.
+Instalaciones generales siguen ocultas, con el código conservado.
 
-## Cerrado y comprobado
-25 pruebas unitarias (extracción real de PDF sintético incluida), 48 pruebas públicas en escritorio/móvil/tablet con axe, compilación y auditoría de dependencias de producción aprobadas en [CI](https://github.com/Gorkaa96/electricidad-lakuntza-web/actions/runs/41627055477). Regresión SQL transaccional aprobada con rollback.
+## Comprobaciones implementadas y reproducibles
+Los checks de la [PR #9](https://github.com/Gorkaa96/electricidad-lakuntza-web/pull/9) son la referencia del último commit.
+- Pruebas unitarias, extracción de PDF sintético, compilación y auditoría de dependencias de producción.
+- Navegación pública, tres tamaños, teclado, accesibilidad automática, formulario cerrado, privacidad y descargas anónimas denegadas.
+- Supabase desechable en GitHub: SQL del proyecto aplicado desde cero y regresión transaccional con rollback.
+- Sesiones Auth auténticas de owner/admin/agent, descarga de archivo privado, expediente ajeno bloqueado y revocación con token ya emitido.
+- CRM de los cinco servicios, sincronización de estado/asignación, lectura PDF desde el panel y borrado de archivo y registros asociados.
+- Invitación recibida por SMTP local y activación de cuenta desde el enlace recibido. Corregido el tratamiento del token de invitación.
+- Formulario habilitado solo en el runner: bono social, gas, consentimiento, formatos, tamaño y rechazo de verificación ausente.
+- Envío completo sintético con captcha y avisos controlados en el runner, incluido fallo de aviso sin pérdida de expediente. No se contacta con Cloudflare ni Resend reales.
+- Copia y restauración byte a byte de un archivo sintético. No sustituye una restauración integral de la instalación alojada.
 
-Configuradas en Vercel exclusivamente para Preview y esta rama: ADMIN_PANEL_BASE_URL, ADMIN_INVITATION_BASE_URL y los tres interruptores de publicación/captación en false. No requieren pedir sus valores al propietario. Los secretos y las pruebas reales siguen pendientes.
+La factura real del correo se contrastó en temporal privado. No se copió al repositorio, CI ni Keep. Fotos y PDF escaneados se revisan manualmente.
 
-## Nueva información recibida el 03/11
-Revisados los tres folletos de alarmas enviados por Javier. Precio base, beneficio de puntos y fechas de campañas documentados; la cerradura promocionada hasta octubre está caducada. [Detalle y preguntas restantes](revision-correos-2026-11-03.md).
-
-Factura real disponible y lectura PDF/parser contrastados en temporal privado, sin subirla a GitHub/Keep ni al entorno de aplicación. Añadidas dos regresiones con valores inventados; comprobación de la versión actual en los checks de PR #9. La recepción y circuito E2E desplegado siguen pendientes.
-
-## Información que hay que pedir (una sola recopilación)
-
-### Javier y Kristina
-- [ ] Denominación jurídica y NIF del titular. Confirmar con César Donázar qué corresponde a la forma declarada «sociedad irregular».
-- [ ] Confirmación de domicilio y teléfono publicados. El correo eleclakuntza@yahoo.es ya está confirmado; no volver a pedirlo como desconocido.
-- [ ] Dominio definitivo, correo corporativo y quién tiene acceso al DNS.
-- [ ] Responsable diario de solicitudes, suplente y plazo de respuesta aceptado.
-- [ ] Confirmar campaña vigente de alarmas del canal Feníe (folletos ya recibidos), renovación de cerradura si existe, cobertura, permanencia/penalización y comisiones. Condiciones vigentes de productos luz/gas.
-- [ ] Alarmas: circuito contractual y posventa con Movistar Prosegur mediante Feníe.
-- [ ] Cargadores propios: alcance, capacidad, zonas, presupuestación, garantías y posventa.
+## Pedir a Javier y Kristina
+- [ ] Denominación jurídica exacta y NIF. Validar con su asesoría la forma declarada «sociedad irregular».
+- [ ] Confirmación de domicilio y teléfonos publicados. eleclakuntza@yahoo.es ya está confirmado.
+- [ ] Dominio final, correo corporativo y quién controla el DNS.
+- [ ] Responsable diario, suplente y plazo de respuesta.
+- [ ] Condiciones de luz/gas del canal Feníe: productos y comisiones.
+- [ ] Alarmas: confirmar campaña actual, renovación de cerradura si existe, permanencia/penalizaciones, cobertura, negocios y circuito de posventa. Los tres folletos ya están recibidos y revisados.
+- [ ] Cargadores: alcance, zona, capacidad, presupuesto, garantías y posventa.
 - [ ] Asesoría propia: alcance y coste.
+- [ ] Aprobación del contenido y diseño presentado.
 
-### Asesoría y titular
-- [ ] Validación de identificación legal y textos RGPD/LSSI.
-- [ ] Bases jurídicas, encargados, contratos de tratamiento y transferencias internacionales.
-- [ ] Plazos de conservación por finalidad, derechos, borrado, copias e incidencias.
-- [ ] Aprobación del destino/frecuencia/retención de copias, responsables, objetivo de recuperación y presupuesto.
+## Validar con el titular y su asesoría
+- [ ] Identidad legal y textos RGPD/LSSI.
+- [ ] Bases jurídicas, proveedores/encargados, contratos y transferencias.
+- [ ] Conservación por finalidad, atención de derechos, borrado e incidencias.
+- [ ] Responsable, destino, frecuencia y retención de copias de base de datos y archivos; objetivos de recuperación y presupuesto.
 
-## Acciones de propietario que faltan, sin pedir contraseñas ni claves por chat
-- [ ] Iniciar sesión de owner en la aplicación Preview.
-- [ ] Configurar los secretos servidor de Vercel Preview/Supabase; mantener los flags cerrados.
+## Acciones de cuentas que necesitan acceso o verificación del propietario
+Estas tareas NO son falta de información comercial ni se deben atribuir a Javier si las cuentas las administra Gorka.
+- [ ] Completar los secretos servidor en Vercel Preview/Supabase, sin enviarlos por chat ni al repositorio.
 - [ ] Configurar Turnstile para el hostname de prueba.
-- [ ] Verificar dominio/remitente de Resend y destinatario de avisos.
-- [ ] Configurar SMTP Auth y allowlist de invitaciones. SMTP de invitaciones y avisos de nuevas solicitudes son dos flujos distintos.
-- [ ] Revisar comprobación de contraseñas filtradas y MFA según disponibilidad del plan.
-- [ ] Una cuenta con administración del repositorio debe proteger main con PR, revisión y checks. La conexión actual tiene push=true y admin=false; no puede imponer esta configuración.
+- [ ] Verificar remitente/dominio de Resend, destinatario de avisos y entrega real.
+- [ ] Configurar SMTP Auth y allowlist del enlace de invitación; acceder como owner a la aplicación.
+- [ ] Revisar protección de contraseñas filtradas y MFA según el plan.
+- [ ] Guardar el ruleset de main tras verificar la sesión de GitHub: preparado con una aprobación, dos checks requeridos, bloqueo de borrado y force-push. No afirmar que está activo hasta comprobarlo.
 
-Pasos y nombres de variables: [activación segura](activacion-segura-cloud.md). No comprar dominio, ampliar plan ni conceder accesos sin decisión del titular.
+Ya se configuraron en Vercel únicamente para Preview de esta rama los dos orígenes administrativos y tres flags false.
+La conexión GitHub de herramientas tiene push y no administración. La sesión del navegador sí muestra la cuenta propietaria, pero GitHub exige reautenticación para guardar las reglas.
 
-## Validaciones pendientes por esas dependencias
-- [ ] Factura sintética (la lectura aislada de una factura real ya se ha probado): subida → Storage privado → CRM → aviso → seguimiento → borrado integral.
-- [ ] Sesiones owner/admin/agent: asignación, descarga, expediente ajeno, renovación y revocación.
-- [ ] Invitación real: entrega, activación, caducidad y desactivación.
-- [ ] Turnstile real, cuota y fallo de correo sin pérdida de solicitud.
-- [ ] Restauración de base de datos y objetos en entorno aislado.
-- [ ] Revisión manual con lector de pantalla y aceptación final sobre Preview configurada.
-- [ ] Aprobación explícita para publicación/activación, tras pasar los controles.
+## Validación final sobre la instalación alojada
+- [ ] Repetir con datos sintéticos el circuito aprobado en CI sobre la Preview protegida y configuración real, incluido captcha y entrega de correo.
+- [ ] Verificar la invitación, sesión y revocación con el SMTP y usuarios de prueba autorizados.
+- [ ] Ejecutar una restauración integral aislada de base de datos y objetos con la política de copias acordada.
+- [ ] Revisión manual con lector de pantalla y aceptación de uso por Javier/Kristina.
+- [ ] Aprobación explícita de publicación y recepción pública después de cerrar los controles.
 
-## Documentación ya preparada
-- Modelo comercial, privacidad técnica y controles: [auditoría](auditoria-work-2026-11-03.md).
-- Procedimiento diario, cuentas, borrado, copias e incidencias: [operativa y recuperación](operativa-y-recuperacion.md).
-- Pruebas SQL reversibles: tests/sql/security-regression.sql.
-- Pruebas públicas de navegador y accesibilidad: e2e/public-flows.spec.mjs, tres tamaños, sin datos ni secretos.
-- PDF de prueba: npm run qa:fixture; sin ningún dato de cliente.
-
-## Límites
-Pasar CI o los ensayos aislados no valida SMTP, Storage, Auth ni RGPD en la instalación real. No confundir tareas preparadas con configuraciones ejecutadas.
-
-Las mejoras futuras de métricas avanzadas, comisiones y automatizaciones no son requisitos para activar una primera recepción controlada y quedan fuera del cierre de lanzamiento.
+## Referencias
+[Activación paso a paso y rollback](activacion-segura-cloud.md) · [Operativa y recuperación](operativa-y-recuperacion.md) · [Revisión de correos](revision-correos-2026-11-03.md).
+No comprar dominio, contratar proveedores, ampliar planes ni conceder nuevos accesos automáticamente. Producción y recepción pública continúan cerradas.

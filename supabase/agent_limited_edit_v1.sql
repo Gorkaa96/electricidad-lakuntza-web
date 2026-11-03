@@ -7,8 +7,13 @@ security invoker
 set search_path = ''
 as $fn$
 begin
-  if current_user = 'authenticated'
-     and app_private.has_permission('leads.edit_assigned')
+  -- Plan private permission checks only for authenticated staff.
+  -- The server intake service has no app_private USAGE and needs none.
+  if current_user <> 'authenticated' then
+    return new;
+  end if;
+
+  if app_private.has_permission('leads.edit_assigned')
      and not app_private.has_permission('leads.edit_all') then
     if (to_jsonb(new) - array[
       'status', 'admin_notes', 'contacted_at', 'converted_at',

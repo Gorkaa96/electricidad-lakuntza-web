@@ -81,7 +81,9 @@ begin
   delete from public.invoice_review_leads where id=b;
   if exists(select 1 from public.commercial_leads where invoice_review_lead_id=b) then raise exception 'CRM cascade failed'; end if;
   execute 'reset role';
+  execute 'set local role service_role';
   update public.invoice_review_leads set notification_status='failed' where id=a;
+  execute 'reset role';
   if not exists(select 1 from public.commercial_leads where invoice_review_lead_id=a and notification_status='failed' and privacy_notice_version='qa-v2') then raise exception 'traceability sync failed'; end if;
 
   execute 'set local role anon';

@@ -56,21 +56,41 @@ Los dos formularios públicos fallan en modo cerrado si faltan claves, Turnstile
 - Revisar aviso legal y política RGPD por el titular real del negocio, responsables, bases jurídicas, proveedores, derechos, retención y transferencias.
 - Confirmar precios y alcance real del canal comercial Feníe con Javier.
 
-Solo con todos los puntos verificados se podrán cambiar las banderas de intake a `true`, una a una, en Preview primero. No fusionar PR #9 ni promocionar Production automáticamente.
+Los ensayos con datos sintéticos se realizan primero en el runner aislado y después en la Preview protegida, siguiendo el procedimiento de activación controlada de este documento. Production permanece cerrada hasta aprobación explícita.
 
 ## Modalidad cloud
 
 Las modificaciones se versionan en GitHub y se despliegan en Vercel por rama. No es necesario un repositorio local en el portátil. Para el E2E navegando por una sesión autenticada, utilizar **Work** con navegador conectado o Codex cloud con acceso autorizado y pruebas reproducibles.
 
 
-## Verificación adicional en Work — 03/11/2026
+## Estado actualizado de configuración — 03/11/2026
+Se guardaron por UI en Vercel exclusivamente para Preview de la rama de integración:
+- ADMIN_PANEL_BASE_URL y ADMIN_INVITATION_BASE_URL: https://electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app
+- INVOICE_INTAKE_ENABLED=false, PUBLIC_COMMERCIAL_INTAKE_ENABLED=false y NEXT_PUBLIC_PUBLICATION_ENABLED=false.
 
-La API de Vercel devuelve 403 para variables, pero se ha revisado la pantalla de Environment Variables con la sesión existente, sin revelar valores. Solo se muestran `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `INVOICE_INTAKE_ENABLED`, `OPENAI_OCR_MODEL` y `OPENAI_API_KEY`. Las variables de servidor/Turnstile/Resend/invitaciones de la tabla superior no figuran. No basta con cambiar la bandera de facturas.
+La redirección que debe autorizarse en Supabase Auth es:
+https://electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app/admin/activar-cuenta
 
-Los nombres OPENAI corresponden a configuración anterior: el código actual inspeccionado no los utiliza. Revisar su necesidad con el propietario; no se han leído ni eliminado sus valores.
+La API de variables de Vercel devuelve 403. La sesión del navegador permite consultar/configurar Preview, pero no se han revelado ni rotado secretos. No figuran aún las credenciales servidor/captcha/correo necesarias; no basta con habilitar los flags.
 
-La aceptación web registra fecha y versión del aviso. El estado del aviso por email se conserva como pending/accepted/failed y aparece en el panel; accepted significa aceptación por Resend, no entrega al destinatario. Si queda pending o failed, atender la solicitud desde el CRM.
+OPENAI_API_KEY y OPENAI_OCR_MODEL son configuración anterior: el lector actual no los utiliza. No se han leído ni eliminado sus valores. Los PDF con texto se procesan con pdf-parse; imágenes y escaneados requieren revisión manual.
 
-Pendiente para Javier/Kristina: [preguntas concretas](preguntas-javier-kristina.md). Las banderas siguen sin habilitarse.
+## Prueba reproducible sin tocar la instalación alojada
+El workflow Verify isolated backend levanta Supabase local en un runner de GitHub, aplica los SQL del proyecto y crea cuentas y facturas ficticias. Las claves locales generadas quedan en temporal y se enmascaran. No utiliza el proyecto alojado ni claves de sus cuentas.
+El preload de proveedores vive solo en tests/backend, exige CI y URL loopback y no se importa desde el código de la aplicación. Controla captcha y avisos exclusivamente en esa prueba; impide contactar proveedores reales. No copiar su configuración al alojamiento.
+Las invitaciones de esa prueba sí recorren Auth y SMTP local hasta el buzón de prueba. No certifican entrega del SMTP corporativo.
 
-Antes de publicar, el propietario debe proteger `main` con un ruleset: PR obligatorio, revisión aprobada y CI requerido. La consulta de GitHub devolvió `protected=false`; el estado draft por sí solo no impone estas garantías.
+## Activación controlada sobre Preview alojada
+1. Completar credenciales desde las cuentas autorizadas, el hostname y la allowlist anterior.
+2. Mantener protegida la Preview con Vercel Authentication. Usar solo datos sintéticos y destinatarios de prueba autorizados.
+3. Cuando estén cerrados los controles previos, habilitar cada flujo solo en esa Preview protegida para repetir el circuito. No habilitar recepción pública ni Production.
+4. Registrar evidencias de captcha real, guardado, CRM, aviso y entrega, permisos, revocación y borrado; volver a cerrar el flujo si falla un control.
+5. Solicitar la aprobación separada de publicación únicamente con datos legales, configuración y pruebas completas.
+
+El aviso accepted significa aceptación por el proveedor, no entrega. pending/failed se atienden desde el CRM. No adjuntar facturas a los avisos.
+
+## Protección y publicación
+El ruleset de main se ha dejado preparado en la cuenta propietaria del navegador; GitHub exige verificación de sesión para guardarlo. Incluye una revisión aprobada, los checks Build with Node.js 24 e Isolated Auth, Storage, CRM and browser, ramas actualizadas y bloqueo de borrado/force-push.
+No afirmar que está activo hasta verificar el resultado guardado. PR #9 permanece draft. No fusionar ni promocionar Production automáticamente.
+
+Pendientes vigentes: [lista única](lista-unica-cierre.md).

@@ -91,3 +91,11 @@ test('Auth invitation reaches the isolated SMTP inbox',async()=>{
   f.inviteLink=link;
   await writeFile(process.env.QA_FIXTURES,JSON.stringify(f),{mode:0o600});
 });
+
+test('trusted intake service persists notification without private helper privileges',async()=>{
+  const updated=await service.from('invoice_review_leads').update({notification_status:'accepted'}).eq('id',f.invoiceId).select('notification_status').single();
+  assert.equal(updated.error,null);
+  assert.equal(updated.data.notification_status,'accepted');
+  const crm=await service.from('commercial_leads').select('notification_status').eq('invoice_review_lead_id',f.invoiceId).single();
+  assert.equal(crm.error,null);assert.equal(crm.data.notification_status,'accepted');
+});
