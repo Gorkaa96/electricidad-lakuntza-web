@@ -1,6 +1,8 @@
 # Guía de puesta en marcha — Electricidad Lakuntza (sin activar captación)
 
-Última revisión: 30/10/2026. Documento interno. Ninguna credencial real está en el repositorio.
+Última revisión: 03/11/2026. Documento interno. Ninguna credencial real está en el repositorio.
+
+> **Estado actualizado:** el inventario y el plan de lanzamiento se mantienen en [cierre de diseño y CRM](./cierre-diseno-crm-pendientes-2026-11-03.md). Esta guía conserva el historial técnico de la reconstrucción.
 
 ## 1. Supabase — proyecto ya creado
 
@@ -16,7 +18,7 @@
 
 - Migración aplicada: `20261030112700_bootstrap_electricidad_lakuntza_secure_v2`.
 - Fuente versionada: `supabase/bootstrap_v2.sql`. **No volver a ejecutarla** sin revisar las migraciones existentes.
-- Seis tablas con RLS activado: `admin_users`, `invoice_review_leads`, `invoice_ocr_results`, `invoice_lead_events`, `projects`, `project_images`.
+- Ocho tablas con RLS activado: `admin_users`, `invoice_review_leads`, `invoice_ocr_results`, `invoice_lead_events`, `projects`, `project_images`, `commercial_leads` y `commercial_lead_events`.
 - Buckets: `invoice-files` **privado**, 10 MB; `project-images` público, 5 MB para imágenes de trabajos autorizados.
 - Políticas inspeccionadas. El analizador de **seguridad** de Supabase no devolvió incidencias.
 - Avisos de **rendimiento**: índices sin uso en una base vacía y políticas de lectura superpuestas para proyectos publicados/administradores. No son bloqueos de seguridad, pero conviene revisar tras empezar a usar el sistema.
@@ -24,15 +26,17 @@
 
 Para dar acceso al primer administrador, crear personalmente un usuario individual en Supabase **Authentication > Users** y confirmar su correo; después insertar su UUID en `public.admin_users` mediante un proceso autorizado. Nunca enviar contraseñas ni compartir claves secretas por chat. Deshabilitar registro público si no está previsto.
 
-### Verificación posterior (30/10/2026)
+### Estado de verificación actualizado (03/11/2026)
 
-- Usuario de Authentication: **1**, correo confirmado.
-- Tabla `public.admin_users`: **1 administrador**, asociado al usuario autenticado. No hay facturas ni trabajos creados.
-- La comprobación de seguridad detecta **`auth_leaked_password_protection`**, funcionalidad de Supabase Pro; se mantiene en Free. Exigir una contraseña larga y única; valorar MFA antes del lanzamiento.
-- El despliegue de prueba `dpl_GGWpqSjsDsAite5CCHJJjkTzvibZ` recompiló la rama con las variables Preview actuales.
-- En el bundle de la nueva preview se comprobó la **clave publishable del Supabase nuevo**, pero `NEXT_PUBLIC_SUPABASE_URL` todavía apunta al antiguo `vprczjegprkwzashxyul`. **No probar acceso ni usar facturas hasta actualizar la URL de Preview** a `https://yvrjrvropgouvzltwwvm.supabase.co` y lanzar una nueva compilación.
-- La API de Vercel devuelve 403 al consultar las variables; el propietario debe cambiar la URL desde Project Settings > Environment Variables, evitando valores duplicados o específicos de rama.
-- El acceso real autenticado al administrador y las pruebas E2E siguen pendientes.
+- Proyecto Supabase nuevo confirmado y enlazado correctamente con Vercel Preview, sin URL antigua en el bundle de acceso.
+- Supabase Auth: 1 usuario con acceso confirmado; su registro en `admin_users` tiene rol `owner` activo con 8 permisos.
+- Migraciones aplicadas en este orden: `bootstrap_electricidad_lakuntza_secure_v2`, `roles_and_agent_permissions_v1`, `agent_assignments_v1`, `agent_limited_edit_v1`, `commercial_crm_v1`. **No volver a aplicarlas**.
+- CRM interno nuevo: `/admin/oportunidades`, alta manual, seguimiento, asignación y eventos automáticos. Probado con SQL reversible por propietario/agente; faltan pruebas reales del formulario con navegador autenticado.
+- RLS: un agente solo ve sus oportunidades asignadas; se bloquean cambios sobre identidad, asignación y expedientes ajenos.
+- No hay solicitudes reales almacenadas en las tablas nuevas; se conserva un borrador anterior de la galería de trabajos, no público.
+- Seguridad: el analizador de Supabase solo informa de `auth_leaked_password_protection`, no disponible en Free. Requiere contraseña robusta, MFA donde exista y control de accesos.
+- **Captación pública de facturas desactivada**. Todavía faltan prevención antiabuso, RGPD y prueba E2E de archivos y mensajes.
+- Vercel conector continúa sin poder consultar/editar variables de entorno (HTTP 403); el propietario gestiona los secretos desde Settings. No enviar secretos por chat ni al repositorio.
 
 ## 3. Variables Vercel
 
@@ -47,6 +51,8 @@ Para dar acceso al primer administrador, crear personalmente un usuario individu
 | `RESEND_API_KEY` | Secreto de servidor | Aviso opcional por correo tras registrar lead |
 | `RESEND_FROM` | Servidor | Remitente verificado en Resend |
 | `INVOICE_REVIEW_TO` | Servidor | Destinatario interno autorizado |
+| `ADMIN_INVITATION_BASE_URL` | Servidor | URL HTTPS autorizada de la preview para activar cuentas invitadas |
+| `NEXT_PUBLIC_PUBLICATION_ENABLED` | Pública | Mantener en `false` hasta levantar el bloqueo de indexación en el lanzamiento |
 
 La clave `SUPABASE_SERVICE_ROLE_KEY` nunca puede llevar el prefijo `NEXT_PUBLIC_`. Después de modificar claves públicas, recompilar para que el navegador use la referencia nueva. **Bloqueo confirmado el 30/10/2026:** la integración de Vercel devolvió HTTP 403 tanto al listar como al crear variables. El propietario del proyecto deberá introducirlas desde Vercel > Project > Settings > Environment Variables o revisar los permisos del conector. No se ha configurado ninguna variable nueva desde esta sesión.
 
