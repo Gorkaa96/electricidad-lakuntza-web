@@ -36,6 +36,8 @@ jobs:
         run: npm audit --omit=dev --audit-level=high
       - name: Test invoice validation
         run: npm test
+      - name: Prepare synthetic invoice
+        run: npm run qa:fixture
       - name: Verify production build
         run: npm run build
       - name: Install isolated browser
@@ -50,5 +52,6 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            qa-output/
           retention-days: 7
           if-no-files-found: ignore

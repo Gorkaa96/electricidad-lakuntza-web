@@ -22,7 +22,7 @@ export default function Header() {
         Ir al contenido
       </a>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
-        <a href="/" aria-label="Electricidad Lakuntza Elektrizitatea, página de inicio" className="shrink-0" onClick={() => setOpen(false)}>
+        <a href="/" className="shrink-0" onClick={() => setOpen(false)}>
           <Logo compact />
         </a>
         <nav className="hidden items-center gap-3 text-xs font-semibold text-[#334139] lg:flex xl:gap-6 xl:text-sm" aria-label="Navegación principal">
