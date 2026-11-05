@@ -31,6 +31,9 @@ test('invoice form enforces eligibility, file size, format and consent',async({p
   await form.locator('[name=phone]').fill('600000003');
   expect(await form.locator('[name=consent]').evaluate(el=>el.validity.valueMissing)).toBe(true);
   await form.locator('[name=consent]').check();
+  expect(await form.locator('[name=email]').evaluate(el=>el.validity.valueMissing)).toBe(true);
+  expect(await form.evaluate(el=>el.checkValidity())).toBe(false);
+  await form.locator('[name=email]').fill('consulta@example.test');
   expect(await form.evaluate(el=>el.checkValidity())).toBe(true);
   await info.attach('invoice form synthetic input',{body:await page.screenshot({fullPage:true}),contentType:'image/png'});
   const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();

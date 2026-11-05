@@ -6,6 +6,7 @@ test('Preview shows customer form with no examples and cannot submit before conf
   await expect(page.getByRole('link',{name:'Subir mi factura',exact:true})).toHaveAttribute('href','#formulario');
   await expect(page.locator('input[type="file"]')).toBeVisible();
   await expect(page.locator('input[name="name"]')).toHaveValue('');
+  await expect(page.locator('input[name="email"]')).toHaveAttribute('required', '');
   await expect(page.locator('main')).not.toContainText('Prueba del formulario');
   await expect(page.getByRole('button',{name:/ejemplo|comprobar formulario/i})).toHaveCount(0);
   await expect(page.getByRole('button',{name:'Envío temporalmente no disponible',exact:true})).toBeDisabled();

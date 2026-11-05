@@ -22,7 +22,7 @@ export const metadata = {
 const errorMessages = {
   config: 'La configuración del formulario no está disponible ahora mismo. Puedes consultarnos por WhatsApp o teléfono.',
   bono: 'No tramitamos el cambio de suministro eléctrico con bono social o posible derecho por familia numerosa. Puedes consultar una comercializadora de referencia o elegir solo gas.',
-  datos: 'Revisa nombre, teléfono y consentimiento antes de enviar.',
+  datos: 'Revisa nombre, teléfono, correo electrónico y consentimiento antes de enviar.',
   factura: 'Debes adjuntar una factura en PDF o imagen.',
   tipo: 'Formato no válido. Sube un PDF, JPG, PNG o WebP.',
   tamano: 'La factura supera el tamaño máximo de 4 MB.',
@@ -77,7 +77,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
             </div>
             <div className="border-l-2 border-[#9BDC83] pl-6 text-sm leading-7 text-white/80 lg:col-span-4">
               <p className="text-base font-semibold text-white">Una persona revisará tu caso</p>
-              <p className="mt-3">Sin resultados automáticos ni obligación de contratar. Necesitamos una factura y un teléfono para explicarte lo que encontremos.</p>
+              <p className="mt-3">Sin resultados automáticos ni obligación de contratar. Necesitamos una factura, un teléfono de contacto y un correo electrónico para poder enviarte la comparativa cuando esté preparada.</p>
             </div>
           </div>
         </section>
@@ -137,7 +137,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     <div>
                       <p className="text-sm font-semibold text-lakuntza-greenDark">Formulario de revisión</p>
                       <h3 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">Enviar factura para revisión</h3>
-                      <p className="mt-3 text-sm leading-6 text-neutral-600">Adjunta la última factura de luz o gas, indica cómo podemos llamarte y confirma el envío. Revisaremos tu caso personalmente, sin obligación de contratar.</p>
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">Adjunta la última factura de luz o gas e indica tu teléfono y correo electrónico para que podamos atenderte y enviarte la comparativa. Revisaremos tu caso personalmente, sin obligación de contratar.</p>
                     </div>
                   </div>
 
@@ -163,8 +163,9 @@ export default async function RevisionFacturaPage({ searchParams }) {
                         <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Correo electrónico (opcional)
-                        <input name="email" type="email" autoComplete="email" maxLength={254} className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        Correo electrónico *
+                        <span id="invoice-email-help" className="text-xs font-medium leading-5 text-neutral-500">Lo usaremos para atender tu consulta y enviarte la comparativa cuando esté preparada.</span>
+                        <input name="email" required aria-describedby="invoice-email-help" type="email" autoComplete="email" maxLength={254} className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
 
                     </div>
