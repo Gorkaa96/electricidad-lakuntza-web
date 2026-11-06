@@ -22,11 +22,11 @@ const localBusinessSchema = {
   areaServed: siteConfig.areaServed,
   description: siteConfig.description,
   makesOffer: [
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Instalaciones eléctricas' } },
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Telecomunicaciones' } },
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asesoría energética y comparación de facturas' } },
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Contratación de luz y gas' } },
-    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asesoramiento sobre alarmas Movistar Prosegur a través de Feníe Energía' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Contratación de luz con Feníe Energía' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Contratación de gas con Feníe Energía' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asesoramiento sobre alarmas Movistar Prosegur' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cargadores eléctricos, estudio y presupuesto' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asesoría energética' } },
   ],
 };
 
@@ -36,19 +36,17 @@ const publicLaunchEnabled = process.env.NEXT_PUBLIC_PUBLICATION_ENABLED === 'tru
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Luz, gas y alarmas | Electricidad Lakuntza',
+    default: 'Luz, gas, alarmas y cargadores | Electricidad Lakuntza',
     template: '%s | Electricidad Lakuntza',
   },
   description: siteConfig.description,
   keywords: [
     'Electricidad Lakuntza',
-    'electricista Lakuntza',
-    'electricista Navarra',
-    'electricista País Vasco',
-    'instalaciones eléctricas Navarra',
-    'instalaciones eléctricas País Vasco',
-    'telecomunicaciones Navarra',
-    'asesoría energética Navarra',
+    'cargadores eléctricos Navarra',
+    'instalación cargadores eléctricos',
+    'alarmas Movistar Prosegur',
+    'luz y gas Fenie Energía',
+    'asesoría energética',
     'Feníe Energía',
     'revisión gratuita factura de luz',
     'comparar factura de gas',
@@ -65,9 +63,9 @@ export const metadata = {
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
-    title: 'Luz, gas y alarmas | Electricidad Lakuntza',
+    title: 'Luz, gas, alarmas y cargadores | Electricidad Lakuntza',
     description:
-      'Luz, gas y alarmas con atención directa a través de Feníe Energía. Instalaciones eléctricas y telecomunicaciones en Navarra y País Vasco.',
+      'Agentes de Feníe Energía para luz y gas y comerciales de alarmas Movistar Prosegur. Instalación de cargadores y asesoría energética por Electricidad Lakuntza.',
     url: siteUrl,
     siteName: siteConfig.name,
     type: 'website',
@@ -85,7 +83,7 @@ export const metadata = {
     card: 'summary',
     title: 'Luz, gas y alarmas | Electricidad Lakuntza',
     description:
-      'Luz, gas y alarmas con atención directa y sin compromiso. Instalaciones eléctricas y telecomunicaciones.',
+      'Luz, gas, alarmas, cargadores eléctricos y asesoría energética con atención cercana.',
     images: ['/logo-lakuntza.png'],
   },
   robots: {

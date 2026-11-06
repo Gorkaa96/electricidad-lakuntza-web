@@ -1,4 +1,6 @@
 import { AlertTriangle, CheckCircle2, MessageCircle, Phone } from 'lucide-react';
+import { cookies } from 'next/headers';
+import { hasValidReceipt, receiptCookieName } from '@/lib/invoice/receipt';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
@@ -39,13 +41,18 @@ export const metadata = {
 export default async function GraciasRevisionFacturaPage({ searchParams }) {
   const resolvedSearchParams = await searchParams;
   const state = resolvedSearchParams?.estado || 'pending';
-  const message = messages[state] || messages.pending;
+  const confirmed = hasValidReceipt((await cookies()).get(receiptCookieName)?.value);
+  const message = confirmed ? (messages[state] || messages.pending) : {
+    title: 'Revisión de factura',
+    text: 'Para enviar tu factura, utiliza el formulario de revisión cuando esté disponible. Si necesitas ayuda ahora, puedes llamarnos o escribir por WhatsApp.',
+    tone: 'amber',
+  };
   const Icon = message.tone === 'amber' ? AlertTriangle : CheckCircle2;
 
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
+      <main id="contenido-principal">
         <section className="brand-dark-surface relative isolate overflow-hidden pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />

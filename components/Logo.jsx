@@ -1,26 +1,17 @@
 import Image from 'next/image';
 
 export default function Logo({ compact = false, dark = false }) {
-  const sizeClass = compact ? 'h-11 w-11' : 'h-14 w-14';
-  const imageSize = compact ? 44 : 56;
-
+  const imgSize = compact ? 43 : 54;
   return (
-    <div className="flex items-center gap-3">
-      <span className={`${sizeClass} logo-shadow relative flex shrink-0 items-center justify-center overflow-hidden rounded-full`}>
-        <Image
-          src="/logo-lakuntza.png"
-          alt="Electricidad Lakuntza"
-          width={imageSize}
-          height={imageSize}
-          priority
-          className="h-full w-full rounded-full object-contain"
-        />
+    <div className="flex min-w-0 items-center gap-3">
+      <span className="flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-white" style={{ width: imgSize, height: imgSize }}>
+        <Image src="/logo-lakuntza.png" alt="" width={imgSize} height={imgSize} priority className="h-full w-full object-contain" />
       </span>
-      <div className="leading-tight">
-        <p className={`${compact ? 'text-base' : 'text-lg'} font-black tracking-tight ${dark ? 'text-white' : 'text-neutral-950'}`}>
+      <div className="min-w-0 leading-tight">
+        <p className={`${compact ? 'text-[15px]' : 'text-lg'} font-semibold tracking-[-.025em] ${dark ? 'text-white' : 'text-[#142118]'}`}>
           Electricidad Lakuntza
         </p>
-        <p className={`text-[10px] font-black uppercase tracking-[0.28em] ${dark ? 'text-white/55' : 'text-neutral-500'}`}>
+        <p className={`mt-1 text-xs font-medium ${dark ? 'text-white/65' : 'text-neutral-500'}`}>
           Elektrizitatea
         </p>
       </div>

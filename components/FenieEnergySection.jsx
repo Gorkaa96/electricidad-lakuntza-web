@@ -1,52 +1,69 @@
-import { ArrowRight, ArrowUpRight, CheckCircle2, Leaf } from 'lucide-react';
+import { ArrowUpRight, Building2, UserRoundCheck } from 'lucide-react';
 
-const fenieUrl = 'https://www.fenieenergia.es/es';
-const logoUrl = 'https://storage.googleapis.com/stb-drupal-p-ew4-01/styles/large/cloud-storage/2022-11/logo.png?itok=W8Dkw-wk';
-
-const steps = [
-  ['01', 'Recibimos tu solicitud', 'Envíanos una factura o consulta la opción que te interesa.'],
-  ['02', 'Revisamos las condiciones', 'Estudiamos la alternativa disponible y las condiciones aplicables.'],
-  ['03', 'Tú decides', 'Te explicamos la propuesta antes de cualquier contratación.'],
-];
+const fenieWebsite = 'https://www.fenieenergia.es/es';
+const fenieHistory = 'https://www.fenieenergia.es/es/sobre-fenie/historia';
 
 export default function FenieEnergySection() {
   return (
-    <section id="fenie" className="scroll-mt-24 bg-lakuntza-mist py-16 sm:py-20">
-      <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,.95fr)] lg:gap-12 lg:px-8">
-        <div className="min-w-0">
-          <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[.14em] text-lakuntza-greenDark"><Leaf size={16} /> Empresa delegada de Feníe Energía</p>
-          <h2 className="mt-5 max-w-xl text-3xl font-black leading-tight tracking-[-.045em] text-neutral-950 sm:text-4xl">Energía y seguridad, con una persona al otro lado.</h2>
-          <p className="mt-5 max-w-xl text-base leading-8 text-neutral-600">
-            Feníe Energía comercializa electricidad y gas y colabora con Movistar Prosegur Alarmas. Desde Electricidad Lakuntza escuchamos tu consulta, explicamos las opciones que podamos ofrecerte y te acompañamos cuando decides contratar.
+    <section id="fenie" aria-labelledby="fenie-title" className="scroll-mt-24 border-t border-[#E1E9DE] bg-white py-20 sm:py-24">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-16 lg:px-8">
+        <div className="lg:col-span-6">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#C9DEC6] bg-[#F1F8ED] px-4 py-2 text-xs font-semibold text-[#27612C]">
+            <span className="h-2 w-2 rounded-full bg-[#3D9347]" aria-hidden="true" />
+            Trabajamos con Feníe Energía
+          </span>
+          <h2 id="fenie-title" className="mt-6 max-w-xl text-4xl font-semibold leading-[1.12] tracking-[-.045em] text-[#152017] sm:text-5xl">
+            ¿Qué es Feníe Energía?
+          </h2>
+          <p className="mt-6 max-w-xl text-base leading-8 text-neutral-600">
+            Feníe Energía es una comercializadora española de electricidad y gas impulsada por profesionales de las instalaciones. Su modelo se basa en una red de agentes energéticos que asesoran y acompañan a los clientes.
           </p>
-          <p className="mt-4 max-w-xl text-sm leading-7 text-neutral-600">
-            No somos un comparador independiente de todo el mercado ni prestamos directamente el servicio de seguridad. El precio, las promociones y las condiciones siempre se confirman para cada caso.
+          <p className="mt-4 max-w-xl text-base leading-8 text-neutral-600">
+            Para luz y gas actuamos como agentes de Feníe Energía: revisamos tu factura, comparamos las propuestas de su CRM oficial y te acompañamos en la contratación con la comercializadora. En alarmas, comercializamos las soluciones que instala y presta Movistar Prosegur.
           </p>
-          <a href={fenieUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-lakuntza-greenDark underline-offset-4 hover:underline">
-            Conocer Feníe Energía en su web oficial <ArrowUpRight size={16} />
-          </a>
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <a href={fenieWebsite} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#24662D] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#194D20]">
+              Visitar la web oficial de Feníe <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+            <a href={fenieHistory} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#28632D] underline decoration-[#9FC79A] underline-offset-4 hover:text-[#143F1D]">
+              Conocer su historia <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          </div>
         </div>
-        <div className="min-w-0 rounded-[1.5rem] border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-neutral-200 pb-6">
-            <p className="text-xs font-black uppercase tracking-[.14em] text-neutral-600">Colaboración comercial</p>
-            <img src={logoUrl} alt="Feníe Energía" loading="lazy" width="160" height="58" className="max-h-14 w-auto max-w-[160px] object-contain" />
-          </div>
-          <ol className="mt-7 grid gap-5">
-            {steps.map(([number, title, description]) => (
-              <li key={number} className="flex items-start gap-4">
-                <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F0F8EB] text-xs font-black text-lakuntza-greenDark">{number}</span>
+        <div className="lg:col-span-6">
+          <div className="overflow-hidden rounded-2xl border border-[#DDE9DA] bg-[#F5F8F4]">
+            <div className="border-b border-[#DDE9DA] px-6 py-5 sm:px-8">
+              <p className="text-sm font-semibold text-[#2B6431]">Quién hace qué</p>
+              <p className="mt-2 text-sm leading-6 text-neutral-600">Dos funciones diferentes que trabajan juntas.</p>
+            </div>
+            <div className="grid gap-0 divide-y divide-[#DDE9DA]">
+              <div className="flex gap-4 px-6 py-7 sm:px-8">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-[#286D34]">
+                  <Building2 size={23} aria-hidden="true" />
+                </span>
                 <div>
-                  <h3 className="text-base font-black text-neutral-950">{title}</h3>
-                  <p className="mt-1 text-sm leading-6 text-neutral-600">{description}</p>
+                  <h3 className="text-lg font-semibold text-[#152017]">Feníe Energía</h3>
+                  <p className="mt-2 text-sm leading-7 text-neutral-600">
+                    La comercializadora que ofrece los contratos de luz y gas y publica sus productos y condiciones oficiales.
+                  </p>
                 </div>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-7 grid gap-3 sm:grid-cols-2">
-            <a href="/revision-factura-luz-gas" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">Luz y gas <ArrowRight size={16} /></a>
-            <a href="/alarmas-movistar-prosegur" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-lakuntza-greenDark px-4 py-3 text-sm font-black text-white transition hover:bg-neutral-950">Alarmas <ArrowRight size={16} /></a>
+              </div>
+              <div className="flex gap-4 px-6 py-7 sm:px-8">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-[#286D34]">
+                  <UserRoundCheck size={23} aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold text-[#152017]">Electricidad Lakuntza</h3>
+                  <p className="mt-2 text-sm leading-7 text-neutral-600">
+                    Te atendemos como agentes de Feníe para luz y gas y como comerciales para alarmas. Además, hacemos directamente el asesoramiento energético y las instalaciones de cargadores eléctricos.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p className="border-t border-[#DDE9DA] bg-white px-6 py-5 text-xs leading-6 text-neutral-600 sm:px-8">
+              Las alarmas las instala y presta Movistar Prosegur. Los cargadores eléctricos y la asesoría energética los realizamos nosotros, desde Electricidad Lakuntza.
+            </p>
           </div>
-          <p className="mt-5 flex items-start gap-2 text-xs leading-5 text-neutral-500"><CheckCircle2 size={16} className="mt-0.5 shrink-0 text-lakuntza-greenDark" /> Atención directa, sin obligación de contratar.</p>
         </div>
       </div>
     </section>

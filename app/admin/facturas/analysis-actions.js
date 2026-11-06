@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { requireAdmin } from '@/lib/admin';
+import { requireAnyPermission } from '@/lib/admin';
 
 const allowedResults = ['pending', 'viable', 'review', 'not_viable'];
 
@@ -18,7 +18,8 @@ function clean(value, limit = 500) {
 }
 
 function numberOrNull(value) {
-  const parsed = Number(String(value || '').replace(',', '.').trim());
+  if (value === null || value === undefined || String(value).trim() === '') return null;
+  const parsed = Number(String(value).replace(',', '.').trim());
   return Number.isFinite(parsed) ? parsed : null;
 }
 
@@ -28,7 +29,7 @@ function integerOrNull(value) {
 }
 
 export async function updateInvoiceAnalysis(formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requireAnyPermission('leads.edit_all', 'leads.edit_assigned');
   const id = clean(formData.get('id'), 80);
   if (!id) redirect('/admin/facturas?error=datos');
 
