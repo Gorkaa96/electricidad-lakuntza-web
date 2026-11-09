@@ -159,3 +159,22 @@ export async function deleteInvoiceLead(formData) {
   revalidatePath('/admin/facturas');
   redirect('/admin/facturas?success=eliminada');
 }
+
+/** Update a quick status without navigating away from the current document. */
+export async function setInvoiceStatusInline({id,expectedStatus,newStatus}) {
+ const {supabase}=await requireAnyPermission('leads.edit_all','leads.edit_assigned');
+ const uid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+ if(!uid.test(String(id||'')) || !allowedStatuses.includes(newStatus) ||
+    !allowedStatuses.includes(expectedStatus) || expectedStatus===newStatus)
+    return {ok:false,message:'Estado no válido.'};
+ // Compare-and-set: never overwrite a colleague's more recent decision.
+ const {data,error}=await supabase.from('invoice_review_leads')
+  .update(statusPayload(newStatus)).eq('id',id).eq('status',expectedStatus)
+  .select('id').maybeSingle();
+ if(error || !data) return {ok:false,message:'No se ha guardado. Alguien pudo actualizar este expediente; recarga y revisa.'};
+ await insertStatusEvent({supabase,leadId:id,status:newStatus,source:'estado rápido'});
+ revalidatePath('/admin/facturas');
+ revalidatePath('/admin/facturas/'+id);
+ revalidatePath('/admin/oportunidades');
+ return {ok:true,status:newStatus};
+}
