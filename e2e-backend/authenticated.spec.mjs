@@ -43,6 +43,35 @@ test('unassigned agent cannot read another invoice via page or download',async({
   await expect(page.getByRole('heading',{name:'Persona de prueba',exact:true})).toHaveCount(0);
   expect((await page.request.get('/admin/facturas/'+f.invoiceId+'/archivo')).status()).not.toBe(200);
 });
+test('owner uploads a Fenie PDF, validates the comparison and prepares Yahoo reply', async ({page})=>{
+  await login(page,'owner');
+  await page.goto('/admin/facturas/'+f.invoiceId);
+  const service=createClient(f.url,f.service,{auth:{persistSession:false}});
+  const before=await service.from('invoice_review_leads').select('invoice_total_eur').eq('id',f.invoiceId).single();
+  expect(before.error).toBeNull();
+  // The preceding extraction reads the 150 EUR fictitious invoice. This test
+  // checks the private browser upload flow, not the parsing accuracy of Fenie templates.
+  expect(Number(before.data.invoice_total_eur)).toBeGreaterThan(0);
+  const {buildSyntheticInvoicePdf}=await import('../tests/fixtures/invoice-pdf.mjs');
+  await page.locator('input[name=proposal]').setInputFiles({
+    name:'propuesta-fenia-ficticia.pdf',mimeType:'application/pdf',buffer:buildSyntheticInvoicePdf()
+  });
+  await page.getByRole('button',{name:'Subir y comparar'}).click();
+  await expect(page).toHaveURL(/propuestaOk=subida/);
+  await expect(page.getByText('Versión 1',{exact:true})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'Revisar y confirmar'})).toBeVisible();
+  await page.locator('input[name=offerTotal]').fill('130,00');
+  await page.locator('input[name=confirmed]').check();
+  await page.getByRole('button',{name:'Confirmar comparación'}).click();
+  await expect(page).toHaveURL(/propuestaOk=revisada/);
+  await expect(page.getByRole('heading',{name:'3. Preparar correo al cliente'})).toBeVisible();
+  await expect(page.getByRole('button',{name:'3. Copiar mensaje'})).toBeVisible();
+  const p=await service.from('fenie_proposals').select('id,reviewed_at').eq('lead_id',f.invoiceId).single();
+  expect(p.error).toBeNull();expect(p.data.reviewed_at).toBeTruthy();
+  const pdf=await page.request.get('/admin/facturas/'+f.invoiceId+'/propuesta/'+p.data.id+'/archivo');
+  expect(pdf.status()).toBe(200);
+  expect((await pdf.body()).subarray(0,5).toString()).toBe('%PDF-');
+});
 test('owner deletes invoice through app and file, CRM and OCR disappear',async({page})=>{
   await login(page,'owner');
   await page.goto('/admin/facturas/'+f.invoiceId+'/eliminar');
