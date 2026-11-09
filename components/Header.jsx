@@ -9,8 +9,6 @@ const navigation = [
   ['Alarmas', '/alarmas-movistar-prosegur'],
   ['Cargadores eléctricos', '/cargadores-electricos'],
   ['Asesoría energética', '/asesoria-energetica'],
-  ['Servicios', '/servicios'],
-  ['Feníe Energía', '/#fenie'],
 ];
 
 export default function Header() {
@@ -31,8 +29,8 @@ export default function Header() {
           ))}
         </nav>
         <div className="hidden lg:flex">
-          <a href="/#contacto" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#194D20]">
-            Contactar <ArrowRight size={16} aria-hidden="true"/>
+          <a href="/revision-factura-luz-gas" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#194D20]">
+            Revisar factura <ArrowRight size={16} aria-hidden="true"/>
           </a>
         </div>
         <button ref={menuButton} type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="public-nav-mobile" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#D6DED4] text-[#152017] lg:hidden">
