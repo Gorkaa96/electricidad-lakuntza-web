@@ -3,6 +3,7 @@ import IntakeNotificationNotice from '@/components/admin/IntakeNotificationNotic
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
 import SimpleInvoiceActionPanel from '@/components/admin/SimpleInvoiceActionPanel';
+import FenieProposalPanel from '@/components/admin/FenieProposalPanel';
 import { requireAnyPermission } from '@/lib/admin';
 import { hasPermission, canEditLeads } from '@/lib/rolePermissions';
 import { assignInvoiceLead } from '../assignment-actions';
@@ -152,6 +153,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
     .limit(1)
     .maybeSingle();
 
+  const {data:proposals,error:proposalLoadError}=await supabase.from('fenie_proposals')
+    .select('id,lead_id,version,file_name,file_size,parsed_data,current_total_eur,offer_total_eur,difference_eur,comparison_status,comparison_reason,reviewed_at,notes,created_at')
+    .eq('lead_id',lead.id).order('version',{ascending:false}).limit(20);
   const documentUrl = lead.file_path ? '/admin/facturas/' + lead.id + '/archivo' : null;
 
   const normalizedPhone = normalizeSpanishPhone(lead.phone);
@@ -168,6 +172,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
       <IntakeNotificationNotice status={lead.notification_status} />
 
       <SimpleInvoiceActionPanel lead={lead} latestOcr={latestOcr} telHref={telHref} canEdit={mayEdit} />
+      {proposalLoadError?<p role="alert" className="mt-5 rounded-lg bg-amber-50 p-4 text-sm text-amber-900">No se han podido consultar las propuestas. Revisa la conexión.</p>:
+        <FenieProposalPanel lead={lead} proposals={proposals||[]} canEdit={mayEdit} notice={{error:resolvedSearchParams?.propuestaError,ok:resolvedSearchParams?.propuestaOk}} />}
+
 
       <div className="mt-6 grid gap-6 lg:grid-cols-12">
         <section className="rounded-xl border border-neutral-200 bg-white p-6 lg:col-span-8 sm:p-8">
