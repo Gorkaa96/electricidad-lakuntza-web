@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { FolderOpen, ExternalLink, UsersRound, LayoutDashboard, BriefcaseBusiness, ReceiptText } from 'lucide-react';
+import { ExternalLink, UsersRound, LayoutDashboard, BriefcaseBusiness, ReceiptText } from 'lucide-react';
 import { canViewLeads, hasPermission } from '@/lib/rolePermissions';
 import { siteUrl } from '@/lib/site';
 
@@ -9,7 +9,6 @@ const navItems = [
   { href: '/admin/resumen', label: 'Resumen', icon: LayoutDashboard, allowed: canViewLeads },
   { href: '/admin/oportunidades', label: 'Oportunidades', icon: BriefcaseBusiness, allowed: canViewLeads },
   { href: '/admin/facturas', label: 'Facturas', icon: ReceiptText, allowed: canViewLeads },
-  { href: '/admin/proyectos', label: 'Trabajos', icon: FolderOpen, allowed: (member) => hasPermission(member, 'projects.manage') },
   { href: '/admin/usuarios', label: 'Usuarios', icon: UsersRound, allowed: (member) => hasPermission(member, 'users.manage') },
   { href: siteUrl, label: 'Ver web', icon: ExternalLink, allowed: () => true, external: true },
 ];
