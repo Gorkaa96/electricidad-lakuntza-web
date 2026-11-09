@@ -28,7 +28,7 @@ export default function FenieProposalPanel({lead,proposals=[],canEdit=false,noti
   <div className="flex flex-wrap items-center justify-between gap-3">
    <div><p className="text-sm font-semibold text-[#2D6743]">Paso 2 · Comparar y responder</p>
     <h2 id="fenie-section-title" className="mt-2 text-2xl font-semibold tracking-tight text-[#193B2B]">Propuesta de Feníe Energía</h2>
-    <p className="mt-2 max-w-2xl text-sm leading-6 text-[#536457]">Sube el PDF descargado del portal oficial de Feníe. Guardamos cada versión y mostramos si mejora la factura actual o si faltan datos.</p>
+    <p className="mt-2 max-w-2xl text-sm leading-6 text-[#536457]">Descarga la comparativa oficial de Feníe y súbela aquí. Verás el importe anterior, el propuesto y la diferencia. Si el PDF no permite comprobar el mismo consumo, periodo e impuestos, aparecerá «Faltan datos» en lugar de prometer un ahorro.</p>
    </div>{proposal?<span className="rounded-full bg-[#EAF2EA] px-4 py-2 text-sm font-semibold text-[#246037]">Versión {proposal.version}</span>:null}
   </div>
   {notice.error && errors[notice.error]?<p role="alert" className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-semibold text-red-800">{errors[notice.error]}</p>:null}
@@ -36,7 +36,9 @@ export default function FenieProposalPanel({lead,proposals=[],canEdit=false,noti
   {proposal?<div className="mt-6 grid gap-4 lg:grid-cols-3">
    <div className="rounded-xl bg-[#F5F8F5] p-5"><p className="text-sm text-neutral-600">Factura original</p><p className="mt-2 text-3xl font-semibold tabular-nums">{eur(proposal.current_total_eur)}</p></div>
    <div className="rounded-xl bg-[#F5F8F5] p-5"><p className="text-sm text-neutral-600">Propuesta Feníe</p><p className="mt-2 text-3xl font-semibold tabular-nums">{eur(proposal.offer_total_eur)}</p></div>
-   <div className={'rounded-xl border p-5 '+tone}><p className="text-sm font-semibold">{title}</p><p className="mt-2 text-3xl font-semibold tabular-nums">{proposal.difference_eur==null?'Sin cálculo':(proposal.difference_eur>0?'+':'')+eur(proposal.difference_eur)}</p><p className="mt-2 text-xs">{approved?'Comprobada por una persona':'Estimación pendiente de validar'}</p></div>
+   <div className={'rounded-xl border p-5 '+tone}><p className="text-sm font-semibold">{title}</p><p className="mt-2 text-3xl font-semibold tabular-nums">{proposal.difference_eur==null?'Sin cálculo':(proposal.difference_eur>0?'+':'')+eur(proposal.difference_eur)}</p>
+    {proposal.difference_eur!=null && Number(proposal.current_total_eur)>0?<p className="mt-2 text-base font-semibold tabular-nums">{Math.abs(Number(proposal.difference_eur)/Number(proposal.current_total_eur)*100).toLocaleString('es-ES',{maximumFractionDigits:1})}% {proposal.difference_eur>0?'menos':proposal.difference_eur<0?'más':'de diferencia'} respecto a esta factura</p>:null}
+    <p className="mt-2 text-xs">{approved?'Importes y condiciones revisados por una persona':'Estimación pendiente de validar'}</p></div>
   </div>:<p className="mt-5 rounded-lg bg-[#F3F8F2] p-5 text-base">Todavía no hay ninguna propuesta. Puedes añadir la primera a continuación.</p>}
   {proposal?<div className="mt-4 rounded-xl border border-[#DDE7DA] p-4">
    <p className="text-sm font-semibold text-[#263D2C]">{approved?'Validada manualmente':'Revisión pendiente'}</p>
@@ -63,7 +65,7 @@ export default function FenieProposalPanel({lead,proposals=[],canEdit=false,noti
    </form>:null}
   </div>:null}
   {proposal && approved?<div className="mt-6 rounded-xl border border-[#C8DCC8] p-5">
-   <h3 className="text-xl font-semibold">3. Preparar correo al cliente</h3>
+   <h3 className="text-xl font-semibold">3. Preparar el correo al cliente desde Yahoo</h3><p className="mt-2 text-sm leading-6 text-neutral-600">El mensaje queda preparado. Descarga los dos PDF, abre Yahoo, adjúntalos y revisa antes de enviar. El CRM todavía no tiene permiso para enviar desde Yahoo automáticamente.</p>
    {canEmail?<FenieEmailDraft to={lead.email} subject="Tu revisión de luz y gas | Electricidad Lakuntza"
       body={offerEmail({name:lead.name,invoiceTotal:proposal.current_total_eur,proposalTotal:proposal.offer_total_eur,difference:proposal.difference_eur,notes:proposal.notes})}
       invoiceHref={invoiceHref} proposalHref={proposalHref}/>:<p className="mt-3 text-sm leading-6 text-amber-800">No se puede preparar el correo: falta una dirección de email válida o una comparación completa. Revisa el contacto.</p>}
