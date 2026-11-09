@@ -1,6 +1,7 @@
 import AdminShell from '@/components/admin/AdminShell';
 import { requireAnyPermission } from '@/lib/admin';
 import { hasPermission } from '@/lib/rolePermissions';
+import { businessToday, activeOpportunityStatuses, followUpLabel } from '@/lib/commercial/follow-up.mjs';
 
 export const metadata = { title: 'Oportunidades comerciales', robots: { index: false, follow: false } };
 export const revalidate = 0;
@@ -19,12 +20,17 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
   const params = await searchParams;
   const selectedStatus = Object.hasOwn(statusNames, params?.estado) ? params.estado : '';
   const selectedService = Object.hasOwn(serviceNames, params?.servicio) ? params.servicio : '';
+  const selectedFollowUp = ['pendiente', 'sin-fecha'].includes(params?.seguimiento) ? params.seguimiento : '';
+  const today = businessToday();
 
   let request = supabase.from('commercial_leads')
     .select('id,service,contact_name,contact_phone,contact_email,origin,status,assigned_to,next_contact_on,created_at,notification_status')
     .order('created_at', { ascending: false }).limit(200);
   if (selectedStatus) request = request.eq('status', selectedStatus);
   if (selectedService) request = request.eq('service', selectedService);
+  if (selectedFollowUp) request = request.in('status', activeOpportunityStatuses);
+  if (selectedFollowUp === 'pendiente') request = request.lte('next_contact_on', today);
+  if (selectedFollowUp === 'sin-fecha') request = request.is('next_contact_on', null);
 
   const { data, error } = await request;
   const leads = data || [];
@@ -42,7 +48,13 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
         <p className="text-sm font-semibold text-[#285D30]">Registro comercial interno</p>
         <p className="mt-2 text-sm leading-7 text-neutral-600">Registra únicamente consultas que hayamos recibido legítimamente. Evita introducir CUPS, documentos de identidad, datos bancarios o información innecesaria. El acceso se limita según el rol del usuario.</p>
       </section>
+      <nav aria-label="Seguimientos prioritarios" className="mb-5 flex flex-wrap gap-2">
+        <a href="/admin/oportunidades?seguimiento=pendiente" aria-current={selectedFollowUp === 'pendiente' ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-xl border px-4 text-sm font-semibold ${selectedFollowUp === 'pendiente' ? 'border-[#24662D] bg-[#EAF6E8] text-[#174A20]' : 'border-neutral-300 bg-white text-neutral-700'}`}>Vencidos y para hoy</a>
+        <a href="/admin/oportunidades?seguimiento=sin-fecha" aria-current={selectedFollowUp === 'sin-fecha' ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-xl border px-4 text-sm font-semibold ${selectedFollowUp === 'sin-fecha' ? 'border-[#24662D] bg-[#EAF6E8] text-[#174A20]' : 'border-neutral-300 bg-white text-neutral-700'}`}>Sin fecha</a>
+        <a href="/admin/oportunidades" className="inline-flex min-h-11 items-center px-3 text-sm font-medium text-[#24662D] underline underline-offset-4">Todas</a>
+      </nav>
       <form method="GET" className="mb-6 flex flex-wrap items-end gap-3">
+        {selectedFollowUp ? <input type="hidden" name="seguimiento" value={selectedFollowUp} /> : null}
         <label className="grid min-w-[170px] gap-2 text-xs font-semibold text-neutral-700">
           Servicio
           <select name="servicio" defaultValue={selectedService} className="min-h-11 rounded-xl border border-neutral-300 bg-white px-3 text-sm">
@@ -85,6 +97,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
                   <p className="mt-1 text-sm text-neutral-600">{lead.contact_phone || lead.contact_email || 'Sin contacto visible'} · {lead.origin}</p>
                   {['pending','failed'].includes(lead.notification_status) ? <p className="mt-2 text-sm font-semibold text-amber-800">Aviso por correo sin confirmar: atender desde el panel.</p> : null}
                   {lead.next_contact_on ? <p className="mt-1 text-xs text-[#8D5E00]">Próximo seguimiento: {lead.next_contact_on}</p> : null}
+                  {followUpLabel(lead.next_contact_on, lead.status, today) ? <p className="mt-1 text-xs font-semibold text-[#8D5E00]">{followUpLabel(lead.next_contact_on, lead.status, today)}</p> : null}
                 </div>
                 <span className="text-sm font-semibold text-[#24662D]">Abrir expediente</span>
               </a>
