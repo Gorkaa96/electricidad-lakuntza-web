@@ -65,7 +65,7 @@ test('owner uploads a Fenie PDF, validates the comparison and prepares Yahoo rep
   await page.locator('input[name=confirmed]').check();
   await page.getByRole('button',{name:'Confirmar comparación'}).click();
   await expect(page).toHaveURL(/propuestaOk=revisada/);
-  await expect(page.getByRole('heading',{name:'3. Preparar correo al cliente'})).toBeVisible();
+  await expect(page.getByRole('heading',{name:/3\. Preparar (el )?correo al cliente/})).toBeVisible();
   await expect(page.getByRole('button',{name:'3. Copiar mensaje'})).toBeVisible();
   const p=await service.from('fenie_proposals').select('id,reviewed_at').eq('lead_id',f.invoiceId).single();
   expect(p.error).toBeNull();expect(p.data.reviewed_at).toBeTruthy();
