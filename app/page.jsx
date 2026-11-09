@@ -66,7 +66,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-14 lg:px-8 lg:py-20">
             <div className="grid items-center gap-6 sm:gap-12 lg:grid-cols-12 lg:gap-16">
               <div className="min-w-0 lg:col-span-7">
-                <p className="hidden text-sm font-semibold text-[#376044] sm:block">Electricidad Lakuntza · Atención directa en Navarra</p>
+                <p className="hidden text-sm font-semibold text-[#376044] sm:block">Electricidad Lakuntza · Luz, gas, alarmas y cargadores</p>
                 <h1 className="max-w-[15ch] text-[2.25rem] font-semibold leading-[1.06] tracking-[-.05em] text-[#173A29] sm:mt-6 sm:text-[clamp(3rem,5.5vw,5rem)]">Tu energía, en buenas manos.</h1>
                 <p className="mt-4 max-w-xl text-base leading-6 text-[#526256] sm:mt-6 sm:text-xl sm:leading-8">Luz y gas, alarmas, cargadores y asesoría energética para tu hogar o negocio. Te ayudamos a decidir con información clara.</p>
                 <div className="mt-8 hidden flex-wrap gap-3 sm:flex">
