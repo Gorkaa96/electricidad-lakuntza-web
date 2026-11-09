@@ -99,3 +99,31 @@ test('trusted intake service persists notification without private helper privil
   const crm=await service.from('commercial_leads').select('notification_status').eq('invoice_review_lead_id',f.invoiceId).single();
   assert.equal(crm.error,null);assert.equal(crm.data.notification_status,'accepted');
 });
+
+test('Fenie PDF versions stay private, immutable and scoped to assigned staff',async()=>{
+ const agent=await signed('agent'),owner=await signed('owner'),other=await signed('other');
+ const proposalId=crypto.randomUUID();
+ const path='propuestas/'+f.invoiceId+'/'+proposalId+'.pdf';
+ const pdf=buildSyntheticInvoicePdf();
+ assert.equal((await agent.storage.from('invoice-files').upload(path,pdf,{contentType:'application/pdf',upsert:false})).error,null);
+ const saved=await agent.from('fenie_proposals').insert({
+   id:proposalId,lead_id:f.invoiceId,version:1,file_path:path,file_name:'propuesta-qa.pdf',
+   file_size:pdf.length,created_by:f.users.agent.id,current_total_eur:100,
+   offer_total_eur:95,difference_eur:5,comparison_status:'estimated_better',
+   comparison_reason:'Solo simulación sintética'
+ }).select('id').single();
+ assert.equal(saved.error,null);
+ assert.equal((await agent.storage.from('invoice-files').download(path)).error,null);
+ assert.equal((await owner.storage.from('invoice-files').download(path)).error,null);
+ assert.deepEqual((await other.from('fenie_proposals').select('id').eq('id',proposalId)).data,[]);
+ assert.ok((await other.storage.from('invoice-files').download(path)).error);
+ assert.ok((await agent.from('fenie_proposals').update({file_path:'forbidden.pdf'}).eq('id',proposalId)).error);
+ const review=await agent.from('fenie_proposals').update({reviewed_at:new Date().toISOString(),
+   reviewed_by:f.users.agent.id,notes:'Verificado en caso ficticio'}).eq('id',proposalId);
+ assert.equal(review.error,null);
+ assert.equal((await service.from('admin_users').update({active:false}).eq('user_id',f.users.agent.id)).error,null);
+ assert.ok((await agent.storage.from('invoice-files').download(path)).error);
+ assert.equal((await service.from('admin_users').update({active:true}).eq('user_id',f.users.agent.id)).error,null);
+ assert.equal((await owner.storage.from('invoice-files').remove([path])).error,null);
+ assert.equal((await owner.from('fenie_proposals').delete().eq('id',proposalId)).error,null);
+});
