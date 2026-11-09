@@ -70,3 +70,4 @@ export default function FenieProposalPanel({lead,proposals=[],canEdit=false,noti
   </div>:null}
   <p className="mt-4 text-xs leading-5 text-neutral-600">Las cifras son orientativas para el periodo y consumo verificados. No se garantiza ahorro anual ni se contrata nada automáticamente. El PDF queda privado.</p>
  </section>;
+}
