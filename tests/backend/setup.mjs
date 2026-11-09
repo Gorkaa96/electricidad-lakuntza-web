@@ -25,7 +25,7 @@ for (const [k,v] of Object.entries(env)) {
   if (/KEY|SERVICE|ANON/.test(k)) console.log('::add-mask::'+v);
 }
 await appendFile(process.env.GITHUB_ENV,Object.entries(env).map(([k,v])=>k+'='+v).join('\n')+'\n');
-const scripts = ['bootstrap_v2','roles_permissions_v1','agent_assignments_v1','agent_limited_edit_v1','commercial_crm_v1','intake_sync_rate_limit_v1','fix_intake_rate_limit_arg_v1','intake_traceability_v1','sync_intake_traceability_v1','commercial_fk_indexes_v1','fenie_proposals_v1','fenie_proposals_storage_precheck_v2','fenie_proposals_storage_precheck_v3'];
+const scripts = ['bootstrap_v2','roles_permissions_v1','agent_assignments_v1','agent_limited_edit_v1','commercial_crm_v1','intake_sync_rate_limit_v1','fix_intake_rate_limit_arg_v1','intake_traceability_v1','sync_intake_traceability_v1','commercial_fk_indexes_v1','fenie_proposals_v1','fenie_proposals_storage_precheck_v2','fenie_proposals_storage_precheck_v3','fenie_proposals_storage_qualified_v4'];
 for (const file of [...scripts.map(n=>'supabase/'+n+'.sql'),'tests/sql/security-regression.sql']) {
   const r=spawnSync('psql',[vars.DB_URL,'-v','ON_ERROR_STOP=1','-f',file],{encoding:'utf8'});
   if(r.status!==0) { console.error(r.stderr); throw new Error('SQL verification failed: '+file); }
