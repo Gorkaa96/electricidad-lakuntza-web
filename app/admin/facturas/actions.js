@@ -124,6 +124,18 @@ export async function deleteInvoiceLead(formData) {
     redirect('/admin/facturas?error=datos');
   }
 
+  const {data:proposalDocs,error:proposalError}=await supabase.from('fenie_proposals')
+    .select('file_path').eq('lead_id',id);
+  if(proposalError) redirect(`/admin/facturas/${id}?error=archivo_eliminar`);
+  if(proposalDocs?.length){
+    const {error:removeProposals}=await supabase.storage.from('invoice-files')
+      .remove(proposalDocs.map(row=>row.file_path));
+    if(removeProposals){
+      console.error('[invoice-delete] Proposal removal failed', {leadId:id});
+      redirect(`/admin/facturas/${id}?error=archivo_eliminar`);
+    }
+  }
+
   if (lead.file_path) {
     const { error: fileDeleteError } = await supabase.storage.from('invoice-files').remove([lead.file_path]);
     // Never report a complete deletion while a private invoice may remain in storage.
