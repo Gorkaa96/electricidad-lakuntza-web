@@ -7,6 +7,11 @@ test('decimal-point prices retain their decimal value', () => {
   assert.equal(parsed.electricity.energy_price_eur_kwh, 0.149426);
   assert.equal(parsed.amounts.total_eur, 1234.56);
 });
+test('synthetic PDFs expressing the total in EUR keep the correct invoice amount', () => {
+  const parsed = parseInvoiceTextFree('FACTURA SINTETICA - SOLO PRUEBA\nPeriodo: 01/10/2026 a 31/10/2026\nConsumo total: 300 kWh\nTotal factura: 150,00 EUR');
+  assert.equal(parsed.amounts.total_eur, 150);
+});
+
 test('large and small invoices both require a professional comparison', () => {
   for (const total of ['150,00', '20,00']) {
     const parsed = parseInvoiceTextFree('Total factura ' + total + ' €');
