@@ -48,6 +48,7 @@ test('synthetic invoice travels from public form through Storage, CRM, OCR and c
   await page.goto('/admin/facturas/'+lead.id);
   expect(lead.ocr_status).toBe('succeeded');
   expect(lead.ocr_requires_manual_review).toBe(true);
+  await page.locator('summary').filter({hasText:'Ver lectura y datos avanzados de la factura'}).click();
   await expect(page.locator('span').filter({hasText:/^Campos detectados/})).toBeVisible();
   expect((await service.from('invoice_ocr_results').select('ocr_status').eq('lead_id',lead.id).single()).data.ocr_status).toBe('succeeded');
   await page.locator('select[name=assignedTo]').selectOption(f.users.agent.id);
