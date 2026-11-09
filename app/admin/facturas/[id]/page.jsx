@@ -264,8 +264,9 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
         </aside>
       </div>
 
-      <section className="mt-6 rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <details open={ocrStatus === 'failed'} className="mt-6 rounded-xl border border-neutral-200 bg-white p-6 sm:p-8">
+        <summary className="cursor-pointer text-lg font-semibold text-[#245B38]">Ver lectura y datos avanzados de la factura (opcional)</summary>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm font-semibold text-lakuntza-greenDark">Datos y decisión</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-neutral-950">Análisis interno</h2>
@@ -307,7 +308,7 @@ export default async function AdminInvoiceLeadDetailPage({ params, searchParams 
           <label className="grid gap-2 text-sm font-black text-neutral-800">Motivos / observaciones<textarea name="analysisReasons" rows={5} defaultValue={analysisReasons.join('\n')} className="rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm font-medium leading-6 outline-none focus:border-lakuntza-green" placeholder="Un motivo por línea" /></label>
           <button className="rounded-lg bg-[#24662D] px-5 py-3 text-sm font-semibold text-white transition hover:bg-lakuntza-greenDark">Guardar análisis</button>
         </form> : null}
-      </section>
+      </details>
     </AdminShell>
   );
 }
