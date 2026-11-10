@@ -11,7 +11,8 @@ const sections = [
   {
     title: 'Responsable del tratamiento',
     content: [
-      'Responsable: Electricidad Lakuntza · Elektrizitatea.',
+      'Responsable: Electricidad Lakuntza (NIF E31283476).',
+      'Nombre comercial: Electricidad Lakuntza · Elektrizitatea.',
       'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Navarra.',
       'Email de contacto: eleclakuntza@yahoo.es.',
       'Teléfono: 649 853 448.',
