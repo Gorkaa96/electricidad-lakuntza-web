@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
 import { requireAnyPermission } from '@/lib/admin';
@@ -145,7 +146,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
         <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-6">
           <h2 className="text-lg font-semibold text-amber-950">No se han podido cargar las solicitudes</h2>
           <p className="mt-2 text-sm leading-6 text-amber-900">Comprueba que la base de datos esté disponible y vuelve a intentarlo. Esto no significa que no haya solicitudes.</p>
-          <a href="/admin/facturas" className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-amber-950 px-5 py-3 text-sm font-semibold text-white hover:bg-amber-900">Reintentar</a>
+          <Link href="/admin/facturas" className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-amber-950 px-5 py-3 text-sm font-semibold text-white hover:bg-amber-900">Reintentar</Link>
         </div>
       </AdminShell>
     );
@@ -173,7 +174,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
         <input type="hidden" name="view" value={selectedView}/>
         <label className="grid flex-1 gap-2 text-sm font-medium text-[#425A4C]">Buscar factura<input name="q" defaultValue={query} placeholder="Nombre, teléfono o localidad" className="min-h-11 w-full border bg-white px-3 py-2 font-normal"/></label>
         <button className="min-h-11 rounded-lg bg-[#1B4E3D] px-5 py-2 text-sm font-semibold text-white">Buscar</button>
-        {query?<a href={href(selectedView)} className="inline-flex min-h-11 items-center px-3 text-sm text-[#3B634B] underline">Limpiar</a>:null}
+        {query?<Link href={href(selectedView)} className="inline-flex min-h-11 items-center px-3 text-sm text-[#3B634B] underline">Limpiar</Link>:null}
       </form>
       <section className="overflow-x-auto rounded-2xl border border-neutral-200 bg-white p-2 shadow-sm" aria-label="Filtrar solicitudes">
         <nav className="flex min-w-max gap-1 sm:min-w-0 sm:flex-wrap" aria-label="Vistas de facturas">
@@ -185,7 +186,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
               className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${selectedView === view ? 'bg-[#EAF5E4] text-lakuntza-greenDark' : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950'}`}
             >
               {viewLabels[view]} <span className={`inline-flex min-w-6 items-center justify-center rounded-lg px-1.5 py-0.5 text-xs font-bold ${selectedView === view ? 'bg-white text-lakuntza-greenDark' : 'bg-neutral-100 text-neutral-600'}`}>{counts[view]}</span>
-            </a>
+            </Link>
           ))}
         </nav>
       </section>
@@ -200,7 +201,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
               const power = formatNumber(lead.contracted_power_kw, ' kW');
 
               return (
-                <a key={lead.id} href={`/admin/facturas/${lead.id}`} className="grid gap-4 p-5 transition-colors hover:bg-[#F5F9F3] lg:grid-cols-[1fr_auto] lg:items-center">
+                <Link key={lead.id} href={`/admin/facturas/${lead.id}`} className="grid gap-4 p-5 transition-colors hover:bg-[#F5F9F3] lg:grid-cols-[1fr_auto] lg:items-center">
                   <div>
                     <div className="flex flex-wrap gap-2">
                       <span className={`rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${statusClass(lead.status)}`}>{statusLabels[lead.status] || lead.status}</span>
@@ -228,7 +229,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
                   <div className="text-left lg:text-right">
                     <p className="text-sm font-semibold text-lakuntza-greenDark">Abrir solicitud</p>
                   </div>
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -236,7 +237,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
           <div className="p-8 text-center">
             <h2 className="text-2xl font-black tracking-[-0.04em] text-neutral-950">No hay facturas en esta vista.</h2>
             <p className="mt-3 text-sm leading-6 text-neutral-600">Cambia a otra pestaña para ver más solicitudes.</p>
-            <a href="/admin/facturas?view=all" className="mt-6 inline-flex rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white">Ver todas</a>
+            <Link href="/admin/facturas?view=all" className="mt-6 inline-flex rounded-2xl bg-neutral-950 px-5 py-3 text-sm font-black text-white">Ver todas</Link>
           </div>
         ) : (
           <div className="p-8 text-center">
