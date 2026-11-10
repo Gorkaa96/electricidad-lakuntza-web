@@ -5,11 +5,28 @@ import { NextResponse } from 'next/server';
 // Pages on the admin hostname must never become a second indexed website.
 const adminHostname = 'admin.electricidadlakuntza.com';
 const publicHostname = 'www.electricidadlakuntza.com';
+const stablePreviewHostname = 'electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app';
 
 export async function middleware(request) {
   const hostname = request.nextUrl.hostname.toLowerCase();
   const pathname = request.nextUrl.pathname;
   const onAdminHostname = hostname === adminHostname;
+
+  // Immutable Vercel Preview URLs change on every commit. Their hostnames are
+  // not all registered with Turnstile, causing error 110200. On this protected
+  // integration branch, send form entry pages to the ONE stable preview alias.
+  if (process.env.VERCEL_ENV === 'preview' &&
+      process.env.VERCEL_GIT_COMMIT_REF === 'integration/launch-prep-2026-10-29' &&
+      hostname.endsWith('.vercel.app') && hostname !== stablePreviewHostname &&
+      (pathname === '/revision-factura-luz-gas' || pathname === '/consulta')) {
+    const canonicalPreview = request.nextUrl.clone();
+    canonicalPreview.hostname = stablePreviewHostname;
+    canonicalPreview.port = '';
+    const redirect = NextResponse.redirect(canonicalPreview, 307);
+    redirect.headers.set('Cache-Control', 'no-store');
+    redirect.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    return redirect;
+  }
 
   if (onAdminHostname && (pathname === '/' || pathname === '/admin')) {
     const landing = request.nextUrl.clone();
