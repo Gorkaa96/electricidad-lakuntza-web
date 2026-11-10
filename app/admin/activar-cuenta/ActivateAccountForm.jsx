@@ -52,8 +52,8 @@ export default function ActivateAccountForm() {
   async function activate(event) {
     event.preventDefault();
     setError('');
-    if (password.length < 12 || password !== confirmPassword) {
-      setError('La contraseña debe tener al menos 12 caracteres y coincidir en ambos campos.');
+    if (password.length < 12 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/[^A-Za-z0-9]/.test(password) || password !== confirmPassword) {
+      setError('Usa 12 caracteres o más con mayúsculas, minúsculas, números y símbolos. Las dos contraseñas deben coincidir.');
       return;
     }
     setBusy(true);
@@ -76,6 +76,7 @@ export default function ActivateAccountForm() {
       <label className="grid gap-2 text-sm font-semibold">Contraseña nueva
         <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} minLength={12} autoComplete="new-password" required className="min-h-12 rounded-xl border border-neutral-300 px-4 py-3 font-normal"/>
       </label>
+      <p className="-mt-2 text-sm leading-6 text-neutral-600">Utiliza una contraseña única de 12 caracteres o más, con mayúsculas, minúsculas, números y símbolos. No compartas tu acceso.</p>
       <label className="grid gap-2 text-sm font-semibold">Repetir contraseña
         <input type="password" value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} minLength={12} autoComplete="new-password" required className="min-h-12 rounded-xl border border-neutral-300 px-4 py-3 font-normal"/>
       </label>
