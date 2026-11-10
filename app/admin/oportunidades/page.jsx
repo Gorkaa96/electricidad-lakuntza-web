@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import AdminShell from '@/components/admin/AdminShell';
 import { requireAnyPermission } from '@/lib/admin';
 import { hasPermission } from '@/lib/rolePermissions';
@@ -40,7 +41,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
       title="Oportunidades"
       description="Seguimiento comercial de luz, gas, alarmas, cargadores y asesoría. Las solicitudes de factura se vinculan automáticamente a su oportunidad."
       action={hasPermission(admin, 'leads.edit_all') ? (
-        <a href="/admin/oportunidades/nueva" className="inline-flex min-h-11 items-center rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white hover:bg-[#194D20]">Nueva oportunidad</a>
+        <Link href="/admin/oportunidades/nueva" className="inline-flex min-h-11 items-center rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white hover:bg-[#194D20]">Nueva oportunidad</Link>
       ) : null}
     >
       {params?.success === 'eliminada' ? <p role="status" className="mb-6 rounded-xl bg-[#ECF7EA] p-4 text-sm text-[#24662D]">Oportunidad eliminada.</p> : null}
@@ -49,9 +50,9 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
         <p className="mt-2 text-sm leading-7 text-neutral-600">Registra únicamente consultas que hayamos recibido legítimamente. Evita introducir CUPS, documentos de identidad, datos bancarios o información innecesaria. El acceso se limita según el rol del usuario.</p>
       </section>
       <nav aria-label="Seguimientos prioritarios" className="mb-5 flex flex-wrap gap-2">
-        <a href="/admin/oportunidades?seguimiento=pendiente" aria-current={selectedFollowUp === 'pendiente' ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-xl border px-4 text-sm font-semibold ${selectedFollowUp === 'pendiente' ? 'border-[#24662D] bg-[#EAF6E8] text-[#174A20]' : 'border-neutral-300 bg-white text-neutral-700'}`}>Vencidos y para hoy</a>
-        <a href="/admin/oportunidades?seguimiento=sin-fecha" aria-current={selectedFollowUp === 'sin-fecha' ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-xl border px-4 text-sm font-semibold ${selectedFollowUp === 'sin-fecha' ? 'border-[#24662D] bg-[#EAF6E8] text-[#174A20]' : 'border-neutral-300 bg-white text-neutral-700'}`}>Sin fecha</a>
-        <a href="/admin/oportunidades" className="inline-flex min-h-11 items-center px-3 text-sm font-medium text-[#24662D] underline underline-offset-4">Todas</a>
+        <Link href="/admin/oportunidades?seguimiento=pendiente" aria-current={selectedFollowUp === 'pendiente' ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-xl border px-4 text-sm font-semibold ${selectedFollowUp === 'pendiente' ? 'border-[#24662D] bg-[#EAF6E8] text-[#174A20]' : 'border-neutral-300 bg-white text-neutral-700'}`}>Vencidos y para hoy</Link>
+        <Link href="/admin/oportunidades?seguimiento=sin-fecha" aria-current={selectedFollowUp === 'sin-fecha' ? 'page' : undefined} className={`inline-flex min-h-11 items-center rounded-xl border px-4 text-sm font-semibold ${selectedFollowUp === 'sin-fecha' ? 'border-[#24662D] bg-[#EAF6E8] text-[#174A20]' : 'border-neutral-300 bg-white text-neutral-700'}`}>Sin fecha</Link>
+        <Link href="/admin/oportunidades" className="inline-flex min-h-11 items-center px-3 text-sm font-medium text-[#24662D] underline underline-offset-4">Todas</Link>
       </nav>
       <form method="GET" className="mb-6 flex flex-wrap items-end gap-3">
         {selectedFollowUp ? <input type="hidden" name="seguimiento" value={selectedFollowUp} /> : null}
@@ -70,7 +71,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
           </select>
         </label>
         <button type="submit" className="min-h-11 rounded-xl border border-[#B8CDB5] bg-white px-5 text-sm font-semibold text-[#255D2A] hover:bg-[#F1F8ED]">Filtrar</button>
-        <a href="/admin/oportunidades" className="inline-flex min-h-11 items-center px-3 text-sm text-neutral-600 underline underline-offset-4">Limpiar</a>
+        <Link href="/admin/oportunidades" className="inline-flex min-h-11 items-center px-3 text-sm text-neutral-600 underline underline-offset-4">Limpiar</Link>
       </form>
 
       {error ? (
@@ -87,7 +88,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
           <p className="border-b border-neutral-200 px-5 py-3 text-xs text-neutral-500">Mostrando {leads.length} de las oportunidades recientes que puedes consultar (máximo 200).</p>
           <div className="divide-y divide-neutral-100">
             {leads.map((lead) => (
-              <a href={'/admin/oportunidades/' + lead.id} key={lead.id} className="grid gap-3 p-5 transition-colors hover:bg-[#F6FAF4] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+              <Link href={'/admin/oportunidades/' + lead.id} key={lead.id} className="grid gap-3 p-5 transition-colors hover:bg-[#F6FAF4] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="rounded-full bg-[#EDF5E9] px-3 py-1 text-xs font-semibold text-[#2A6331]">{serviceNames[lead.service] || lead.service}</span>
@@ -100,7 +101,7 @@ export default async function CommercialOpportunitiesPage({ searchParams }) {
                   {followUpLabel(lead.next_contact_on, lead.status, today) ? <p className="mt-1 text-xs font-semibold text-[#8D5E00]">{followUpLabel(lead.next_contact_on, lead.status, today)}</p> : null}
                 </div>
                 <span className="text-sm font-semibold text-[#24662D]">Abrir expediente</span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
