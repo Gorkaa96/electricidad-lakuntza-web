@@ -56,3 +56,14 @@ Publicar una **versión piloto para comprobación interna** en los dominios fina
 - Crear/editar una oportunidad ficticia y verificar filtros, rol, cambios, cierre y eliminación de PDF y metadatos.
 - Comprobar que en **producción piloto no aparecen formularios capaces de registrar datos**, y que robots bloquea indexación.
 - Consultar GitHub Actions y Vercel: no dar por bueno el último commit hasta tener CI verde y deployment READY.
+
+
+## Publicación piloto verificada el 10/11/2026
+- Producción nueva: `dpl_HfSMSpiNLjrSNfUcuSQ86HzFRUoM`, commit `4b397b937fc68417031d37041220617c7b3aa41f`, estado READY.
+- Dominios `www.electricidadlakuntza.com` y `admin.electricidadlakuntza.com` apuntan al nuevo despliegue. Comprobación HTTP 200 de portada, login, consultas y páginas legales.
+- Recepción en producción: se comprobó que la revisión de facturas no presenta formulario para enviar datos; `robots.txt` contiene `Disallow: /`; la portada sigue con noindex.
+- Alias estable de Preview `electricidad-lakuntza-git-c5cfe9-gorkahernandez6-9437s-projects.vercel.app` reasignado al despliegue de Preview `dpl_883Emn4E7tcLgtLdqxsjsKtSmxvr`, después de que la publicación de producción lo reasignase temporalmente. El formulario ficticio permanece visible en esa Preview.
+- Cloudflare DNS: registros A/CNAME de raíz, www y admin en `proxied:false`. Los tres registros estaban en proxy naranja y se corrigieron a DNS-only.
+- Rollback de referencia: despliegue anterior `dpl_4drQhhLxhtx6tfcfytuCgm3QcFiu`; verificar siempre compatibilidad de las variables actuales y mantener el circuito de datos bloqueado.
+- No se ha comprobado Turnstile con un navegador humano real después de cambiar dominios; prueba manual obligatoria antes de aceptar el flujo como resuelto.
+- **Nota de seguridad:** noindex no restringe acceso; es una web piloto técnicamente accesible. Mantener el control de formularios y no usar datos reales todavía.
