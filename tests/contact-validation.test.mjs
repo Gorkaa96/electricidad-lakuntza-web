@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { canonicalPhone, validContactChannels, quotaContact } from '../lib/contact-validation.mjs';
+import { canonicalPhone, validEmail, validContactChannels, quotaContact } from '../lib/contact-validation.mjs';
 
 test('Spanish phone formatting cannot bypass a contact quota', () => {
   const variants = ['600123456', '600 123 456', '+34 (600) 123-456', '0034 600.123.456'];
@@ -21,4 +21,21 @@ test('supports email-only inquiries and normalizes email quotas', () => {
 });
 test('a valid email never excuses a malformed phone', () => {
   assert.equal(validContactChannels('---', 'cliente@example.org'), false);
+});
+
+test('rejects implausible Spanish prefixes and accepts mobile / landline formats', () => {
+  for (const bad of ['123456789','0034 123456789','+34 123456789','000000000']) {
+    assert.equal(canonicalPhone(bad), null, bad);
+  }
+  for (const good of ['600123456','722123456','948123456','+34 948 123 456']) {
+    assert.ok(canonicalPhone(good), good);
+  }
+});
+test('email validation rejects malformed local parts and domains', () => {
+  for (const bad of ['ana..perez@example.com','ana@-empresa.com','ana@empresa..es','ana@empresa.c','ana@@example.com','ana@empresa.com.']) {
+    assert.equal(validEmail(bad), false, bad);
+  }
+  for (const good of ['ana.perez@example.com','ana+oferta@empresa.es','gorka@electricidadlakuntza.com']) {
+    assert.equal(validEmail(good), true, good);
+  }
 });
