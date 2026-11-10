@@ -6,9 +6,9 @@ import { canViewLeads, hasPermission } from '@/lib/rolePermissions';
 import { siteUrl } from '@/lib/site';
 
 const navItems = [
-  { href: '/admin/resumen', label: 'Resumen', icon: LayoutDashboard, allowed: canViewLeads },
-  { href: '/admin/oportunidades', label: 'Oportunidades', icon: BriefcaseBusiness, allowed: canViewLeads },
-  { href: '/admin/facturas', label: 'Facturas', icon: ReceiptText, allowed: canViewLeads },
+  { href: '/admin/resumen', label: 'Inicio', icon: LayoutDashboard, allowed: canViewLeads },
+  { href: '/admin/oportunidades', label: 'Consultas', icon: BriefcaseBusiness, allowed: canViewLeads },
+  { href: '/admin/facturas', label: 'Facturas luz/gas', icon: ReceiptText, allowed: canViewLeads },
   { href: '/admin/usuarios', label: 'Usuarios', icon: UsersRound, allowed: (member) => hasPermission(member, 'users.manage') },
   { href: siteUrl, label: 'Ver web', icon: ExternalLink, allowed: () => true, external: true },
 ];
