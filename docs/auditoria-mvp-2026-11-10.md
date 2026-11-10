@@ -67,3 +67,9 @@ Publicar una **versión piloto para comprobación interna** en los dominios fina
 - Rollback de referencia: despliegue anterior `dpl_4drQhhLxhtx6tfcfytuCgm3QcFiu`; verificar siempre compatibilidad de las variables actuales y mantener el circuito de datos bloqueado.
 - No se ha comprobado Turnstile con un navegador humano real después de cambiar dominios; prueba manual obligatoria antes de aceptar el flujo como resuelto.
 - **Nota de seguridad:** noindex no restringe acceso; es una web piloto técnicamente accesible. Mantener el control de formularios y no usar datos reales todavía.
+
+## Verificación funcional comunicada por propietario — 10/11/2026
+- **P0 SUPERADO EN PREVIEW (comprobación manual del propietario):** Turnstile permite completar la comprobación de seguridad y enviar facturas ficticias.
+- **P0 SUPERADO EN PREVIEW (comprobación manual del propietario):** circuito factura → OCR → comparativa Feníe → correo preparado → eliminación.
+- **Alcance:** validación de la Preview protegida, **no** validación de captación en producción. El formulario público continúa deshabilitado hasta aprobación de lanzamiento y cierre de los P0 de seguridad, respaldo, titularidad legal y alojamiento.
+- **Siguiente P0:** respaldo verificable de base de datos, ficheros privados y procedimiento de restauración, sin borrar datos reales.
