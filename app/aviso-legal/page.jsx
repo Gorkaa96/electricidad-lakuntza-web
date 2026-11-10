@@ -11,7 +11,8 @@ const sections = [
   {
     title: 'Titular de la web',
     content: [
-      'Denominación comercial: Electricidad Lakuntza · Elektrizitatea.',
+      'Titular identificado fiscalmente: Electricidad Lakuntza (NIF E31283476).',
+      'Nombre comercial: Electricidad Lakuntza · Elektrizitatea.',
       'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Navarra.',
       'Teléfono: 649 853 448.',
       'Correo electrónico: eleclakuntza@yahoo.es.',
