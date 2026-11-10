@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { ExternalLink, UsersRound, LayoutDashboard, BriefcaseBusiness, ReceiptText } from 'lucide-react';
 import { canViewLeads, hasPermission } from '@/lib/rolePermissions';
 import { siteUrl } from '@/lib/site';
@@ -22,8 +23,9 @@ export default function AdminNavigation({ compact = false, member }) {
       {visible.map((item) => {
         const Icon = item.icon;
         const current = !item.external && (pathname === item.href || pathname.startsWith(item.href + '/'));
+        const NavLink = item.external ? 'a' : Link;
         return (
-          <a key={item.href} href={item.href} aria-current={current ? 'page' : undefined}
+          <NavLink key={item.href} href={item.href} aria-current={current ? 'page' : undefined}
             target={item.external ? '_blank' : undefined}
             rel={item.external ? 'noopener noreferrer' : undefined}
             className={compact
@@ -32,7 +34,7 @@ export default function AdminNavigation({ compact = false, member }) {
           >
             <Icon aria-hidden="true" size={compact ? 17 : 19} className="shrink-0" />
             <span>{item.label}</span>
-          </a>
+          </NavLink>
         );
       })}
     </nav>
