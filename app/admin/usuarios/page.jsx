@@ -22,8 +22,10 @@ const errors = {
 
 function PermissionFields({ selected = [], manager, prefix }) {
   return (
-    <fieldset className="mt-5">
-      <legend className="text-sm font-semibold text-neutral-800">Permisos individuales</legend>
+    <details className="mt-5 rounded-xl border border-neutral-200 bg-[#F8FAF8] p-4">
+      <summary className="cursor-pointer text-sm font-semibold text-[#254E37]">Permisos avanzados (opcional)</summary>
+      <fieldset className="mt-4">
+        <legend className="sr-only">Permisos individuales</legend>
       <input type="hidden" name="permissionsPresent" value="true" />
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         {PERMISSION_OPTIONS.map((option) => (
@@ -33,8 +35,9 @@ function PermissionFields({ selected = [], manager, prefix }) {
           </label>
         ))}
       </div>
-      <p className="mt-3 text-xs leading-6 text-neutral-500">Un agente solo ve las solicitudes asignadas de forma predeterminada. Al cambiar de rol en una invitación se aplican los permisos iniciales; puedes ajustarlos individualmente. La base de datos aplica también estas restricciones.</p>
-    </fieldset>
+      <p className="mt-3 text-xs leading-6 text-neutral-500">Los agentes solo ven y gestionan sus solicitudes asignadas. El rol elegido prepara estos permisos. Si no necesitas personalizarlos, deja las casillas como están.</p>
+      </fieldset>
+    </details>
   );
 }
 
@@ -57,7 +60,7 @@ export default async function TeamMembersPage({ searchParams }) {
       {!readyToInvite ? <div className="mb-7 rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm leading-7 text-amber-900"><strong>Invitaciones no activadas.</strong> Configura el secreto de Supabase solo en Vercel (servidor), la URL de invitaciones y SMTP. La consulta de usuarios y las políticas de permisos sí están disponibles.</div> : null}
       <section className="rounded-2xl border border-neutral-200 bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3"><UserPlus className="text-[#286B2C]" /><h2 className="text-xl font-semibold">Invitar a una persona</h2></div>
-        <p className="mt-3 text-sm leading-7 text-neutral-600">El usuario recibe un enlace para activar su cuenta. No enviamos ni almacenamos contraseñas en el panel.</p>
+        <p className="mt-3 text-sm leading-7 text-neutral-600">Escribe su correo y elige <strong>Agente</strong> para Javier o Kristina. El resto de permisos ya viene preparado. Cada persona recibirá su propio enlace de acceso cuando configuremos el envío de invitaciones.</p>
         <form action={inviteTeamMember} className="mt-6 grid gap-4">
           <div className="grid gap-4 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-semibold">Correo electrónico
