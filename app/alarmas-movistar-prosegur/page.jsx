@@ -78,7 +78,7 @@ export default function AlarmasMovistarProsegurPage() {
               <p className="text-xs font-black uppercase tracking-[.18em] text-lakuntza-greenDark">Proceso comercial</p>
               <h2 className="mt-4 text-3xl font-black tracking-[-.04em] sm:text-5xl">La tranquilidad empieza por tener la información clara.</h2>
             </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
               {steps.map(([number, title, description]) => (
                 <article key={number} className="border-t-2 border-[#438C44] pt-6">
                   <p className="text-sm font-black text-lakuntza-greenDark">{number}</p>
@@ -105,7 +105,7 @@ export default function AlarmasMovistarProsegurPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <p className="text-sm font-semibold text-[#245A33]">Promoción publicada por Feníe Energía · Sujeta a condiciones</p>
             <h2 id="promocion-fenie" className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-[#193B2B] sm:text-4xl">¿Qué ventajas se anuncian para sus clientes?</h2>
-            <div className="mt-7 grid gap-4 md:grid-cols-3">
+            <div className="mt-7 grid gap-4 lg:grid-cols-3">
               <div className="rounded-xl border border-[#CAE1CD] bg-white p-6"><p className="text-3xl font-semibold text-[#245A33]">Hasta 240 €</p><p className="mt-3 text-sm leading-7 text-neutral-700">Equivalentes a 10 €/mes durante 24 meses en saldo del Plan Épico. <strong>No son dinero en efectivo ni un descuento garantizado de la cuota de alarma.</strong></p></div>
               <div className="rounded-xl border border-[#CAE1CD] bg-white p-6"><p className="text-xl font-semibold text-[#245A33]">Instalación promocional</p><p className="mt-3 text-sm leading-7 text-neutral-700">La web oficial anuncia instalación gratuita por tiempo limitado, sujeta a campaña y a la permanencia indicada en el contrato.</p></div>
               <div className="rounded-xl border border-[#CAE1CD] bg-white p-6"><p className="text-xl font-semibold text-[#245A33]">Cuota y permanencia</p><p className="mt-3 text-sm leading-7 text-neutral-700">No publicamos una cuota fija porque puede variar según equipo, inmueble y oferta. Confirmamos el precio final, los extras y la permanencia por escrito antes de contratar.</p></div>
