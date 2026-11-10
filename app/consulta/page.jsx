@@ -71,10 +71,10 @@ export default async function CommercialInquiryPage({ searchParams }) {
                 </label>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <label className="grid gap-2 text-sm font-semibold">Teléfono
-                    <input name="contactPhone" type="tel" maxLength={35} autoComplete="tel" className={field} />
+                    <input name="contactPhone" type="tel" inputMode="tel" maxLength={35} pattern="[+0-9() .-]{9,35}" title="Teléfono válido, por ejemplo 600 123 456" placeholder="600 123 456" autoComplete="tel" className={field} />
                   </label>
                   <label className="grid gap-2 text-sm font-semibold">Correo electrónico
-                    <input name="contactEmail" type="email" maxLength={254} autoComplete="email" className={field} />
+                    <input name="contactEmail" type="email" maxLength={254} placeholder="nombre@ejemplo.com" autoComplete="email" className={field} />
                   </label>
                 </div>
                 <p className="-mt-4 text-xs text-neutral-600">Indica al menos un medio de contacto.</p>
@@ -86,7 +86,7 @@ export default async function CommercialInquiryPage({ searchParams }) {
                   <span>Confirmo que puedo facilitar estos datos para recibir respuesta a mi consulta. He leído la <a href="/privacidad" className="font-semibold text-[#23632B] underline underline-offset-4">política de privacidad</a>.</span>
                 </label>
                 <div className="rounded-xl border border-neutral-200 p-4">
-                  <p className="mb-3 text-sm font-semibold">Comprobación de seguridad</p>
+                  <p className="mb-2 text-sm font-semibold">Comprobación de seguridad</p><p className="mb-3 text-xs text-neutral-600">Para proteger el formulario contra envíos automáticos. Si no se completa, recarga la página o contacta por teléfono.</p>
                   <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
                   <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-action="commercial_inquiry" data-theme="light" />
                 </div>
