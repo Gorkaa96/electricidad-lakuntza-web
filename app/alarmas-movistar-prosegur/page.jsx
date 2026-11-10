@@ -101,6 +101,20 @@ export default function AlarmasMovistarProsegurPage() {
           </div>
         </section>
 
+        <section className="border-y border-[#D8E5D9] bg-[#F7FAF6] py-14 sm:py-20" aria-labelledby="promocion-fenie">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <p className="text-sm font-semibold text-[#245A33]">Promoción publicada por Feníe Energía · Sujeta a condiciones</p>
+            <h2 id="promocion-fenie" className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-[#193B2B] sm:text-4xl">¿Qué ventajas se anuncian para sus clientes?</h2>
+            <div className="mt-7 grid gap-4 md:grid-cols-3">
+              <div className="rounded-xl border border-[#CAE1CD] bg-white p-6"><p className="text-3xl font-semibold text-[#245A33]">Hasta 240 €</p><p className="mt-3 text-sm leading-7 text-neutral-700">Equivalentes a 10 €/mes durante 24 meses en saldo del Plan Épico. <strong>No son dinero en efectivo ni un descuento garantizado de la cuota de alarma.</strong></p></div>
+              <div className="rounded-xl border border-[#CAE1CD] bg-white p-6"><p className="text-xl font-semibold text-[#245A33]">Instalación promocional</p><p className="mt-3 text-sm leading-7 text-neutral-700">La web oficial anuncia instalación gratuita por tiempo limitado, sujeta a campaña y a la permanencia indicada en el contrato.</p></div>
+              <div className="rounded-xl border border-[#CAE1CD] bg-white p-6"><p className="text-xl font-semibold text-[#245A33]">Cuota y permanencia</p><p className="mt-3 text-sm leading-7 text-neutral-700">No publicamos una cuota fija porque puede variar según equipo, inmueble y oferta. Confirmamos el precio final, los extras y la permanencia por escrito antes de contratar.</p></div>
+            </div>
+            <p className="mt-5 text-sm leading-7 text-neutral-700">Promoción indicada por el proveedor y sujeta a elegibilidad como cliente de Feníe Energía. Electricidad Lakuntza interviene como agente comercial; Movistar Prosegur Alarmas presta el servicio y realiza la instalación.</p>
+            <a href={officialUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex min-h-11 items-center font-semibold text-[#245A33] underline underline-offset-4">Consultar condiciones vigentes en Feníe Energía <ArrowUpRight size={17} className="ml-2" aria-hidden="true"/></a>
+          </div>
+        </section>
+
         <section className="bg-white py-20 sm:py-24">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <p className="text-xs font-black uppercase tracking-[.18em] text-lakuntza-greenDark">Resolvemos tus dudas</p>
