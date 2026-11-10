@@ -93,3 +93,17 @@ body {
 .crm :where(th,td) { vertical-align:middle; }
 .crm :where(p,span) { overflow-wrap:anywhere; }
 .crm :where(a,button) { transition:background-color .15s ease,border-color .15s ease; }
+
+/* Restrained transitions: quick feedback without distracting from forms. */
+@media (prefers-reduced-motion: no-preference) {
+  .crm a, .crm button,
+  main a[class*="rounded"], main button[class*="rounded"] {
+    transition: background-color 160ms ease, border-color 160ms ease,
+                box-shadow 160ms ease, transform 160ms ease;
+  }
+  main a[class*="rounded"]:hover, main button[class*="rounded"]:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+  main :where(details) { transition: border-color 160ms ease; }
+  main :where(details[open]) { border-color: #83ae8a; }
+}
