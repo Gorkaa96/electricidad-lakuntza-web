@@ -1,17 +1,17 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 
-// Next.js 15 uses middleware.js (proxy.js is a Next.js 16 convention).
-// The dedicated admin hostname shares the existing app, Auth and RLS.
+// One Vercel project serves the public website and the authenticated CRM.
+// Pages on the admin hostname must never become a second indexed website.
 const adminHostname = 'admin.electricidadlakuntza.com';
+const publicHostname = 'www.electricidadlakuntza.com';
 
 export async function middleware(request) {
-  // A clean entry point for the future internal subdomain. The admin pages
-  // continue to enforce authenticated membership and database permissions.
-  if (request.nextUrl.pathname === '/') {
-    if (request.nextUrl.hostname.toLowerCase() !== adminHostname) {
-      return NextResponse.next();
-    }
+  const hostname = request.nextUrl.hostname.toLowerCase();
+  const pathname = request.nextUrl.pathname;
+  const onAdminHostname = hostname === adminHostname;
+
+  if (onAdminHostname && (pathname === '/' || pathname === '/admin')) {
     const landing = request.nextUrl.clone();
     landing.pathname = '/admin/entrada';
     const redirect = NextResponse.redirect(landing, 307);
@@ -20,7 +20,21 @@ export async function middleware(request) {
     return redirect;
   }
 
-  // Refresh cookies here because Server Components cannot persist refreshed tokens.
+  // Keep public pages and SEO on www, not the internal admin hostname.
+  // Authentication and authorization continue to live on the /admin routes.
+  if (onAdminHostname && !pathname.startsWith('/admin/')) {
+    const publicUrl = request.nextUrl.clone();
+    publicUrl.hostname = publicHostname;
+    const redirect = NextResponse.redirect(publicUrl, 308);
+    redirect.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    return redirect;
+  }
+
+  // Public routes need no CRM session lookup.
+  if (!pathname.startsWith('/admin/')) return NextResponse.next();
+
+  // Refresh cookies for authenticated pages because Server Components
+  // cannot persist refreshed tokens. Roles are checked in app + database RLS.
   let response = NextResponse.next({ request });
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -35,14 +49,18 @@ export async function middleware(request) {
         },
       },
     });
-    // This verifies with Auth, rather than trusting user-controlled session data.
-    // Authorization remains in getAdminContext and the database RLS policies.
     await supabase.auth.getUser();
   }
   response.headers.set('Cache-Control', 'private, no-store, max-age=0');
   response.headers.set('Pragma', 'no-cache');
   response.headers.set('Expires', '0');
+  if (onAdminHostname) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+  }
   return response;
 }
 
-export const config = { matcher: ['/', '/admin/:path*'] };
+// Run on site routes while excluding APIs, Next.js assets and file assets.
+export const config = {
+  matcher: ['/((?!api/|_next/|.*\\..*).*)'],
+};
