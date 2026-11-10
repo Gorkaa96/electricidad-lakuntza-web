@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { validEmail as isValidEmail } from '@/lib/contact-validation.mjs';
 import { redirect } from 'next/navigation';
 import { requirePermission } from '@/lib/admin';
 import { createUserManagementClient } from '@/lib/supabase/management';
@@ -12,7 +13,7 @@ function inviteError(code) {
 
 function validEmail(value) {
   const email = String(value || '').trim().toLowerCase();
-  return email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null;
+  return isValidEmail(email) ? email : null;
 }
 
 function permissionsFromForm(data, manager, role) {
