@@ -160,12 +160,12 @@ export default async function RevisionFacturaPage({ searchParams }) {
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Teléfono de contacto *
-                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} pattern="[+0-9() .-]{9,25}" placeholder="600 123 456" title="Introduce un teléfono válido, por ejemplo 600 123 456 o +34 600 123 456" className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
                         Correo electrónico *
                         <span id="invoice-email-help" className="text-xs font-medium leading-5 text-neutral-500">Lo usaremos para atender tu consulta y enviarte la comparativa cuando esté preparada.</span>
-                        <input name="email" required aria-describedby="invoice-email-help" type="email" autoComplete="email" maxLength={254} className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        <input name="email" required aria-describedby="invoice-email-help" type="email" autoComplete="email" maxLength={254} placeholder="nombre@ejemplo.com" className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
 
                     </div>
@@ -195,12 +195,12 @@ export default async function RevisionFacturaPage({ searchParams }) {
 
                   {!intakeReady ? (
                     <div role="status" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
-                      El envío no está disponible en este momento. Puedes <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">escribirnos por WhatsApp</a>. y te indicaremos cómo continuar.
+                      El envío no está disponible en este momento. Puedes <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">escribirnos por WhatsApp</a> y te indicaremos cómo continuar.
                     </div>
                   ) : null}
                   {intakeReady ? (
                     <div className="rounded-xl border border-neutral-200 bg-white p-4">
-                      <p className="mb-3 text-sm font-semibold text-neutral-800">Comprobación de seguridad</p>
+                      <p className="mb-2 text-sm font-semibold text-neutral-800">Comprobación de seguridad</p><p className="mb-3 text-xs leading-5 text-neutral-600">Esta comprobación evita envíos automáticos. Si no aparece, actualiza la página. También puedes contactarnos por teléfono.</p>
                       <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
                       <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-action="invoice_review" data-theme="light" />
                     </div>
