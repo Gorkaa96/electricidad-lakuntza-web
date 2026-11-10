@@ -73,3 +73,10 @@ Publicar una **versión piloto para comprobación interna** en los dominios fina
 - **P0 SUPERADO EN PREVIEW (comprobación manual del propietario):** circuito factura → OCR → comparativa Feníe → correo preparado → eliminación.
 - **Alcance:** validación de la Preview protegida, **no** validación de captación en producción. El formulario público continúa deshabilitado hasta aprobación de lanzamiento y cierre de los P0 de seguridad, respaldo, titularidad legal y alojamiento.
 - **Siguiente P0:** respaldo verificable de base de datos, ficheros privados y procedimiento de restauración, sin borrar datos reales.
+
+
+## Respaldo y seguridad — inspección del 10/11/2026
+- Protocolo de copia y restauración preparado en `docs/backup-recuperacion-crm.md`.
+- Supabase Free: NO hay backup diario gestionado. DB 12 MB; bucket privado de facturas 2 objetos (~90 KB) con 0 archivos huérfanos identificados. No se descargaron datos personales ni archivos.
+- Auth: 1 usuario de equipo activo; 0 factores MFA verificados. Seguridad: leaked password protection desactivado. No se alteraron sesiones ni roles.
+- **P0 respaldo permanece abierto**: falta acordar almacenamiento cifrado externo, generar las copias de base y PDF, y demostrar restauración en destino aislado. No marcar «Hecho» solo por disponer de instrucciones.
