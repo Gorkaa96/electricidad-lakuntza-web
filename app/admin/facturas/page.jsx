@@ -179,7 +179,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
       <section className="overflow-x-auto rounded-2xl border border-neutral-200 bg-white p-2 shadow-sm" aria-label="Filtrar solicitudes">
         <nav className="flex min-w-max gap-1 sm:min-w-0 sm:flex-wrap" aria-label="Vistas de facturas">
           {views.map((view) => (
-            <a
+            <Link
               key={view}
               href={href(view)+(query?(view==='pending'?'?':'&')+'q='+encodeURIComponent(query):'')}
               aria-current={selectedView === view ? 'page' : undefined}
