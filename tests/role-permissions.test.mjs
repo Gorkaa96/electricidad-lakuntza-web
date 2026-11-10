@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  ROLE_DEFAULTS, hasPermission, allowedRoleForManager,
+  ROLE_DEFAULTS, PERMISSION_OPTIONS, hasPermission, allowedRoleForManager,
   canViewLeads, validateMemberPermissions,
 } from '../lib/rolePermissions.js';
 
@@ -54,4 +54,12 @@ test('unknown roles and unknown permission keys always fail closed', () => {
   assert.equal(hasPermission(owner, 'unknown.permission'), false);
   assert.equal(hasPermission({ active: true, role: 'unexpected', permissions: ['users.manage'] }, 'users.manage'), false);
   assert.equal(allowedRoleForManager({ ...agent, permissions: ['users.manage'] }, 'agent'), false);
+});
+
+test('paused Trabajos module is not presented or granted to new staff', () => {
+  assert.equal(PERMISSION_OPTIONS.some((option) => option.key === 'projects.manage'), false);
+  assert.equal(ROLE_DEFAULTS.admin.includes('projects.manage'), false);
+  assert.equal(ROLE_DEFAULTS.agent.includes('projects.manage'), false);
+  assert.equal(validateMemberPermissions(owner, 'admin', ['projects.manage']), null);
+  assert.equal(hasPermission(owner, 'projects.manage'), true); // existing owner data remains accessible
 });
