@@ -28,7 +28,7 @@ export default async function AdminLoginPage({ searchParams }) {
                 Todo el trabajo, en un lugar.
               </h1>
               <p className="mt-7 max-w-sm text-base leading-8 text-white/70">
-                Revisa solicitudes de clientes y gestiona los trabajos publicados desde un panel accesible solo para personal autorizado.
+                Revisa las nuevas consultas, compara las facturas y organiza los seguimientos. Solo para personal autorizado.
               </p>
             </div>
           </section>
