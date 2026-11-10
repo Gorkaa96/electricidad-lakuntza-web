@@ -31,7 +31,7 @@ const localBusinessSchema = {
 };
 
 // Dejar el dominio provisional fuera de buscadores hasta el lanzamiento oficial.
-const publicLaunchEnabled = process.env.NEXT_PUBLIC_PUBLICATION_ENABLED === 'true';
+const publicLaunchEnabled = process.env.NEXT_PUBLIC_PUBLICATION_ENABLED === 'true' && process.env.PUBLIC_LAUNCH_APPROVED === 'true';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
