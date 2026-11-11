@@ -95,9 +95,9 @@ try {
 
   Push-Location $ProjectRoot
   try {
-    Invoke-SupabaseDump -Params @('db','dump','--linked','--role-only','-f',(Join-Path $Stage 'roles.sql'))
-    Invoke-SupabaseDump -Params @('db','dump','--linked','-f',(Join-Path $Stage 'schema.sql'))
-    Invoke-SupabaseDump -Params @('db','dump','--linked','--data-only','--use-copy','-f',(Join-Path $Stage 'data.sql'))
+    Invoke-SupabaseDump -Params @('db','dump','--remote','--role-only','-f',(Join-Path $Stage 'roles.sql'))
+    Invoke-SupabaseDump -Params @('db','dump','--remote','-f',(Join-Path $Stage 'schema.sql'))
+    Invoke-SupabaseDump -Params @('db','dump','--remote','--data-only','--use-copy','-f',(Join-Path $Stage 'data.sql'))
   } finally { Pop-Location }
 
   foreach ($Filename in @('roles.sql','schema.sql','data.sql')) {
@@ -133,7 +133,10 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Error al cifrar la copia.' }
     if (-not (Test-Path -LiteralPath $Archive -PathType Leaf)) { throw 'No se genero el archivo cifrado.' }
     Write-Host '7-Zip pedira la contrasena de nuevo para comprobar la integridad del archivo.'
-    & $SevenZipExe t -p $Archive
+    # Testing an encrypted archive with bare -p did not prompt in 7-Zip 26.06
+    # on Windows and instead reported Wrong password. Omit -p so 7-Zip
+    # prompts to unlock the encrypted headers interactively.
+    & $SevenZipExe t $Archive
     if ($LASTEXITCODE -ne 0) { throw 'Fallo la validacion del archivo cifrado.' }
   } finally { Pop-Location }
 
