@@ -95,9 +95,9 @@ try {
 
   Push-Location $ProjectRoot
   try {
-    Invoke-SupabaseDump @('db','dump','--linked','--role-only','-f',(Join-Path $Stage 'roles.sql'))
-    Invoke-SupabaseDump @('db','dump','--linked','-f',(Join-Path $Stage 'schema.sql'))
-    Invoke-SupabaseDump @('db','dump','--linked','--data-only','--use-copy','-f',(Join-Path $Stage 'data.sql'))
+    Invoke-SupabaseDump -Params @('db','dump','--linked','--role-only','-f',(Join-Path $Stage 'roles.sql'))
+    Invoke-SupabaseDump -Params @('db','dump','--linked','-f',(Join-Path $Stage 'schema.sql'))
+    Invoke-SupabaseDump -Params @('db','dump','--linked','--data-only','--use-copy','-f',(Join-Path $Stage 'data.sql'))
   } finally { Pop-Location }
 
   foreach ($Filename in @('roles.sql','schema.sql','data.sql')) {
