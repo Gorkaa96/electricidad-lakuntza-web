@@ -75,3 +75,36 @@ Documentación: https://supabase.com/docs/guides/storage/management/download-obj
 | Restauración en entorno aislado | Pendiente |
 | Periodicidad y alerta de fallo | Pendiente |
 | P0 respaldos y recuperación | **ABIERTO** |
+
+
+## 9. Primera ejecución gratis en Windows — actualización 11/11/2026
+
+Herramienta preparada en **scripts/backup-crm-windows.ps1**, en esta misma rama de GitHub. **No ha sido ejecutada ni validada en el PC del propietario**; el P0 de recuperación continúa abierto.
+
+### Requisitos sin contratar servicios
+1. Clonar/descargar esta rama del repositorio a un directorio no sincronizado. Instalar [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started), [Docker Desktop](https://www.docker.com/products/docker-desktop/) y [7-Zip](https://www.7-zip.org/).
+2. Abrir PowerShell en la raíz del proyecto y vincularlo una sola vez con estos dos comandos (pueden solicitar iniciar sesión y contraseña de base de datos; **no pegar secretos en el chat**):
+
+    supabase login
+    supabase link --project-ref yvrjrvropgouvzltwwvm
+
+   La CLI requiere un proyecto inicializado. Si falta la configuración local, usar un directorio limpio separado, ejecutar supabase init y vincularlo allí; situar allí también el script dentro de una carpeta scripts. No sobrescribir las migraciones del repositorio.
+3. Abrir Supabase Dashboard → Storage → bucket privado **invoice-files**. Descargar cada objeto manteniendo los subdirectorios y nombres relativos en una carpeta local protegida, como C:\ElectricidadLakuntza\storage-descargado. No cambiar el bucket a público. Actualmente el inventario tiene dos objetos, pero **confirmar el número antes de cada copia**.
+4. Con el PC y el disco cifrados (BitLocker u otro equivalente), ejecutar desde la raíz del proyecto:
+
+    .\scripts\backup-crm-windows.ps1 -StorageFolder 'C:\ElectricidadLakuntza\storage-descargado' -ExpectedStorageFiles 2
+
+   La política de ejecución de PowerShell puede bloquear scripts descargados. Revisar el archivo antes de permitir su ejecución. No desactivar las protecciones del sistema globalmente ni ejecutarlo como administrador.
+
+### Funcionamiento y limitaciones
+- Verifica Docker, Supabase CLI, 7-Zip, el identificador del proyecto remoto y el recuento de ficheros descargados.
+- Genera una copia lógica de roles, esquema y datos (roles.sql, schema.sql y data.sql) y añade los documentos descargados. Calcula SHA-256 de cada fichero en un manifiesto interno.
+- Crea un archivo **7z cifrado** con los nombres también cifrados. La contraseña se solicita de forma interactiva; nunca debe pasarse por línea de comandos. Se solicita de nuevo para comprobar la integridad.
+- Elimina los **ficheros temporales creados por el script**, no las descargas originales del usuario. Evitar PCs sin cifrado de disco porque existen temporales SQL en claro durante la operación.
+- El archivo no equivale a una copia íntegra de los sistemas internos de Auth y Storage ni del proyecto Supabase. No reconstruye por sí solo usuarios, identidades o configuraciones de acceso.
+- El origen de los archivos PDF (directorio storage-descargado) sigue en claro: se debe proteger y, después de comprobar el archivo cifrado y una segunda copia, eliminar con arreglo a la política de conservación.
+
+### Para aceptar el respaldo
+- Verificar el archivo cifrado y guardar el hash SHA-256 de la copia.
+- Copiar el 7z cifrado a **otro dispositivo o destino controlado**, independiente del PC. Guardar la contraseña por separado, sin publicarla ni enviarla por correo/chat.
+- Demostrar una **restauración de datos y PDF en entorno de prueba aislado**, sin tocar producción, y disponer de un plan de recuperación de las cuentas Auth. Hasta completar estos puntos, **P0 de recuperación abierto**.
