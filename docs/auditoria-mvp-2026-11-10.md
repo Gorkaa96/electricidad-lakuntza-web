@@ -80,3 +80,10 @@ Publicar una **versión piloto para comprobación interna** en los dominios fina
 - Supabase Free: NO hay backup diario gestionado. DB 12 MB; bucket privado de facturas 2 objetos (~90 KB) con 0 archivos huérfanos identificados. No se descargaron datos personales ni archivos.
 - Auth: 1 usuario de equipo activo; 0 factores MFA verificados. Seguridad: leaked password protection desactivado. No se alteraron sesiones ni roles.
 - **P0 respaldo permanece abierto**: falta acordar almacenamiento cifrado externo, generar las copias de base y PDF, y demostrar restauración en destino aislado. No marcar «Hecho» solo por disponer de instrucciones.
+
+
+## Decisión de respaldo — 11/11/2026
+- El propietario ha elegido **sin nuevas suscripciones**: alternativa gratuita local con exportación de Supabase Free y respaldo cifrado externo de facturas.
+- Se ha añadido el script `scripts/backup-crm-windows.ps1` y el procedimiento de Windows al documento `docs/backup-recuperacion-crm.md`.
+- **No se ha ejecutado todavía** en el PC del propietario, ni se han copiado los PDF ni creado destino externo, ni se ha probado restauración; conservar el bloqueo de recuperación ABIERTO.
+- Próxima acción del propietario: instalar/confirmar Supabase CLI + Docker + 7-Zip, vincular su clon local al proyecto y descargar el contenido actual del bucket privado con su estructura. No revelar contraseñas ni subir copias al repositorio.
