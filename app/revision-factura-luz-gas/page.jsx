@@ -1,4 +1,6 @@
 import { AlertTriangle, CheckCircle2, FileText, Leaf, Lock, MessageCircle, ShieldCheck } from 'lucide-react';
+import Script from 'next/script';
+import { invoiceIntakeReady } from '@/lib/invoice/protection';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
@@ -8,32 +10,39 @@ import InvoiceSubmitButton from '@/components/InvoiceSubmitButton';
 import EnergyEligibilityFields from '@/components/EnergyEligibilityFields';
 import { submitInvoiceReview } from './actions';
 
+export const maxDuration = 60;
+
 export const metadata = {
   title: 'Revisión de factura de luz y gas',
   alternates: { canonical: '/revision-factura-luz-gas' },
   description:
-    'Revisión de facturas de luz y gas con Electricidad Lakuntza, empresa delegada de Feníe Energía. Atención directa y sin compromiso.',
+    'Revisión de facturas de luz y gas con Electricidad Lakuntza, agente de Feníe Energía. Atención directa y sin compromiso.',
 };
 
 const errorMessages = {
-  config: 'La configuración del formulario no está disponible ahora mismo. Puedes enviar la factura por WhatsApp o email.',
+  config: 'La configuración del formulario no está disponible ahora mismo. Puedes consultarnos por WhatsApp o teléfono.',
   bono: 'No tramitamos el cambio de suministro eléctrico con bono social o posible derecho por familia numerosa. Puedes consultar una comercializadora de referencia o elegir solo gas.',
-  datos: 'Revisa nombre, teléfono y consentimiento antes de enviar.',
+  datos: 'Revisa nombre, teléfono, correo electrónico y consentimiento antes de enviar.',
   factura: 'Debes adjuntar una factura en PDF o imagen.',
   tipo: 'Formato no válido. Sube un PDF, JPG, PNG o WebP.',
-  tamano: 'La factura supera el tamaño máximo de 10 MB.',
-  subida: 'No se ha podido subir la factura. Inténtalo de nuevo o envíala por WhatsApp.',
-  registro: 'No se ha podido registrar la solicitud. Inténtalo de nuevo o envíala por WhatsApp.',
+  tamano: 'La factura supera el tamaño máximo de 4 MB.',
+  subida: 'No se ha podido subir la factura. Inténtalo de nuevo o consúltanos por teléfono.',
+  registro: 'No se ha podido registrar la solicitud. Inténtalo de nuevo o consúltanos por teléfono.',
+  verificacion: 'No se ha completado la verificación de seguridad. Inténtalo de nuevo.',
+  servicio: 'No podemos recibir tu solicitud en este momento. Inténtalo de nuevo más tarde o llámanos.',
+  limite: 'Hemos recibido demasiados intentos desde este contacto. Inténtalo más tarde o consúltanos por teléfono.',
 };
 
 const benefits = [
-  'Empresa delegada de Feníe Energía; te explicamos las opciones que ofrece.',
+  'Somos agentes de Feníe Energía y comparamos las ofertas disponibles en su portal profesional.',
   'Te explicamos la comparativa antes de cambiar nada.',
   'Atención directa desde Electricidad Lakuntza.',
   'Si no te conviene cambiar, también te lo diremos.',
 ];
 
 const initialQuestionWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero consultar la revisión de luz o gas, pero ahora mismo no tengo la factura.');
+
+const reviewWhatsapp = 'https://wa.me/34649853448?text=' + encodeURIComponent('Hola Electricidad Lakuntza. Quiero solicitar una revisión de mi factura de luz o gas. ¿Cómo podemos continuar?');
 
 const privacyPoints = [
   'La factura se guarda en un espacio privado, no público.',
@@ -45,44 +54,33 @@ const privacyPoints = [
 export default async function RevisionFacturaPage({ searchParams }) {
   const resolvedParams = await searchParams;
   const error = resolvedParams?.error;
+  const initialSupplyType = ['luz', 'gas', 'luz_gas'].includes(resolvedParams?.servicio) ? resolvedParams.servicio : 'luz';
+  const intakeReady = invoiceIntakeReady();
+  // Trusted hosting environment only; never enable intake from a query parameter.
+  const showPreviewForm = !intakeReady && process.env.VERCEL_ENV === 'preview' &&
+    process.env.VERCEL_GIT_COMMIT_REF === 'integration/launch-prep-2026-10-29';
 
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
-        <section className="brand-dark-surface relative isolate overflow-hidden pt-28 text-white">
-          <div className="hero-grid absolute inset-0 opacity-30" />
-          <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl gap-6 px-4 pb-10 sm:gap-10 sm:px-6 sm:pb-16 xl:grid-cols-12 xl:items-end xl:px-8">
-            <div className="xl:col-span-8">
-              <Badge dark><Leaf size={14} /> Luz y gas</Badge>
-              <h1 className="mt-6 max-w-5xl text-4xl font-black leading-[1.06] tracking-[-.05em] sm:text-6xl">
-                Revisión de luz y gas, con trato directo.
-              </h1>
-              <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
-                Envíanos tu factura para que revisemos tus condiciones y valoremos si existe una alternativa interesante con Feníe Energía. Si no te conviene cambiar, también te lo diremos.
-              </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-lakuntza-greenDark px-6 py-3 text-sm font-black text-white transition-colors hover:bg-neutral-950">Subir mi factura</a>
-                <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 bg-white/10 px-6 py-3 text-sm font-black text-white transition-colors hover:bg-white/20">Consultar sin factura</a>
+      <main id="contenido-principal">
+        <section className="brand-dark-surface relative isolate overflow-hidden pt-20 text-white">
+          <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-12 lg:gap-14 lg:px-8">
+            <div className="lg:col-span-8">
+              <p className="text-sm font-medium text-[#B6E6A4]">Luz y gas · Revisión de facturas</p>
+              <h1 className="mt-5 max-w-4xl text-[clamp(2.65rem,5vw,4.5rem)] font-semibold leading-[1.06] tracking-[-.05em]">Tu factura merece una revisión cuidadosa.</h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">Cuéntanos tu situación y revisaremos las condiciones de luz o gas para valorar si te conviene una propuesta de Feníe Energía. Si es mejor mantener lo que tienes, también te lo explicaremos.</p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a href="#formulario" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#E7F4DF] px-6 py-3 text-sm font-semibold text-[#22582A] transition-colors hover:bg-white">{intakeReady || showPreviewForm ? 'Subir mi factura' : 'Solicitar revisión'}</a>
+                <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/35 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Consultar sin factura</a>
               </div>
             </div>
-            <div className="hidden xl:col-span-4 xl:block">
-              <div className="rounded-[2rem] border border-white/10 bg-white/[.07] p-7">
-                <FileText className="mb-6 text-lakuntza-green" size={34} />
-                <p className="text-sm leading-7 text-white/70">
-                  La factura se guarda en un espacio privado y solo se utiliza para estudiar tu consulta.
-                </p>
-                <div className="mt-5 grid gap-3 text-xs font-bold text-white/65">
-                  <div className="flex gap-2"><Lock size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Archivo privado</div>
-                  <div className="flex gap-2"><ShieldCheck size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Revisión humana</div>
-                  <div className="flex gap-2"><MessageCircle size={14} className="mt-0.5 shrink-0 text-lakuntza-green" /> Contacto directo</div>
-                </div>
-              </div>
+            <div className="border-l-2 border-[#9BDC83] pl-6 text-sm leading-7 text-white/80 lg:col-span-4">
+              <p className="text-base font-semibold text-white">Una persona revisará tu caso</p>
+              <p className="mt-3">Sin resultados automáticos ni obligación de contratar. Necesitamos una factura, un teléfono de contacto y un correo electrónico para poder enviarte la comparativa cuando esté preparada.</p>
             </div>
           </div>
         </section>
-
         <section className="bg-lakuntza-mist py-20 sm:py-28">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 xl:grid-cols-12 xl:px-8">
             <div className="order-2 xl:order-1 xl:col-span-5">
@@ -96,8 +94,8 @@ export default async function RevisionFacturaPage({ searchParams }) {
 
               <div className="mt-8 grid gap-3">
                 {benefits.map((item) => (
-                  <div key={item} className="flex gap-3 rounded-2xl bg-white p-4 text-sm font-bold text-neutral-700 shadow-sm">
-                    <CheckCircle2 className="mt-0.5 shrink-0 text-lakuntza-green" size={18} />
+                  <div key={item} className="flex gap-3 border-b border-[#DCE8D9] py-3 text-sm leading-6 text-neutral-700">
+                    <CheckCircle2 className="mt-0.5 shrink-0 text-[#2C7331]" size={18} aria-hidden="true" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -129,7 +127,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
             </div>
 
             <div className="order-1 xl:order-2 xl:col-span-7">
-              <form id="formulario" action={submitInvoiceReview} className="scroll-mt-24 overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-card">
+              {intakeReady || showPreviewForm ? <form id="formulario" action={submitInvoiceReview} className="scroll-mt-24 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm">
                 <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="website-hp">Deja este campo vacío</label><input id="website-hp" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -137,9 +135,9 @@ export default async function RevisionFacturaPage({ searchParams }) {
                       <ShieldCheck size={24} />
                     </div>
                     <div>
-                      <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Formulario seguro</p>
+                      <p className="text-sm font-semibold text-lakuntza-greenDark">Formulario de revisión</p>
                       <h3 className="mt-2 text-3xl font-black tracking-[-0.05em] text-neutral-950">Enviar factura para revisión</h3>
-                      <p className="mt-3 text-sm leading-6 text-neutral-600">Adjunta la última factura de luz o gas, indica cómo podemos llamarte y confirma el envío. Revisaremos tu caso personalmente, sin obligación de contratar.</p>
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">Adjunta la última factura de luz o gas e indica tu teléfono y correo electrónico para que podamos atenderte y enviarte la comparativa. Revisaremos tu caso personalmente, sin obligación de contratar.</p>
                     </div>
                   </div>
 
@@ -151,36 +149,38 @@ export default async function RevisionFacturaPage({ searchParams }) {
                 </div>
 
                 <div className="grid gap-7 p-5 sm:p-8">
-                  <EnergyEligibilityFields />
+                  <EnergyEligibilityFields initialSupplyType={initialSupplyType} />
                   <div className="border-t border-neutral-200 pt-7">
-                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">2. Datos de contacto</p>
+                    <p className="text-sm font-semibold text-neutral-700">2. Datos de contacto</p>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Nombre *
-                        <input name="name" required autoComplete="name" minLength={2} maxLength={100} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        Nombre de la persona de contacto *
+                        <span className="text-xs font-medium leading-5 text-neutral-500">Puede ser distinto de quien figura como titular en la factura.</span>
+                        <input name="name" required autoComplete="name" minLength={2} maxLength={100} className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Teléfono *
-                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        Teléfono de contacto *
+                        <input name="phone" required type="tel" inputMode="tel" autoComplete="tel" minLength={9} maxLength={25} pattern="[+0-9() .-]{9,25}" placeholder="600 123 456" title="Introduce un teléfono válido, por ejemplo 600 123 456 o +34 600 123 456" className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
                       <label className="grid gap-2 text-sm font-black text-neutral-800">
-                        Email
-                        <input name="email" type="email" autoComplete="email" maxLength={254} className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
+                        Correo electrónico *
+                        <span id="invoice-email-help" className="text-xs font-medium leading-5 text-neutral-500">Lo usaremos para atender tu consulta y enviarte la comparativa cuando esté preparada.</span>
+                        <input name="email" required aria-describedby="invoice-email-help" type="email" autoComplete="email" maxLength={254} placeholder="nombre@ejemplo.com" className="focus-ring min-h-12 w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none focus:border-lakuntza-green sm:text-sm" />
                       </label>
 
                     </div>
                   </div>
 
                   <div className="border-t border-neutral-200 pt-7">
-                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-400">3. Factura y comentarios</p>
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-600">3. Factura y comentarios</p>
                     <div className="mt-4 grid gap-4">
 
                       <InvoiceFileInput />
                     </div>
 
                     <label className="mt-4 grid gap-2 text-sm font-black text-neutral-800">
-                      Comentarios
-                      <textarea name="notes" rows={3} maxLength={500} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-400 focus:border-lakuntza-green sm:text-sm" />
+                      ¿Algo que debamos saber? (opcional)
+                      <textarea name="notes" rows={3} maxLength={500} placeholder="Ej.: creo que pago mucho, tengo permanencia, tengo servicios añadidos, quiero revisar luz y gas..." className="focus-ring w-full min-w-0 rounded-lg border border-neutral-300 bg-white px-4 py-3.5 text-base font-medium outline-none placeholder:text-neutral-600 focus:border-lakuntza-green sm:text-sm" />
                     </label>
                   </div>
 
@@ -188,19 +188,40 @@ export default async function RevisionFacturaPage({ searchParams }) {
                     <label className="flex gap-3 text-xs leading-5 text-neutral-600">
                       <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 shrink-0 accent-lakuntza-green" />
                       <span>
-                        Acepto que Electricidad Lakuntza use mis datos y la factura enviada únicamente para revisar la consulta y contactarme. Entiendo que el preanálisis es orientativo y que la recomendación final requiere revisión humana. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
+                        Confirmo que tengo autorización para facilitar esta factura, incluso si está a nombre de otra persona. Acepto que Electricidad Lakuntza la utilice junto con mis datos para atender esta consulta. No se contratará nada sin autorización. Más información en la <a href="/privacidad" className="font-black text-lakuntza-greenDark underline">política de privacidad</a>.
                       </span>
                     </label>
                   </div>
 
-                  <InvoiceSubmitButton />
+                  {!intakeReady ? (
+                    <div role="status" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+                      El envío no está disponible en este momento. Puedes <a href={initialQuestionWhatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">escribirnos por WhatsApp</a> y te indicaremos cómo continuar.
+                    </div>
+                  ) : null}
+                  {intakeReady ? (
+                    <div className="rounded-xl border border-neutral-200 bg-white p-4">
+                      <p className="mb-2 text-sm font-semibold text-neutral-800">Comprobación de seguridad</p><p className="mb-3 text-xs leading-5 text-neutral-600">Esta comprobación evita envíos automáticos. Si no aparece, actualiza la página. También puedes contactarnos por teléfono.</p>
+                      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
+                      <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-action="invoice_review" data-theme="light" />
+                    </div>
+                  ) : null}
+                  <InvoiceSubmitButton disabled={!intakeReady} />
 
                   <p className="flex items-start gap-2 text-xs leading-5 text-neutral-500">
                     <Lock className="mt-0.5 shrink-0" size={14} />
-                    Formatos permitidos: PDF, JPG, PNG o WebP. Máximo 10 MB. No adjuntes DNI, IBAN ni documentación adicional: solo necesitamos la factura para esta primera revisión.
+                    Formatos permitidos: PDF, JPG, PNG o WebP. Máximo 4 MB. No adjuntes DNI, IBAN ni documentación adicional: solo necesitamos la factura para esta primera revisión.
                   </p>
                 </div>
-              </form>
+              </form> : (
+                <section id="formulario" className="scroll-mt-24 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+                  <h2 className="text-2xl font-semibold text-[#152017]">Solicita tu revisión de luz o gas</h2>
+                  <p className="mt-4 text-base leading-8 text-neutral-600">Cuéntanos qué necesitas por WhatsApp o teléfono y te indicaremos cómo continuar. El envío de facturas desde esta web aún no está disponible.</p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <a href={reviewWhatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center rounded-xl bg-[#24662D] px-5 py-3 text-sm font-semibold text-white">Consultar por WhatsApp</a>
+                    <a href="tel:+34649853448" className="inline-flex min-h-12 items-center rounded-xl border border-neutral-300 px-5 py-3 text-sm font-semibold text-[#205127]">Llamar</a>
+                  </div>
+                </section>
+              )}
             </div>
           </div>
         </section>
@@ -212,7 +233,7 @@ export default async function RevisionFacturaPage({ searchParams }) {
             <div className="mt-8 grid gap-3">
               {[
                 ['¿Es obligatorio contratar?', 'No. Revisamos tu consulta y te explicamos las alternativas que podamos ofrecerte. Tú decides si continuar.'],
-                ['¿Comparáis todas las comercializadoras?', 'No. Electricidad Lakuntza trabaja como empresa delegada de Feníe Energía y estudia sus alternativas a partir de tus condiciones actuales.'],
+                ['¿Comparáis todas las comercializadoras?', 'No. Electricidad Lakuntza compara tu situación actual con las ofertas disponibles en el CRM oficial de Feníe Energía, de la que somos agentes. El contrato final de luz o gas se formaliza con Feníe Energía.'],
                 ['¿Me quedaré sin luz o gas si cambio?', 'El cambio ordinario de comercializadora es administrativo y no exige interrumpir el suministro. Antes de contratar revisamos las condiciones aplicables.'],
                 ['¿Y si tengo bono social eléctrico o título de familia numerosa?', 'No podemos tramitar el cambio de luz a una tarifa con bono social. El PVPC y el descuento se solicitan ante una comercializadora de referencia. Para gas o alarmas puedes consultarnos por separado.'],
                 ['¿No tengo la factura disponible?', 'Puedes preguntarnos primero por WhatsApp o llamarnos. No hace falta enviarla para una consulta inicial.'],

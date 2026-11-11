@@ -1,99 +1,67 @@
-import { ArrowRight, FileText, Leaf, PlugZap, ShieldCheck, Wifi } from 'lucide-react';
+import { ArrowRight, BatteryCharging, FileText, Lightbulb, ShieldCheck, TrendingDown } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
-import { servicePages } from '@/lib/servicePages';
+import { commercialCatalog } from '@/lib/commercialCatalog';
 
 export const metadata = {
-  title: 'Servicios',
+  title: 'Servicios de luz, gas, alarmas y movilidad',
+  description: 'Electricidad Lakuntza: luz y gas como agentes de Feníe, alarmas Movistar Prosegur, instalación propia de cargadores y asesoría energética directa.',
   alternates: { canonical: '/servicios' },
-  description:
-    'Revisión de luz y gas, asesoramiento sobre alarmas Movistar Prosegur a través de Feníe Energía, instalaciones y telecomunicaciones.',
 };
 
-const iconBySlug = {
-  'instalaciones-electricas': PlugZap,
-  telecomunicaciones: Wifi,
-  'asesoria-energetica-luz-gas': Leaf,
-};
+const icons = { luz: Lightbulb, gas: FileText, alarmas: ShieldCheck, cargadores: BatteryCharging, asesoria: TrendingDown };
 
 export default function ServiciosPage() {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
-        <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
-          <div className="hero-grid absolute inset-0 opacity-30" />
-          <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-12 lg:items-end lg:px-8">
-            <div className="lg:col-span-8">
-              <Badge dark>Servicios</Badge>
-              <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[.95] tracking-[-.06em] sm:text-7xl">
-                Luz, gas, alarmas e instalaciones.
-              </h1>
-              <p className="mt-7 max-w-3xl text-lg leading-8 text-white/75">
-                Con Feníe Energía trabajamos luz, gas y consultas sobre alarmas de Movistar Prosegur. Además, realizamos instalaciones eléctricas y telecomunicaciones según disponibilidad.
-              </p>
+      <main id="contenido-principal">
+        <section className="brand-dark-surface pt-20 text-white">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+            <p className="text-sm font-semibold text-[#B6E6A4]">Electricidad Lakuntza · Servicios</p>
+            <h1 className="mt-6 max-w-4xl text-[clamp(2.9rem,5.5vw,5.3rem)] font-semibold leading-[1.04] tracking-[-.055em]">
+              Energía, seguridad y movilidad. Sin complicaciones.
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80">
+              Nos centramos en cinco soluciones: luz, gas, alarmas, cargadores eléctricos y asesoría energética. Te orientamos, estudiamos tu caso y te explicamos las condiciones reales.
+            </p>
+          </div>
+        </section>
+
+        <section className="bg-[#F5F8F4] py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10 max-w-2xl">
+              <p className="text-sm font-semibold text-[#2E7136]">Qué ofrecemos</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-[-.04em] sm:text-4xl">Elige cómo podemos ayudarte.</h2>
+              <p className="mt-5 text-base leading-8 text-neutral-600">Para luz y gas comparamos las propuestas del portal de Feníe Energía; las alarmas las instala Movistar Prosegur. Los cargadores eléctricos y la asesoría energética los realizamos directamente en Electricidad Lakuntza.</p>
             </div>
-            <div className="lg:col-span-4">
-              <div className="rounded-[2rem] border border-lakuntza-green/20 bg-lakuntza-green/10 p-7">
-                <FileText className="mb-5 text-lakuntza-green" size={32} />
-                <h2 className="text-2xl font-black tracking-[-0.04em]">Revisión de factura</h2>
-                <p className="mt-3 text-sm leading-6 text-white/70">Revisamos luz, gas, potencia, consumo y servicios añadidos. Sin compromiso.</p>
-                <a href="/revision-factura-luz-gas" className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-lakuntza-greenDark px-5 py-3 text-sm font-black text-white shadow-green transition hover:bg-neutral-950">
-                  Revisar factura <ArrowRight className="ml-2" size={17} />
-                </a>
-                <a href="/alarmas-movistar-prosegur" className="mt-3 inline-flex w-full items-center justify-center rounded-2xl border border-white/25 px-5 py-3 text-sm font-black text-white transition hover:bg-white/10">
-                  Consultar alarmas <ArrowRight className="ml-2" size={17} />
-                </a>
-              </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {commercialCatalog.map((service) => {
+                const Icon = icons[service.slug] || Lightbulb;
+                return (
+                  <a href={service.href} key={service.slug} className="group rounded-2xl border border-[#DEE9DC] bg-white p-7 transition-colors hover:border-[#82B283] hover:bg-[#FCFEFB] sm:p-9">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E8F3E4] text-[#286B2C]"><Icon size={23} aria-hidden="true"/></div>
+                    <p className="mt-7 text-xs font-semibold uppercase tracking-[.12em] text-[#327837]">{service.eyebrow}</p>
+                    <h3 className="mt-3 text-2xl font-semibold tracking-[-.035em]">{service.title}</h3>
+                    <p className="mt-4 text-sm leading-7 text-neutral-600">{service.description}</p>
+                    <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[#28632D]">{service.action}<ArrowRight size={17} aria-hidden="true" className="transition-transform group-hover:translate-x-1"/></span>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section className="bg-lakuntza-mist py-20 sm:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-10 rounded-[2rem] border border-lakuntza-green/20 bg-white p-6 shadow-card sm:p-8">
-              <div className="grid gap-5 lg:grid-cols-12 lg:items-center">
-                <div className="lg:col-span-8">
-                  <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Luz y gas</p>
-                  <h2 className="mt-3 text-3xl font-black tracking-[-0.05em] text-neutral-950">Empieza por una factura de luz o gas.</h2>
-                  <p className="mt-4 text-sm leading-7 text-neutral-600">Con una factura podemos revisar consumo, potencia, condiciones y servicios añadidos. Después te explicamos si merece la pena mejorar algo o si conviene mantener lo actual.</p>
-                </div>
-                <div className="lg:col-span-4">
-                  <a href="/revision-factura-luz-gas" className="inline-flex w-full items-center justify-center rounded-2xl bg-neutral-950 px-5 py-4 text-sm font-black text-white transition hover:bg-neutral-950">
-                    Subir factura ahora <ArrowRight className="ml-2" size={17} />
-                  </a>
-                </div>
-              </div>
+        <section className="border-t border-[#DFE7DC] bg-white py-20 sm:py-24">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
+            <div className="lg:col-span-7">
+              <h2 className="text-3xl font-semibold tracking-[-.04em] sm:text-4xl">Una propuesta adecuada empieza por conocer tu caso.</h2>
+              <p className="mt-5 text-base leading-8 text-neutral-600">Las tarifas pueden ser fijas o indexadas, las alarmas tienen condiciones de elegibilidad y los cargadores se presupuestan según la instalación. Antes de contratar, te explicaremos lo aplicable a tu situación.</p>
             </div>
-
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              <a href="/alarmas-movistar-prosegur" className="group rounded-[2rem] border border-lakuntza-green/30 bg-white p-7 shadow-card transition hover:-translate-y-1 hover:shadow-2xl">
-                <div className="mb-7 flex h-16 w-16 items-center justify-center rounded-3xl bg-[#F3FAEF] text-lakuntza-greenDark"><ShieldCheck size={30} /></div>
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">Seguridad · Feníe Energía</p>
-                <h2 className="mt-3 text-2xl font-black tracking-[-.04em] text-neutral-950">Alarmas Movistar Prosegur</h2>
-                <p className="mt-4 text-sm leading-7 text-neutral-600">Consulta las opciones para tu hogar o negocio a través de Feníe Energía. Te orientamos sobre elegibilidad y condiciones.</p>
-                <span className="mt-6 inline-flex items-center text-sm font-black text-lakuntza-greenDark">Consultar alarmas <ArrowRight className="ml-2 transition group-hover:translate-x-1" size={17} /></span>
-              </a>
-              {servicePages.map((service) => {
-                const Icon = iconBySlug[service.slug] || PlugZap;
-                const href = service.slug === 'asesoria-energetica-luz-gas' ? '/revision-factura-luz-gas' : `/servicios/${service.slug}`;
-                return (
-                  <a key={service.slug} href={href} className="group rounded-[2rem] border border-neutral-200 bg-white p-7 shadow-card transition hover:-translate-y-1 hover:border-lakuntza-green/40 hover:shadow-2xl">
-                    <div className="mb-7 flex h-16 w-16 items-center justify-center rounded-3xl bg-[#F3FAEF] text-lakuntza-greenDark">
-                      <Icon size={30} />
-                    </div>
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-lakuntza-greenDark">{service.eyebrow}</p>
-                    <h2 className="mt-3 text-2xl font-black tracking-[-.04em] text-neutral-950">{service.title}</h2>
-                    <p className="mt-4 text-sm leading-7 text-neutral-600">{service.intro}</p>
-                    <span className="mt-6 inline-flex items-center text-sm font-black text-lakuntza-greenDark">
-                      {service.slug === 'asesoria-energetica-luz-gas' ? 'Subir factura' : 'Ver servicio'} <ArrowRight className="ml-2 transition group-hover:translate-x-1" size={17} />
-                    </span>
-                  </a>
-                );
-              })}
+            <div className="lg:col-span-5">
+              <a href="/#contacto" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#24662D] px-6 py-4 text-sm font-semibold text-white hover:bg-[#194D20]">Consultar sin compromiso<ArrowRight size={18} aria-hidden="true"/></a>
+              <p className="mt-4 text-xs leading-6 text-neutral-500">La consulta no implica contratación, presupuesto aceptado ni reserva de instalación.</p>
             </div>
           </div>
         </section>

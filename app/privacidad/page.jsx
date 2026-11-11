@@ -11,7 +11,8 @@ const sections = [
   {
     title: 'Responsable del tratamiento',
     content: [
-      'Responsable: Electricidad Lakuntza · Elektrizitatea.',
+      'Responsable del tratamiento: Electricidad Lakuntza. Identificación fiscal completa pendiente de verificación documental antes del lanzamiento.',
+      'Nombre comercial: Electricidad Lakuntza · Elektrizitatea.',
       'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Navarra.',
       'Email de contacto: eleclakuntza@yahoo.es.',
       'Teléfono: 649 853 448.',
@@ -22,7 +23,7 @@ const sections = [
     content: [
       'Podemos tratar los datos que el usuario facilita voluntariamente al contactar por teléfono, correo electrónico, WhatsApp o formulario web: nombre, teléfono, email, mensaje, ubicación aproximada del trabajo y documentación que el usuario decida enviar.',
       'En el caso de revisión de facturas de luz o gas, la factura puede incluir datos como nombre y apellidos, dirección del suministro, CUPS, compañía comercializadora, tarifa o peaje, potencia contratada, consumo, importes, periodo facturado y otros conceptos asociados al contrato.',
-      'No se deben enviar datos de terceros ni información especialmente sensible salvo que sea imprescindible para atender la solicitud.',
+      'Si envías una factura a nombre de otra persona, debes contar con autorización para facilitarla y solicitar su revisión. Los datos de contacto pueden pertenecer a una persona diferente del titular. No adjuntes DNI, documentación bancaria adicional ni información innecesaria.',
     ],
   },
   {
@@ -44,7 +45,7 @@ const sections = [
   {
     title: 'Finalidades',
     content: [
-      'Responder consultas, preparar presupuestos, gestionar solicitudes de servicio, valorar trabajos técnicos, revisar facturas de luz o gas, informar sobre alarmas y mantener la comunicación necesaria con el cliente.',
+      'Responder consultas y gestionar las oportunidades comerciales del cliente, realizar asesoría energética e instalaciones de cargadores eléctricos, revisar facturas y gestionar, como agentes, propuestas de luz y gas con Feníe Energía, así como consultas comerciales sobre alarmas de Movistar Prosegur.',
       'También podemos conservar información mínima de trabajos realizados para gestión interna, historial de servicio y obligaciones legales cuando corresponda.',
       'No utilizamos los datos recibidos para publicidad masiva ni cesiones comerciales no solicitadas.',
     ],
@@ -69,7 +70,9 @@ const sections = [
     content: [
       'No se cederán datos a terceros salvo obligación legal o cuando sea necesario para prestar el servicio solicitado.',
       'Para luz, gas o alarmas, si el cliente decide avanzar con una contratación y existe base jurídica para ello, podrán comunicarse los datos necesarios a Feníe Energía, Movistar Prosegur Alarmas y las entidades que intervengan en el servicio solicitado, informando al interesado según corresponda.',
-      'La web puede utilizar proveedores técnicos de alojamiento, almacenamiento, formularios, correo electrónico, analítica o comunicaciones para que el servicio funcione correctamente. Estos proveedores solo deben tratar los datos en la medida necesaria para prestar el servicio técnico correspondiente.',
+      'El alojamiento utiliza Vercel y la gestión de acceso y almacenamiento privado utiliza Supabase. Cuando se habilitan los formularios web, Cloudflare Turnstile verifica los envíos y Resend tramita los avisos internos sin adjuntar facturas ni datos de contacto del cliente.',
+      'La prevención de abuso utiliza identificadores de contacto e IP seudonimizados mediante HMAC para limitar envíos. Los contadores se depuran al recibir nuevas solicitudes una vez superado el periodo técnico de dos días; la seudonimización no equivale a anonimización.',
+      'La aceptación del aviso de privacidad se registra con fecha y versión del texto. No implica consentimiento para publicidad.',
       'Al usar WhatsApp, email u otros servicios externos, la comunicación se rige también por las condiciones y políticas de privacidad de dichos proveedores.',
     ],
   },
@@ -102,7 +105,7 @@ export default function PrivacidadPage() {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
+      <main id="contenido-principal">
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
@@ -127,7 +130,7 @@ export default function PrivacidadPage() {
                 ))}
               </div>
               <p className="mt-10 rounded-2xl bg-neutral-50 p-4 text-xs leading-6 text-neutral-500">
-                Última actualización: junio de 2026. Esta política tiene carácter informativo y podrá actualizarse si cambian los servicios, herramientas o requisitos aplicables.
+                Última actualización: noviembre de 2026. Esta política tiene carácter informativo y podrá actualizarse si cambian los servicios, herramientas o requisitos aplicables.
               </p>
             </div>
           </div>

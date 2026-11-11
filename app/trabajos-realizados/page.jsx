@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
@@ -5,6 +6,7 @@ import ProjectCard from '@/components/ProjectCard';
 import MobileContactBar from '@/components/MobileContactBar';
 import { Camera, CheckCircle2 } from 'lucide-react';
 import { getPublishedProjects, projectCategories } from '@/lib/projects';
+import { publicLegacyPortfolioEnabled } from '@/lib/servicePages';
 
 export const revalidate = 60;
 
@@ -15,13 +17,14 @@ export const metadata = {
 };
 
 export default async function TrabajosRealizadosPage() {
+  if (!publicLegacyPortfolioEnabled) notFound();
   const publishedProjects = await getPublishedProjects();
   const hasProjects = publishedProjects.length > 0;
 
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
+      <main id="contenido-principal">
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />

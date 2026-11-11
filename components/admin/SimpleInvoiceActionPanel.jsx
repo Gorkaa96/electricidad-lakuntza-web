@@ -1,12 +1,5 @@
-import { quickUpdateInvoiceStatus } from '@/app/admin/facturas/actions';
+import QuickStatusButtons from './QuickStatusButtons';
 import { requireAdmin } from '@/lib/admin';
-
-const statusActions = [
-  ['reviewing', 'En revisión'],
-  ['contacted', 'Contactado'],
-  ['converted', 'Convertido'],
-  ['discarded', 'Descartado'],
-];
 
 function toNumber(value) {
   if (value === null || value === undefined || value === '') return null;
@@ -32,18 +25,13 @@ function ocrData(latestOcr) {
 }
 
 function decision(lead, latestOcr) {
-  const data = ocrData(latestOcr);
-  const status = latestOcr?.ocr_status || lead.ocr_status || 'pending';
-  const total = toNumber(lead.invoice_total_eur ?? data.amounts?.total_eur);
-  const consumption = toNumber(lead.consumption_kwh ?? data.electricity?.consumption_kwh?.total);
-  const business = lead.customer_type === 'negocio' || lead.customer_type === 'comunidad';
-
-  if (lead.bonus_status === 'si' || lead.precheck_result === 'bonus_social_case') return ['Revisar con cuidado', 'El cliente indicó un posible caso especial. Confirma condiciones antes de recomendar cambios.', 'amber'];
-  if (status === 'failed') return ['Revisar manualmente', 'La lectura no ha funcionado. Abre la factura y completa los datos principales.', 'amber'];
-  if (status !== 'succeeded') return ['Procesar lectura', 'Primero lee la factura para ver consumo, potencia, tarifa e importe.', 'neutral'];
-  if (lead.analysis_result === 'viable' || lead.has_extra_services || business || (total !== null && total >= 90) || (consumption !== null && consumption >= 300)) return ['Contactar', 'Hay datos suficientes para explicar la revisión al cliente sin prometer ahorro automático.', 'green'];
-  if (lead.analysis_result === 'not_viable') return ['Sin urgencia', 'No se ve una oportunidad clara. Responde con transparencia o cierra si procede.', 'neutral'];
-  return ['Validar y decidir', 'Revisa los datos principales antes de contactar.', 'amber'];
+ const status=latestOcr?.ocr_status || lead.ocr_status || 'pending';
+ if(lead.status==='converted' || lead.status==='discarded') return ['Caso finalizado','Puedes seguir consultando los documentos y el historial.','neutral'];
+ if(lead.bonus_status==='si' || lead.precheck_result==='bonus_social_case') return ['Atención: posible bono social','Comprueba si el cliente perdería protección antes de valorar cualquier cambio.','amber'];
+ if(status==='failed') return ['Comprobar factura manualmente','El archivo no se ha podido leer. Abre la factura y revisa importe y consumo.','amber'];
+ if(status!=='succeeded') return ['Leer la factura','Comprueba los importes antes de subir una propuesta de Feníe.','neutral'];
+ if(toNumber(lead.invoice_total_eur)==null) return ['Completar importe de factura','Revisa el total de la factura y guárdalo antes de comparar.','amber'];
+ return ['Subir propuesta de Feníe','Adjunta el PDF oficial para ver de un vistazo la diferencia. Después confirma los datos y prepara el mensaje.','green'];
 }
 
 function whatsappMessage(lead, latestOcr) {
@@ -84,48 +72,40 @@ async function recentEvents(leadId) {
   return data || [];
 }
 
-export default async function SimpleInvoiceActionPanel({ lead, latestOcr, telHref }) {
+export default async function SimpleInvoiceActionPanel({ lead, latestOcr, telHref, canEdit = false }) {
   const [title, text, tone] = decision(lead, latestOcr);
   const events = await recentEvents(lead.id);
   const phone = normalizePhone(lead.phone);
   const whatsappHref = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage(lead, latestOcr))}` : '#';
 
   return (
-    <section className={`rounded-[2rem] border p-6 shadow-card sm:p-8 ${panelClass(tone)}`}>
+    <section className={`rounded-xl border p-6 sm:p-8 ${panelClass(tone)}`}>
       <div className="grid gap-6 lg:grid-cols-[1fr_240px] lg:items-start">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-neutral-500">Qué hacer ahora</p>
-          <h2 className="mt-3 text-3xl font-black tracking-[-0.05em] text-neutral-950">{title}</h2>
-          <p className="mt-3 max-w-3xl text-sm font-bold leading-7 text-neutral-700">{text}</p>
+          <p className="text-sm font-semibold text-neutral-500">Qué hacer ahora</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-neutral-950">{title}</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-neutral-700">{text}</p>
         </div>
         <div className="grid gap-3">
-          <a href={telHref || '#'} className="rounded-2xl bg-neutral-950 px-5 py-3 text-center text-sm font-black text-white transition hover:bg-lakuntza-greenDark">Llamar</a>
-          <a href={whatsappHref} target="_blank" rel="noreferrer" className="rounded-2xl border border-neutral-200 bg-white px-5 py-3 text-center text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">WhatsApp</a>
+          <a href="#propuesta-fenie" className="rounded-lg bg-[#24662D] px-5 py-3 text-center text-base font-semibold text-white transition hover:bg-lakuntza-greenDark">Ver comparativa</a>
+          <a href={telHref || '#'} className="rounded-lg border border-[#C8DAC8] bg-white px-5 py-3 text-center text-base font-semibold text-[#215B37]">Llamar</a>
+          <a href={whatsappHref} target="_blank" rel="noreferrer" className="rounded-lg border border-neutral-200 bg-white px-5 py-3 text-center text-sm font-black text-neutral-800 transition hover:border-lakuntza-green">WhatsApp</a>
         </div>
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <div className="rounded-2xl bg-white/75 p-4">
-          <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-500">Estado rápido</p>
-          <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            {statusActions.map(([status, label]) => (
-              <form key={status} action={quickUpdateInvoiceStatus}>
-                <input type="hidden" name="id" value={lead.id} />
-                <input type="hidden" name="status" value={status} />
-                <button disabled={lead.status === status} className="w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-xs font-black text-neutral-800 transition hover:border-lakuntza-green disabled:cursor-not-allowed disabled:opacity-45">
-                  {lead.status === status ? `${label} ✓` : label}
-                </button>
-              </form>
-            ))}
-          </div>
+        <div className="rounded-lg bg-white/75 p-4">
+          <p className="text-xs font-semibold text-neutral-500">Estado rápido</p>
+          {canEdit ? <QuickStatusButtons leadId={lead.id} initialStatus={lead.status} />:<p className="mt-3 text-sm text-neutral-500">Consulta en modo solo lectura.</p>}
+
         </div>
-        <div className="rounded-2xl bg-white/75 p-4">
-          <p className="text-xs font-black uppercase tracking-[0.14em] text-neutral-500">Últimos movimientos</p>
+        <div className="rounded-lg bg-white/75 p-4">
+          <p className="text-xs font-semibold text-neutral-500">Últimos movimientos</p>
           <div className="mt-3 grid gap-2">
             {events.length > 0 ? events.map((event) => (
-              <div key={event.id} className="rounded-2xl border border-neutral-200 bg-white p-3">
-                <p className="text-sm font-black text-neutral-900">{event.title}</p>
-                <p className="mt-1 text-[11px] font-bold text-neutral-400">{new Date(event.created_at).toLocaleString('es-ES')}</p>
+              <div key={event.id} className="rounded-lg border border-neutral-200 bg-white p-3">
+                <p className="text-sm font-semibold text-neutral-900">{event.title}</p>
+                <p className="mt-1 text-[11px] font-bold text-neutral-400">{new Intl.DateTimeFormat('es-ES', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(event.created_at))}</p>
               </div>
             )) : <p className="text-xs font-bold text-neutral-500">Sin movimientos todavía.</p>}
           </div>

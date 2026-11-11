@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
 import { getProjectBySlug } from '@/lib/projects';
+import { publicLegacyPortfolioEnabled } from '@/lib/servicePages';
 
 export const revalidate = 60;
 
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProjectDetailPage({ params }) {
+  if (!publicLegacyPortfolioEnabled) notFound();
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
 
@@ -38,7 +40,7 @@ export default async function ProjectDetailPage({ params }) {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
+      <main id="contenido-principal">
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />

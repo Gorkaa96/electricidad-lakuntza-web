@@ -24,6 +24,7 @@ body {
   color: var(--ink);
   background: #ffffff;
   text-rendering: optimizeLegibility;
+  font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -80,3 +81,29 @@ body {
 }
 
 :where(h1, h2, h3) { text-wrap: balance; }
+
+:where(a,button,input,select,textarea) { touch-action: manipulation; }
+:where([id="contenido-principal"]) { scroll-margin-top: 5rem; }
+
+/* Separate density for the internal workspace, retaining the Lakuntza identity. */
+.crm { --crm-ink:#182A25; --crm-muted:#586B63; --crm-line:#DFE6E2; }
+.crm .uppercase { text-transform:none; letter-spacing:normal; }
+.crm .font-black { font-weight:600; }
+.crm :where(input:not([type=checkbox]):not([type=radio]),select,textarea) { border-color:#C6D3CB; border-radius:.5rem; }
+.crm :where(th,td) { vertical-align:middle; }
+.crm :where(p,span) { overflow-wrap:anywhere; }
+.crm :where(a,button) { transition:background-color .15s ease,border-color .15s ease; }
+
+/* Restrained transitions: quick feedback without distracting from forms. */
+@media (prefers-reduced-motion: no-preference) {
+  .crm a, .crm button,
+  main a[class*="rounded"], main button[class*="rounded"] {
+    transition: background-color 160ms ease, border-color 160ms ease,
+                box-shadow 160ms ease, transform 160ms ease;
+  }
+  main a[class*="rounded"]:hover, main button[class*="rounded"]:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+  main :where(details) { transition: border-color 160ms ease; }
+  main :where(details[open]) { border-color: #83ae8a; }
+}
