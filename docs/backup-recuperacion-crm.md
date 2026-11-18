@@ -69,8 +69,8 @@ Documentación: https://supabase.com/docs/guides/storage/management/download-obj
 |---|---|
 | Inventario BD/Storage | Comprobado |
 | Destino cifrado externo aprobado | Pendiente |
-| Volcado de datos generado | Pendiente |
-| Archivos PDF copiados | Pendiente |
+| Volcado de datos generado | Verificado por propietario 18/11/2026 |
+| Archivos PDF copiados | Incluidos en copia verificada 18/11/2026 |
 | Cuentas/Auth recuperables | Pendiente |
 | Restauración en entorno aislado | Pendiente |
 | Periodicidad y alerta de fallo | Pendiente |
@@ -108,3 +108,17 @@ Herramienta preparada en **scripts/backup-crm-windows.ps1**, en esta misma rama 
 - Verificar el archivo cifrado y guardar el hash SHA-256 de la copia.
 - Copiar el 7z cifrado a **otro dispositivo o destino controlado**, independiente del PC. Guardar la contraseña por separado, sin publicarla ni enviarla por correo/chat.
 - Demostrar una **restauración de datos y PDF en entorno de prueba aislado**, sin tocar producción, y disponer de un plan de recuperación de las cuentas Auth. Hasta completar estos puntos, **P0 de recuperación abierto**.
+
+
+## 10. Primera copia cifrada verificada — 18/11/2026
+
+Ejecución del propietario desde Windows confirmada mediante el registro de PowerShell:
+- Supabase CLI v3.1.0: exportaciones de roles.sql, schema.sql y data.sql correctas usando --remote.
+- 7-Zip 26.06: creación del archivo con 6 ficheros (172105 bytes sin comprimir) y comprobación interactiva de contraseña e integridad exitosa (Everything is Ok); método 7zAES.
+- Archivo: ElectricidadLakuntza-20261118-172614.7z (77072 bytes).
+- SHA-256: f57c196d2a0d3af618a50f0124afd5190d689e7f0503d3241f89eeedd0f12eb6.
+- Inventario remoto consultado después: 2 PDF privados, 46181 y 45565 bytes, con las mismas rutas y fechas de modificación del 10/11 que en la descarga original. project-images sigue vacío.
+- Evidencia recibida: registro de ejecución e inventario; no se ha recibido ni inspeccionado el archivo cifrado ni su contraseña.
+
+Estado actualizado: **copia lógica y PDF generados y comprobados por el propietario**. No equivale a recuperación completa.
+Pendientes: segunda ubicación independiente bajo control del propietario; plan de recuperación Auth y configuración; restauración integral aislada y periodicidad regular con comprobación de fallos. Mantener P0 recuperación ABIERTO. Sin nuevas suscripciones y sin cambios en producción.
