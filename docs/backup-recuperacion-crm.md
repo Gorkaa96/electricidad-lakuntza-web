@@ -1,6 +1,6 @@
 # Electricidad Lakuntza — Copias de seguridad y recuperación del CRM
 
-**Estado: diseño de procedimiento, NO hay copia recuperable verificada.** Última inspección: 10/11/2026. Sin clientes reales en captación de producción.
+**Estado a 18/11/2026: copia lógica cifrada generada y comprobada; segunda ubicación comunicada por propietario; restauración integral pendiente.** Sin captación autorizada de clientes reales.
 
 ## 1. Inventario técnico comprobado (metadatos, sin datos personales)
 - Plataforma: Supabase Free (sin copias diarias gestionadas).
@@ -68,7 +68,7 @@ Documentación: https://supabase.com/docs/guides/storage/management/download-obj
 | Control | Estado |
 |---|---|
 | Inventario BD/Storage | Comprobado |
-| Destino cifrado externo aprobado | Pendiente |
+| Segunda ubicación cifrada | OneDrive personal, comunicada por propietario; sincronización/descarga aún no verificadas |
 | Volcado de datos generado | Verificado por propietario 18/11/2026 |
 | Archivos PDF copiados | Incluidos en copia verificada 18/11/2026 |
 | Cuentas/Auth recuperables | Pendiente |
@@ -122,3 +122,9 @@ Ejecución del propietario desde Windows confirmada mediante el registro de Powe
 
 Estado actualizado: **copia lógica y PDF generados y comprobados por el propietario**. No equivale a recuperación completa.
 Pendientes: segunda ubicación independiente bajo control del propietario; plan de recuperación Auth y configuración; restauración integral aislada y periodicidad regular con comprobación de fallos. Mantener P0 recuperación ABIERTO. Sin nuevas suscripciones y sin cambios en producción.
+
+
+## 11. Segunda ubicación — comunicación del propietario 18/11/2026
+- Archivo cifrado de prueba copiado al OneDrive personal del propietario desde PC-GHU, equipo de sobremesa designado para copias y pruebas locales. El código se mantiene en GitHub y se utiliza también desde portátil.
+- Copia externa comunicada, no se ha inspeccionado la cuenta ni verificado sincronización o descarga independiente. Para datos reales, revisar autorización corporativa, condiciones del proveedor y acceso/retención; no guardar PDF ni SQL en claro en OneDrive.
+- La restauración aislada y el plan Auth/config siguen pendientes. No se autoriza captación de datos reales por este avance.
