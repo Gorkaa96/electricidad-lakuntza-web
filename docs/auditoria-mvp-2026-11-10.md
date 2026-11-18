@@ -87,3 +87,9 @@ Publicar una **versión piloto para comprobación interna** en los dominios fina
 - Se ha añadido el script `scripts/backup-crm-windows.ps1` y el procedimiento de Windows al documento `docs/backup-recuperacion-crm.md`.
 - **No se ha ejecutado todavía** en el PC del propietario, ni se han copiado los PDF ni creado destino externo, ni se ha probado restauración; conservar el bloqueo de recuperación ABIERTO.
 - Próxima acción del propietario: instalar/confirmar Supabase CLI + Docker + 7-Zip, vincular su clon local al proyecto y descargar el contenido actual del bucket privado con su estructura. No revelar contraseñas ni subir copias al repositorio.
+
+
+## Respaldo local validado — 18/11/2026
+- El propietario ha ejecutado correctamente la copia cifrada en su PC (roles, esquema, datos, 2 PDF y manifiesto). 7-Zip ha verificado contraseña e integridad: Everything is Ok.
+- Archivo de 77072 bytes; SHA-256 f57c196d2a0d3af618a50f0124afd5190d689e7f0503d3241f89eeedd0f12eb6. Supabase confirma que los dos documentos originales conservan rutas, tamaños y fechas de modificación anteriores.
+- **P0 copias: generación e integridad verificadas por el propietario. Recuperación aún ABIERTO:** falta segunda copia independiente, restauración aislada, cobertura de Auth/configuración y proceso periódico. No se ha contratado ningún servicio ni modificado producción. Detalles en docs/backup-recuperacion-crm.md.
