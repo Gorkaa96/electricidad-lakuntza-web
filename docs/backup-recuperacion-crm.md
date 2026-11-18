@@ -1,6 +1,6 @@
 # Electricidad Lakuntza — Copias de seguridad y recuperación del CRM
 
-**Estado a 18/11/2026: copia lógica cifrada generada y comprobada; segunda ubicación comunicada por propietario; restauración integral pendiente.** Sin captación autorizada de clientes reales.
+**Estado a 18/11/2026: copia lógica cifrada generada y comprobada; segunda copia de OneDrive comprobada por propietario; restauración integral pendiente.** Sin captación autorizada de clientes reales.
 
 ## 1. Inventario técnico comprobado (metadatos, sin datos personales)
 - Plataforma: Supabase Free (sin copias diarias gestionadas).
@@ -68,7 +68,7 @@ Documentación: https://supabase.com/docs/guides/storage/management/download-obj
 | Control | Estado |
 |---|---|
 | Inventario BD/Storage | Comprobado |
-| Segunda ubicación cifrada | OneDrive personal, comunicada por propietario; sincronización/descarga aún no verificadas |
+| Segunda ubicación cifrada | OneDrive personal; archivo leído, descifrado y SHA-256 comprobado por propietario 18/11/2026 |
 | Volcado de datos generado | Verificado por propietario 18/11/2026 |
 | Archivos PDF copiados | Incluidos en copia verificada 18/11/2026 |
 | Cuentas/Auth recuperables | Pendiente |
@@ -128,3 +128,14 @@ Pendientes: segunda ubicación independiente bajo control del propietario; plan 
 - Archivo cifrado de prueba copiado al OneDrive personal del propietario desde PC-GHU, equipo de sobremesa designado para copias y pruebas locales. El código se mantiene en GitHub y se utiliza también desde portátil.
 - Copia externa comunicada, no se ha inspeccionado la cuenta ni verificado sincronización o descarga independiente. Para datos reales, revisar autorización corporativa, condiciones del proveedor y acceso/retención; no guardar PDF ni SQL en claro en OneDrive.
 - La restauración aislada y el plan Auth/config siguen pendientes. No se autoriza captación de datos reales por este avance.
+
+
+## 12. Cierre de sesión — 18/11/2026
+
+- PC-GHU: copia OneDrive leída, hash del archivo coincide con el original; extracción de 6 archivos correcta y SHA-256 de los 5 elementos del manifiesto correcto. No se comprobó una descarga independiente desde otro equipo.
+- IMPORTANTE: rectificación de alcance de backup: la inspección de cabeceras COPY de data.sql confirma que incluye auth.users, auth.identities, otras tablas Auth (incluyendo sesiones y tokens) y metadatos Storage, además de los datos CRM. No asumir exclusión de los datos Auth. El esquema gestionado y la configuración de proyecto no quedan reconstruidos automáticamente. Los volcados son sensibles y se deben cifrar.
+- Entorno CLI local separado, PostgreSQL 17, proyecto local prueba-restauracion-20261118, puertos API 55321, DB 55322, Studio 55323; no vinculado a producción. Contenedor supabase_db_prueba-restauracion-20261118.
+- Se generó data-restauracion-local.sql excluyendo COPY de sesiones/tokens y otras tablas Auth salvo users/identities, y Storage (recuperación posterior por API). Se copiaron roles.sql, schema.sql y SQL filtrado al contenedor. La importación en transacción única con ON_ERROR_STOP falló en roles.sql línea 13: supabase_admin es rol reservado. La consulta posterior confirma que public.admin_users no existe. No hay restauración SQL exitosa todavía.
+- Próxima sesión: revisar únicamente sentencias de roles y sus dependencias sin exponer secretos, excluir ALTER de roles administrados cuando ya existan localmente (no elevar privilegios ni modificar producción), verificar esquema/funciones/policies y compatibilidad de Auth, evitar reactivar sesiones originales, usar credenciales de ensayo y recuperar PDFs por Storage API manteniendo sus rutas. Validar recuentos, integridad referencial y acceso permitido/denegado; borrar copias SQL temporales del contenedor y limpiar entorno de ensayo al terminar.
+- El propietario estará fuera y retoma cuando tenga disponibilidad. Objetivo declarado: antes del 31/12/2026, web y CRM publicados para captación y gestión real, LinkedIn preparado y activo. El propietario aportará cifra inicial de clientes y contratos para establecer línea base. Mantener bloqueo comercial hasta criterios de seguridad, legalidad, recuperación y alojamiento.
+- Recomendada parada del entorno local con supabase stop desde su carpeta (ejecución no confirmada), conservar archivo cifrado y proteger temporales en claro. No se han hecho cambios en producción.
