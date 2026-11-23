@@ -93,3 +93,32 @@ Publicar una **versión piloto para comprobación interna** en los dominios fina
 - El propietario ha ejecutado correctamente la copia cifrada en su PC (roles, esquema, datos, 2 PDF y manifiesto). 7-Zip ha verificado contraseña e integridad: Everything is Ok.
 - Archivo de 77072 bytes; SHA-256 f57c196d2a0d3af618a50f0124afd5190d689e7f0503d3241f89eeedd0f12eb6. Supabase confirma que los dos documentos originales conservan rutas, tamaños y fechas de modificación anteriores.
 - **P0 copias: generación e integridad verificadas por el propietario. Recuperación aún ABIERTO:** falta segunda copia independiente, restauración aislada, cobertura de Auth/configuración y proceso periódico. No se ha contratado ningún servicio ni modificado producción. Detalles en docs/backup-recuperacion-crm.md.
+
+
+## Semana 48 — 23/11/2026 · reanudación desde portátil de Barranquesa
+
+**Entorno y límites:** el propietario está temporalmente en su portátil corporativo de Barranquesa; no transferir a ese equipo backups, PDF, SQL, credenciales o archivos reales. Los backups y ensayos de restauración permanecen en PC-GHU, con copia cifrada en OneDrive personal hasta revisar idoneidad para datos reales.
+
+### Revisión remota verificada el 23/11
+- Supabase proyecto yvrjrvropgouvzltwwvm: ACTIVE_HEALTHY, 1 cuenta Auth, 1 admin activo, 0 factores MFA verificados y 2 objetos privados en invoice-files.
+- Advisors de seguridad: INFO RLS sin políticas en app_private.public_intake_quota (tabla interna de cuota, no abrir sin análisis) y WARN protección de contraseñas filtradas desactivada. Ver https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy y https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection .
+- Código de rama: app/admin/login/LoginForm.jsx usa signInWithPassword; lib/admin.js valida auth.getUser y pertenencia activa a admin_users, pero no implementa paso MFA; pg_policies consultadas no contienen predicados AAL. No exigir MFA en producción hasta diseñar inscripción, recuperación y transición sin bloquear al único propietario.
+- GitHub PR #9 permanece DRAFT y sin fusionar, cabeza 80a0f6e... al inicio de la sesión. GitHub Actions de ese SHA: Verify isolated backend y Verify Next.js build = success.
+- Producción Vercel para www/admin conserva deployment READY dpl_HfSMSpiNLjrSNfUcuSQ86HzFRUoM con commit 4b397b9; los commits posteriores de la PR no son por ello automáticamente producción. No habilitar captación ni publicación hasta gates.
+- Alojamiento: la condición de uso no comercial de Vercel Hobby sigue vigente en noviembre 2026 (https://vercel.com/legal/terms y https://vercel.com/docs/plans/hobby). No utilizar Hobby para captación comercial; decidir Pro u otra infraestructura compatible, con prueba de compatibilidad y coste antes de migrar. No se ha contratado nada.
+- No se pudo consultar el inventario de variables Vercel: respuesta 403. No interpretar ese 403 como ausencia de variables, ni solicitar/mostrar valores secretos.
+
+### Punto de restauración en PC-GHU
+- Archivo 7z verificado (integridad y extracción con clave desde copia OneDrive); SQL incluye auth.users/identities y otras tablas Auth y Storage. El propietario preparó un data-restauracion-local.sql filtrado; mantiene backups intactos.
+- El ensayo de importación local falló en roles.sql línea 13 al intentar modificar supabase_admin (rol administrado/reservado); la importación se abortó con ON_ERROR_STOP en transacción única. La consulta a public.admin_users mostró que la tabla no existe aún. El propietario confirmó que detuvo el entorno local.
+- Próxima prueba en PC-GHU: inspeccionar las sentencias de roles gestionados, adaptar la importación a instancia local sin alterar roles reservados y comprobar transacción, recuentos, Auth, RLS, objetos y acceso funcional. Nunca ejecutar db reset ni restauración sobre producción, no modificar credenciales originales.
+
+### Secuencia prioritaria de lanzamiento
+1. **P0 copia y recuperación:** terminar restauración local y automatización de PDF + DB, custodia y retención; revisar adecuación corporativa de OneDrive personal antes de clientes reales.
+2. **P0 seguridad:** inscripción MFA TOTP owner, verificación y enforcement por servidor/RLS, recuperación y pruebas de sesión; después roles de Javier y Kristina cuando se autorice.
+3. **P0 legal y comercial:** titular fiscal/NIF confirmado por negocio y asesoría, aviso legal/privacidad/retención; alojamiento comercial permitido y correo operativo mínimo.
+4. **P0 calidad:** auditoría visual/UX final de web y CRM, especialmente navegación y circuito de facturas; pruebas con Javier y Kristina; CI y validación del dominio final.
+5. **Lanzamiento:** decisión expresa sobre activar flags, formulario, SEO, LinkedIn ya creado pero aún pendiente de optimización, Search Console y medición de captación. No fusionar PR ni cambiar producción por una comprobación documental.
+6. **Línea base:** propietario facilitará clientes únicos, contratos luz/gas/alarmas e ingresos recurrentes agregados cuando obtenga cifras; no pedir listados personales para calcular el punto de partida.
+
+**Objetivo del negocio:** captación y gestión real antes del 31/12/2026, condicionadas a cierre de P0. Al 23/11 no se ha autorizado el lanzamiento comercial.
