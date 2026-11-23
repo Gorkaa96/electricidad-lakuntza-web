@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="mx-auto mt-12 flex max-w-7xl flex-wrap justify-between gap-4 border-t border-white/15 px-4 pt-7 text-xs text-white/55 sm:px-6 lg:px-8">
-        <span>© {new Date().getFullYear()} Electricidad Lakuntza.</span>
+        <span>© {new Date().getFullYear()} Electricidad Lakuntza, C.B.</span>
         <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Información legal">
           <Link href="/aviso-legal" className="hover:text-white">Aviso legal</Link>
           <Link href="/privacidad" className="hover:text-white">Privacidad</Link>
