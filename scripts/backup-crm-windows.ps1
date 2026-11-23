@@ -7,7 +7,8 @@ Se ejecuta desde un clon local YA vinculado con:
 Antes de lanzarlo, descargar los objetos privados desde Supabase Storage
 al directorio especificado y conservar sus nombres/rutas relativos.
 
-NO exporta los usuarios de Auth gestionados por Supabase ni su configuracion.
+El SQL data.sql SI puede incluir auth.users/auth.identities y datos Auth sensibles.
+No exporta la configuracion del proyecto ni todos los ficheros de Storage.
 NO acredita recuperacion hasta efectuar una restauracion en entorno aislado.
 #>
 [CmdletBinding()]
@@ -119,7 +120,7 @@ try {
     created_utc = (Get-Date).ToUniversalTime().ToString('o')
     expected_storage_files = $ExpectedStorageFiles
     storage_files = $Files.Count
-    completeness = 'Partial logical DB dump plus downloaded storage. Auth managed schema and Supabase project settings excluded.'
+    completeness = 'Logical DB dump and downloaded storage. Data may contain Auth users/tokens; Supabase service settings and complete recovery remain unverified.'
     files = $Checksums
   }
   $Manifest | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath (Join-Path $Stage 'manifest.json') -Encoding UTF8
