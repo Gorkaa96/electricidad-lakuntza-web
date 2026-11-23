@@ -56,3 +56,16 @@ Producción técnica piloto READY pero captación real BLOQUEADA. Pendiente rest
 
 ## Nota de dimensionamiento (23/11/2026)
 Electricidad Lakuntza, C.B. opera con Javier y Kristina; Gorka ayuda en el ámbito técnico pero **no es socio ni empleado**. Por ello se recomiendan **2 licencias nominativas** para la operación diaria y una tercera solo si se demuestra una necesidad real de correo/OneDrive de Gorka. Acceso técnico delegado, trazable y con MFA; facturación y propiedad de las cuentas, dominio y datos a nombre de la empresa. **WhatsApp Business App** puede usarse gratis y con dispositivos vinculados; una nueva línea solo se presupuesta si el 649 853 448 es de uso personal o se desea separar clientes nuevos. Fuentes: https://faq.whatsapp.com/641572844337957 y https://blog.whatsapp.com/one-whatsapp-account-now-across-multiple-phones .
+
+## Decisión de telefonía: 23/11/2026
+El propietario confirma que el **649 853 448 es el número personal de Javier**, utilizado también profesionalmente. Por tanto, la propuesta cambia de «nueva línea opcional» a **«nueva línea corporativa recomendada»** para los formularios y el WhatsApp Business de nuevos clientes. Mantener el número conocido para los contactos habituales durante la transición, sin retirar ni alterar el número personal de Javier; cuando la nueva línea esté operativa y verificada, sustituir progresivamente el teléfono y WhatsApp públicos de la web y sus CTA. El número nuevo debe contratarse a nombre de Electricidad Lakuntza, C.B., si el operador lo permite, con capacidad de recibir SMS/llamadas para verificaciones y acceso recuperable por negocio, no solo por Javier o por el técnico.
+
+Referencias de tarifas de noviembre de 2026, **no contratadas**:
+- DIGI Móvil 5 GB + 100 minutos nacionales: 3 €/mes precio final, https://www.digimobil.es/movil/
+- simyo 15 GB + 120 minutos: 3,50 €/mes (consultar condiciones y facturación), https://www.simyo.es/tarifas-movil.html
+- WhatsApp Business App: descarga gratuita, funciones básicas sin suscripción; https://faq.whatsapp.com/641572844337957/
+
+Presupuesto de lanzamiento orientativo con 2 licencias de correo: **45 USD/mes + 12,34–12,84 €/mes** (9,34 € de Microsoft sin IVA, con compromiso anual, más 3–3,50 € del teléfono según precios publicados, IVA incluido según operador; totales con impuestos mixtos, no comparar como cifra final de factura). Añadir impuestos de otras plataformas, divisas y consumos variables. La cobertura en Lakuntza, portabilidad no necesaria, eSIM/SIM, llamadas, verificación SMS, titularidad jurídica y costes reales deben confirmarse antes de contratar.
+
+No requiere segundo teléfono físico si el dispositivo principal admite WhatsApp personal y Business con números distintos, o dispositivos vinculados. Antes del alta elegir quién custodiará la SIM/eSIM principal y cómo accederá Kristina al WhatsApp del negocio, especialmente pensando en la jubilación de Javier. Gorka ayuda técnicamente, **no es empleado ni socio**, y no debe ser titular personal de la línea.
+
