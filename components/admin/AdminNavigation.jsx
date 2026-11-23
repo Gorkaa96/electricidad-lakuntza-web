@@ -15,9 +15,10 @@ const navItems = [
   { href: siteUrl, label: 'Ver web', icon: ExternalLink, allowed: () => true, external: true },
 ];
 
-export default function AdminNavigation({ compact = false, member }) {
+export default function AdminNavigation({ compact = false, member, mfaEnabled = false }) {
   const pathname = usePathname();
-  const visible = navItems.filter((item) => item.allowed(member));
+  const visible = navItems.filter((item) =>
+    item.allowed(member) && (item.href !== '/admin/seguridad' || mfaEnabled));
 
   return (
     <nav aria-label="Navegación del administrador" className={compact ? 'grid grid-cols-3 gap-2 sm:grid-cols-6' : 'grid gap-2'}>
