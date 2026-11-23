@@ -15,7 +15,7 @@
 
 1. Base de datos (roles + esquema + datos) exportada diariamente desde un equipo/ejecutor de confianza.
 2. Archivos completos de **Storage**, descargados con su ruta y tamaño/huella; los volcados SQL contienen metadatos pero NO los PDF.
-3. Auth y configuración: plan específico para cuentas, identificadores, ajustes de proyecto, URL de redirección, SMTP y claves; **el comando Supabase CLI db dump excluye los esquemas internos como auth y storage**. No asumir que `roles.sql + schema.sql + data.sql` reconstruye usuarios o archivos.
+3. Auth y configuración: el volcado concreto de noviembre **sí incluye datos de auth.users, auth.identities y otras tablas Auth, además de metadatos Storage**; se confirmó al inspeccionar sus sentencias COPY. Esto no garantiza restauración de los servicios gestionados, ajustes, claves, SMTP, OAuth ni los bytes de Storage. Plan específico para reconstrucción de cuentas y servicios. No asumir que roles.sql + schema.sql + data.sql es una recuperación integral.
 4. Copia externa **cifrada AES-256 o equivalente**, con acceso restringido, dos destinos distintos y claves custodiadas por propietario. Registro de fecha/resultado. Retención propuesta: últimos 7 diarios y 4 semanales, ajustada por finalidad/privacidad y capacidad.
 5. Ensayo de recuperación en **entorno aislado**, nunca sobre la base en uso. Comprobar que se pueden ver expedientes, abrir los PDF, iniciar sesión y respetar los permisos RLS. Si no se verifica, el P0 permanece abierto.
 6. Cuando se usen copias automáticas gestionadas de Supabase Pro, **continuar respaldando Storage por separado**.
@@ -34,7 +34,7 @@ supabase db dump --db-url "$DB_URL" -f schema.sql
 supabase db dump --db-url "$DB_URL" --data-only --use-copy -f data.sql
 ```
 
-> **Límite importante:** los archivos generados son una parte del respaldo: no incluyen los objetos privados de Storage, el contenido completo de Auth gestionado por Supabase ni toda la configuración del proyecto. Evitar prometer restauración completa con solo estos tres archivos. Verificar la semántica actual de CLI y la lista de esquemas incluidos antes de cada ejecución.
+> **Límite importante:** los archivos generados son una parte del respaldo: no incluyen los bytes de objetos privados de Storage ni toda la configuración del proyecto. El data.sql inspeccionado sí contiene auth.users, auth.identities y otras tablas Auth, con sesiones/tokens potencialmente sensibles. La recuperación funcional sigue sin estar acreditada. Evitar prometer restauración completa con solo estos tres archivos. Verificar la semántica actual de CLI y la lista de esquemas incluidos antes de cada ejecución.
 
 **Verificación mínima:** los tres archivos se generan sin errores, no están vacíos cuando deben contener datos; calcular y guardar sumas SHA-256 en un manifiesto junto con la fecha/versión del CLI y el destino. Cifrar inmediatamente, retirar las copias en claro, comprobar que el archivo cifrado puede descifrarse. No registrar contraseñas en logs.
 
@@ -79,7 +79,7 @@ Documentación: https://supabase.com/docs/guides/storage/management/download-obj
 
 ## 9. Primera ejecución gratis en Windows — actualización 11/11/2026
 
-Herramienta preparada en **scripts/backup-crm-windows.ps1**, en esta misma rama de GitHub. **No ha sido ejecutada ni validada en el PC del propietario**; el P0 de recuperación continúa abierto.
+Herramienta preparada en **scripts/backup-crm-windows.ps1**, en esta misma rama de GitHub. **Fue ejecutada y el archivo cifrado se validó en PC-GHU el 18/11/2026**, como detallan los apartados posteriores. El P0 de restauración integral continúa abierto.
 
 ### Requisitos sin contratar servicios
 1. Clonar/descargar esta rama del repositorio a un directorio no sincronizado. Instalar [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started), [Docker Desktop](https://www.docker.com/products/docker-desktop/) y [7-Zip](https://www.7-zip.org/).
@@ -139,3 +139,16 @@ Pendientes: segunda ubicación independiente bajo control del propietario; plan 
 - Próxima sesión: revisar únicamente sentencias de roles y sus dependencias sin exponer secretos, excluir ALTER de roles administrados cuando ya existan localmente (no elevar privilegios ni modificar producción), verificar esquema/funciones/policies y compatibilidad de Auth, evitar reactivar sesiones originales, usar credenciales de ensayo y recuperar PDFs por Storage API manteniendo sus rutas. Validar recuentos, integridad referencial y acceso permitido/denegado; borrar copias SQL temporales del contenedor y limpiar entorno de ensayo al terminar.
 - El propietario estará fuera y retoma cuando tenga disponibilidad. Objetivo declarado: antes del 31/12/2026, web y CRM publicados para captación y gestión real, LinkedIn preparado y activo. El propietario aportará cifra inicial de clientes y contratos para establecer línea base. Mantener bloqueo comercial hasta criterios de seguridad, legalidad, recuperación y alojamiento.
 - Recomendada parada del entorno local con supabase stop desde su carpeta (ejecución no confirmada), conservar archivo cifrado y proteger temporales en claro. No se han hecho cambios en producción.
+
+
+## 13. Próximo ensayo LOCAL (cuando se retome PC-GHU; no ejecutado)
+
+La importación anterior utilizó ON_ERROR_STOP + --single-transaction e interrumpió el proceso con el error de rol gestionado "supabase_admin" al procesar /tmp/roles.sql. Por eso public.admin_users no existía al verificar después.
+
+Ruta local protegida: C:\Users\gorka\CopiasElectricidadLakuntza\prueba-restauracion-20261118; base local 127.0.0.1:55322; contenedor supabase_db_prueba-restauracion-20261118. No relink remoto. Verificar que el entorno realmente está en ese contexto y proteger los puertos (CLI los expone por 0.0.0.0; evitar redes no confiables). No subir dumps a GitHub ni a portátil de Barranquesa.
+
+**Próxima prueba sugerida:** inspeccionar localmente los roles declarados y las sentencias que afectan a roles internos; como los roles gestionados ya existen en la pila local, ensayar una importación de schema.sql + data-restauracion-local.sql sin roles.sql, solo en la base nueva/aislada y bajo transacción única con ON_ERROR_STOP. Primero comprobar las dependencias de roles y si se requieren roles propios; no borrar ni crear roles privilegiados a ciegas. No restaurar encima de producción ni ejecutar supabase db reset sobre un proyecto vinculado.
+
+Tras éxito: comparar recuentos (no contenido) de tablas, comprobar Auth sin sesiones originales, roles y RLS; restaurar los PDF a Storage local conservando rutas y bucket privado; probar acceso autorizado y denegado. Si falla, detener y registrar error en vez de repetir en bucle.
+
+Al terminar, eliminar de forma segura los SQL extraídos y los temporales en el contenedor, manteniendo únicamente copia cifrada y evidencias no sensibles. El cierre P0 requiere recuperación funcional, no solo SQL importado.
