@@ -5,6 +5,8 @@ import MfaChallenge from './MfaChallenge';
 export const metadata = { title: 'Verificación de acceso', robots: { index: false, follow: false } };
 
 export default async function MfaPage() {
+  // The staged UI is unavailable until Auth, RLS and recovery are tested.
+  if (process.env.CRM_MFA_ROLLOUT_ENABLED !== 'true') redirect('/admin/entrada');
   const { user, admin, mfaRequired } = await getAdminContext();
   if (!user) redirect('/admin/login');
   if (!mfaRequired) {
