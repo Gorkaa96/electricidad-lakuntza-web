@@ -67,5 +67,11 @@ Referencias de tarifas de noviembre de 2026, **no contratadas**:
 
 Presupuesto de lanzamiento orientativo con 2 licencias de correo: **45 USD/mes + 12,34–12,84 €/mes** (9,34 € de Microsoft sin IVA, con compromiso anual, más 3–3,50 € del teléfono según precios publicados, IVA incluido según operador; totales con impuestos mixtos, no comparar como cifra final de factura). Añadir impuestos de otras plataformas, divisas y consumos variables. La cobertura en Lakuntza, portabilidad no necesaria, eSIM/SIM, llamadas, verificación SMS, titularidad jurídica y costes reales deben confirmarse antes de contratar.
 
-No requiere segundo teléfono físico si el dispositivo principal admite WhatsApp personal y Business con números distintos, o dispositivos vinculados. Antes del alta elegir quién custodiará la SIM/eSIM principal y cómo accederá Kristina al WhatsApp del negocio, especialmente pensando en la jubilación de Javier. Gorka ayuda técnicamente, **no es empleado ni socio**, y no debe ser titular personal de la línea.
+No requiere segundo teléfono físico si el dispositivo principal admite WhatsApp personal y Business con números distintos, o dispositivos vinculados. Plan técnico acordado por Gorka: **Javier gestionará WhatsApp Business del negocio en su móvil como dispositivo principal y Kristina lo utilizará como dispositivo vinculado**. Cada uno conserva WhatsApp personal en su número. Decidir quién custodia la nueva SIM/eSIM y la recuperación empresarial, pensando en la futura jubilación de Javier. Confirmar compatibilidad de los móviles y de WhatsApp Business con esa configuración antes de comprar hardware. Gorka ayuda técnicamente, **no es empleado ni socio**, y no debe ser titular personal de la línea.
 
+
+## Preferencia de contratación, pendiente de Javier y Kristina
+- **DIGI** es la opción de primera elección para la línea nueva de WhatsApp Business, **solo si ambos aceptan**. Comprobar condiciones actuales y cobertura real en Lakuntza antes de contratar y confirmar alta a nombre de Electricidad Lakuntza, C.B.
+- Línea nueva independiente del 649 853 448 de Javier; su número personal no se porta ni se sustituye. El número personal de Kristina tampoco se publica.
+- WhatsApp Business del número corporativo: teléfono principal Javier, dispositivo vinculado Kristina; el número será de la empresa y deben existir procedimientos de recuperación para continuidad.
+- No contratar la línea, activar WhatsApp ni cambiar enlaces de la web hasta tener aprobación y verificarlo.
