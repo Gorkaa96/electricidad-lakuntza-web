@@ -142,7 +142,7 @@ export default async function AdminInvoiceLeadsPage({ searchParams }) {
   if (loadError) {
     console.error('[admin-invoices] Error loading invoice requests', { code: loadError.code || 'unknown' });
     return (
-      <AdminShell title="Solicitudes" description="Revisión de facturas recibidas.">
+      <AdminShell title="Facturas" description="Revisión de facturas recibidas.">
         <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-6">
           <h2 className="text-lg font-semibold text-amber-950">No se han podido cargar las solicitudes</h2>
           <p className="mt-2 text-sm leading-6 text-amber-900">Comprueba que la base de datos esté disponible y vuelve a intentarlo. Esto no significa que no haya solicitudes.</p>
