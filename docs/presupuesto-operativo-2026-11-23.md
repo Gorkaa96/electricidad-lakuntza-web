@@ -7,23 +7,23 @@ Revisión de precios públicos: 23/11/2026. **No se ha contratado, comprado ni c
 |---|---|---|---|---|
 | Vercel Pro | **20 USD/mes** de base, un puesto de desarrollador | 1 | **20 USD** + posible consumo adicional | Necesario si se mantiene este alojamiento: Hobby solo uso no comercial |
 | Supabase Pro | **25 USD/mes** para una organización/proyecto base, más posibles excesos | 1 | **25 USD** + posible consumo adicional | Recomendado para un CRM con datos reales: evita pausas por inactividad y permite backups diarios 7 días |
-| Microsoft 365 Empresa Básico EEE **sin Teams** | **4,67 €/usuario/mes**, compromiso anual, sin IVA; alternativa mensual **5,60 €/usuario/mes** | 3 usuarios propuestos | **14,01 €**/mes equivalente anual, sin IVA (o **16,80 €**/mes en suscripción mensual) | Recomendado: correo y OneDrive empresarial (1 TB por usuario); designar usuarios nominativos, no compartir contraseñas |
+| Microsoft 365 Empresa Básico EEE **sin Teams** | **4,67 €/usuario/mes**, compromiso anual, sin IVA; alternativa mensual **5,60 €/usuario/mes** | 2 usuarios operativos propuestos (Javier y Kristina), tercero opcional para soporte técnico | **9,34 €**/mes equivalente anual, sin IVA (o **11,20 €**/mes en suscripción mensual) | Recomendado: correo y OneDrive empresarial (1 TB por usuario), accesos separados. Tercer buzón de Gorka solo si realmente lo necesita |
 | Resend Free (emails transaccionales) | 0 USD hasta 3.000 emails/mes, máximo 100/día | 1 | 0 | Suficiente al inicio; no sustituye automáticamente un buzón de atención ni envía comparativas desde Yahoo |
 | Cloudflare Free, Turnstile y DNS | 0 | Actual | 0 | Mantener |
 | GitHub Free | 0 | Actual | 0 | Mantener si necesidades de colaboración/seguridad caben |
 | LinkedIn Page / Search Console | 0 | Actual | 0 | Mantener |
 | Dominio electricidadlakuntza.com | Ya comprado | 1 | 0 adicional inmediato | Renovación anual pendiente de importe exacto de factura/registrador |
 
-**Total de referencia recomendado:** **45 USD/mes + 14,01 €/mes**, antes de impuestos, tipo de cambio, uso extra y renovación del dominio; Microsoft con compromiso anual. Si Microsoft se contrata mes a mes, serían **45 USD/mes + 16,80 €/mes**. Si se parte solo con 1 licencia Microsoft, la partida de correo sería 4,67 €/mes (anual) o 5,60 €/mes (mensual), con las restricciones de acceso compartido que se acuerden.
+**Total base recomendado para dos usuarios operativos:** **45 USD/mes + 9,34 €/mes**, antes de impuestos, tipo de cambio, uso extra y renovación del dominio; Microsoft con compromiso anual. En suscripción mensual Microsoft serían **45 USD/mes + 11,20 €/mes**. Con tres licencias en vez de dos, el total sería **45 USD/mes + 14,01 €/mes** (compromiso anual). Gorka colabora técnicamente pero no es empleado ni socio: no comprar una tercera licencia por defecto; asignar permisos técnicos nominativos de forma autorizada, sin que su identidad personal sea la única propietaria de servicios corporativos.
 
 Los dos servicios en USD facturan según plan/uso y pueden sumar impuestos. No publicar un coste global fijo en euros sin confirmar cambio/tipo de factura y límites de consumo. No añadir desarrolladores de pago en Vercel sin necesidad. Configurar presupuesto y alertas/hard cap con cuidado: un límite duro puede interrumpir el servicio, no solo reducir el gasto.
 
 ## Alternativas de correo
-- **Microsoft Exchange Online (Plan 1)**: 3,50 €/usuario/mes con compromiso anual, sin IVA, para correo/calendario sin el 1 TB empresarial de OneDrive. 3 cuentas: 10,50 €/mes. Alternativa si no se necesita almacenamiento corporativo del paquete Microsoft 365.
+- **Microsoft Exchange Online (Plan 1)**: 3,50 €/usuario/mes con compromiso anual, sin IVA, para correo/calendario sin el 1 TB empresarial de OneDrive. 2 cuentas: 7,00 €/mes (3 cuentas: 10,50 €/mes). Alternativa si no se necesita almacenamiento corporativo del paquete Microsoft 365.
 - Google Workspace Business Starter: desde 6,80 €/usuario/mes en su oferta española consultada; 30 GB de almacenamiento conjunto por usuario. Más caro que Microsoft 365 Básico sin Teams en esta comparativa, sujeto a duración/oferta.
 - Microsoft 365 Empresa Básico EEE sin Teams propuesto arriba por gestión Outlook, archivos corporativos y flexibilidad. Evaluar almacenamiento y protección efectiva de backups; sincronización no sustituye un backup independiente.
 - Buzones compartidos (por ejemplo info@) sin licencia adicional dentro de límites Microsoft, **solo mediante delegación de usuarios con licencia**, nunca compartir la contraseña. admin@ puede ser alias/identidad técnica según diseño. No inventar emails personales sin aprobación.
-- Teléfono: conservar el existente (649 853 448) al inicio; número nuevo o centralita solo si la operativa lo justifica.
+- Teléfono: conservar por ahora el 649 853 448 porque ya lo conocen los clientes, pero preguntar si es personal de Javier o exclusivo del negocio. Si es exclusivo y pertenece/controla la empresa, valorar migrar ese mismo número a la app gratuita WhatsApp Business; si mezcla vida personal, valorar segunda línea económica (precio por presupuestar) para WhatsApp Business y captación. No contratar centralita ni WhatsApp API al inicio. El número de atención debe poder continuar cuando Javier se jubile.
 
 ## Opcionales / externos
 - Resend Pro: 20 USD/mes si se supera Free o se necesita más capacidad; no se recomienda inicialmente.
@@ -33,7 +33,7 @@ Los dos servicios en USD facturan según plan/uso y pueden sumar impuestos. No p
 - Configurar MX, SPF, DKIM, DMARC y SMTP/control de invitaciones antes de poner en producción nuevas direcciones; evitar cortar comunicación Yahoo durante transición.
 
 ## Orden de contratación, condicionado a aprobación de la propiedad
-1. Aprobar presupuesto y titularidad de facturación **Electricidad Lakuntza, C.B.** con NIF vigente.
+1. Aprobar presupuesto, decidir 2 licencias de correo operativas o tercera opcional, teléfono actual versus segunda línea para WhatsApp Business, y titularidad de facturación **Electricidad Lakuntza, C.B.** con NIF vigente.
 2. Crear/organizar las identidades y un buzón corporativo en Microsoft 365; configurar DNS sin alterar registros de web ni romper Yahoo. Separar acceso por usuario y añadir MFA.
 3. Subir el proyecto Supabase de Free a Pro para evitar pausa y disponer de backups gestionados (los archivos de Storage requieren copia aparte). Revisar caps de gasto.
 4. Cambiar Vercel a Pro y asegurar que todo el proyecto/dominio comercial reside en el equipo de facturación correcto; alertas y límite de gasto. Hacerlo antes de permitir captación real.
@@ -53,3 +53,6 @@ Los dos servicios en USD facturan según plan/uso y pueden sumar impuestos. No p
 
 ## Estado de lanzamiento
 Producción técnica piloto READY pero captación real BLOQUEADA. Pendiente restauración integral, MFA RLS, NIF/legal, pago de alojamiento comercial, remitentes e invitaciones, QA final en dominios y prueba con Javier/Kristina. Objetivo indicativo 16/12/2026 condicionado a P0.
+
+## Nota de dimensionamiento (23/11/2026)
+Electricidad Lakuntza, C.B. opera con Javier y Kristina; Gorka ayuda en el ámbito técnico pero **no es socio ni empleado**. Por ello se recomiendan **2 licencias nominativas** para la operación diaria y una tercera solo si se demuestra una necesidad real de correo/OneDrive de Gorka. Acceso técnico delegado, trazable y con MFA; facturación y propiedad de las cuentas, dominio y datos a nombre de la empresa. **WhatsApp Business App** puede usarse gratis y con dispositivos vinculados; una nueva línea solo se presupuesta si el 649 853 448 es de uso personal o se desea separar clientes nuevos. Fuentes: https://faq.whatsapp.com/641572844337957 y https://blog.whatsapp.com/one-whatsapp-account-now-across-multiple-phones .
