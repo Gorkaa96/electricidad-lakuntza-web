@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
+import { needsMfaChallenge } from '@/lib/admin-mfa.mjs';
 
 export default function LoginForm({ unauthorized = false }) {
   const router = useRouter();
@@ -33,8 +34,18 @@ export default function LoginForm({ unauthorized = false }) {
       return;
     }
 
-    // Never navigate to an untrusted URL from query parameters.
-    router.push('/admin/entrada');
+    // Only use fixed internal routes; a password-only session with an enrolled
+    // factor must complete the TOTP challenge before entering the CRM.
+    try {
+      const supabase = createSupabaseBrowserClient();
+      const { data: levels, error: levelError } =
+        await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      router.replace(levelError || !levels || needsMfaChallenge(levels)
+        ? '/admin/mfa'
+        : '/admin/entrada');
+    } catch {
+      router.replace('/admin/mfa');
+    }
     router.refresh();
   }
 
