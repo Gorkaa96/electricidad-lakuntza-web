@@ -51,9 +51,8 @@ export default function ContactForm() {
         <select name="service" defaultValue="Revisión de luz y gas" className="focus-ring min-h-12 w-full min-w-0 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3.5 text-base outline-none focus:border-lakuntza-green sm:text-sm">
           <option>Revisión de luz y gas</option>
           <option>Alarmas de Movistar Prosegur</option>
-          <option>Instalación eléctrica</option>
-          <option>Avería o mantenimiento</option>
-          <option>Telecomunicaciones</option>
+          <option>Instalación de cargador eléctrico</option>
+          <option>Asesoría energética</option>
           <option>Otro</option>
         </select>
       </label>

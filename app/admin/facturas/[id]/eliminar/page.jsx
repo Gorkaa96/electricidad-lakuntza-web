@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
-import { requireAdmin } from '@/lib/admin';
+import { requirePermission } from '@/lib/admin';
 import { deleteInvoiceLead } from '../../actions';
 
 export const metadata = {
@@ -14,7 +14,7 @@ export const revalidate = 0;
 export default async function DeleteInvoiceLeadPage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('leads.delete');
   const { data: lead } = await supabase
     .from('invoice_review_leads')
     .select('id, created_at, name, phone, file_name')

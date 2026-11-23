@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  serverExternalPackages: ['pdf-parse', '@napi-rs/canvas'],
   experimental: {
     serverActions: { bodySizeLimit: '12mb' },
   },

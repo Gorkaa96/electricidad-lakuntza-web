@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import AdminShell from '@/components/admin/AdminShell';
 import AdminNotice from '@/components/admin/AdminNotice';
 import ProjectForm from '@/components/admin/ProjectForm';
-import { requireAdmin } from '@/lib/admin';
+import { requirePermission } from '@/lib/admin';
 
 export const metadata = {
   title: 'Editar trabajo',
@@ -14,7 +14,7 @@ export const revalidate = 0;
 export default async function EditProjectPage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('projects.manage');
   const { data: project } = await supabase
     .from('projects')
     .select('*, project_images(*)')

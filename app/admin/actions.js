@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { requireAdmin } from '@/lib/admin';
+import { requireAdmin, requirePermission } from '@/lib/admin';
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
@@ -157,7 +157,7 @@ async function uploadProjectImages({ supabase, projectId, slug, title, files }) 
 }
 
 export async function createProject(formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('projects.manage');
   const payload = getProjectPayload(formData);
 
   if (!payload.title || !payload.slug || !payload.category || !payload.description) {
@@ -191,7 +191,7 @@ export async function createProject(formData) {
 }
 
 export async function updateProject(projectId, formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('projects.manage');
   const payload = getProjectPayload(formData);
 
   if (!payload.title || !payload.slug || !payload.category || !payload.description) {
@@ -236,7 +236,7 @@ export async function updateProject(projectId, formData) {
 }
 
 export async function setProjectCover(projectId, imageId) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('projects.manage');
 
   const { data: image } = await supabase
     .from('project_images')
@@ -255,7 +255,7 @@ export async function setProjectCover(projectId, imageId) {
 }
 
 export async function deleteProjectImage(projectId, imageId) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('projects.manage');
 
   const { data: image } = await supabase
     .from('project_images')
@@ -282,7 +282,7 @@ export async function deleteProjectImage(projectId, imageId) {
 }
 
 export async function deleteProject(projectId) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('projects.manage');
 
   const { data: project } = await supabase
     .from('projects')

@@ -11,14 +11,15 @@ const sections = [
   {
     title: 'Uso actual de cookies',
     content: [
-      'La parte pública de esta web está preparada para funcionar sin cookies publicitarias, sin píxeles de seguimiento y sin analítica avanzada.',
+      'La web pública no utiliza actualmente píxeles publicitarios, seguimiento comercial ni analítica con cookies propias. Los enlaces externos no cargan esos servicios hasta que el usuario decide visitarlos.',
+      'Cloudflare Turnstile comprueba los formularios frente a envíos automatizados mediante un desafío y validación de token de seguridad. No está habilitada su función opcional de preautorización mediante cookies de seguridad; pueden tratarse datos técnicos para realizar la comprobación. Tras guardar una solicitud se crea una cookie técnica de confirmación (lakuntza_invoice_receipt o lakuntza_commercial_receipt), limitada a su página de confirmación y con una duración de cinco minutos. No contiene datos de contacto ni documentación.',
       'El panel privado de administración puede utilizar cookies técnicas o mecanismos equivalentes estrictamente necesarios para mantener la sesión de usuario autenticado y garantizar la seguridad del acceso.',
     ],
   },
   {
     title: 'Cookies técnicas',
     content: [
-      'Las cookies técnicas son necesarias para el funcionamiento correcto de determinadas partes de la web, como el acceso seguro al panel privado. Estas cookies no se utilizan con fines publicitarios.',
+      'Las cookies técnicas mantienen funciones esenciales como la seguridad de los formularios, la confirmación de recepción o el acceso al panel privado. No se utilizan para perfilar clientes ni para publicidad.',
       'Al ser necesarias para prestar el servicio solicitado o mantener la seguridad, no requieren consentimiento previo cuando se limitan a esa finalidad técnica.',
     ],
   },
@@ -32,7 +33,7 @@ const sections = [
   {
     title: 'Cambios futuros',
     content: [
-      'Si en el futuro se incorporan herramientas de analítica, mapas embebidos, píxeles publicitarios, chat externo, reCAPTCHA u otras tecnologías no estrictamente técnicas, esta política deberá actualizarse y, cuando corresponda, se añadirá un sistema de consentimiento de cookies.',
+      'Si en el futuro se incorporan herramientas de analítica no exenta, mapas embebidos, píxeles publicitarios, chat externo u otras tecnologías no esenciales, se revisará la política y se habilitará consentimiento previo con opciones equivalentes para aceptar y rechazar cuando sea exigible.',
     ],
   },
   {
@@ -47,7 +48,7 @@ export default function CookiesPage() {
   return (
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
-      <main>
+      <main id="contenido-principal">
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />
@@ -72,7 +73,7 @@ export default function CookiesPage() {
                 ))}
               </div>
               <p className="mt-10 rounded-2xl bg-neutral-50 p-4 text-xs leading-6 text-neutral-500">
-                Última actualización: junio de 2026.
+                Última actualización: 10 de noviembre de 2026.
               </p>
             </div>
           </div>

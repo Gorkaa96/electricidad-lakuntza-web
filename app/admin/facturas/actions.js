@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { requireAdmin } from '@/lib/admin';
+import { requireAnyPermission, requirePermission } from '@/lib/admin';
 
 const allowedStatuses = ['new', 'reviewing', 'contacted', 'converted', 'discarded'];
 
@@ -43,7 +43,7 @@ async function insertStatusEvent({ supabase, leadId, status, source, adminNotes 
 }
 
 export async function updateInvoiceLead(formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requireAnyPermission('leads.edit_all', 'leads.edit_assigned');
 
   const id = String(formData.get('id') || '').trim();
   const status = String(formData.get('status') || '').trim();
@@ -58,12 +58,14 @@ export async function updateInvoiceLead(formData) {
     admin_notes: adminNotes || null,
   };
 
-  const { error } = await supabase
+  const { data: updatedLead, error } = await supabase
     .from('invoice_review_leads')
     .update(payload)
-    .eq('id', id);
+    .eq('id', id)
+    .select('id')
+    .maybeSingle();
 
-  if (error) {
+  if (error || !updatedLead) {
     redirect(`/admin/facturas/${id}?error=estado`);
   }
 
@@ -75,7 +77,7 @@ export async function updateInvoiceLead(formData) {
 }
 
 export async function quickUpdateInvoiceStatus(formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requireAnyPermission('leads.edit_all', 'leads.edit_assigned');
 
   const id = String(formData.get('id') || '').trim();
   const status = String(formData.get('status') || '').trim();
@@ -84,12 +86,14 @@ export async function quickUpdateInvoiceStatus(formData) {
     redirect('/admin/facturas?error=datos');
   }
 
-  const { error } = await supabase
+  const { data: updatedLead, error } = await supabase
     .from('invoice_review_leads')
     .update(statusPayload(status))
-    .eq('id', id);
+    .eq('id', id)
+    .select('id')
+    .maybeSingle();
 
-  if (error) {
+  if (error || !updatedLead) {
     redirect(`/admin/facturas/${id}?error=estado`);
   }
 
@@ -101,7 +105,7 @@ export async function quickUpdateInvoiceStatus(formData) {
 }
 
 export async function deleteInvoiceLead(formData) {
-  const { supabase } = await requireAdmin();
+  const { supabase } = await requirePermission('leads.delete');
 
   const id = String(formData.get('id') || '').trim();
   const confirm = String(formData.get('confirmDelete') || '').trim().toUpperCase();
@@ -120,19 +124,57 @@ export async function deleteInvoiceLead(formData) {
     redirect('/admin/facturas?error=datos');
   }
 
-  if (lead.file_path) {
-    await supabase.storage.from('invoice-files').remove([lead.file_path]);
+  const {data:proposalDocs,error:proposalError}=await supabase.from('fenie_proposals')
+    .select('file_path').eq('lead_id',id);
+  if(proposalError) redirect(`/admin/facturas/${id}?error=archivo_eliminar`);
+  if(proposalDocs?.length){
+    const {error:removeProposals}=await supabase.storage.from('invoice-files')
+      .remove(proposalDocs.map(row=>row.file_path));
+    if(removeProposals){
+      console.error('[invoice-delete] Proposal removal failed', {leadId:id});
+      redirect(`/admin/facturas/${id}?error=archivo_eliminar`);
+    }
   }
 
-  const { error } = await supabase
+  if (lead.file_path) {
+    const { error: fileDeleteError } = await supabase.storage.from('invoice-files').remove([lead.file_path]);
+    // Never report a complete deletion while a private invoice may remain in storage.
+    if (fileDeleteError) {
+      console.error('[invoice-delete] Private file removal failed', { leadId: id, code: fileDeleteError.statusCode || 'unknown' });
+      redirect(`/admin/facturas/${id}?error=archivo_eliminar`);
+    }
+  }
+
+  const { data: deletedLead, error } = await supabase
     .from('invoice_review_leads')
     .delete()
-    .eq('id', id);
+    .eq('id', id)
+    .select('id')
+    .maybeSingle();
 
-  if (error) {
+  if (error || !deletedLead) {
     redirect(`/admin/facturas/${id}?error=eliminar`);
   }
 
   revalidatePath('/admin/facturas');
   redirect('/admin/facturas?success=eliminada');
+}
+
+/** Update a quick status without navigating away from the current document. */
+export async function setInvoiceStatusInline({id,expectedStatus,newStatus}) {
+ const {supabase}=await requireAnyPermission('leads.edit_all','leads.edit_assigned');
+ const uid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+ if(!uid.test(String(id||'')) || !allowedStatuses.includes(newStatus) ||
+    !allowedStatuses.includes(expectedStatus) || expectedStatus===newStatus)
+    return {ok:false,message:'Estado no válido.'};
+ // Compare-and-set: never overwrite a colleague's more recent decision.
+ const {data,error}=await supabase.from('invoice_review_leads')
+  .update(statusPayload(newStatus)).eq('id',id).eq('status',expectedStatus)
+  .select('id').maybeSingle();
+ if(error || !data) return {ok:false,message:'No se ha guardado. Alguien pudo actualizar este expediente; recarga y revisa.'};
+ await insertStatusEvent({supabase,leadId:id,status:newStatus,source:'estado rápido'});
+ revalidatePath('/admin/facturas');
+ revalidatePath('/admin/facturas/'+id);
+ revalidatePath('/admin/oportunidades');
+ return {ok:true,status:newStatus};
 }

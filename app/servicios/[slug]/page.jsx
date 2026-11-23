@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Badge from '@/components/Badge';
 import MobileContactBar from '@/components/MobileContactBar';
-import { getServicePage, servicePages } from '@/lib/servicePages';
+import { getServicePage, publicServicePages } from '@/lib/servicePages';
 
 const whatsappText = encodeURIComponent('Hola Electricidad Lakuntza. Quiero hacer una consulta desde la web.');
 const whatsappHref = `https://wa.me/34649853448?text=${whatsappText}`;
@@ -16,7 +16,7 @@ const iconBySlug = {
 };
 
 export function generateStaticParams() {
-  return servicePages.map((service) => ({ slug: service.slug }));
+  return publicServicePages.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({ params }) {
@@ -39,7 +39,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ServiceDetailPage({ params }) {
-  const service = getServicePage(params.slug);
+  const { slug } = await params;
+  const service = getServicePage(slug);
   if (!service) notFound();
 
   const Icon = iconBySlug[service.slug] || PlugZap;
@@ -73,7 +74,7 @@ export default async function ServiceDetailPage({ params }) {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-      <main>
+      <main id="contenido-principal">
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />

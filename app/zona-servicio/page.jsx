@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { ArrowRight, CheckCircle2, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -40,6 +41,8 @@ export const metadata = {
 };
 
 export default function ZonaServicioPage() {
+  // Conservada para una posible recuperación de las instalaciones tradicionales.
+  notFound();
   const areaSchema = {
     '@context': 'https://schema.org',
     '@type': 'Electrician',
@@ -61,7 +64,7 @@ export default function ZonaServicioPage() {
     <div className="min-h-screen bg-white pb-24 text-neutral-950 md:pb-0">
       <Header />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(areaSchema) }} />
-      <main>
+      <main id="contenido-principal">
         <section className="relative isolate overflow-hidden bg-neutral-950 pt-32 text-white">
           <div className="hero-grid absolute inset-0 opacity-30" />
           <div className="absolute -right-44 top-12 h-[28rem] w-[28rem] rounded-full bg-lakuntza-green/15 blur-3xl" />

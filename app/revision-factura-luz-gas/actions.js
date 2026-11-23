@@ -1,12 +1,19 @@
 'use server';
 
-import { headers } from 'next/headers';
+import { processInvoiceReading } from '@/lib/invoice/process-reading';
+import { headers, cookies } from 'next/headers';
+import { receiptCookie } from '@/lib/invoice/receipt';
 import { redirect } from 'next/navigation';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { createInvoiceIntakeClient } from '@/lib/supabase/intake';
+import { PRIVACY_NOTICE_VERSION } from '@/lib/privacy-notice.mjs';
+import { recordNotificationResult } from '@/lib/intake-notification';
 import { siteUrl } from '@/lib/site';
+import { validateInvoiceContact } from '@/lib/invoice/validate-contact.mjs';
+import { invoiceIntakeReady, verifyInvoiceHuman, checkInvoiceQuotas } from '@/lib/invoice/protection';
 
 const allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
-const maxFileSize = 10 * 1024 * 1024;
+// Leave multipart overhead below Vercel's 4.5 MB request limit.
+const maxFileSize = 4 * 1024 * 1024;
 
 function cleanText(value, fallback = '') {
   return String(value || fallback).trim().slice(0, 500);
@@ -34,21 +41,17 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
     return false;
   }
 
-  const to = process.env.INVOICE_REVIEW_TO || 'eleclakuntza@yahoo.es';
-  const from = process.env.RESEND_FROM || 'Electricidad Lakuntza <onboarding@resend.dev>';
-  const adminUrl = `${siteUrl}/admin/facturas/${leadId}`;
+  const to = process.env.INVOICE_REVIEW_TO;
+  const from = process.env.RESEND_FROM;
+  if (!to || !from) return false;
+  const adminBase = process.env.ADMIN_PANEL_BASE_URL?.startsWith('https://') ? process.env.ADMIN_PANEL_BASE_URL.replace(/\/$/, '') : siteUrl;
+  const adminUrl = `${adminBase}/admin/facturas/${leadId}`;
 
   const body = [
     'Nueva factura recibida para revisión.',
     '',
-    `Nombre: ${name}`,
-    `Teléfono: ${phone}`,
-    `Email: ${email || 'No indicado'}`,
-    `Localidad: ${locality || 'No indicada'}`,
     `Suministro: ${supplyType}`,
-    `Cliente: ${customerType}`,
-    `Bono social / familia numerosa: ${bonusStatus}`,
-    `Compañía actual: ${currentCompany || 'No indicada'}`,
+    `Tipo de cliente: ${customerType}`,
     '',
     'Revisión humana pendiente: no se ha realizado comparación de tarifas.',
     `Abrir la solicitud en admin: ${adminUrl}`,
@@ -85,6 +88,7 @@ async function notifyByEmail({ leadId, name, phone, email, locality, supplyType,
 }
 
 export async function submitInvoiceReview(formData) {
+  if (!invoiceIntakeReady()) redirect('/revision-factura-luz-gas?error=config#formulario');
   const name = cleanText(formData.get('name'));
   const phone = cleanText(formData.get('phone'));
   const email = cleanText(formData.get('email'));
@@ -98,8 +102,7 @@ export async function submitInvoiceReview(formData) {
   if (formData.get('website')) redirect('/revision-factura-luz-gas/gracias?estado=pending');
   const file = formData.get('invoice');
 
-  const phoneDigits = phone.replace(/\D/g, '');
-  if (name.length < 2 || name.length > 100 || phoneDigits.length < 9 || phoneDigits.length > 15 || (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) || !consentAccepted) {
+  if (!validateInvoiceContact({ name, phone, email, consentAccepted })) {
     redirect('/revision-factura-luz-gas?error=datos#formulario');
   }
   if (!file || typeof file === 'string' || !file.size) redirect('/revision-factura-luz-gas?error=factura#formulario');
@@ -108,8 +111,17 @@ export async function submitInvoiceReview(formData) {
   if (!allowedFileTypes.includes(file.type)) redirect('/revision-factura-luz-gas?error=tipo#formulario');
   if (file.size > maxFileSize) redirect('/revision-factura-luz-gas?error=tamano#formulario');
   // La comprobación barata de datos se realiza antes de crear clientes o leer archivos.
-  const supabase = await createSupabaseServerClient();
+  const supabase = createInvoiceIntakeClient();
   if (!supabase) redirect('/revision-factura-luz-gas?error=config#formulario');
+
+  const requestHeaders = await headers();
+  if (!(await verifyInvoiceHuman({ token: formData.get('cf-turnstile-response'), requestHeaders }))) {
+    redirect('/revision-factura-luz-gas?error=verificacion#formulario');
+  }
+  const quota = await checkInvoiceQuotas({ supabase, requestHeaders, phone });
+  if (quota !== 'allowed') {
+    redirect('/revision-factura-luz-gas?error=' + (quota === 'limited' ? 'limite' : 'servicio') + '#formulario');
+  }
 
   const leadId = crypto.randomUUID();
   const fileName = safeFileName(file.name);
@@ -133,7 +145,6 @@ export async function submitInvoiceReview(formData) {
   if (uploadError) redirect('/revision-factura-luz-gas?error=subida#formulario');
 
   const precheckResult = getPrecheckResult({ bonusStatus, supplyType, customerType, currentCompany, notes });
-  const userAgent = (await headers()).get('user-agent') || '';
 
   const { error: insertError } = await supabase.from('invoice_review_leads').insert({
     id: leadId,
@@ -153,25 +164,28 @@ export async function submitInvoiceReview(formData) {
     file_size: file.size,
     precheck_result: precheckResult,
     consent_accepted: consentAccepted,
-    user_agent: userAgent,
+    consent_accepted_at: new Date().toISOString(),
+    privacy_notice_version: PRIVACY_NOTICE_VERSION,
+    notification_status: 'pending',
   });
 
   if (insertError) {
-    await supabase.storage.from('invoice-files').remove([filePath]);
+    const { error: cleanupError } = await supabase.storage.from('invoice-files').remove([filePath]);
+    if (cleanupError) console.error('[invoice-intake] Orphan file requires cleanup', { leadId, code: cleanupError.statusCode || 'unknown' });
     redirect('/revision-factura-luz-gas?error=registro#formulario');
   }
 
-  await notifyByEmail({
-    leadId,
-    name,
-    phone,
-    email,
-    locality,
-    supplyType,
-    customerType,
-    bonusStatus,
-    currentCompany,
-  });
+  const notified = await notifyByEmail({ leadId, supplyType, customerType });
+  await recordNotificationResult(supabase, 'invoice_review_leads', leadId, notified);
 
+  // Await on the server: no browser visit or manual action is needed to start reading.
+  // Intake and notification are already committed; extraction failure never loses the file.
+  try { await processInvoiceReading({supabase,id:leadId,automatic:true}); }
+  catch { console.error('[invoice-intake] Automatic reading unavailable');
+    await supabase.from('invoice_review_leads').update({ocr_status:'failed',ocr_requires_manual_review:true}).eq('id',leadId).eq('ocr_status','processing');
+  }
+
+  const receipt = receiptCookie();
+  if (receipt) (await cookies()).set(receipt.name, receipt.value, receipt.options);
   redirect(`/revision-factura-luz-gas/gracias?estado=${precheckResult}`);
 }
