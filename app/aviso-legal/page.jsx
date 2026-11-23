@@ -11,7 +11,7 @@ const sections = [
   {
     title: 'Titular de la web',
     content: [
-      'Titular de la actividad: Electricidad Lakuntza. Identificación fiscal completa pendiente de verificación documental antes del lanzamiento.',
+      'Titular de la actividad: Electricidad Lakuntza, C.B. NIF pendiente de comprobación documental antes del lanzamiento comercial.',
       'Nombre comercial: Electricidad Lakuntza · Elektrizitatea.',
       'Domicilio: Uriz Kalea, 27, 31830 Lakuntza, Navarra.',
       'Teléfono: 649 853 448.',
