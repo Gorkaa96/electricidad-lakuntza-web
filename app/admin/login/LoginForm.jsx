@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 import { needsMfaChallenge } from '@/lib/admin-mfa.mjs';
 
-export default function LoginForm({ unauthorized = false }) {
+export default function LoginForm({ unauthorized = false, mfaEnabled = false }) {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +31,12 @@ export default function LoginForm({ unauthorized = false }) {
     if (signInError) {
       setError('No se ha podido iniciar sesión. Revisa el correo y la contraseña.');
       setLoading(false);
+      return;
+    }
+
+    if (!mfaEnabled) {
+      router.replace('/admin/entrada');
+      router.refresh();
       return;
     }
 
