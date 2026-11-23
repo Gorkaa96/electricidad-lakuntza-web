@@ -10,8 +10,9 @@ export const metadata = {
 
 export default async function AdminLoginPage({ searchParams }) {
   const resolvedParams = await searchParams;
-  const { admin } = await getAdminContext();
+  const { admin, mfaRequired } = await getAdminContext();
 
+  if (mfaRequired) redirect('/admin/mfa');
   if (admin) {
     redirect('/admin/entrada');
   }
