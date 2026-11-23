@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ExternalLink, UsersRound, LayoutDashboard, BriefcaseBusiness, ReceiptText } from 'lucide-react';
+import { ExternalLink, UsersRound, LayoutDashboard, BriefcaseBusiness, ReceiptText, ShieldCheck } from 'lucide-react';
 import { canViewLeads, hasPermission } from '@/lib/rolePermissions';
 import { siteUrl } from '@/lib/site';
 
@@ -11,6 +11,7 @@ const navItems = [
   { href: '/admin/oportunidades', label: 'Consultas', icon: BriefcaseBusiness, allowed: canViewLeads },
   { href: '/admin/facturas', label: 'Facturas luz/gas', icon: ReceiptText, allowed: canViewLeads },
   { href: '/admin/usuarios', label: 'Usuarios', icon: UsersRound, allowed: (member) => hasPermission(member, 'users.manage') },
+  { href: '/admin/seguridad', label: 'Seguridad', icon: ShieldCheck, allowed: (member) => Boolean(member?.active) },
   { href: siteUrl, label: 'Ver web', icon: ExternalLink, allowed: () => true, external: true },
 ];
 
