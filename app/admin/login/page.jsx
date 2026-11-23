@@ -39,7 +39,7 @@ export default async function AdminLoginPage({ searchParams }) {
               <p className="mt-4 text-sm leading-7 text-neutral-600">
                 Utiliza el correo y la contraseña de tu cuenta de administración.
               </p>
-              <LoginForm unauthorized={resolvedParams?.error === 'unauthorized'} />
+              <LoginForm unauthorized={resolvedParams?.error === 'unauthorized'} mfaEnabled={process.env.CRM_MFA_ROLLOUT_ENABLED === 'true'} />
             </div>
           </section>
         </div>
