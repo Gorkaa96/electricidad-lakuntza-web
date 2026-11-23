@@ -31,12 +31,13 @@ Fecha de revisión: 23/11/2026. **Objetivo estimado de lanzamiento comercial: 16
 - [ ] Activación explícita de flags, comprobación SEO, Search Console, LinkedIn y recepción de oportunidades.
 - [ ] Procedimiento operativo: responsable de consultas, atención y seguimiento diario, gestión de incidencias y canales comerciales.
 
-## Titularidad legal: discrepancia por resolver
-- En la auditoría corporativa aportada al proyecto se describía una forma legal como sociedad irregular.
-- El mapa público de agentes de Feníe Energía (https://www.fenieenergia.es/gl/agentes) y un directorio sectorial identifican a Electricidad Lakuntza como C.B.; esto NO sustituye factura fiscal ni prueba de forma jurídica vigente. No inferir NIF ni usar datos de directorios como datos contractuales. Solicitar factura emitida reciente/documento fiscal vigente y confirmar con titular/asesoría antes de poner datos legales definitivos.
+## Titularidad legal: nombre confirmado el 23/11/2026
+- El propietario ha confirmado que la denominación de la empresa es **Electricidad Lakuntza, C.B.**, utilizada habitualmente en toda la documentación. La marca abreviada visible puede seguir siendo Electricidad Lakuntza.
+- Se han ajustado aviso legal, privacidad y copyright del pie de página en la rama de integración. **El NIF, domicilio fiscal oficial y datos de contacto deben contrastarse aún con factura/documentación vigente** antes de autorizar la captación comercial. No inventar NIF ni suscribir servicios sin titular correcto.
+- Las cuotas y alternativas de infraestructura/correo están en docs/presupuesto-operativo-2026-11-23.md; aprobación de Javier y Kristina pendiente.
 
 ## Material que se necesita de propiedad
-1. Factura reciente emitida por Electricidad Lakuntza, o datos fiscales oficiales: titular, NIF, forma jurídica, domicilio, contacto.
+1. Factura reciente emitida por Electricidad Lakuntza, C.B., o datos fiscales oficiales: NIF, domicilio fiscal y contacto. Denominación C.B. confirmada por el propietario.
 2. Aprobación del alojamiento comercial y presupuesto operativo, sin cambio unilateral de plan.
 3. Breve sesión real con Javier y Kristina para comprobar el CRM e identificar responsable y suplente.
 4. Línea base opcional: número de clientes y contratos vigentes de luz/gas/alarmas y comisiones agregadas. No bloquea apertura pero permite medir crecimiento.
